@@ -62,7 +62,6 @@ namespace Technics.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to Во время создания базы данных произошла ошибка:
-        ///
         ///{0}.
         /// </summary>
         internal static string MsgDatabaseCreateFail {
@@ -72,13 +71,51 @@ namespace Technics.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Не удалось загрузить списки.
-        ///Ошибка:
+        ///   Looks up a localized string similar to Во время удаления записи из базы данных произошла ошибка:
+        ///{0}.
+        /// </summary>
+        internal static string MsgDatabaseListItemDeleteFail {
+            get {
+                return ResourceManager.GetString("MsgDatabaseListItemDeleteFail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Во время сохранения записи в базу данных произошла ошибка:
+        ///{0}.
+        /// </summary>
+        internal static string MsgDatabaseListItemSaveFail {
+            get {
+                return ResourceManager.GetString("MsgDatabaseListItemSaveFail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Во время обращения к базе данных произошла ошибка:
         ///{0}..
         /// </summary>
-        internal static string MsgDatabaseLoadListFail {
+        internal static string MsgDatabaseLoadFail {
             get {
-                return ResourceManager.GetString("MsgDatabaseLoadListFail", resourceCulture);
+                return ResourceManager.GetString("MsgDatabaseLoadFail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Удалить «{0}» из базы данных?
+        ///Содержимое папки будет перемещено в родительскую..
+        /// </summary>
+        internal static string QuestionDeleteListItem {
+            get {
+                return ResourceManager.GetString("QuestionDeleteListItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Удалить «{0}» из базы данных?.
+        /// </summary>
+        internal static string QuestionDeleteListItemEmpty {
+            get {
+                return ResourceManager.GetString("QuestionDeleteListItemEmpty", resourceCulture);
             }
         }
         

@@ -88,14 +88,21 @@
     <Compile Include="Forms\Main.Database.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\Main.UpdateData.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\Main.Designer.cs">
       <DependentUpon>Main.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Main.Techs.cs">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\Main.Utils.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\PresenterStatusStripMain.cs" />
-    <Compile Include="Models\TreeNodeItem.cs" />
+    <Compile Include="Models\TreeNodeBase.cs" />
+    <Compile Include="Models\TreeNodeTech.cs" />
     <Compile Include="Models\TreeNodeFolder.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ProgramStatus.cs" />
@@ -131,6 +138,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\ResourcesSql.resx">
       <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResourcesSql.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -151,8 +159,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="Resources\CreateTableFolders.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CreateTableTechs.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

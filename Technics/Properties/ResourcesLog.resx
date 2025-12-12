@@ -129,6 +129,9 @@
   <data name="LoadListOk" xml:space="preserve">
     <value>ok, {0} count={1}</value>
   </data>
+  <data name="LoadTechOk" xml:space="preserve">
+    <value>ok</value>
+  </data>
   <data name="PathAppDirectory" xml:space="preserve">
     <value>app directory</value>
   </data>

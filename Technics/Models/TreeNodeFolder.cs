@@ -1,20 +1,20 @@
-﻿using System.Windows.Forms;
+﻿using Technics.Models;
 using static Technics.Database.Models;
 
 namespace Technics
 {
-    internal class TreeNodeFolder : TreeNode
+    internal class TreeNodeFolder : TreeNodeBase
     {
-        public Folder Folder { get; set; } = new Folder();
+        public Folder Folder { get => (Folder)Model; set => Model = value; }
 
-        public new string Text
+        public TreeNodeFolder()
         {
-            get => base.Text;
-            set
-            {
-                base.Text = value;
-                Folder.Text = value;
-            }
+            Folder = new Folder();
+        }
+
+        public TreeNodeFolder(Folder folder)
+        {
+            Folder = folder;
         }
     }
 }

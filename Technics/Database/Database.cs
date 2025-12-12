@@ -1,5 +1,4 @@
 ﻿using Dapper;
-using Newtonsoft.Json.Linq;
 using P3tr0viCh.Database;
 using P3tr0viCh.Utils;
 using System.Collections.Generic;
@@ -7,7 +6,6 @@ using System.Data.SQLite;
 using System.IO;
 using System.Threading.Tasks;
 using Technics.Properties;
-using static Technics.Database.Models;
 
 namespace Technics
 {
@@ -41,6 +39,7 @@ namespace Technics
             {
                 /* tables */
                 connection.Execute(ResourcesSql.CreateTableFolders);
+                connection.Execute(ResourcesSql.CreateTableTechs);
 
                 /* indexes */
 
@@ -48,11 +47,19 @@ namespace Technics
             }
         }
 
-        public async Task ListItemSaveAsync<T>(BaseId value) where T : BaseId
+        public async Task ListItemSaveAsync<T>(T value) where T : BaseId
         {
             using (var connection = GetConnection())
             {
                 await Actions.ListItemSaveAsync<T>(connection, null, value);
+            }
+        }
+
+        public async Task ListItemDeleteAsync<T>(T value) where T : BaseId
+        {
+            using (var connection = GetConnection())
+            {
+                await Actions.ListItemDeleteAsync<T>(connection, null, value);
             }
         }
 

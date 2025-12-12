@@ -119,13 +119,26 @@
   </resheader>
   <data name="MsgDatabaseCreateFail" xml:space="preserve">
     <value>Во время создания базы данных произошла ошибка:
-
 {0}</value>
   </data>
-  <data name="MsgDatabaseLoadListFail" xml:space="preserve">
-    <value>Не удалось загрузить списки.
-Ошибка:
+  <data name="MsgDatabaseListItemDeleteFail" xml:space="preserve">
+    <value>Во время удаления записи из базы данных произошла ошибка:
+{0}</value>
+  </data>
+  <data name="MsgDatabaseListItemSaveFail" xml:space="preserve">
+    <value>Во время сохранения записи в базу данных произошла ошибка:
+{0}</value>
+  </data>
+  <data name="MsgDatabaseLoadFail" xml:space="preserve">
+    <value>Во время обращения к базе данных произошла ошибка:
 {0}.</value>
+  </data>
+  <data name="QuestionDeleteListItem" xml:space="preserve">
+    <value>Удалить «{0}» из базы данных?
+Содержимое папки будет перемещено в родительскую.</value>
+  </data>
+  <data name="QuestionDeleteListItemEmpty" xml:space="preserve">
+    <value>Удалить «{0}» из базы данных?</value>
   </data>
   <data name="TextTechAll" xml:space="preserve">
     <value>Техника</value>

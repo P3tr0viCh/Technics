@@ -9,18 +9,15 @@ namespace Technics
         {
             // ------------------------------------------------------------------------------------------------------------
             [Table(Tables.folders)]
-            public class Folder : BaseId
+            public class Folder : BaseText
             {
                 public long? ParentId { get; set; } = null;
-
-                public string Text { get; set; } = null;
 
                 public new void Clear()
                 {
                     base.Clear();
 
                     ParentId = null;
-                    Text = null;
                 }
 
                 public void Assign(Folder source)
@@ -35,7 +32,34 @@ namespace Technics
                     base.Assign(source);
 
                     ParentId = source.ParentId;
-                    Text = source.Text;
+                }
+            }
+
+            // ------------------------------------------------------------------------------------------------------------
+            [Table(Tables.techs)]
+            public class Tech : BaseText
+            {
+                public long? FolderId { get; set; } = null;
+
+                public new void Clear()
+                {
+                    base.Clear();
+
+                    FolderId = null;
+                }
+
+                public void Assign(Tech source)
+                {
+                    if (source == null)
+                    {
+                        Clear();
+
+                        return;
+                    }
+
+                    base.Assign(source);
+
+                    FolderId = source.FolderId;
                 }
             }
         }

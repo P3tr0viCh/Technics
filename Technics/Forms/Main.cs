@@ -1,5 +1,6 @@
 ﻿using P3tr0viCh.Utils;
 using System;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Technics.Properties;
 using static Technics.Enums;
@@ -26,7 +27,7 @@ namespace Technics
 
             if (!SetProgramDirectory()) return;
 
-            AddTechRoot();
+            AddTechsRoot();
 
             AppSettingsLoad();
 
@@ -34,7 +35,7 @@ namespace Technics
 
             AppSettings.LoadFormState(this, AppSettings.Default.FormStateMain);
 
-            await LoadTechAsync();
+            await UpdateDataAsync();
         }
 
         private void ProgramStatus_StatusChanged(object sender, Status status)
@@ -95,56 +96,57 @@ namespace Technics
             }
         }
 
-        private void AddTechRoot()
+        private void TvTechs_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
-            tvTechs.Nodes.Add(new TreeNodeFolder()
+            if (e.Button == MouseButtons.Right)
             {
-                Text = Resources.TextTechAll
-            });
+                tvTechs.SelectedNode = e.Node;
+            }
         }
 
-        private TreeNodeFolder GetParent(TreeNode node)
+        private void TvTechs_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            var result = node is TreeNodeItem ? node.Parent : node;
-
-            return result as TreeNodeFolder;
-        }
-
-        private void TechAdd(TreeNode parent, TreeNode value)
-        {
-            parent.Nodes.Add(value);
-
-            parent.Expand();
-
-            tvTechs.SelectedNode = value;
+            SelectedChanged();
         }
 
         private async void MiTechAddFolder_Click(object sender, EventArgs e)
         {
-            var node = new TreeNodeFolder
-            {
-                Text = $"Folder {Str.Random(3)}"
-            };
-
-            var parent = GetParent(tvTechs.SelectedNode);
-
-            node.Folder.ParentId = parent.Folder.Id;
-
-            await Database.Default.ListItemSaveAsync(node.Folder);
-
-            TechAdd(parent, node);
+            await TechsAddNewFolderAsync();
         }
 
-        private void MiTechAddItem_Click(object sender, EventArgs e)
+        private async void MiTechAddItem_Click(object sender, EventArgs e)
         {
-            var node = new TreeNodeItem
-            {
-                Text = "Item"
-            };
+            await TechsAddNewTechAsync();
+        }
 
-            var parent = GetParent(tvTechs.SelectedNode);
+        private void TsbtnTechChange_Click(object sender, EventArgs e)
+        {
 
-            TechAdd(parent, node);
+        }
+
+        private async void TsbtnTechDelete_Click(object sender, EventArgs e)
+        {
+            await TechsDeleteSelected();
+        }
+
+        private async void MiTechAddFolder2_Click(object sender, EventArgs e)
+        {
+            await TechsAddNewFolderAsync();
+        }
+
+        private async void MiTechAddTech2_Click(object sender, EventArgs e)
+        {
+            await TechsAddNewTechAsync();
+        }
+
+        private void miTechChange_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private async void MiTechDelete_Click(object sender, EventArgs e)
+        {
+            await TechsDeleteSelected();
         }
     }
 }

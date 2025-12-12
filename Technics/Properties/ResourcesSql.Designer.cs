@@ -72,5 +72,18 @@ namespace Technics.Properties {
                 return ResourceManager.GetString("CreateTableFolders", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CREATE TABLE techs (
+        ///	id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+        ///	folderid INTEGER,
+        ///	text TEXT
+        ///);.
+        /// </summary>
+        internal static string CreateTableTechs {
+            get {
+                return ResourceManager.GetString("CreateTableTechs", resourceCulture);
+            }
+        }
     }
 }

@@ -97,6 +97,15 @@ namespace Technics.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ok.
+        /// </summary>
+        internal static string LoadTechOk {
+            get {
+                return ResourceManager.GetString("LoadTechOk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to app directory.
         /// </summary>
         internal static string PathAppDirectory {
