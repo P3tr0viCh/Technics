@@ -36,6 +36,12 @@
             this.splitterLeft = new System.Windows.Forms.Splitter();
             this.panelLeft = new System.Windows.Forms.Panel();
             this.tvTechs = new System.Windows.Forms.TreeView();
+            this.menuTechs = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.miTechAdd = new System.Windows.Forms.ToolStripMenuItem();
+            this.miTechAddFolder2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.miTechAddTech2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.miTechChange = new System.Windows.Forms.ToolStripMenuItem();
+            this.miTechDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripTechs = new System.Windows.Forms.ToolStrip();
             this.tsbtnTechAdd = new System.Windows.Forms.ToolStripDropDownButton();
             this.miTechAddFolder = new System.Windows.Forms.ToolStripMenuItem();
@@ -45,21 +51,18 @@
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.miMainFile = new System.Windows.Forms.ToolStripMenuItem();
             this.miFileClose = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuTechs = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.miTechAdd = new System.Windows.Forms.ToolStripMenuItem();
-            this.miTechAddFolder2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.miTechAddTech2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.miTechChange = new System.Windows.Forms.ToolStripMenuItem();
-            this.miTechDelete = new System.Windows.Forms.ToolStripMenuItem();
+            this.miMainHelp = new System.Windows.Forms.ToolStripMenuItem();
+            this.miHelpAbout = new System.Windows.Forms.ToolStripMenuItem();
+            this.imageList16 = new System.Windows.Forms.ImageList(this.components);
             this.toolStripContainer.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer.ContentPanel.SuspendLayout();
             this.toolStripContainer.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.panelLeft.SuspendLayout();
+            this.menuTechs.SuspendLayout();
             this.toolStripTechs.SuspendLayout();
             this.menuStrip.SuspendLayout();
-            this.menuTechs.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStripContainer
@@ -126,13 +129,62 @@
             this.tvTechs.ContextMenuStrip = this.menuTechs;
             this.tvTechs.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tvTechs.HideSelection = false;
+            this.tvTechs.ImageIndex = 0;
+            this.tvTechs.ImageList = this.imageList16;
             this.tvTechs.Location = new System.Drawing.Point(0, 50);
             this.tvTechs.Name = "tvTechs";
+            this.tvTechs.SelectedImageIndex = 0;
             this.tvTechs.ShowRootLines = false;
             this.tvTechs.Size = new System.Drawing.Size(259, 241);
             this.tvTechs.TabIndex = 0;
             this.tvTechs.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TvTechs_AfterSelect);
             this.tvTechs.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.TvTechs_NodeMouseClick);
+            // 
+            // menuTechs
+            // 
+            this.menuTechs.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.miTechAdd,
+            this.miTechChange,
+            this.miTechDelete});
+            this.menuTechs.Name = "menuTechs";
+            this.menuTechs.Size = new System.Drawing.Size(129, 70);
+            // 
+            // miTechAdd
+            // 
+            this.miTechAdd.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.miTechAddFolder2,
+            this.miTechAddTech2});
+            this.miTechAdd.Name = "miTechAdd";
+            this.miTechAdd.Size = new System.Drawing.Size(128, 22);
+            this.miTechAdd.Text = "Добавить";
+            // 
+            // miTechAddFolder2
+            // 
+            this.miTechAddFolder2.Name = "miTechAddFolder2";
+            this.miTechAddFolder2.Size = new System.Drawing.Size(118, 22);
+            this.miTechAddFolder2.Text = "Папка";
+            this.miTechAddFolder2.Click += new System.EventHandler(this.MiTechAddFolder2_Click);
+            // 
+            // miTechAddTech2
+            // 
+            this.miTechAddTech2.Name = "miTechAddTech2";
+            this.miTechAddTech2.Size = new System.Drawing.Size(118, 22);
+            this.miTechAddTech2.Text = "Техника";
+            this.miTechAddTech2.Click += new System.EventHandler(this.MiTechAddTech2_Click);
+            // 
+            // miTechChange
+            // 
+            this.miTechChange.Name = "miTechChange";
+            this.miTechChange.Size = new System.Drawing.Size(128, 22);
+            this.miTechChange.Text = "Изменить";
+            this.miTechChange.Click += new System.EventHandler(this.miTechChange_Click);
+            // 
+            // miTechDelete
+            // 
+            this.miTechDelete.Name = "miTechDelete";
+            this.miTechDelete.Size = new System.Drawing.Size(128, 22);
+            this.miTechDelete.Text = "Удалить";
+            this.miTechDelete.Click += new System.EventHandler(this.MiTechDelete_Click);
             // 
             // toolStripTechs
             // 
@@ -199,7 +251,8 @@
             this.menuStrip.Dock = System.Windows.Forms.DockStyle.None;
             this.menuStrip.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.miMainFile});
+            this.miMainFile,
+            this.miMainHelp});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.Size = new System.Drawing.Size(650, 27);
@@ -221,51 +274,28 @@
             this.miFileClose.Text = "Выход";
             this.miFileClose.Click += new System.EventHandler(this.MiFileClose_Click);
             // 
-            // menuTechs
+            // miMainHelp
             // 
-            this.menuTechs.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.miTechAdd,
-            this.miTechChange,
-            this.miTechDelete});
-            this.menuTechs.Name = "menuTechs";
-            this.menuTechs.Size = new System.Drawing.Size(129, 70);
+            this.miMainHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.miHelpAbout});
+            this.miMainHelp.Name = "miMainHelp";
+            this.miMainHelp.Size = new System.Drawing.Size(74, 23);
+            this.miMainHelp.Text = "Справка";
             // 
-            // miTechAdd
+            // miHelpAbout
             // 
-            this.miTechAdd.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.miTechAddFolder2,
-            this.miTechAddTech2});
-            this.miTechAdd.Name = "miTechAdd";
-            this.miTechAdd.Size = new System.Drawing.Size(180, 22);
-            this.miTechAdd.Text = "Добавить";
+            this.miHelpAbout.Name = "miHelpAbout";
+            this.miHelpAbout.ShortcutKeys = System.Windows.Forms.Keys.F1;
+            this.miHelpAbout.Size = new System.Drawing.Size(188, 24);
+            this.miHelpAbout.Text = "О программе";
+            this.miHelpAbout.Click += new System.EventHandler(this.MiHelpAbout_Click);
             // 
-            // miTechAddFolder2
+            // imageList16
             // 
-            this.miTechAddFolder2.Name = "miTechAddFolder2";
-            this.miTechAddFolder2.Size = new System.Drawing.Size(180, 22);
-            this.miTechAddFolder2.Text = "Папка";
-            this.miTechAddFolder2.Click += new System.EventHandler(this.MiTechAddFolder2_Click);
-            // 
-            // miTechAddTech2
-            // 
-            this.miTechAddTech2.Name = "miTechAddTech2";
-            this.miTechAddTech2.Size = new System.Drawing.Size(180, 22);
-            this.miTechAddTech2.Text = "Техника";
-            this.miTechAddTech2.Click += new System.EventHandler(this.MiTechAddTech2_Click);
-            // 
-            // miTechChange
-            // 
-            this.miTechChange.Name = "miTechChange";
-            this.miTechChange.Size = new System.Drawing.Size(180, 22);
-            this.miTechChange.Text = "Изменить";
-            this.miTechChange.Click += new System.EventHandler(this.miTechChange_Click);
-            // 
-            // miTechDelete
-            // 
-            this.miTechDelete.Name = "miTechDelete";
-            this.miTechDelete.Size = new System.Drawing.Size(180, 22);
-            this.miTechDelete.Text = "Удалить";
-            this.miTechDelete.Click += new System.EventHandler(this.MiTechDelete_Click);
+            this.imageList16.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList16.ImageStream")));
+            this.imageList16.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList16.Images.SetKeyName(0, "folder-custom-16.png");
+            this.imageList16.Images.SetKeyName(1, "circle-double-custom-16.png");
             // 
             // Main
             // 
@@ -273,6 +303,7 @@
             this.ClientSize = new System.Drawing.Size(650, 342);
             this.Controls.Add(this.toolStripContainer);
             this.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Main";
@@ -290,11 +321,11 @@
             this.statusStrip.PerformLayout();
             this.panelLeft.ResumeLayout(false);
             this.panelLeft.PerformLayout();
+            this.menuTechs.ResumeLayout(false);
             this.toolStripTechs.ResumeLayout(false);
             this.toolStripTechs.PerformLayout();
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
-            this.menuTechs.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -322,6 +353,9 @@
         private System.Windows.Forms.ToolStripMenuItem miTechAddTech2;
         private System.Windows.Forms.ToolStripMenuItem miTechChange;
         private System.Windows.Forms.ToolStripMenuItem miTechDelete;
+        private System.Windows.Forms.ToolStripMenuItem miMainHelp;
+        private System.Windows.Forms.ToolStripMenuItem miHelpAbout;
+        private System.Windows.Forms.ImageList imageList16;
     }
 }
 

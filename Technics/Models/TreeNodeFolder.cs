@@ -7,14 +7,16 @@ namespace Technics
     {
         public Folder Folder { get => (Folder)Model; set => Model = value; }
 
-        public TreeNodeFolder()
-        {
-            Folder = new Folder();
-        }
-
         public TreeNodeFolder(Folder folder)
         {
             Folder = folder;
+
+            ImageIndex = 0;
+            SelectedImageIndex = 0;
+        }
+
+        public TreeNodeFolder() : this(new Folder())
+        {
         }
     }
 }

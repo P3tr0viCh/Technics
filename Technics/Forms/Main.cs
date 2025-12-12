@@ -87,6 +87,16 @@ namespace Technics
             Close();
         }
 
+        private void ShowAbout()
+        {
+            FrmAbout.Show(14);
+        }
+
+        private void MiHelpAbout_Click(object sender, EventArgs e)
+        {
+            ShowAbout();
+        }
+
         ToolStripStatusLabel PresenterStatusStrip<StatusLabel>.IPresenterStatusStrip.GetLabel(StatusLabel label)
         {
             switch (label)
