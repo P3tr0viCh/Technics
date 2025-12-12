@@ -74,6 +74,21 @@ namespace Technics.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to CREATE TABLE mileages (
+        ///	id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+        ///	techid INTEGER,
+        ///	datetime TEXT,
+        ///	mileage REAL,
+        ///	description TEXT
+        ///);.
+        /// </summary>
+        internal static string CreateTableMileages {
+            get {
+                return ResourceManager.GetString("CreateTableMileages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to CREATE TABLE techs (
         ///	id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
         ///	folderid INTEGER,

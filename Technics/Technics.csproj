@@ -42,6 +42,9 @@
     <Reference Include="Dapper, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Dapper.2.1.66\lib\net461\Dapper.dll</HintPath>
     </Reference>
+    <Reference Include="Dapper.Contrib, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.Contrib.2.0.78\lib\net461\Dapper.Contrib.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=9.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.9.0.1\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
@@ -79,16 +82,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AppSettings.cs" />
-    <Compile Include="AppSettings.FormState.cs" />
+    <Compile Include="AppSettings\AppSettings.cs" />
+    <Compile Include="AppSettings\AppSettings.FormState.cs" />
     <Compile Include="Database\Database.cs" />
     <Compile Include="Database\Database.Models.cs" />
     <Compile Include="Database\Database.Tables.cs" />
     <Compile Include="Enums.cs" />
+    <Compile Include="AppSettings\AppSettings.ColumnsState.cs" />
     <Compile Include="Forms\Main.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\Main.Database.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Main.Mileages.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\Main.UpdateData.cs">
@@ -104,6 +111,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\PresenterStatusStripMain.cs" />
+    <Compile Include="Lists.cs" />
     <Compile Include="Models\TreeNodeBase.cs" />
     <Compile Include="Models\TreeNodeTech.cs" />
     <Compile Include="Models\TreeNodeFolder.cs" />
@@ -144,6 +152,7 @@
       <LastGenOutput>ResourcesSql.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\Database.Models.MileageModel.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -169,6 +178,7 @@
     <None Include="Resources\CreateTableTechs.sql" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\CreateTableMileages.sql" />
     <Content Include="Technics.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

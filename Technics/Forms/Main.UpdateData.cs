@@ -15,6 +15,8 @@ namespace Technics
             try
             {
                 await LoadTechsAsync();
+
+                await LoadMileagesAsync();
             }
             catch (TaskCanceledException e)
             {

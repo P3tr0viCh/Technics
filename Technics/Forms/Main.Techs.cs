@@ -49,7 +49,7 @@ namespace Technics
 
             try
             {
-                var folderList = await ListLoadAsync<Folder>();
+                var folderList = await ListLoadAsync<FolderModel>();
 
                 folderList = folderList.OrderBy(f => f.Id).ToList();
 
@@ -67,9 +67,9 @@ namespace Technics
                     folderNodes[(long)folder.ParentId].Nodes.Add(folderNode);
                 }
 
-                var techList = await ListLoadAsync<Tech>();
+                Lists.Default.Techs = await ListLoadAsync<TechModel>();
 
-                foreach (var tech in techList)
+                foreach (var tech in Lists.Default.Techs)
                 {
                     var techNode = new TreeNodeTech(tech);
 
@@ -78,7 +78,7 @@ namespace Technics
 
                 tvTechs.ExpandAll();
 
-                Utils.Log.Info(ResourcesLog.LoadTechOk);
+                Utils.Log.Info(ResourcesLog.LoadOk);
             }
             finally
             {
@@ -102,7 +102,7 @@ namespace Technics
             tvTechs.SelectedNode = value;
         }
 
-        private async Task TechsAddNewItemAsync(TreeNodeBase node)
+        private async Task TechsAddNewItemAsync(BaseId value)
         {
             var status = ProgramStatus.Start(Status.SaveDatа);
 
@@ -110,19 +110,25 @@ namespace Technics
             {
                 var parent = GetParent(tvTechs.SelectedNode);
 
-                if (node is TreeNodeFolder nodeFolder)
-                {
-                    nodeFolder.Folder.ParentId = parent.Folder.Id;
+                TreeNode node = null;
 
-                    await Database.Default.ListItemSaveAsync(nodeFolder.Folder);
+                if (value is FolderModel folder)
+                {
+                    folder.ParentId = parent.Folder.Id;
+
+                    node = new TreeNodeFolder(folder);
+
+                    await ListItemSaveAsync(folder);
                 }
                 else
                 {
-                    if (node is TreeNodeTech nodeTech)
+                    if (value is TechModel tech)
                     {
-                        nodeTech.Tech.FolderId = parent.Folder.Id;
+                        tech.FolderId = parent.Folder.Id;
 
-                        await Database.Default.ListItemSaveAsync(nodeTech.Tech);
+                        node = new TreeNodeTech(tech);
+
+                        await ListItemSaveAsync(tech);
                     }
                 }
 
@@ -146,25 +152,25 @@ namespace Technics
 
         private async Task TechsAddNewFolderAsync()
         {
-            var node = new TreeNodeFolder
+            var folder = new FolderModel
             {
                 Text = $"Folder {Str.Random(3)}"
             };
 
-            await TechsAddNewItemAsync(node);
+            await TechsAddNewItemAsync(folder);
         }
 
         private async Task TechsAddNewTechAsync()
         {
-            var node = new TreeNodeTech
+            var tech = new TechModel
             {
                 Text = $"Item {Str.Random(3)}"
             };
 
-            await TechsAddNewItemAsync(node);
+            await TechsAddNewItemAsync(tech);
         }
 
-        private async Task TechsDeleteSelected()
+        private async Task TechsDeleteSelectedAsync()
         {
             var deletedNode = (TreeNodeBase)tvTechs.SelectedNode;
 
@@ -188,7 +194,7 @@ namespace Technics
 
                 if (deletedNode.Nodes.Count != 0)
                 {
-                    var parentNodeFolder = deletedNodeParent.Model as Folder;
+                    var parentNodeFolder = deletedNodeParent.Model as FolderModel;
 
                     var movedNodes = deletedNode.Nodes.Cast<TreeNodeBase>().ToArray();
 
@@ -216,15 +222,15 @@ namespace Technics
                     }
                 }
 
-                if (deletedModel is Folder folder)
+                if (deletedModel is FolderModel folder)
                 {
-                    await Database.Default.ListItemDeleteAsync(folder);
+                    await ListItemDeleteAsync(folder);
                 }
                 else
                 {
-                    if (deletedModel is Tech tech)
+                    if (deletedModel is TechModel tech)
                     {
-                        await Database.Default.ListItemDeleteAsync(tech);
+                        await ListItemDeleteAsync(tech);
                     }
                 }
 

@@ -1,6 +1,5 @@
 ﻿using P3tr0viCh.Utils;
 using System;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Technics.Properties;
 using static Technics.Enums;
@@ -25,6 +24,9 @@ namespace Technics
         {
             Text = string.Format(Resources.TitleMain, new AssemblyDecorator().VersionString(false));
 
+            splitterMileages.Cursor = Cursors.SizeNS;
+            splitterTechs.Cursor = Cursors.SizeWE;
+
             if (!SetProgramDirectory()) return;
 
             AddTechsRoot();
@@ -34,6 +36,11 @@ namespace Technics
             ProgramStatus.StatusChanged += ProgramStatus_StatusChanged;
 
             AppSettings.LoadFormState(this, AppSettings.Default.FormStateMain);
+
+            AppSettings.LoadDataGridColumns(dgvMileages, AppSettings.Default.ColumnsMileages);
+
+            tvTechs.Width = AppSettings.Default.PanelTechsWidth;
+            panelBottom.Height = AppSettings.Default.PanelBottomHeight;
 
             await UpdateDataAsync();
         }
@@ -46,13 +53,13 @@ namespace Technics
             {
                 UseWaitCursor = false;
 
-                panelLeft.Enabled = true;
+                toolStripContainer.ContentPanel.Enabled = true;
             }
             else
             {
                 UseWaitCursor = true;
 
-                panelLeft.Enabled = false;
+                toolStripContainer.ContentPanel.Enabled = false;
             }
         }
 
@@ -76,6 +83,11 @@ namespace Technics
             }
 
             AppSettings.Default.FormStateMain = AppSettings.SaveFormState(this);
+
+            AppSettings.Default.ColumnsMileages = AppSettings.SaveDataGridColumns(dgvMileages);
+
+            AppSettings.Default.PanelTechsWidth = tvTechs.Width;
+            AppSettings.Default.PanelBottomHeight = panelBottom.Height;
 
             AppSettingsSave();
 
@@ -136,7 +148,7 @@ namespace Technics
 
         private async void TsbtnTechDelete_Click(object sender, EventArgs e)
         {
-            await TechsDeleteSelected();
+            await TechsDeleteSelectedAsync();
         }
 
         private async void MiTechAddFolder2_Click(object sender, EventArgs e)
@@ -149,14 +161,19 @@ namespace Technics
             await TechsAddNewTechAsync();
         }
 
-        private void miTechChange_Click(object sender, EventArgs e)
+        private void MiTechChange_Click(object sender, EventArgs e)
         {
 
         }
 
         private async void MiTechDelete_Click(object sender, EventArgs e)
         {
-            await TechsDeleteSelected();
+            await TechsDeleteSelectedAsync();
+        }
+
+        private async void MiMileagesAddMileage_Click(object sender, EventArgs e)
+        {
+            await MileageAddNewAsync();
         }
     }
 }

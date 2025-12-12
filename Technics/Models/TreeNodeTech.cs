@@ -5,9 +5,9 @@ namespace Technics
 {
     internal class TreeNodeTech : TreeNodeBase
     {
-        public Tech Tech { get => (Tech)Model; set => Model = value; }
+        public TechModel Tech { get => (TechModel)Model; set => Model = value; }
 
-        public TreeNodeTech(Tech folder)
+        public TreeNodeTech(TechModel folder)
         {
             Tech = folder;
 
@@ -15,7 +15,7 @@ namespace Technics
             SelectedImageIndex = 1;
         }
 
-        public TreeNodeTech() : this(new Tech())
+        public TreeNodeTech() : this(new TechModel())
         {
         }
     }

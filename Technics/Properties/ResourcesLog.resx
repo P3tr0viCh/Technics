@@ -126,10 +126,16 @@
   <data name="CloseReasonTaskManager" xml:space="preserve">
     <value>closed from task manager</value>
   </data>
+  <data name="ListItemDeleteOk" xml:space="preserve">
+    <value>{0} item delete ok</value>
+  </data>
+  <data name="ListItemSaveOk" xml:space="preserve">
+    <value>{0} item save ok</value>
+  </data>
   <data name="LoadListOk" xml:space="preserve">
     <value>ok, {0} count={1}</value>
   </data>
-  <data name="LoadTechOk" xml:space="preserve">
+  <data name="LoadOk" xml:space="preserve">
     <value>ok</value>
   </data>
   <data name="PathAppDirectory" xml:space="preserve">

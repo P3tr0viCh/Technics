@@ -40,6 +40,7 @@ namespace Technics
                 /* tables */
                 connection.Execute(ResourcesSql.CreateTableFolders);
                 connection.Execute(ResourcesSql.CreateTableTechs);
+                connection.Execute(ResourcesSql.CreateTableMileages);
 
                 /* indexes */
 

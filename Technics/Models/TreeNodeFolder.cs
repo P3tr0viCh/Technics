@@ -5,9 +5,9 @@ namespace Technics
 {
     internal class TreeNodeFolder : TreeNodeBase
     {
-        public Folder Folder { get => (Folder)Model; set => Model = value; }
+        public FolderModel Folder { get => (FolderModel)Model; set => Model = value; }
 
-        public TreeNodeFolder(Folder folder)
+        public TreeNodeFolder(FolderModel folder)
         {
             Folder = folder;
 
@@ -15,7 +15,7 @@ namespace Technics
             SelectedImageIndex = 0;
         }
 
-        public TreeNodeFolder() : this(new Folder())
+        public TreeNodeFolder() : this(new FolderModel())
         {
         }
     }
