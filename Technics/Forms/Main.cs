@@ -129,6 +129,25 @@ namespace Technics
             }
         }
 
+        private void DgvMileages_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            Utils.SelectCellOnCellMouseDown(dgvMileages, e);
+        }
+
+        private void BindingSourceMileages_ListChanged(object sender, ListChangedEventArgs e)
+        {
+            switch (e.ListChangedType)
+            {
+                case ListChangedType.ItemAdded:
+                    tsbtnMileagesChange.Enabled = tsbtnMileagesDelete.Enabled = true;
+                    break;
+                case ListChangedType.Reset:
+                case ListChangedType.ItemDeleted:
+                    tsbtnMileagesDelete.Enabled = tsbtnMileagesChange.Enabled = bindingSourceMileages.Count > 0;
+                    break;
+            }
+        }
+
         private async void TvTechs_AfterSelect(object sender, TreeViewEventArgs e)
         {
             await TechsSelectedChangedAsync();
@@ -184,23 +203,9 @@ namespace Technics
             await MileagesDeleteSelectedAsync();
         }
 
-        private void DgvMileages_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
+        private async void MiMileagesAddMilleageTotal_Click(object sender, EventArgs e)
         {
-            Utils.SelectCellOnCellMouseDown(dgvMileages, e);
-        }
-
-        private void BindingSourceMileages_ListChanged(object sender, ListChangedEventArgs e)
-        {
-            switch (e.ListChangedType)
-            {
-                case ListChangedType.ItemAdded:
-                    tsbtnMileagesChange.Enabled = tsbtnMileagesDelete.Enabled = true;
-                    break;
-                case ListChangedType.Reset:
-                case ListChangedType.ItemDeleted:
-                    tsbtnMileagesDelete.Enabled = tsbtnMileagesChange.Enabled = bindingSourceMileages.Count > 0;
-                    break;
-            }
+            await MileagesAddNewCommonAsync();
         }
     }
 }

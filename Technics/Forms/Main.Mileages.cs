@@ -57,22 +57,23 @@ namespace Technics
             }
         }
 
-        private async Task MileagesAddNewAsync()
+        private async Task MileagesAddNewItemAsync(MileageModel mileage)
         {
             var tech = GetSelectedTech() ?? GetRandomTech();
-
-            var mileage = new MileageModel()
-            {
-                TechId = tech.Id,
-                TechText = tech.Text,
-                DateTime = DateTime.Now,
-                Mileage = 1 + new Random().Next(10),
-            };
 
             var status = ProgramStatus.Start(Status.SaveDatа);
 
             try
             {
+                if (mileage.Mileage == default)
+                {
+                    var mileageCommon = await Database.Default.GetMileageCommonAsync(mileage);
+
+                    var newMileageCommon = mileageCommon + 1 + new Random().Next(10);
+
+                    mileage.Mileage = newMileageCommon - mileageCommon;
+                }
+
                 await Database.Default.ListItemSaveAsync(mileage);
 
                 Utils.Log.Info(string.Format(ResourcesLog.ListItemSaveOk, nameof(MileageModel)));
@@ -97,6 +98,36 @@ namespace Technics
             }
 
             dgvMileages.Focus();
+        }
+
+        private async Task MileagesAddNewAsync()
+        {
+            var tech = GetSelectedTech() ?? GetRandomTech();
+
+            var mileage = new MileageModel()
+            {
+                TechId = tech.Id,
+                TechText = tech.Text,
+                DateTime = DateTime.Now,
+                Mileage = 1 + new Random().Next(10),
+            };
+
+            await MileagesAddNewItemAsync(mileage);
+        }
+
+        private async Task MileagesAddNewCommonAsync()
+        {
+            var tech = GetSelectedTech() ?? GetRandomTech();
+
+            var mileage = new MileageModel()
+            {
+                TechId = tech.Id,
+                TechText = tech.Text,
+                DateTime = DateTime.Now,
+                Mileage = default,
+            };
+
+            await MileagesAddNewItemAsync(mileage);
         }
 
         private async Task MileagesDeleteSelectedAsync()
