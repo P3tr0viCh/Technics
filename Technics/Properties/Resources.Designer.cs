@@ -104,18 +104,18 @@ namespace Technics.Properties {
         ///   Looks up a localized string similar to Удалить «{0}» из базы данных?
         ///Содержимое папки будет перемещено в родительскую..
         /// </summary>
-        internal static string QuestionDeleteListItem {
+        internal static string QuestionDeleteFolderNotEmpty {
             get {
-                return ResourceManager.GetString("QuestionDeleteListItem", resourceCulture);
+                return ResourceManager.GetString("QuestionDeleteFolderNotEmpty", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Удалить «{0}» из базы данных?.
         /// </summary>
-        internal static string QuestionDeleteListItemEmpty {
+        internal static string QuestionDeleteItem {
             get {
-                return ResourceManager.GetString("QuestionDeleteListItemEmpty", resourceCulture);
+                return ResourceManager.GetString("QuestionDeleteItem", resourceCulture);
             }
         }
         

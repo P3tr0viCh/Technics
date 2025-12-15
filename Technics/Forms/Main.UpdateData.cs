@@ -8,15 +8,36 @@ namespace Technics
 {
     public partial class Main
     {
-        private async Task UpdateDataAsync()
+        [Flags]
+        public enum DataLoad
         {
+            Techs = 1,
+            Mileages = 2,
+        }
+
+        private async Task UpdateDataAsync(DataLoad load = default)
+        {
+            if (load == default)
+            {
+                load = DataLoad.Techs |
+                       DataLoad.Mileages;
+            }
+
+            DebugWrite.Line($"Loading data {load}");
+
             var status = ProgramStatus.Start(Status.LoadData);
 
             try
             {
-                await LoadTechsAsync();
+                if (load.HasFlag(DataLoad.Techs))
+                {
+                    await TechsLoadAsync();
+                }
 
-                await LoadMileagesAsync();
+                if (load.HasFlag(DataLoad.Mileages))
+                {
+                    await MileagesLoadAsync();
+                }
             }
             catch (TaskCanceledException e)
             {

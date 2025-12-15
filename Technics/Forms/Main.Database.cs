@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Technics.Properties;
-using static Technics.Database.Models;
 
 namespace Technics
 {

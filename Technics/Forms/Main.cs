@@ -1,7 +1,9 @@
 ﻿using P3tr0viCh.Utils;
 using System;
+using System.ComponentModel;
 using System.Windows.Forms;
 using Technics.Properties;
+using static Technics.Database.Models;
 using static Technics.Enums;
 using static Technics.PresenterStatusStripMain;
 
@@ -42,25 +44,16 @@ namespace Technics
             tvTechs.Width = AppSettings.Default.PanelTechsWidth;
             panelBottom.Height = AppSettings.Default.PanelBottomHeight;
 
-            await UpdateDataAsync();
+            UpdateSettings();
+
+            await UpdateDataAsync(DataLoad.Techs);
         }
 
         private void ProgramStatus_StatusChanged(object sender, Status status)
         {
             statusStripPresenter.Status = status;
 
-            if (ProgramStatus.IsIdle)
-            {
-                UseWaitCursor = false;
-
-                toolStripContainer.ContentPanel.Enabled = true;
-            }
-            else
-            {
-                UseWaitCursor = true;
-
-                toolStripContainer.ContentPanel.Enabled = false;
-            }
+            UseWaitCursor = !ProgramStatus.IsIdle;
         }
 
         private void Main_FormClosing(object sender, FormClosingEventArgs e)
@@ -118,6 +111,16 @@ namespace Technics
             }
         }
 
+        public void UpdateSettings()
+        {
+            DataGridViewCellStyles.UpdateSettings();
+
+            MileagesDateTime.DefaultCellStyle = DataGridViewCellStyles.DateTime;
+
+            MileagesMileage.DefaultCellStyle = 
+                MileagesMileageCommon.DefaultCellStyle = DataGridViewCellStyles.Mileage;
+        }
+
         private void TvTechs_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
@@ -126,9 +129,9 @@ namespace Technics
             }
         }
 
-        private void TvTechs_AfterSelect(object sender, TreeViewEventArgs e)
+        private async void TvTechs_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            SelectedChanged();
+            await TechsSelectedChangedAsync();
         }
 
         private async void MiTechAddFolder_Click(object sender, EventArgs e)
@@ -173,7 +176,31 @@ namespace Technics
 
         private async void MiMileagesAddMileage_Click(object sender, EventArgs e)
         {
-            await MileageAddNewAsync();
+            await MileagesAddNewAsync();
+        }
+
+        private async void TsbtnMileagesDelete_Click(object sender, EventArgs e)
+        {
+            await MileagesDeleteSelectedAsync();
+        }
+
+        private void DgvMileages_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            Utils.SelectCellOnCellMouseDown(dgvMileages, e);
+        }
+
+        private void BindingSourceMileages_ListChanged(object sender, ListChangedEventArgs e)
+        {
+            switch (e.ListChangedType)
+            {
+                case ListChangedType.ItemAdded:
+                    tsbtnMileagesChange.Enabled = tsbtnMileagesDelete.Enabled = true;
+                    break;
+                case ListChangedType.Reset:
+                case ListChangedType.ItemDeleted:
+                    tsbtnMileagesDelete.Enabled = tsbtnMileagesChange.Enabled = bindingSourceMileages.Count > 0;
+                    break;
+            }
         }
     }
 }

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Technics.Models;
 using Technics.Properties;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrackBar;
 using static Technics.Database.Models;
 using static Technics.Enums;
 
@@ -34,16 +35,18 @@ namespace Technics
             }
         }
 
-        private void SelectedChanged()
+        private async Task TechsSelectedChangedAsync()
         {
             var selected = tvTechs.SelectedNode as TreeNodeBase;
 
             TechsCanChangeItem = selected?.Model.IsNew == false;
 
             miTechAdd.Visible = selected is TreeNodeFolder;
+
+            await UpdateDataAsync(DataLoad.Mileages);
         }
 
-        private async Task LoadTechsAsync()
+        private async Task TechsLoadAsync()
         {
             DebugWrite.Line("start");
 
@@ -93,6 +96,11 @@ namespace Technics
             return result as TreeNodeFolder;
         }
 
+        private TechModel GetSelectedTech()
+        {
+            return tvTechs.SelectedNode is TreeNodeTech techNode ? techNode.Tech : null;
+        }
+
         private void TechsAddNew(TreeNode parent, TreeNode value)
         {
             parent.Nodes.Add(value);
@@ -129,6 +137,8 @@ namespace Technics
                         node = new TreeNodeTech(tech);
 
                         await ListItemSaveAsync(tech);
+
+                        Lists.Default.Techs.Add(tech);
                     }
                 }
 
@@ -181,8 +191,8 @@ namespace Technics
             if (deletedModel.IsNew) return;
 
             var question = deletedNode.Nodes.Count == 0 ?
-                Resources.QuestionDeleteListItemEmpty :
-                Resources.QuestionDeleteListItem;
+                Resources.QuestionDeleteItem :
+                Resources.QuestionDeleteFolderNotEmpty;
 
             if (!Msg.Question(question, deletedModel.Text)) return;
 
@@ -231,6 +241,8 @@ namespace Technics
                     if (deletedModel is TechModel tech)
                     {
                         await ListItemDeleteAsync(tech);
+
+                        Lists.Default.Techs.Remove(Lists.Default.Techs.Find(t => t.Id == tech.Id));
                     }
                 }
 

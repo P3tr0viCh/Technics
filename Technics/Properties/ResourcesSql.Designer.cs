@@ -79,7 +79,10 @@ namespace Technics.Properties {
         ///	techid INTEGER,
         ///	datetime TEXT,
         ///	mileage REAL,
-        ///	description TEXT
+        ///	description TEXT,
+        ///	FOREIGN KEY (techid) REFERENCES techs (id)
+        ///	ON DELETE SET NULL
+        ///	ON UPDATE CASCADE
         ///);.
         /// </summary>
         internal static string CreateTableMileages {
@@ -98,6 +101,17 @@ namespace Technics.Properties {
         internal static string CreateTableTechs {
             get {
                 return ResourceManager.GetString("CreateTableTechs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SELECT IFNULL(SUM(mileage), 0.0)
+        ///FROM mileages
+        ///WHERE techid = :techid AND datetime &lt; :datetime;.
+        /// </summary>
+        internal static string GetMileageCommon {
+            get {
+                return ResourceManager.GetString("GetMileageCommon", resourceCulture);
             }
         }
     }

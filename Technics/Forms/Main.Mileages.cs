@@ -1,7 +1,8 @@
-﻿using P3tr0viCh.Database;
-using P3tr0viCh.Utils;
+﻿using P3tr0viCh.Utils;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using Technics.Properties;
 using static Technics.Database.Models;
 using static Technics.Enums;
@@ -10,7 +11,7 @@ namespace Technics
 {
     public partial class Main
     {
-        private async Task LoadMileagesAsync()
+        private async Task MileagesLoadAsync()
         {
             DebugWrite.Line("start");
 
@@ -18,10 +19,14 @@ namespace Technics
             {
                 var mileagesList = await ListLoadAsync<MileageModel>();
 
-                mileagesList.ForEach(m =>
+                foreach (var mileage in mileagesList)
                 {
-                    m.TechText = Lists.Default.Techs.Find(t => t.Id == m.TechId)?.Text;
-                });
+                    mileage.TechText = Lists.Default.Techs.Find(t => t.Id == mileage.TechId)?.Text;
+
+                    mileage.MileageCommon = await Database.Default.GetMileageCommonAsync(mileage);
+                }
+
+                mileagesList = mileagesList.OrderByDescending(m => m.DateTime).ToList();
 
                 bindingSourceMileages.DataSource = mileagesList;
 
@@ -38,16 +43,30 @@ namespace Technics
             return Lists.Default.Techs?[new Random().Next(Lists.Default.Techs.Count)];
         }
 
-        private async Task MileageAddNewAsync()
+        private async Task MileagesUpdateMileageCommonAsync(MileageModel mileage)
         {
-            var tech = GetRandomTech();
+            var changedMileageCommonList = bindingSourceMileages
+                .Cast<MileageModel>()
+                .Where(m => m.TechId == mileage.TechId && m.DateTime >= mileage.DateTime);
+
+            DebugWrite.Line(changedMileageCommonList.Count());
+
+            foreach (var changedMileage in changedMileageCommonList)
+            {
+                changedMileage.MileageCommon = await Database.Default.GetMileageCommonAsync(changedMileage);
+            }
+        }
+
+        private async Task MileagesAddNewAsync()
+        {
+            var tech = GetSelectedTech() ?? GetRandomTech();
 
             var mileage = new MileageModel()
             {
                 TechId = tech.Id,
                 TechText = tech.Text,
                 DateTime = DateTime.Now,
-                Mileage = new Random().NextDouble() * 100.0,
+                Mileage = 1 + new Random().Next(10),
             };
 
             var status = ProgramStatus.Start(Status.SaveDatа);
@@ -61,6 +80,8 @@ namespace Technics
                 bindingSourceMileages.Insert(0, mileage);
 
                 bindingSourceMileages.Position = 0;
+
+                await MileagesUpdateMileageCommonAsync(mileage);
             }
             catch (Exception e)
             {
@@ -69,6 +90,40 @@ namespace Technics
                 Utils.Log.Error(e);
 
                 Utils.Msg.Error(Resources.MsgDatabaseListItemSaveFail, e.Message);
+            }
+            finally
+            {
+                ProgramStatus.Stop(status);
+            }
+
+            dgvMileages.Focus();
+        }
+
+        private async Task MileagesDeleteSelectedAsync()
+        {
+            var mileage = ((BindingSource)dgvMileages.DataSource).Current as MileageModel;
+
+            Utils.SetSelectedRows(dgvMileages, mileage);
+
+            if (!Msg.Question(Resources.QuestionDeleteItem, mileage.DateTime)) return;
+
+            var status = ProgramStatus.Start(Status.SaveDatа);
+
+            try
+            {
+                await ListItemDeleteAsync(mileage);
+
+                bindingSourceMileages.Remove(mileage);
+
+                await MileagesUpdateMileageCommonAsync(mileage);
+            }
+            catch (Exception e)
+            {
+                Utils.Log.Query(e);
+
+                Utils.Log.Error(e);
+
+                Utils.Msg.Error(Resources.MsgDatabaseListItemDeleteFail, e.Message);
             }
             finally
             {

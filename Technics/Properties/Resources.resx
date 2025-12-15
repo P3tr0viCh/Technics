@@ -133,11 +133,11 @@
     <value>Во время обращения к базе данных произошла ошибка:
 {0}.</value>
   </data>
-  <data name="QuestionDeleteListItem" xml:space="preserve">
+  <data name="QuestionDeleteFolderNotEmpty" xml:space="preserve">
     <value>Удалить «{0}» из базы данных?
 Содержимое папки будет перемещено в родительскую.</value>
   </data>
-  <data name="QuestionDeleteListItemEmpty" xml:space="preserve">
+  <data name="QuestionDeleteItem" xml:space="preserve">
     <value>Удалить «{0}» из базы данных?</value>
   </data>
   <data name="TextTechAll" xml:space="preserve">
