@@ -1,7 +1,9 @@
 ﻿using P3tr0viCh.Database;
+using P3tr0viCh.Utils;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using Technics.Properties;
 
 namespace Technics
 {
@@ -37,6 +39,15 @@ namespace Technics
                     dataGridView.CurrentCell = dataGridView[e.ColumnIndex, e.RowIndex];
                 }
             }
+        }
+
+        public static bool TextInputBoxShow(ref string text, string caption)
+        {
+            return TextInputBox.Show(ref text, new TextInputBox.Settings()
+                {
+                    Caption = caption,
+                    Label = Resources.TextLabelText
+                });
         }
     }
 }

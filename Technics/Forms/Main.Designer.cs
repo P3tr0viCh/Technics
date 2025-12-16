@@ -174,6 +174,7 @@
             this.tvTechs.HideSelection = false;
             this.tvTechs.ImageIndex = 0;
             this.tvTechs.ImageList = this.imageList16;
+            this.tvTechs.Indent = 16;
             this.tvTechs.Location = new System.Drawing.Point(0, 50);
             this.tvTechs.Name = "tvTechs";
             this.tvTechs.SelectedImageIndex = 0;
@@ -182,6 +183,7 @@
             this.tvTechs.TabIndex = 0;
             this.tvTechs.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TvTechs_AfterSelect);
             this.tvTechs.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.TvTechs_NodeMouseClick);
+            this.tvTechs.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.TvTechs_NodeMouseDoubleClick);
             // 
             // menuTechs
             // 
@@ -400,14 +402,14 @@
             // miMileagesAddMileage
             // 
             this.miMileagesAddMileage.Name = "miMileagesAddMileage";
-            this.miMileagesAddMileage.Size = new System.Drawing.Size(180, 24);
+            this.miMileagesAddMileage.Size = new System.Drawing.Size(173, 24);
             this.miMileagesAddMileage.Text = "Пробег";
             this.miMileagesAddMileage.Click += new System.EventHandler(this.MiMileagesAddMileage_Click);
             // 
             // miMileagesAddMilleageTotal
             // 
             this.miMileagesAddMilleageTotal.Name = "miMileagesAddMilleageTotal";
-            this.miMileagesAddMilleageTotal.Size = new System.Drawing.Size(180, 24);
+            this.miMileagesAddMilleageTotal.Size = new System.Drawing.Size(173, 24);
             this.miMileagesAddMilleageTotal.Text = "Общий пробег";
             this.miMileagesAddMilleageTotal.Click += new System.EventHandler(this.MiMileagesAddMilleageTotal_Click);
             // 

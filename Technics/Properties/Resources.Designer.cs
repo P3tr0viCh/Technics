@@ -120,6 +120,15 @@ namespace Technics.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Наименование.
+        /// </summary>
+        internal static string TextLabelText {
+            get {
+                return ResourceManager.GetString("TextLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Техника.
         /// </summary>
         internal static string TextTechAll {
@@ -129,11 +138,29 @@ namespace Technics.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Папка.
+        /// </summary>
+        internal static string TitleFolder {
+            get {
+                return ResourceManager.GetString("TitleFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Учёт и обслуживание техники {0}.
         /// </summary>
         internal static string TitleMain {
             get {
                 return ResourceManager.GetString("TitleMain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Техника.
+        /// </summary>
+        internal static string TitleTech {
+            get {
+                return ResourceManager.GetString("TitleTech", resourceCulture);
             }
         }
     }

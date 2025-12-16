@@ -140,10 +140,19 @@
   <data name="QuestionDeleteItem" xml:space="preserve">
     <value>Удалить «{0}» из базы данных?</value>
   </data>
+  <data name="TextLabelText" xml:space="preserve">
+    <value>Наименование</value>
+  </data>
   <data name="TextTechAll" xml:space="preserve">
     <value>Техника</value>
   </data>
+  <data name="TitleFolder" xml:space="preserve">
+    <value>Папка</value>
+  </data>
   <data name="TitleMain" xml:space="preserve">
     <value>Учёт и обслуживание техники {0}</value>
+  </data>
+  <data name="TitleTech" xml:space="preserve">
+    <value>Техника</value>
   </data>
 </root>

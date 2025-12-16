@@ -1,5 +1,6 @@
 ﻿using P3tr0viCh.Utils;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -38,23 +39,41 @@ namespace Technics
             }
         }
 
-        private TechModel GetRandomTech()
+        private IEnumerable<MileageModel> MileageList => bindingSourceMileages.Cast<MileageModel>();
+
+        private void MileagesUpdateTechText(TechModel tech)
         {
-            return Lists.Default.Techs?[new Random().Next(Lists.Default.Techs.Count)];
+            var changedList = MileageList.Where(m => m.TechId == tech.Id);
+
+            DebugWrite.Line(changedList.Count());
+
+            if (changedList.Count() == 0) return;
+
+            foreach (var changed in changedList)
+            {
+                changed.TechText = tech.Text;
+            }
+
+            dgvMileages.Refresh();
         }
 
         private async Task MileagesUpdateMileageCommonAsync(MileageModel mileage)
         {
-            var changedMileageCommonList = bindingSourceMileages
-                .Cast<MileageModel>()
-                .Where(m => m.TechId == mileage.TechId && m.DateTime >= mileage.DateTime);
+            var changedList = MileageList.Where(m => m.TechId == mileage.TechId && m.DateTime >= mileage.DateTime);
 
-            DebugWrite.Line(changedMileageCommonList.Count());
+            DebugWrite.Line(changedList.Count());
 
-            foreach (var changedMileage in changedMileageCommonList)
+            if (changedList.Count() == 0) return;
+
+            foreach (var changed in changedList)
             {
-                changedMileage.MileageCommon = await Database.Default.GetMileageCommonAsync(changedMileage);
+                changed.MileageCommon = await Database.Default.GetMileageCommonAsync(changed);
             }
+        }
+
+        private TechModel GetRandomTech()
+        {
+            return Lists.Default.Techs?[new Random().Next(Lists.Default.Techs.Count)];
         }
 
         private async Task MileagesAddNewItemAsync(MileageModel mileage)

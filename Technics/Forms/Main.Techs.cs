@@ -1,4 +1,5 @@
-﻿using P3tr0viCh.Database;
+﻿using Newtonsoft.Json.Linq;
+using P3tr0viCh.Database;
 using P3tr0viCh.Utils;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Technics.Models;
 using Technics.Properties;
+using static System.Net.Mime.MediaTypeNames;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrackBar;
 using static Technics.Database.Models;
 using static Technics.Enums;
@@ -162,9 +164,18 @@ namespace Technics
 
         private async Task TechsAddNewFolderAsync()
         {
+            var text =
+#if DEBUG
+                $"Folder {Str.Random(3)}";
+#else
+                string.Empty;
+#endif
+
+            if (!Utils.TextInputBoxShow(ref text, Resources.TitleFolder)) return;
+
             var folder = new FolderModel
             {
-                Text = $"Folder {Str.Random(3)}"
+                Text = text
             };
 
             await TechsAddNewItemAsync(folder);
@@ -172,12 +183,89 @@ namespace Technics
 
         private async Task TechsAddNewTechAsync()
         {
+            var text =
+#if DEBUG
+                $"Item {Str.Random(3)}";
+#else
+                string.Empty;
+#endif
+
+            if (!Utils.TextInputBoxShow(ref text, Resources.TitleTech)) return;
+
             var tech = new TechModel
             {
-                Text = $"Item {Str.Random(3)}"
+                Text = text
             };
 
             await TechsAddNewItemAsync(tech);
+        }
+
+        private async Task TechsChangeSelectedAsync()
+        {
+            var changedNode = (TreeNodeBase)tvTechs.SelectedNode;
+
+            if (changedNode == null) return;
+
+            var changedModel = changedNode.Model;
+
+            var text = changedModel.Text;
+
+            var caption = string.Empty;
+
+            if (changedModel is FolderModel)
+            {
+                caption = Resources.TitleTech;
+            }
+            else
+            {
+                if (changedModel is TechModel)
+                {
+                    caption = Resources.TitleTech;
+                }
+            }
+
+            if (!Utils.TextInputBoxShow(ref text, caption)) return;
+
+            changedModel.Text = text;
+
+            var status = ProgramStatus.Start(Status.SaveDatа);
+
+            try
+            {
+                if (changedModel is FolderModel folder)
+                {
+                    await ListItemSaveAsync(folder);
+                }
+                else
+                {
+                    if (changedModel is TechModel tech)
+                    {
+                        await ListItemSaveAsync(tech);
+
+                        Lists.Default.Techs.Remove(tech);
+
+                        Lists.Default.Techs.Add(tech);
+
+                        MileagesUpdateTechText(tech);
+                    }
+                }
+
+                changedNode.Model = changedModel;
+            }
+            catch (Exception e)
+            {
+                Utils.Log.Query(e);
+
+                Utils.Log.Error(e);
+
+                Utils.Msg.Error(Resources.MsgDatabaseListItemSaveFail, e.Message);
+            }
+            finally
+            {
+                ProgramStatus.Stop(status);
+            }
+
+            tvTechs.Focus();
         }
 
         private async Task TechsDeleteSelectedAsync()

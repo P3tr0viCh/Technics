@@ -163,9 +163,17 @@ namespace Technics
             await TechsAddNewTechAsync();
         }
 
-        private void TsbtnTechChange_Click(object sender, EventArgs e)
+        private async void TsbtnTechChange_Click(object sender, EventArgs e)
         {
+            await TechsChangeSelectedAsync();
+        }
 
+        private async void TvTechs_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            if (e.Node is TreeNodeTech)
+            {
+                await TechsChangeSelectedAsync();
+            }
         }
 
         private async void TsbtnTechDelete_Click(object sender, EventArgs e)
@@ -183,9 +191,9 @@ namespace Technics
             await TechsAddNewTechAsync();
         }
 
-        private void MiTechChange_Click(object sender, EventArgs e)
+        private async void MiTechChange_Click(object sender, EventArgs e)
         {
-
+            await TechsChangeSelectedAsync();
         }
 
         private async void MiTechDelete_Click(object sender, EventArgs e)
