@@ -53,11 +53,6 @@
             this.tsbtnTechDelete = new System.Windows.Forms.ToolStripButton();
             this.panelBottom = new System.Windows.Forms.Panel();
             this.dgvMileages = new System.Windows.Forms.DataGridView();
-            this.MileagesTechText = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MileagesDateTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MileagesMileage = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MileagesMileageCommon = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MileagesDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bindingSourceMileages = new System.Windows.Forms.BindingSource(this.components);
             this.toolStripMileages = new System.Windows.Forms.ToolStrip();
             this.tsbtnMileagesAdd = new System.Windows.Forms.ToolStripButton();
@@ -68,6 +63,11 @@
             this.miFileClose = new System.Windows.Forms.ToolStripMenuItem();
             this.miMainHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.miHelpAbout = new System.Windows.Forms.ToolStripMenuItem();
+            this.MileagesTechText = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MileagesDateTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MileagesMileage = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MileagesMileageCommon = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MileagesDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolStripContainer.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer.ContentPanel.SuspendLayout();
             this.toolStripContainer.TopToolStripPanel.SuspendLayout();
@@ -331,41 +331,6 @@
             this.dgvMileages.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DgvMileages_CellMouseDoubleClick);
             this.dgvMileages.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DgvMileages_CellMouseDown);
             // 
-            // MileagesTechText
-            // 
-            this.MileagesTechText.DataPropertyName = "TechText";
-            this.MileagesTechText.HeaderText = "TechText";
-            this.MileagesTechText.Name = "MileagesTechText";
-            this.MileagesTechText.ReadOnly = true;
-            // 
-            // MileagesDateTime
-            // 
-            this.MileagesDateTime.DataPropertyName = "DateTime";
-            this.MileagesDateTime.HeaderText = "DateTime";
-            this.MileagesDateTime.Name = "MileagesDateTime";
-            this.MileagesDateTime.ReadOnly = true;
-            // 
-            // MileagesMileage
-            // 
-            this.MileagesMileage.DataPropertyName = "Mileage";
-            this.MileagesMileage.HeaderText = "Mileage";
-            this.MileagesMileage.Name = "MileagesMileage";
-            this.MileagesMileage.ReadOnly = true;
-            // 
-            // MileagesMileageCommon
-            // 
-            this.MileagesMileageCommon.DataPropertyName = "MileageCommon";
-            this.MileagesMileageCommon.HeaderText = "MileageCommon";
-            this.MileagesMileageCommon.Name = "MileagesMileageCommon";
-            this.MileagesMileageCommon.ReadOnly = true;
-            // 
-            // MileagesDescription
-            // 
-            this.MileagesDescription.DataPropertyName = "Description";
-            this.MileagesDescription.HeaderText = "Description";
-            this.MileagesDescription.Name = "MileagesDescription";
-            this.MileagesDescription.ReadOnly = true;
-            // 
             // bindingSourceMileages
             // 
             this.bindingSourceMileages.DataSource = typeof(Technics.Database.Models.MileageModel);
@@ -460,6 +425,41 @@
             this.miHelpAbout.Text = "О программе";
             this.miHelpAbout.Click += new System.EventHandler(this.MiHelpAbout_Click);
             // 
+            // MileagesTechText
+            // 
+            this.MileagesTechText.DataPropertyName = "TechText";
+            this.MileagesTechText.HeaderText = "Техника";
+            this.MileagesTechText.Name = "MileagesTechText";
+            this.MileagesTechText.ReadOnly = true;
+            // 
+            // MileagesDateTime
+            // 
+            this.MileagesDateTime.DataPropertyName = "DateTime";
+            this.MileagesDateTime.HeaderText = "Дата и время";
+            this.MileagesDateTime.Name = "MileagesDateTime";
+            this.MileagesDateTime.ReadOnly = true;
+            // 
+            // MileagesMileage
+            // 
+            this.MileagesMileage.DataPropertyName = "Mileage";
+            this.MileagesMileage.HeaderText = "Пробег";
+            this.MileagesMileage.Name = "MileagesMileage";
+            this.MileagesMileage.ReadOnly = true;
+            // 
+            // MileagesMileageCommon
+            // 
+            this.MileagesMileageCommon.DataPropertyName = "MileageCommon";
+            this.MileagesMileageCommon.HeaderText = "Общий пробег";
+            this.MileagesMileageCommon.Name = "MileagesMileageCommon";
+            this.MileagesMileageCommon.ReadOnly = true;
+            // 
+            // MileagesDescription
+            // 
+            this.MileagesDescription.DataPropertyName = "Description";
+            this.MileagesDescription.HeaderText = "Описание";
+            this.MileagesDescription.Name = "MileagesDescription";
+            this.MileagesDescription.ReadOnly = true;
+            // 
             // Main
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -533,12 +533,12 @@
         private System.Windows.Forms.DataGridView dgvMileages;
         private System.Windows.Forms.BindingSource bindingSourceMileages;
         private System.Windows.Forms.Panel panelTechs;
+        private System.Windows.Forms.ToolStripButton tsbtnMileagesAdd;
         private System.Windows.Forms.DataGridViewTextBoxColumn MileagesTechText;
         private System.Windows.Forms.DataGridViewTextBoxColumn MileagesDateTime;
         private System.Windows.Forms.DataGridViewTextBoxColumn MileagesMileage;
         private System.Windows.Forms.DataGridViewTextBoxColumn MileagesMileageCommon;
         private System.Windows.Forms.DataGridViewTextBoxColumn MileagesDescription;
-        private System.Windows.Forms.ToolStripButton tsbtnMileagesAdd;
     }
 }
 

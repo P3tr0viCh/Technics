@@ -148,12 +148,19 @@
     <value>Во время обращения к базе данных произошла ошибка:
 {0}.</value>
   </data>
+  <data name="QuestionDeleteFolder" xml:space="preserve">
+    <value>Удалить «{0}» из базы данных?</value>
+  </data>
   <data name="QuestionDeleteFolderNotEmpty" xml:space="preserve">
     <value>Удалить «{0}» из базы данных?
 Содержимое папки будет перемещено в родительскую.</value>
   </data>
-  <data name="QuestionDeleteItem" xml:space="preserve">
+  <data name="QuestionDeleteMileage" xml:space="preserve">
     <value>Удалить «{0}» из базы данных?</value>
+  </data>
+  <data name="QuestionDeleteTech" xml:space="preserve">
+    <value>Удалить «{0}» из базы данных?
+Все связанные записи пробега так же будут удалены.</value>
   </data>
   <data name="TextLabelText" xml:space="preserve">
     <value>Наименование</value>

@@ -146,6 +146,15 @@ namespace Technics.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Удалить «{0}» из базы данных?.
+        /// </summary>
+        internal static string QuestionDeleteFolder {
+            get {
+                return ResourceManager.GetString("QuestionDeleteFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Удалить «{0}» из базы данных?
         ///Содержимое папки будет перемещено в родительскую..
         /// </summary>
@@ -158,9 +167,19 @@ namespace Technics.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Удалить «{0}» из базы данных?.
         /// </summary>
-        internal static string QuestionDeleteItem {
+        internal static string QuestionDeleteMileage {
             get {
-                return ResourceManager.GetString("QuestionDeleteItem", resourceCulture);
+                return ResourceManager.GetString("QuestionDeleteMileage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Удалить «{0}» из базы данных?
+        ///Все связанные записи пробега так же будут удалены..
+        /// </summary>
+        internal static string QuestionDeleteTech {
+            get {
+                return ResourceManager.GetString("QuestionDeleteTech", resourceCulture);
             }
         }
         

@@ -12,13 +12,15 @@ namespace Technics
 {
     public partial class Main
     {
-        private async Task MileagesLoadAsync()
+        private async Task MileagesLoadAsync(List<TechModel> techs)
         {
             DebugWrite.Line("start");
 
             try
             {
-                var mileagesList = await ListLoadAsync<MileageModel>();
+                techs.ForEach(tech => DebugWrite.Line(tech.Text));
+
+                var mileagesList = await ListLoadAsync<MileageModel>(GetMileagesQuery(techs));
 
                 foreach (var mileage in mileagesList)
                 {
@@ -26,8 +28,6 @@ namespace Technics
 
                     mileage.MileageCommon = await Database.Default.GetMileageCommonAsync(mileage);
                 }
-
-                mileagesList = mileagesList.OrderByDescending(m => m.DateTime).ToList();
 
                 bindingSourceMileages.DataSource = mileagesList;
 
@@ -128,7 +128,7 @@ namespace Technics
                 DateTime = DateTime.Now,
             };
 
-            var tech = GetSelectedTech();
+            var tech = SelectedTech;
 
             if (tech != null)
             {
@@ -158,7 +158,7 @@ namespace Technics
 
             Utils.SetSelectedRows(dgvMileages, mileage);
 
-            if (!Msg.Question(Resources.QuestionDeleteItem, mileage.DateTime)) return;
+            if (!Msg.Question(Resources.QuestionDeleteMileage, mileage.DateTime)) return;
 
             var status = ProgramStatus.Start(Status.SaveDatа);
 

@@ -66,12 +66,17 @@ namespace Technics
             }
         }
 
-        public async Task<List<T>> ListLoadAsync<T>()
+        public async Task<List<T>> ListLoadAsync<T>(Query query)
         {
             using (var connection = GetConnection())
             {
-                return await Actions.ListLoadAsync<T>(connection);
+                return await Actions.ListLoadAsync<T>(connection, query);
             }
+        }
+
+        public async Task<List<T>> ListLoadAsync<T>()
+        {
+            return await ListLoadAsync<T>(null);
         }
 
         public async Task<T> QueryFirstOrDefaultAsync<T>(string sql, object param)

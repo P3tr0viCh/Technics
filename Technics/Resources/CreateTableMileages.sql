@@ -5,6 +5,6 @@ CREATE TABLE mileages (
 	mileage REAL,
 	description TEXT,
 	FOREIGN KEY (techid) REFERENCES techs (id)
-	ON DELETE SET NULL
+	ON DELETE CASCADE
 	ON UPDATE CASCADE
 );

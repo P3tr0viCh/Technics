@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Linq;
 using Technics.Properties;
 using static Technics.Database.Models;
 using static Technics.Enums;
@@ -94,10 +95,36 @@ namespace Technics
             return result as TreeNodeFolder;
         }
 
-        private TechModel GetSelectedTech()
+        private TechModel SelectedTech => tvTechs.SelectedNode is TreeNodeTech techNode ? techNode.Tech : null;
+
+        private List<TechModel> GetTechList(TreeNode parent)
         {
-            return tvTechs.SelectedNode is TreeNodeTech techNode ? techNode.Tech : null;
+            var result = new List<TechModel>();
+
+            if (parent is TreeNodeTech parentNodeTech)
+            {
+                result.Add(parentNodeTech.Tech);
+            }
+
+            foreach (TreeNode node in parent.Nodes)
+            {
+                if (node is TreeNodeTech nodeTech)
+                {
+                    result.Add(nodeTech.Tech);
+                }
+                else
+                {
+                    if (node is TreeNodeFolder nodeFolder)
+                    {
+                        result.AddRange(GetTechList(nodeFolder));
+                    }
+                }
+            }
+
+            return result;
         }
+
+        private List<TechModel> SelectedTechList => GetTechList(tvTechs.SelectedNode);
 
         private void TechsAddNew(TreeNode parent, TreeNode value)
         {
@@ -274,9 +301,18 @@ namespace Technics
 
             if (deletedModel.IsNew) return;
 
-            var question = deletedNode.Nodes.Count == 0 ?
-                Resources.QuestionDeleteItem :
-                Resources.QuestionDeleteFolderNotEmpty;
+            var question = string.Empty;
+
+            if (deletedNode is TreeNodeTech)
+            {
+                question = Resources.QuestionDeleteTech;
+            }
+            else
+            {
+                question = deletedNode.Nodes.Count == 0 ?
+                    Resources.QuestionDeleteFolder :
+                    Resources.QuestionDeleteFolderNotEmpty;
+            }
 
             if (!Msg.Question(question, deletedModel.Text)) return;
 
@@ -326,7 +362,7 @@ namespace Technics
                     {
                         await ListItemDeleteAsync(tech);
 
-                        Lists.Default.Techs.Remove(Lists.Default.Techs.Find(t => t.Id == tech.Id));
+                        Lists.Default.Techs.Remove(tech);
                     }
                 }
 

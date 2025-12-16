@@ -36,7 +36,7 @@ namespace Technics
 
                 if (load.HasFlag(DataLoad.Mileages))
                 {
-                    await MileagesLoadAsync();
+                    await MileagesLoadAsync(SelectedTechList);
                 }
             }
             catch (TaskCanceledException e)
