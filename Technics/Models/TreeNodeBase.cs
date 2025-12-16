@@ -1,7 +1,7 @@
 ﻿using P3tr0viCh.Database;
 using System.Windows.Forms;
 
-namespace Technics.Models
+namespace Technics
 {
     internal abstract class TreeNodeBase : TreeNode
     {

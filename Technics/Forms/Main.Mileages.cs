@@ -41,13 +41,18 @@ namespace Technics
 
         private IEnumerable<MileageModel> MileageList => bindingSourceMileages.Cast<MileageModel>();
 
+        public MileageModel MileageSelected
+        {
+            get => ((BindingSource)dgvMileages.DataSource).Current as MileageModel;
+        }
+
         private void MileagesUpdateTechText(TechModel tech)
         {
             var changedList = MileageList.Where(m => m.TechId == tech.Id);
 
             DebugWrite.Line(changedList.Count());
 
-            if (changedList.Count() == 0) return;
+            if (!changedList.Any()) return;
 
             foreach (var changed in changedList)
             {
@@ -63,43 +68,40 @@ namespace Technics
 
             DebugWrite.Line(changedList.Count());
 
-            if (changedList.Count() == 0) return;
+            if (!changedList.Any()) return;
 
             foreach (var changed in changedList)
             {
                 changed.MileageCommon = await Database.Default.GetMileageCommonAsync(changed);
             }
+
+            dgvMileages.Refresh();
         }
 
-        private TechModel GetRandomTech()
+        private async Task MileagesChangeAsync(MileageModel mileage)
         {
-            return Lists.Default.Techs?[new Random().Next(Lists.Default.Techs.Count)];
-        }
-
-        private async Task MileagesAddNewItemAsync(MileageModel mileage)
-        {
-            var tech = GetSelectedTech() ?? GetRandomTech();
+            if (!FrmMileage.ShowDlg(this, mileage)) return;
 
             var status = ProgramStatus.Start(Status.SaveDatа);
 
             try
             {
-                if (mileage.Mileage == default)
-                {
-                    var mileageCommon = await Database.Default.GetMileageCommonAsync(mileage);
-
-                    var newMileageCommon = mileageCommon + 1 + new Random().Next(10);
-
-                    mileage.Mileage = newMileageCommon - mileageCommon;
-                }
+                var isNew = mileage.IsNew;
 
                 await Database.Default.ListItemSaveAsync(mileage);
 
                 Utils.Log.Info(string.Format(ResourcesLog.ListItemSaveOk, nameof(MileageModel)));
 
-                bindingSourceMileages.Insert(0, mileage);
+                if (isNew)
+                {
+                    bindingSourceMileages.Insert(0, mileage);
 
-                bindingSourceMileages.Position = 0;
+                    bindingSourceMileages.Position = 0;
+                }
+                else
+                {
+                    dgvMileages.Refresh();
+                }
 
                 await MileagesUpdateMileageCommonAsync(mileage);
             }
@@ -121,37 +123,38 @@ namespace Technics
 
         private async Task MileagesAddNewAsync()
         {
-            var tech = GetSelectedTech() ?? GetRandomTech();
-
             var mileage = new MileageModel()
             {
-                TechId = tech.Id,
-                TechText = tech.Text,
                 DateTime = DateTime.Now,
-                Mileage = 1 + new Random().Next(10),
             };
 
-            await MileagesAddNewItemAsync(mileage);
+            var tech = GetSelectedTech();
+
+            if (tech != null)
+            {
+                mileage.TechId = tech.Id;
+                mileage.TechText = tech.Text;
+            }
+
+            await MileagesChangeAsync(mileage);
         }
 
-        private async Task MileagesAddNewCommonAsync()
+        private async Task MileagesChangeSelectedAsync()
         {
-            var tech = GetSelectedTech() ?? GetRandomTech();
+            var mileage = MileageSelected;
 
-            var mileage = new MileageModel()
-            {
-                TechId = tech.Id,
-                TechText = tech.Text,
-                DateTime = DateTime.Now,
-                Mileage = default,
-            };
+            if (mileage == null) return;
 
-            await MileagesAddNewItemAsync(mileage);
+            Utils.SetSelectedRows(dgvMileages, mileage);
+
+            await MileagesChangeAsync(mileage);
         }
 
         private async Task MileagesDeleteSelectedAsync()
         {
-            var mileage = ((BindingSource)dgvMileages.DataSource).Current as MileageModel;
+            var mileage = MileageSelected;
+
+            if (mileage == null) return;
 
             Utils.SetSelectedRows(dgvMileages, mileage);
 

@@ -60,9 +60,7 @@
             this.MileagesDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bindingSourceMileages = new System.Windows.Forms.BindingSource(this.components);
             this.toolStripMileages = new System.Windows.Forms.ToolStrip();
-            this.tsbtnMileagesAdd = new System.Windows.Forms.ToolStripDropDownButton();
-            this.miMileagesAddMileage = new System.Windows.Forms.ToolStripMenuItem();
-            this.miMileagesAddMilleageTotal = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsbtnMileagesAdd = new System.Windows.Forms.ToolStripButton();
             this.tsbtnMileagesChange = new System.Windows.Forms.ToolStripButton();
             this.tsbtnMileagesDelete = new System.Windows.Forms.ToolStripButton();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
@@ -330,6 +328,7 @@
             this.dgvMileages.ReadOnly = true;
             this.dgvMileages.Size = new System.Drawing.Size(688, 146);
             this.dgvMileages.TabIndex = 3;
+            this.dgvMileages.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DgvMileages_CellMouseDoubleClick);
             this.dgvMileages.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DgvMileages_CellMouseDown);
             // 
             // MileagesTechText
@@ -389,29 +388,13 @@
             // 
             // tsbtnMileagesAdd
             // 
-            this.tsbtnMileagesAdd.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.miMileagesAddMileage,
-            this.miMileagesAddMilleageTotal});
             this.tsbtnMileagesAdd.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnMileagesAdd.Image")));
             this.tsbtnMileagesAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnMileagesAdd.Name = "tsbtnMileagesAdd";
-            this.tsbtnMileagesAdd.Size = new System.Drawing.Size(83, 47);
+            this.tsbtnMileagesAdd.Size = new System.Drawing.Size(74, 47);
             this.tsbtnMileagesAdd.Text = "Добавить";
             this.tsbtnMileagesAdd.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            // 
-            // miMileagesAddMileage
-            // 
-            this.miMileagesAddMileage.Name = "miMileagesAddMileage";
-            this.miMileagesAddMileage.Size = new System.Drawing.Size(173, 24);
-            this.miMileagesAddMileage.Text = "Пробег";
-            this.miMileagesAddMileage.Click += new System.EventHandler(this.MiMileagesAddMileage_Click);
-            // 
-            // miMileagesAddMilleageTotal
-            // 
-            this.miMileagesAddMilleageTotal.Name = "miMileagesAddMilleageTotal";
-            this.miMileagesAddMilleageTotal.Size = new System.Drawing.Size(173, 24);
-            this.miMileagesAddMilleageTotal.Text = "Общий пробег";
-            this.miMileagesAddMilleageTotal.Click += new System.EventHandler(this.MiMileagesAddMilleageTotal_Click);
+            this.tsbtnMileagesAdd.Click += new System.EventHandler(this.TsbtnMileagesAdd_Click);
             // 
             // tsbtnMileagesChange
             // 
@@ -421,6 +404,7 @@
             this.tsbtnMileagesChange.Size = new System.Drawing.Size(75, 47);
             this.tsbtnMileagesChange.Text = "Изменить";
             this.tsbtnMileagesChange.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tsbtnMileagesChange.Click += new System.EventHandler(this.TsbtnMileagesChange_Click);
             // 
             // tsbtnMileagesDelete
             // 
@@ -544,9 +528,6 @@
         private System.Windows.Forms.Panel panelBottom;
         private System.Windows.Forms.Splitter splitterTechs;
         private System.Windows.Forms.ToolStrip toolStripMileages;
-        private System.Windows.Forms.ToolStripDropDownButton tsbtnMileagesAdd;
-        private System.Windows.Forms.ToolStripMenuItem miMileagesAddMileage;
-        private System.Windows.Forms.ToolStripMenuItem miMileagesAddMilleageTotal;
         private System.Windows.Forms.ToolStripButton tsbtnMileagesChange;
         private System.Windows.Forms.ToolStripButton tsbtnMileagesDelete;
         private System.Windows.Forms.DataGridView dgvMileages;
@@ -557,6 +538,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn MileagesMileage;
         private System.Windows.Forms.DataGridViewTextBoxColumn MileagesMileageCommon;
         private System.Windows.Forms.DataGridViewTextBoxColumn MileagesDescription;
+        private System.Windows.Forms.ToolStripButton tsbtnMileagesAdd;
     }
 }
 

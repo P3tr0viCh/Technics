@@ -1,5 +1,4 @@
-﻿using Technics.Models;
-using static Technics.Database.Models;
+﻿using static Technics.Database.Models;
 
 namespace Technics
 {

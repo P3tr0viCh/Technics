@@ -1,5 +1,4 @@
 ﻿using Dapper;
-using Newtonsoft.Json.Linq;
 using P3tr0viCh.Database;
 using P3tr0viCh.Utils;
 using System;
@@ -75,16 +74,13 @@ namespace Technics
             }
         }
 
-        public async Task<double> GetMileageCommonAsync(MileageModel mileage)
+        public async Task<T> QueryFirstOrDefaultAsync<T>(string sql, object param)
         {
             using (var connection = GetConnection())
             {
-                var sql = ResourcesSql.GetMileageCommon;
-
                 try
                 {
-                    return await connection.QueryFirstOrDefaultAsync<double>(sql,
-                        new { techid = mileage.TechId, datetime = mileage.DateTime });
+                    return await connection.QueryFirstOrDefaultAsync<T>(sql, param);
                 }
                 catch (Exception e)
                 {
@@ -92,6 +88,22 @@ namespace Technics
                     throw;
                 }
             }
+        }
+
+        private async Task<double> GetMileageCommonInternalAsync(MileageModel mileage, string sql)
+        {
+            return await QueryFirstOrDefaultAsync<double>(sql,
+                new { techid = mileage.TechId, datetime = mileage.DateTime });
+        }
+
+        public async Task<double> GetMileageCommonAsync(MileageModel mileage)
+        {
+            return await GetMileageCommonInternalAsync(mileage, ResourcesSql.GetMileageCommon);
+        }
+
+        public async Task<double> GetMileageCommonPrevAsync(MileageModel mileage)
+        {
+            return await GetMileageCommonInternalAsync(mileage, ResourcesSql.GetMileageCommonPrev);
         }
     }
 }

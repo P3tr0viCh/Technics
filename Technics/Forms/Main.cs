@@ -3,13 +3,12 @@ using System;
 using System.ComponentModel;
 using System.Windows.Forms;
 using Technics.Properties;
-using static Technics.Database.Models;
 using static Technics.Enums;
 using static Technics.PresenterStatusStripMain;
 
 namespace Technics
 {
-    public partial class Main : Form, PresenterStatusStrip<StatusLabel>.IPresenterStatusStrip
+    public partial class Main : Form, IMainForm, PresenterStatusStrip<StatusLabel>.IPresenterStatusStrip
     {
         private readonly PresenterStatusStripMain statusStripPresenter;
 
@@ -201,9 +200,14 @@ namespace Technics
             await TechsDeleteSelectedAsync();
         }
 
-        private async void MiMileagesAddMileage_Click(object sender, EventArgs e)
+        private async void TsbtnMileagesAdd_Click(object sender, EventArgs e)
         {
             await MileagesAddNewAsync();
+        }
+
+        private async void TsbtnMileagesChange_Click(object sender, EventArgs e)
+        {
+            await MileagesChangeSelectedAsync();
         }
 
         private async void TsbtnMileagesDelete_Click(object sender, EventArgs e)
@@ -211,9 +215,11 @@ namespace Technics
             await MileagesDeleteSelectedAsync();
         }
 
-        private async void MiMileagesAddMilleageTotal_Click(object sender, EventArgs e)
+        private async void DgvMileages_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            await MileagesAddNewCommonAsync();
+            if (e.RowIndex < 0) return;
+
+            await MileagesChangeSelectedAsync();
         }
     }
 }

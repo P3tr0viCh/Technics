@@ -1,15 +1,11 @@
-﻿using Newtonsoft.Json.Linq;
-using P3tr0viCh.Database;
+﻿using P3tr0viCh.Database;
 using P3tr0viCh.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Technics.Models;
 using Technics.Properties;
-using static System.Net.Mime.MediaTypeNames;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrackBar;
 using static Technics.Database.Models;
 using static Technics.Enums;
 

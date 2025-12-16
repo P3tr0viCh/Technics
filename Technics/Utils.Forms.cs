@@ -7,7 +7,7 @@ using Technics.Properties;
 
 namespace Technics
 {
-    public partial class Utils
+    public static partial class Utils
     {
         public static void SetSelectedRows(DataGridView dataGridView, List<BaseId> values)
         {

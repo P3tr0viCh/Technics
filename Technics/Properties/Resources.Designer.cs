@@ -61,6 +61,51 @@ namespace Technics.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Указанный общий пробег ({0}) меньше или равен уже внесённому в базу данных ({1})..
+        /// </summary>
+        internal static string ErrorMileageCommonWrong {
+            get {
+                return ResourceManager.GetString("ErrorMileageCommonWrong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Не один из пробегов не указан..
+        /// </summary>
+        internal static string ErrorMileagesEmpty {
+            get {
+                return ResourceManager.GetString("ErrorMileagesEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Техника не указана..
+        /// </summary>
+        internal static string ErrorTechEmpty {
+            get {
+                return ResourceManager.GetString("ErrorTechEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Необходимо указать число..
+        /// </summary>
+        internal static string ErrorValueNeedDouble {
+            get {
+                return ResourceManager.GetString("ErrorValueNeedDouble", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Значение должно быть больше нуля..
+        /// </summary>
+        internal static string ErrorValueNeedGreaterZero {
+            get {
+                return ResourceManager.GetString("ErrorValueNeedGreaterZero", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Во время создания базы данных произошла ошибка:
         ///{0}.
         /// </summary>

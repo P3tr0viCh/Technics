@@ -107,11 +107,22 @@ namespace Technics.Properties {
         /// <summary>
         ///   Looks up a localized string similar to SELECT IFNULL(SUM(mileage), 0.0)
         ///FROM mileages
-        ///WHERE techid = :techid AND datetime &lt; :datetime;.
+        ///WHERE techid = :techid AND datetime &lt;= :datetime;.
         /// </summary>
         internal static string GetMileageCommon {
             get {
                 return ResourceManager.GetString("GetMileageCommon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SELECT IFNULL(SUM(mileage), 0.0)
+        ///FROM mileages
+        ///WHERE techid = :techid AND datetime &lt; :datetime;.
+        /// </summary>
+        internal static string GetMileageCommonPrev {
+            get {
+                return ResourceManager.GetString("GetMileageCommonPrev", resourceCulture);
             }
         }
     }

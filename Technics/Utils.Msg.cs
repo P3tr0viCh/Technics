@@ -2,7 +2,7 @@
 
 namespace Technics
 {
-    public partial class Utils
+    public static partial class Utils
     {
         public static class Msg
         {

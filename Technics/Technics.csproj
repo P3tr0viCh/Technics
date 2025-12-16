@@ -90,6 +90,13 @@
     <Compile Include="DataGridViewCellStyles.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="AppSettings\AppSettings.ColumnsState.cs" />
+    <Compile Include="Forms\FrmMileage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmMileage.Designer.cs">
+      <DependentUpon>FrmMileage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\IMainForm.cs" />
     <Compile Include="Forms\Main.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -112,6 +119,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\PresenterStatusStripMain.cs" />
+    <Compile Include="Utils.cs" />
     <Compile Include="Utils.Forms.cs" />
     <Compile Include="Lists.cs" />
     <Compile Include="Models\TreeNodeBase.cs" />
@@ -132,6 +140,9 @@
     </Compile>
     <Compile Include="Utils.Log.cs" />
     <Compile Include="Utils.Msg.cs" />
+    <EmbeddedResource Include="Forms\FrmMileage.resx">
+      <DependentUpon>FrmMileage.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>
@@ -155,6 +166,7 @@
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\Database.Models.MileageModel.datasource" />
+    <None Include="Properties\DataSources\Database.Models.TechModel.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -182,6 +194,7 @@
   <ItemGroup>
     <None Include="Resources\CreateTableMileages.sql" />
     <None Include="Resources\GetMileageCommon.sql" />
+    <None Include="Resources\GetMileageCommonPrev.sql" />
     <Content Include="Technics.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

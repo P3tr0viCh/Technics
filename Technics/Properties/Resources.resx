@@ -117,6 +117,21 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ErrorMileageCommonWrong" xml:space="preserve">
+    <value>Указанный общий пробег ({0}) меньше или равен уже внесённому в базу данных ({1}).</value>
+  </data>
+  <data name="ErrorMileagesEmpty" xml:space="preserve">
+    <value>Не один из пробегов не указан.</value>
+  </data>
+  <data name="ErrorTechEmpty" xml:space="preserve">
+    <value>Техника не указана.</value>
+  </data>
+  <data name="ErrorValueNeedDouble" xml:space="preserve">
+    <value>Необходимо указать число.</value>
+  </data>
+  <data name="ErrorValueNeedGreaterZero" xml:space="preserve">
+    <value>Значение должно быть больше нуля.</value>
+  </data>
   <data name="MsgDatabaseCreateFail" xml:space="preserve">
     <value>Во время создания базы данных произошла ошибка:
 {0}</value>
