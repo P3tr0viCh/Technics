@@ -81,13 +81,31 @@ namespace Technics.Properties {
         ///	mileage REAL,
         ///	description TEXT,
         ///	FOREIGN KEY (techid) REFERENCES techs (id)
-        ///	ON DELETE SET NULL
+        ///	ON DELETE CASCADE
         ///	ON UPDATE CASCADE
         ///);.
         /// </summary>
         internal static string CreateTableMileages {
             get {
                 return ResourceManager.GetString("CreateTableMileages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CREATE TABLE mileages (
+        ///	id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+        ///	techid INTEGER,
+        ///	datetime TEXT,
+        ///	mileage REAL,
+        ///	description TEXT,
+        ///	FOREIGN KEY (techid) REFERENCES techs (id)
+        ///	ON DELETE CASCADE
+        ///	ON UPDATE CASCADE
+        ///);.
+        /// </summary>
+        internal static string CreateTableParts {
+            get {
+                return ResourceManager.GetString("CreateTableParts", resourceCulture);
             }
         }
         

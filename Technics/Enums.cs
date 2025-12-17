@@ -16,5 +16,10 @@ namespace Technics
             [Description("Сохранение данных...")]
             SaveDatа,
         }
+        
+        public enum ListType
+        {
+            Parts,
+        }
     }
 }

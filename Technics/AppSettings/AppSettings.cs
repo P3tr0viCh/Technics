@@ -8,8 +8,13 @@ namespace Technics
     {
         public string FormatDateTime { get; set; } = "yyyy.MM.dd HH:mm";
 
+        [Browsable(false)]
         public int PanelTechsWidth { get; set; } = 260;
+        [Browsable(false)]
         public int PanelBottomHeight { get; set; } = 128;
+
+        [Browsable(false)]
+        public bool ToolStripsShowText { get; set; } = true;
 
         public void Check()
         {

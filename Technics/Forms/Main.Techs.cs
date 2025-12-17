@@ -305,13 +305,13 @@ namespace Technics
 
             if (deletedNode is TreeNodeTech)
             {
-                question = Resources.QuestionDeleteTech;
+                question = Resources.QuestionTechDelete;
             }
             else
             {
                 question = deletedNode.Nodes.Count == 0 ?
-                    Resources.QuestionDeleteFolder :
-                    Resources.QuestionDeleteFolderNotEmpty;
+                    Resources.QuestionFolderDelete :
+                    Resources.QuestionFolderDeleteNotEmpty;
             }
 
             if (!Msg.Question(question, deletedModel.Text)) return;

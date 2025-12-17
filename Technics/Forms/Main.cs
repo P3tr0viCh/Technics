@@ -1,6 +1,7 @@
 ﻿using P3tr0viCh.Utils;
 using System;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Technics.Properties;
 using static Technics.Enums;
@@ -30,6 +31,8 @@ namespace Technics
 
             if (!SetProgramDirectory()) return;
 
+            miListParts.Tag = ListType.Parts;
+
             AddTechsRoot();
 
             AppSettingsLoad();
@@ -42,6 +45,8 @@ namespace Technics
 
             tvTechs.Width = AppSettings.Default.PanelTechsWidth;
             panelBottom.Height = AppSettings.Default.PanelBottomHeight;
+
+            ToolStripsShowText = AppSettings.Default.ToolStripsShowText;
 
             UpdateSettings();
 
@@ -81,6 +86,8 @@ namespace Technics
             AppSettings.Default.PanelTechsWidth = tvTechs.Width;
             AppSettings.Default.PanelBottomHeight = panelBottom.Height;
 
+            AppSettings.Default.ToolStripsShowText = miViewToolStripsShowText.Checked;
+
             AppSettingsSave();
 
             Utils.Log.WriteProgramStop();
@@ -116,7 +123,7 @@ namespace Technics
 
             MileagesDateTime.DefaultCellStyle = DataGridViewCellStyles.DateTime;
 
-            MileagesMileage.DefaultCellStyle = 
+            MileagesMileage.DefaultCellStyle =
                 MileagesMileageCommon.DefaultCellStyle = DataGridViewCellStyles.Mileage;
         }
 
@@ -220,6 +227,52 @@ namespace Technics
             if (e.RowIndex < 0) return;
 
             await MileagesChangeSelectedAsync();
+        }
+
+        private bool ToolStripsShowText
+        {
+            get => miViewToolStripsShowText.Checked;
+            set
+            {
+                miViewToolStripsShowText.Checked = value;
+
+                AppSettings.Default.ToolStripsShowText = value;
+
+                toolStripTechs.SetShowText(value);
+                toolStripTechs.ShowItemToolTips = !value;
+                toolStripMileages.SetShowText(value);
+                toolStripMileages.ShowItemToolTips = !value;
+            }
+        }
+
+        private void MiViewToolStripsShowText_Click(object sender, EventArgs e)
+        {
+            ToolStripsShowText = !ToolStripsShowText;
+        }
+
+        private bool IsProgramBusy()
+        {
+            if (ProgramStatus.IsIdle) return false;
+
+            Utils.Msg.Error(Resources.TextProgramBusy);
+
+            return true;
+        }
+
+        private async Task ShowListAsync(ListType listType)
+        {
+            if (IsProgramBusy()) return;
+
+            if (FrmList.ShowDlg(this, listType))
+            {
+                await Task.Delay(500);
+//                await UpdateDataAsync();
+            }
+        }
+
+        private async void MiList_Click(object sender, EventArgs e)
+        {
+            await ShowListAsync((ListType)((ToolStripMenuItem)sender).Tag);
         }
     }
 }

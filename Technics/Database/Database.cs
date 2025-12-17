@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using Dapper.Contrib.Extensions;
 using P3tr0viCh.Database;
 using P3tr0viCh.Utils;
 using System;
@@ -40,8 +41,9 @@ namespace Technics
             using (var connection = GetConnection())
             {
                 /* tables */
-                connection.Execute(ResourcesSql.CreateTableFolders);
+                connection.Execute(ResourcesSql.CreateTableParts);
                 connection.Execute(ResourcesSql.CreateTableTechs);
+                connection.Execute(ResourcesSql.CreateTableFolders);
                 connection.Execute(ResourcesSql.CreateTableMileages);
 
                 /* indexes */
@@ -63,6 +65,32 @@ namespace Technics
             using (var connection = GetConnection())
             {
                 await Actions.ListItemDeleteAsync(connection, null, value);
+            }
+        }
+
+        public async Task ListItemDeleteAsync<T>(List<T> values) where T : BaseId
+        {
+            using (var connection = GetConnection())
+            {
+                await connection.OpenAsync();
+
+                using (var transaction = connection.BeginTransaction())
+                {
+                    try
+                    {
+                        foreach (var value in values)
+                        {
+                            await Actions.ListItemDeleteAsync(connection, transaction, value);
+                        }
+
+                        transaction.Commit();
+                    }
+                    catch (Exception)
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
+                }
             }
         }
 

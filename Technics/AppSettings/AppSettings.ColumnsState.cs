@@ -6,5 +6,8 @@ namespace Technics
     {
         [Browsable(false)]
         public ColumnState[] ColumnsMileages { get; set; }
+
+        [Browsable(false)]
+        public ColumnState[] ColumnsListParts { get; set; }
     }
 }

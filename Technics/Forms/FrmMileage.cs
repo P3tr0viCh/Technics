@@ -30,8 +30,6 @@ namespace Technics
                 TextBoxSetValue(tboxMileage, value.Mileage);
                 TextBoxSetValue(tboxMileageCommon, value.MileageCommon);
 
-                selfChange = false;
-
                 tboxDescription.SetText(value.Description);
             }
         }
@@ -48,9 +46,7 @@ namespace Technics
                 Owner = owner,
             })
             {
-                frm.LoadData();
-
-                frm.Mileage = mileage;
+                frm.Load += (sender, args) => frm.FrmMileage_Load(mileage);
 
                 var result = frm.ShowDialog(owner) == DialogResult.OK;
 
@@ -62,6 +58,13 @@ namespace Technics
                 return result;
             }
         }
+
+        private void FrmMileage_Load(MileageModel mileage)
+        {
+            LoadData();
+
+            Mileage = mileage;
+       }
 
         private void LoadData()
         {

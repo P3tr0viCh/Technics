@@ -124,6 +124,9 @@
   <data name="CreateTableMileages" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\CreateTableMileages.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1251</value>
   </data>
+  <data name="CreateTableParts" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CreateTableParts.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1251</value>
+  </data>
   <data name="CreateTableTechs" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\CreateTableTechs.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1251</value>
   </data>

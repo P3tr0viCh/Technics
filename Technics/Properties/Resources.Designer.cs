@@ -148,9 +148,9 @@ namespace Technics.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Удалить «{0}» из базы данных?.
         /// </summary>
-        internal static string QuestionDeleteFolder {
+        internal static string QuestionFolderDelete {
             get {
-                return ResourceManager.GetString("QuestionDeleteFolder", resourceCulture);
+                return ResourceManager.GetString("QuestionFolderDelete", resourceCulture);
             }
         }
         
@@ -158,18 +158,36 @@ namespace Technics.Properties {
         ///   Looks up a localized string similar to Удалить «{0}» из базы данных?
         ///Содержимое папки будет перемещено в родительскую..
         /// </summary>
-        internal static string QuestionDeleteFolderNotEmpty {
+        internal static string QuestionFolderDeleteNotEmpty {
             get {
-                return ResourceManager.GetString("QuestionDeleteFolderNotEmpty", resourceCulture);
+                return ResourceManager.GetString("QuestionFolderDeleteNotEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Удалить «{0}»?.
+        /// </summary>
+        internal static string QuestionItemDelete {
+            get {
+                return ResourceManager.GetString("QuestionItemDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Удалить «{0}» и ещё {1}?.
+        /// </summary>
+        internal static string QuestionItemListDelete {
+            get {
+                return ResourceManager.GetString("QuestionItemListDelete", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Удалить «{0}» из базы данных?.
         /// </summary>
-        internal static string QuestionDeleteMileage {
+        internal static string QuestionMileageDelete {
             get {
-                return ResourceManager.GetString("QuestionDeleteMileage", resourceCulture);
+                return ResourceManager.GetString("QuestionMileageDelete", resourceCulture);
             }
         }
         
@@ -177,9 +195,27 @@ namespace Technics.Properties {
         ///   Looks up a localized string similar to Удалить «{0}» из базы данных?
         ///Все связанные записи пробега так же будут удалены..
         /// </summary>
-        internal static string QuestionDeleteTech {
+        internal static string QuestionTechDelete {
             get {
-                return ResourceManager.GetString("QuestionDeleteTech", resourceCulture);
+                return ResourceManager.GetString("QuestionTechDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Количество: {0}.
+        /// </summary>
+        internal static string StatusCount {
+            get {
+                return ResourceManager.GetString("StatusCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Выделено: {0}.
+        /// </summary>
+        internal static string StatusSelectedCount {
+            get {
+                return ResourceManager.GetString("StatusSelectedCount", resourceCulture);
             }
         }
         
@@ -189,6 +225,15 @@ namespace Technics.Properties {
         internal static string TextLabelText {
             get {
                 return ResourceManager.GetString("TextLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Дождитесь окончания выполнения текущей операции..
+        /// </summary>
+        internal static string TextProgramBusy {
+            get {
+                return ResourceManager.GetString("TextProgramBusy", resourceCulture);
             }
         }
         
@@ -211,11 +256,29 @@ namespace Technics.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Комплектующие.
+        /// </summary>
+        internal static string TitleListParts {
+            get {
+                return ResourceManager.GetString("TitleListParts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Учёт и обслуживание техники {0}.
         /// </summary>
         internal static string TitleMain {
             get {
                 return ResourceManager.GetString("TitleMain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Деталь.
+        /// </summary>
+        internal static string TitlePart {
+            get {
+                return ResourceManager.GetString("TitlePart", resourceCulture);
             }
         }
         

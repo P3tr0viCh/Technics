@@ -158,7 +158,7 @@ namespace Technics
 
             Utils.SetSelectedRows(dgvMileages, mileage);
 
-            if (!Msg.Question(Resources.QuestionDeleteMileage, mileage.DateTime)) return;
+            if (!Msg.Question(Resources.QuestionMileageDelete, mileage.DateTime)) return;
 
             var status = ProgramStatus.Start(Status.SaveDatа);
 

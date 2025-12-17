@@ -90,12 +90,19 @@
     <Compile Include="DataGridViewCellStyles.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="AppSettings\AppSettings.ColumnsState.cs" />
+    <Compile Include="Forms\FrmList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmList.Designer.cs">
+      <DependentUpon>FrmList.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\FrmMileage.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\FrmMileage.Designer.cs">
       <DependentUpon>FrmMileage.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\IFrmList.cs" />
     <Compile Include="Forms\IMainForm.cs" />
     <Compile Include="Forms\Main.cs">
       <SubType>Form</SubType>
@@ -118,7 +125,17 @@
     <Compile Include="Forms\Main.Utils.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\IPresenterFrmList.cs" />
+    <Compile Include="Forms\PresenterFrmListBase.cs" />
+    <Compile Include="Forms\PresenterFrmListFactory.cs" />
+    <Compile Include="Forms\PresenterFrmListParts.cs" />
+    <Compile Include="Forms\PresenterStatusStripList.cs" />
     <Compile Include="Forms\PresenterStatusStripMain.cs" />
+    <Compile Include="Properties\ResourcesColumnHeader.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResourcesColumnHeader.resx</DependentUpon>
+    </Compile>
     <Compile Include="Utils.cs" />
     <Compile Include="Utils.Forms.cs" />
     <Compile Include="Lists.cs" />
@@ -140,6 +157,9 @@
     </Compile>
     <Compile Include="Utils.Log.cs" />
     <Compile Include="Utils.Msg.cs" />
+    <EmbeddedResource Include="Forms\FrmList.resx">
+      <DependentUpon>FrmList.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\FrmMileage.resx">
       <DependentUpon>FrmMileage.cs</DependentUpon>
     </EmbeddedResource>
@@ -156,6 +176,10 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Properties\ResourcesColumnHeader.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResourcesColumnHeader.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\ResourcesLog.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ResourcesLog.Designer.cs</LastGenOutput>
@@ -164,6 +188,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ResourcesSql.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <Compile Include="Forms\PresenterFrmListBase.Database.cs" />
     <None Include="packages.config" />
     <None Include="Properties\DataSources\Database.Models.MileageModel.datasource" />
     <None Include="Properties\DataSources\Database.Models.TechModel.datasource" />
@@ -195,6 +220,7 @@
     <None Include="Resources\CreateTableMileages.sql" />
     <None Include="Resources\GetMileageCommon.sql" />
     <None Include="Resources\GetMileageCommonPrev.sql" />
+    <None Include="Resources\CreateTableParts.sql" />
     <Content Include="Technics.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

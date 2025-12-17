@@ -8,7 +8,7 @@ namespace Technics
     {
         public class Models
         {
-            // ------------------------------------------------------------------------------------------------------------
+            // ---------------------------------------------------------------
             [Table(Tables.folders)]
             public class FolderModel : BaseText
             {
@@ -36,7 +36,7 @@ namespace Technics
                 }
             }
 
-            // ------------------------------------------------------------------------------------------------------------
+            // ---------------------------------------------------------------
             [Table(Tables.techs)]
             public class TechModel : BaseText
             {
@@ -64,12 +64,12 @@ namespace Technics
                 }
             }
 
-            // ------------------------------------------------------------------------------------------------------------
+            // ---------------------------------------------------------------
             [Table(Tables.mileages)]
             public class MileageModel : BaseId
             {
                 public long? TechId { get; set; } = null;
-                
+
                 [Write(false)]
                 [Computed]
                 public string TechText { get; set; } = default;
@@ -114,11 +114,33 @@ namespace Technics
                     TechText = source.TechText;
 
                     DateTime = source.DateTime;
-                    
+
                     Mileage = source.Mileage;
                     MileageCommon = source.MileageCommon;
 
                     Description = source.Description;
+                }
+            }
+
+            // ---------------------------------------------------------------
+            [Table(Tables.parts)]
+            public class PartModel : BaseText
+            {
+                public new void Clear()
+                {
+                    base.Clear();
+                }
+
+                public void Assign(PartModel source)
+                {
+                    if (source == null)
+                    {
+                        Clear();
+
+                        return;
+                    }
+
+                    base.Assign(source);
                 }
             }
         }

@@ -53,6 +53,11 @@
             this.tsbtnTechDelete = new System.Windows.Forms.ToolStripButton();
             this.panelBottom = new System.Windows.Forms.Panel();
             this.dgvMileages = new System.Windows.Forms.DataGridView();
+            this.MileagesTechText = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MileagesDateTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MileagesMileage = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MileagesMileageCommon = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MileagesDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bindingSourceMileages = new System.Windows.Forms.BindingSource(this.components);
             this.toolStripMileages = new System.Windows.Forms.ToolStrip();
             this.tsbtnMileagesAdd = new System.Windows.Forms.ToolStripButton();
@@ -61,13 +66,12 @@
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.miMainFile = new System.Windows.Forms.ToolStripMenuItem();
             this.miFileClose = new System.Windows.Forms.ToolStripMenuItem();
+            this.miMainView = new System.Windows.Forms.ToolStripMenuItem();
+            this.miViewToolStripsShowText = new System.Windows.Forms.ToolStripMenuItem();
             this.miMainHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.miHelpAbout = new System.Windows.Forms.ToolStripMenuItem();
-            this.MileagesTechText = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MileagesDateTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MileagesMileage = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MileagesMileageCommon = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MileagesDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.miMainLists = new System.Windows.Forms.ToolStripMenuItem();
+            this.miListParts = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripContainer.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer.ContentPanel.SuspendLayout();
             this.toolStripContainer.TopToolStripPanel.SuspendLayout();
@@ -266,14 +270,14 @@
             // miTechAddFolder
             // 
             this.miTechAddFolder.Name = "miTechAddFolder";
-            this.miTechAddFolder.Size = new System.Drawing.Size(128, 24);
+            this.miTechAddFolder.Size = new System.Drawing.Size(180, 24);
             this.miTechAddFolder.Text = "Папка";
             this.miTechAddFolder.Click += new System.EventHandler(this.MiTechAddFolder_Click);
             // 
             // miTechAddTech
             // 
             this.miTechAddTech.Name = "miTechAddTech";
-            this.miTechAddTech.Size = new System.Drawing.Size(128, 24);
+            this.miTechAddTech.Size = new System.Drawing.Size(180, 24);
             this.miTechAddTech.Text = "Техника";
             this.miTechAddTech.Click += new System.EventHandler(this.MiTechAddItem_Click);
             // 
@@ -331,6 +335,41 @@
             this.dgvMileages.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DgvMileages_CellMouseDoubleClick);
             this.dgvMileages.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DgvMileages_CellMouseDown);
             // 
+            // MileagesTechText
+            // 
+            this.MileagesTechText.DataPropertyName = "TechText";
+            this.MileagesTechText.HeaderText = "Техника";
+            this.MileagesTechText.Name = "MileagesTechText";
+            this.MileagesTechText.ReadOnly = true;
+            // 
+            // MileagesDateTime
+            // 
+            this.MileagesDateTime.DataPropertyName = "DateTime";
+            this.MileagesDateTime.HeaderText = "Дата и время";
+            this.MileagesDateTime.Name = "MileagesDateTime";
+            this.MileagesDateTime.ReadOnly = true;
+            // 
+            // MileagesMileage
+            // 
+            this.MileagesMileage.DataPropertyName = "Mileage";
+            this.MileagesMileage.HeaderText = "Пробег";
+            this.MileagesMileage.Name = "MileagesMileage";
+            this.MileagesMileage.ReadOnly = true;
+            // 
+            // MileagesMileageCommon
+            // 
+            this.MileagesMileageCommon.DataPropertyName = "MileageCommon";
+            this.MileagesMileageCommon.HeaderText = "Общий пробег";
+            this.MileagesMileageCommon.Name = "MileagesMileageCommon";
+            this.MileagesMileageCommon.ReadOnly = true;
+            // 
+            // MileagesDescription
+            // 
+            this.MileagesDescription.DataPropertyName = "Description";
+            this.MileagesDescription.HeaderText = "Описание";
+            this.MileagesDescription.Name = "MileagesDescription";
+            this.MileagesDescription.ReadOnly = true;
+            // 
             // bindingSourceMileages
             // 
             this.bindingSourceMileages.DataSource = typeof(Technics.Database.Models.MileageModel);
@@ -387,6 +426,8 @@
             this.menuStrip.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.miMainFile,
+            this.miMainLists,
+            this.miMainView,
             this.miMainHelp});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
@@ -409,6 +450,23 @@
             this.miFileClose.Text = "Выход";
             this.miFileClose.Click += new System.EventHandler(this.MiFileClose_Click);
             // 
+            // miMainView
+            // 
+            this.miMainView.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.miViewToolStripsShowText});
+            this.miMainView.Name = "miMainView";
+            this.miMainView.Size = new System.Drawing.Size(45, 23);
+            this.miMainView.Text = "Вид";
+            // 
+            // miViewToolStripsShowText
+            // 
+            this.miViewToolStripsShowText.Checked = true;
+            this.miViewToolStripsShowText.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.miViewToolStripsShowText.Name = "miViewToolStripsShowText";
+            this.miViewToolStripsShowText.Size = new System.Drawing.Size(184, 24);
+            this.miViewToolStripsShowText.Text = "Подписи кнопок";
+            this.miViewToolStripsShowText.Click += new System.EventHandler(this.MiViewToolStripsShowText_Click);
+            // 
             // miMainHelp
             // 
             this.miMainHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -425,40 +483,20 @@
             this.miHelpAbout.Text = "О программе";
             this.miHelpAbout.Click += new System.EventHandler(this.MiHelpAbout_Click);
             // 
-            // MileagesTechText
+            // miMainLists
             // 
-            this.MileagesTechText.DataPropertyName = "TechText";
-            this.MileagesTechText.HeaderText = "Техника";
-            this.MileagesTechText.Name = "MileagesTechText";
-            this.MileagesTechText.ReadOnly = true;
+            this.miMainLists.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.miListParts});
+            this.miMainLists.Name = "miMainLists";
+            this.miMainLists.Size = new System.Drawing.Size(67, 23);
+            this.miMainLists.Text = "Списки";
             // 
-            // MileagesDateTime
+            // miListParts
             // 
-            this.MileagesDateTime.DataPropertyName = "DateTime";
-            this.MileagesDateTime.HeaderText = "Дата и время";
-            this.MileagesDateTime.Name = "MileagesDateTime";
-            this.MileagesDateTime.ReadOnly = true;
-            // 
-            // MileagesMileage
-            // 
-            this.MileagesMileage.DataPropertyName = "Mileage";
-            this.MileagesMileage.HeaderText = "Пробег";
-            this.MileagesMileage.Name = "MileagesMileage";
-            this.MileagesMileage.ReadOnly = true;
-            // 
-            // MileagesMileageCommon
-            // 
-            this.MileagesMileageCommon.DataPropertyName = "MileageCommon";
-            this.MileagesMileageCommon.HeaderText = "Общий пробег";
-            this.MileagesMileageCommon.Name = "MileagesMileageCommon";
-            this.MileagesMileageCommon.ReadOnly = true;
-            // 
-            // MileagesDescription
-            // 
-            this.MileagesDescription.DataPropertyName = "Description";
-            this.MileagesDescription.HeaderText = "Описание";
-            this.MileagesDescription.Name = "MileagesDescription";
-            this.MileagesDescription.ReadOnly = true;
+            this.miListParts.Name = "miListParts";
+            this.miListParts.Size = new System.Drawing.Size(184, 24);
+            this.miListParts.Text = "Комплектующие";
+            this.miListParts.Click += new System.EventHandler(this.MiList_Click);
             // 
             // Main
             // 
@@ -539,6 +577,10 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn MileagesMileage;
         private System.Windows.Forms.DataGridViewTextBoxColumn MileagesMileageCommon;
         private System.Windows.Forms.DataGridViewTextBoxColumn MileagesDescription;
+        private System.Windows.Forms.ToolStripMenuItem miMainView;
+        private System.Windows.Forms.ToolStripMenuItem miViewToolStripsShowText;
+        private System.Windows.Forms.ToolStripMenuItem miMainLists;
+        private System.Windows.Forms.ToolStripMenuItem miListParts;
     }
 }
 

@@ -117,85 +117,68 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ErrorMileageCommonWrong" xml:space="preserve">
-    <value>Указанный общий пробег ({0}) меньше или равен уже внесённому в базу данных ({1}).</value>
+  <metadata name="statusStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <metadata name="toolStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>126, 17</value>
+  </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="tsbtnAdd.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAJhSURBVEhL3ZXLaxRBEIfHB+LFx0Evgoh6UhHBiwqKevdx
+        cTEh2enuFaOsiChJJDPd2wddMj01G/WfEAkeNVcvCuJdQQ+C+AQvPoPiIVbNVBwnu5nJXvNBw86vuh7d
+        W1PjLW9qtelV0sSnpYGbvoGHvok/0ZLaPRA6voH6SWvtSt7eH8pO7agH7hkGmStbmPBJI4Rt7LY0hIGL
+        0tgfaZAQ3uApYmXcUWFvbRyxyab0t4mnpIne0R4xGn8XLTjH7uWgQ5OcBgx883VyyvPmVrCpC7oeoWEA
+        i5nNiokvsKk3fhjvzDbbWV9He1iupG7iQ+I8/Bm8Bj+HQ9jOcpG0miB6SpUoHQ+zXCCtEhc/FsBrHM1O
+        AY97nlqFyWHagJU/X+xayhLUrF0jJtqfyS6CzkGWc+YrEGF8iaUuyhIQUoMju9JwlaUcNN5PjdieLHVR
+        lUCEcCzdo2GapRwRwFsyCmvXsvQvYNXi7R61MD1TLJZyZAAfydgYc+tY6jvBkL2zPtUwFks5+PrPpEbd
+        2ctSFwsDLkRatz+L4WZYysF7myQjvjhjLHVRmcCAzmLEbZZyZMudJWPdwKvFBlhZAvRZnY2VtIvOsJxD
+        fy4e7SVXIFkuUJYA2/sy21/83ygFlO7sk034TYOurqNdLFeiDBwYMvYXLWVhN8u9kTq5QpXgVX1R2p1g
+        uSd0laqVDM5P3rKXtIBqgaJpmh158nXWAO7IyPVog5pob/aNO47j+nY9gPfpnvHoK/mw+9KQYbKVBleW
+        pGy5Rw3rtrBb/9DYxkBNbN97GOwDdQo2wV36KFXe9zLA8/4CVXywvTLD2CIAAAAASUVORK5CYII=
+</value>
   </data>
-  <data name="ErrorMileagesEmpty" xml:space="preserve">
-    <value>Не один из пробегов не указан.</value>
+  <data name="tsbtnChange.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAJjSURBVEhL3ZVPiE1xFMdflEZZiZIoSRJhI1mI7SRlMy9q
+        vPv73TEmXhammMa9v5+zYLx777nXytZWki1WYiEs2NgIC0RDihqLCSXO+b1z39/bfU9286lfr77nnO/v
+        /P7c36ssbarVW8u1TY5oi5c9i3c8m3yW0P/jw9XNZP6EzP90Dgl34V+YW6tN/EqZZE6kcpRNp7SFRWca
+        4mNl8ZRv44NTkK6RlC60wdt5AzTJJZGLoaQ6Jx628EvZZAYAlkmoDw+SXZ6N79cg3UoreOkmoZVIuJ/m
+        tsAim08E8R6RC9Em23l89spXNvUMPudJVIgP+VdSuuFOVRA9lWWGIhfimWgH5X1zHcugS3BdwsX4Ybq/
+        mRw/K9sWBem2cYtfOs1rNnlxArLVklIM3ZhznEzda5H6IJMtvea89wPNmfwmqCDbJ1IXbK4D/NRrzldU
+        UspRAX7gojpcWyVSCwWNTb3mKkzeDG3O0N7Pu0JI1onUQtvoY6d5zeLrojzWmjnxvEhtKHCPg9TZqEgt
+        cmM3QnxbZM7Qlh1yOSa+K1IbOoOGm8AmsyK16DSfhGiDyH1QjnEeRU+GvhgfzU2qACtEHpqx6WylZxvv
+        2MM3OCZyGwUwwp+5m4RWI/LQKIPItc3zgRGRu/FNtlvX8efoSfztBdFekQfCV5trxi388AG3i1wMncFZ
+        7oSTqavzZV+1e17ozDjXrdziGQmVo006eczid1ckz7UX4gH+Yvnu89Pth8np/O3SM9EC10j5cOgw3Ujm
+        j6SzkhE/mIB4vZT9O/Jy1mm7brqPMcT3dA1vuD+hQfu9BKhU/gL6GJZmGkV1NQAAAABJRU5ErkJggg==
+</value>
   </data>
-  <data name="ErrorTechEmpty" xml:space="preserve">
-    <value>Техника не указана.</value>
+  <data name="tsbtnDelete.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAEcSURBVEhLYxgFFIP4+naFhOru+wm13f9RMFAMJAdVRhrA
+        MIxIDNVOGGDTTAyGah8kAJsL8WGoNuIBNkPwYag24gGxGqliQWJNr358fb8AWAIIYivahJPqu3VAbIot
+        SKjpVI2paHsbV9NxNaa+WyypvlMqtrb7VkJl68vE+j4lii2Iq+5SjqnteARix1Z33Y2rbX8AY4MzIVQd
+        VBvxAFkj3NVQMZhv0NWRBJA10tSCmOpuReQgAmGo3J2k6m55mDqoNuIBTGNsfY8akH4DcjXIJzDfRNd2
+        vwJZTrEFYHZNr25yfa8QWAIIQMkUaKE2iE0VC/ABsi0ABQlMMyEMUgvVRjxIrOkOia/uuo3NQGQcV9t9
+        A6QWqm0UkAoYGACcCoqisiHctwAAAABJRU5ErkJggg==
+</value>
   </data>
-  <data name="ErrorValueNeedDouble" xml:space="preserve">
-    <value>Необходимо указать число.</value>
+  <data name="tsbtnClose.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAEOSURBVEhL7VVLCsIwFOwhBBV3LjyRO22rCN5B09Btm6h4
+        I394g4qCiOBF1ImvSttUjfjZOPBoMp33pu1LGusPI7Q9WXe43LS4PL4SyEUNKpeF4wUrXaJJoAaVyyIW
+        0dQYD/O/bmD7g1qLh7OuPygQdQU43Gv7oypR5gYOF0vFeeG60xsXibYwvi2GcEL0Cwb9YcVmYgcOV8x1
+        HMnNDYBGf1SOnxYFmzw4KN35rVxflEimoMtPIE+A753aH5GuL3n5V+QJLg2VUXwf47cZJBrK5F4FxqnG
+        A7r8BNKCjzfZ5WKhuDvL1GVySrS5waON5jA5h4YocwNT/N7g479rHBYuE1td4jOBxt89cP7IwrJOlDvH
+        d4tB9A4AAAAASUVORK5CYII=
+</value>
   </data>
-  <data name="ErrorValueNeedGreaterZero" xml:space="preserve">
-    <value>Значение должно быть больше нуля.</value>
-  </data>
-  <data name="MsgDatabaseCreateFail" xml:space="preserve">
-    <value>Во время создания базы данных произошла ошибка:
-{0}</value>
-  </data>
-  <data name="MsgDatabaseListItemDeleteFail" xml:space="preserve">
-    <value>Во время удаления записи из базы данных произошла ошибка:
-{0}</value>
-  </data>
-  <data name="MsgDatabaseListItemSaveFail" xml:space="preserve">
-    <value>Во время сохранения записи в базу данных произошла ошибка:
-{0}</value>
-  </data>
-  <data name="MsgDatabaseLoadFail" xml:space="preserve">
-    <value>Во время обращения к базе данных произошла ошибка:
-{0}.</value>
-  </data>
-  <data name="QuestionFolderDelete" xml:space="preserve">
-    <value>Удалить «{0}» из базы данных?</value>
-  </data>
-  <data name="QuestionFolderDeleteNotEmpty" xml:space="preserve">
-    <value>Удалить «{0}» из базы данных?
-Содержимое папки будет перемещено в родительскую.</value>
-  </data>
-  <data name="QuestionItemDelete" xml:space="preserve">
-    <value>Удалить «{0}»?</value>
-  </data>
-  <data name="QuestionItemListDelete" xml:space="preserve">
-    <value>Удалить «{0}» и ещё {1}?</value>
-  </data>
-  <data name="QuestionMileageDelete" xml:space="preserve">
-    <value>Удалить «{0}» из базы данных?</value>
-  </data>
-  <data name="QuestionTechDelete" xml:space="preserve">
-    <value>Удалить «{0}» из базы данных?
-Все связанные записи пробега так же будут удалены.</value>
-  </data>
-  <data name="StatusCount" xml:space="preserve">
-    <value>Количество: {0}</value>
-  </data>
-  <data name="StatusSelectedCount" xml:space="preserve">
-    <value>Выделено: {0}</value>
-  </data>
-  <data name="TextLabelText" xml:space="preserve">
-    <value>Наименование</value>
-  </data>
-  <data name="TextProgramBusy" xml:space="preserve">
-    <value>Дождитесь окончания выполнения текущей операции.</value>
-  </data>
-  <data name="TextTechAll" xml:space="preserve">
-    <value>Техника</value>
-  </data>
-  <data name="TitleFolder" xml:space="preserve">
-    <value>Папка</value>
-  </data>
-  <data name="TitleListParts" xml:space="preserve">
-    <value>Комплектующие</value>
-  </data>
-  <data name="TitleMain" xml:space="preserve">
-    <value>Учёт и обслуживание техники {0}</value>
-  </data>
-  <data name="TitlePart" xml:space="preserve">
-    <value>Деталь</value>
-  </data>
-  <data name="TitleTech" xml:space="preserve">
-    <value>Техника</value>
-  </data>
+  <metadata name="bindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>225, 17</value>
+  </metadata>
 </root>

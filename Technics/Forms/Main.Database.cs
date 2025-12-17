@@ -23,7 +23,7 @@ namespace Technics
             return await ListLoadAsync<T>(null);
         }
 
-        private async Task ListItemSaveAsync<T>(T value) where T : BaseId
+        public async Task ListItemSaveAsync<T>(T value) where T : BaseId
         {
             await Database.Default.ListItemSaveAsync(value);
 
