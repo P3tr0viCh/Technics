@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 using Technics.Properties;
 using static Technics.Database.Models;
 using static Technics.Enums;
@@ -13,20 +12,16 @@ namespace Technics
 {
     public partial class Main
     {
-        private async Task MileagesLoadAsync(List<TechModel> techs)
+        private async Task MileagesLoadAsync(IEnumerable<TechModel> techs)
         {
             DebugWrite.Line("start");
 
             try
             {
-                techs.ForEach(tech => DebugWrite.Line(tech.Text));
-
                 var mileageList = await ListLoadAsync<MileageModel>(GetMileagesSql(techs));
 
                 foreach (var mileage in mileageList)
                 {
-                    //mileage.TechText = Lists.Default.Techs.Find(t => t.Id == mileage.TechId)?.Text;
-
                     mileage.MileageCommon = await Database.Default.GetMileageCommonAsync(mileage);
                 }
 
@@ -51,7 +46,7 @@ namespace Technics
 
         private void MileagesListChanged()
         {
-            tsbtnMileagesDelete.Enabled = tsbtnMileagesChange.Enabled = bindingSourceMileages.Count > 0;
+            tsbtnMileageDelete.Enabled = tsbtnMileageChange.Enabled = bindingSourceMileages.Count > 0;
         }
 
         private void MileagesUpdateTechText(TechModel tech)

@@ -6,6 +6,7 @@ namespace Technics
     {
         public static readonly DataGridViewCellStyle DateTime = new DataGridViewCellStyle()
         {
+            
         };
 
         public static readonly DataGridViewCellStyle Mileage = new DataGridViewCellStyle()

@@ -154,13 +154,29 @@ namespace Technics.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SELECT IFNULL(SUM(mileage), 0.0)
+        ///   Looks up a localized string similar to SELECT mileages.id, techid, techs.text AS techtext, datetime, mileage, description
         ///FROM mileages
-        ///WHERE techid = :techid AND datetime &lt;= :datetime;.
+        ///LEFT JOIN techs ON mileages.techid = techs.id
+        ///{0}
+        ///ORDER BY datetime DESC;.
         /// </summary>
         internal static string SelectMileages {
             get {
                 return ResourceManager.GetString("SelectMileages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SELECT techparts.id, techid, techs.text AS techtext, partid, parts.text AS parttext, datetimeinstall, datetimeremove
+        ///FROM techparts
+        ///LEFT JOIN techs ON techparts.techid = techs.id
+        ///LEFT JOIN parts ON techparts.partid = parts.id
+        ///{0}
+        ///ORDER BY datetimeinstall DESC;.
+        /// </summary>
+        internal static string SelectTechParts {
+            get {
+                return ResourceManager.GetString("SelectTechParts", resourceCulture);
             }
         }
     }

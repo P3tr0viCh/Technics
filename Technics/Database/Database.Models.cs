@@ -65,15 +65,19 @@ namespace Technics
             }
 
             // ---------------------------------------------------------------
-            [Table(Tables.mileages)]
-            public class MileageModel : BaseId
+            public abstract class BaseTechId : BaseId
             {
                 public long? TechId { get; set; } = null;
 
                 [Write(false)]
                 [Computed]
                 public string TechText { get; set; } = default;
+            }
 
+            // ---------------------------------------------------------------
+            [Table(Tables.mileages)]
+            public class MileageModel : BaseTechId
+            {
                 public DateTime DateTime { get; set; } = default;
 
                 public double Mileage { get; set; } = default;
@@ -146,14 +150,8 @@ namespace Technics
 
             // ---------------------------------------------------------------
             [Table(Tables.techparts)]
-            public class TechPartModel : BaseId
+            public class TechPartModel : BaseTechId
             {
-                public long? TechId { get; set; } = null;
-
-                [Write(false)]
-                [Computed]
-                public string TechText { get; set; } = default;
-
                 public long? PartId { get; set; } = null;
 
                 [Write(false)]
@@ -161,7 +159,7 @@ namespace Technics
                 public string PartText { get; set; } = default;
 
                 public DateTime DateTimeInstall { get; set; } = default;
-                public DateTime DateTimeRemove { get; set; } = default;
+                public DateTime? DateTimeRemove { get; set; } = default;
 
                 public new void Clear()
                 {

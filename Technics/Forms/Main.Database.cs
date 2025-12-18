@@ -38,27 +38,45 @@ namespace Technics
             Utils.Log.Info(string.Format(ResourcesLog.ListItemDeleteOk, typeof(T).Name));
         }
 
-        public string GetMileagesSql(List<TechModel> techs)
+        public string GetWhereSql(IEnumerable<TechModel> techs)
         {
             var where = string.Empty;
 
-            if (techs.Count != Lists.Default.Techs.Count)
+            var techList = techs.ToList();
+
+            if (techList.Count != Lists.Default.Techs.Count)
             {
-                if (techs.Count == 1)
+                if (techList.Count == 1)
                 {
-                    where = $" = {techs[0].Id}";
+                    where = $" = {techList[0].Id}";
                 }
                 else
                 {
-                    techs.ForEach(tech => where = where.JoinExcludeEmpty(", ", tech.Id.ToString()));
+                    techList.ForEach(tech => where = where.JoinExcludeEmpty(", ", tech.Id.ToString()));
 
                     where = $" IN ({where})";
                 }
 
-                where = $"WHERE {Sql.FieldName(nameof(MileageModel.TechId)) + where}";
+                where = $"WHERE {Sql.FieldName(nameof(BaseTechId.TechId)) + where}";
             }
 
+            return where;
+        }
+
+        public string GetMileagesSql(IEnumerable<TechModel> techs)
+        {
+            var where = GetWhereSql(techs);
+
             var sql = string.Format(ResourcesSql.SelectMileages, where);
+
+            return sql;
+        }
+
+        public string GetTechPartsSql(IEnumerable<TechModel> techs)
+        {
+            var where = GetWhereSql(techs);
+
+            var sql = string.Format(ResourcesSql.SelectTechParts, where);
 
             return sql;
         }

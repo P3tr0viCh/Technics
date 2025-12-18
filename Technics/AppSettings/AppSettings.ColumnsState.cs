@@ -8,6 +8,9 @@ namespace Technics
         public ColumnState[] ColumnsMileages { get; set; }
 
         [Browsable(false)]
+        public ColumnState[] ColumnsTechParts { get; set; }
+
+        [Browsable(false)]
         public ColumnState[] ColumnsListParts { get; set; }
     }
 }

@@ -1,8 +1,6 @@
 ﻿using P3tr0viCh.Utils;
 using System;
-using System.ComponentModel;
 using System.Windows.Forms;
-using Technics.Forms;
 using static Technics.Enums;
 using static Technics.PresenterStatusStripList;
 

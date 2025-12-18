@@ -1,7 +1,7 @@
 ﻿using System;
 using static Technics.Enums;
 
-namespace Technics.Forms
+namespace Technics
 {
     internal class PresenterFrmListFactory
     {

@@ -43,6 +43,7 @@ namespace Technics
             AppSettings.LoadFormState(this, AppSettings.Default.FormStateMain);
 
             AppSettings.LoadDataGridColumns(dgvMileages, AppSettings.Default.ColumnsMileages);
+            AppSettings.LoadDataGridColumns(dgvTechParts, AppSettings.Default.ColumnsTechParts);
 
             tvTechs.Width = AppSettings.Default.PanelTechsWidth;
             panelBottom.Height = AppSettings.Default.PanelBottomHeight;
@@ -83,6 +84,7 @@ namespace Technics
             AppSettings.Default.FormStateMain = AppSettings.SaveFormState(this);
 
             AppSettings.Default.ColumnsMileages = AppSettings.SaveDataGridColumns(dgvMileages);
+            AppSettings.Default.ColumnsTechParts = AppSettings.SaveDataGridColumns(dgvTechParts);
 
             AppSettings.Default.PanelTechsWidth = tvTechs.Width;
             AppSettings.Default.PanelBottomHeight = panelBottom.Height;
@@ -127,10 +129,14 @@ namespace Technics
         {
             DataGridViewCellStyles.UpdateSettings();
 
-            MileagesDateTime.DefaultCellStyle = DataGridViewCellStyles.DateTime;
+            MileagesDateTime.DefaultCellStyle =
+            TechPartsDateTimeInstall.DefaultCellStyle =
+            TechPartsDateTimeRemove.DefaultCellStyle =
+                DataGridViewCellStyles.DateTime;
 
             MileagesMileage.DefaultCellStyle =
-                MileagesMileageCommon.DefaultCellStyle = DataGridViewCellStyles.Mileage;
+            MileagesMileageCommon.DefaultCellStyle =
+                DataGridViewCellStyles.Mileage;
         }
 
         private void TvTechs_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
@@ -257,7 +263,7 @@ namespace Technics
             if (FrmList.ShowDlg(this, listType))
             {
                 await Task.Delay(500);
-//                await UpdateDataAsync();
+                //                await UpdateDataAsync();
             }
         }
 
@@ -269,6 +275,21 @@ namespace Technics
         private async void TsbtnList_Click(object sender, EventArgs e)
         {
             await ShowListAsync((ListType)((ToolStripItem)sender).Tag);
+        }
+
+        private async void TsbtnTechPartAdd_Click(object sender, EventArgs e)
+        {
+            await TechPartsAddNewAsync();
+        }
+
+        private async void TsbtnTechPartChange_Click(object sender, EventArgs e)
+        {
+            await TechPartsChangeSelectedAsync();
+        }
+
+        private async void TsbtnTechPartDelete_Click(object sender, EventArgs e)
+        {
+            await TechPartsDeleteSelectedAsync();
         }
     }
 }

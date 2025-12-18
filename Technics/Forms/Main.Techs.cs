@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml.Linq;
 using Technics.Properties;
 using static Technics.Database.Models;
 using static Technics.Enums;
@@ -34,6 +33,9 @@ namespace Technics
             }
         }
 
+        private IEnumerable<TechModel> selectedTechList;
+        private IEnumerable<TechModel> SelectedTechList => selectedTechList;
+
         private async Task TechsSelectedChangedAsync()
         {
             var selected = tvTechs.SelectedNode as TreeNodeBase;
@@ -42,7 +44,9 @@ namespace Technics
 
             miTechAdd.Visible = selected is TreeNodeFolder;
 
-            await UpdateDataAsync(DataLoad.Mileages);
+            selectedTechList = GetTechList(tvTechs.SelectedNode);
+
+            await UpdateDataAsync(DataLoad.Mileages | DataLoad.TechParts);
         }
 
         private async Task TechsLoadAsync()
@@ -71,7 +75,7 @@ namespace Technics
 
                 var techs = await ListLoadAsync<TechModel>();
 
-                Lists.Default.Techs = techs.ToList();
+                Lists.Default.Techs = techs.OrderBy(t => t.Text).ToList();
 
                 foreach (var tech in Lists.Default.Techs)
                 {
@@ -103,6 +107,11 @@ namespace Technics
         {
             var result = new List<TechModel>();
 
+            if (parent is null)
+            {
+                return result;
+            }
+
             if (parent is TreeNodeTech parentNodeTech)
             {
                 result.Add(parentNodeTech.Tech);
@@ -125,8 +134,6 @@ namespace Technics
 
             return result;
         }
-
-        private List<TechModel> SelectedTechList => GetTechList(tvTechs.SelectedNode);
 
         private void TechsAddNew(TreeNode parent, TreeNode value)
         {

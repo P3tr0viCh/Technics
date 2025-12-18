@@ -168,6 +168,9 @@
     <value>Удалить «{0}» из базы данных?
 Все связанные записи пробега так же будут удалены.</value>
   </data>
+  <data name="QuestionTechPartDelete" xml:space="preserve">
+    <value>Удалить «{0}» с датой установки {1} из базы данных?</value>
+  </data>
   <data name="StatusCount" xml:space="preserve">
     <value>Количество: {0}</value>
   </data>

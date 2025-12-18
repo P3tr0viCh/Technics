@@ -13,6 +13,7 @@ namespace Technics
         {
             Techs = 1,
             Mileages = 2,
+            TechParts = 4,
         }
 
         private async Task UpdateDataAsync(DataLoad load = default)
@@ -20,7 +21,8 @@ namespace Technics
             if (load == default)
             {
                 load = DataLoad.Techs |
-                       DataLoad.Mileages;
+                       DataLoad.Mileages |
+                       DataLoad.TechParts;
             }
 
             DebugWrite.Line($"Loading data {load}");
@@ -37,6 +39,11 @@ namespace Technics
                 if (load.HasFlag(DataLoad.Mileages))
                 {
                     await MileagesLoadAsync(SelectedTechList);
+                }
+
+                if (load.HasFlag(DataLoad.TechParts))
+                {
+                    await TechPartsLoadAsync(SelectedTechList);
                 }
             }
             catch (TaskCanceledException e)
