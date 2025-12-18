@@ -32,6 +32,7 @@ namespace Technics
             if (!SetProgramDirectory()) return;
 
             miListParts.Tag = ListType.Parts;
+            tsbtnListParts.Tag = ListType.Parts;
 
             AddTechsRoot();
 
@@ -91,6 +92,11 @@ namespace Technics
             AppSettingsSave();
 
             Utils.Log.WriteProgramStop();
+        }
+
+        private void TsbtnClose_Click(object sender, EventArgs e)
+        {
+            Close();
         }
 
         private void MiFileClose_Click(object sender, EventArgs e)
@@ -238,10 +244,9 @@ namespace Technics
 
                 AppSettings.Default.ToolStripsShowText = value;
 
-                toolStripTechs.SetShowText(value);
-                toolStripTechs.ShowItemToolTips = !value;
-                toolStripMileages.SetShowText(value);
-                toolStripMileages.ShowItemToolTips = !value;
+                toolStripMain.SetShowTextAndToolTips(value);
+                toolStripTechs.SetShowTextAndToolTips(value);
+                toolStripMileages.SetShowTextAndToolTips(value);
             }
         }
 
@@ -272,7 +277,12 @@ namespace Technics
 
         private async void MiList_Click(object sender, EventArgs e)
         {
-            await ShowListAsync((ListType)((ToolStripMenuItem)sender).Tag);
+            await ShowListAsync((ListType)((ToolStripItem)sender).Tag);
+        }
+
+        private async void TsbtnList_Click(object sender, EventArgs e)
+        {
+            await ShowListAsync((ListType)((ToolStripItem)sender).Tag);
         }
     }
 }

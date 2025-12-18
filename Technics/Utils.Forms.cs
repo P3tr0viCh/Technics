@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using Technics.Properties;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Technics
 {
@@ -48,6 +49,12 @@ namespace Technics
                     Caption = caption,
                     Label = Resources.TextLabelText
                 });
+        }
+
+        public static void SetShowTextAndToolTips(this ToolStrip toolStrip, bool value)
+        {
+            toolStrip.SetShowText(value);
+            toolStrip.ShowItemToolTips = !value;
         }
     }
 }

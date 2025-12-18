@@ -111,6 +111,7 @@
             this.dataGridView.RowHeadersWidth = 32;
             this.dataGridView.Size = new System.Drawing.Size(384, 193);
             this.dataGridView.TabIndex = 1;
+            this.dataGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView_CellDoubleClick);
             this.dataGridView.SelectionChanged += new System.EventHandler(this.DataGridView_SelectionChanged);
             // 
             // toolStrip
@@ -153,6 +154,7 @@
             this.tsbtnChange.Text = "Изменить";
             this.tsbtnChange.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsbtnChange.ToolTipText = "Изменить";
+            this.tsbtnChange.Click += new System.EventHandler(this.TsbtnChange_Click);
             // 
             // tsbtnDelete
             // 

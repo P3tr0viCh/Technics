@@ -66,12 +66,16 @@
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.miMainFile = new System.Windows.Forms.ToolStripMenuItem();
             this.miFileClose = new System.Windows.Forms.ToolStripMenuItem();
+            this.miMainLists = new System.Windows.Forms.ToolStripMenuItem();
+            this.miListParts = new System.Windows.Forms.ToolStripMenuItem();
             this.miMainView = new System.Windows.Forms.ToolStripMenuItem();
             this.miViewToolStripsShowText = new System.Windows.Forms.ToolStripMenuItem();
             this.miMainHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.miHelpAbout = new System.Windows.Forms.ToolStripMenuItem();
-            this.miMainLists = new System.Windows.Forms.ToolStripMenuItem();
-            this.miListParts = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMain = new System.Windows.Forms.ToolStrip();
+            this.tsbtnListParts = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsbtnClose = new System.Windows.Forms.ToolStripButton();
             this.toolStripContainer.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer.ContentPanel.SuspendLayout();
             this.toolStripContainer.TopToolStripPanel.SuspendLayout();
@@ -86,6 +90,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourceMileages)).BeginInit();
             this.toolStripMileages.SuspendLayout();
             this.menuStrip.SuspendLayout();
+            this.toolStripMain.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStripContainer
@@ -100,7 +105,7 @@
             this.toolStripContainer.ContentPanel.Controls.Add(this.splitterMileages);
             this.toolStripContainer.ContentPanel.Controls.Add(this.panelTop);
             this.toolStripContainer.ContentPanel.Controls.Add(this.panelBottom);
-            this.toolStripContainer.ContentPanel.Size = new System.Drawing.Size(688, 382);
+            this.toolStripContainer.ContentPanel.Size = new System.Drawing.Size(688, 332);
             this.toolStripContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolStripContainer.Location = new System.Drawing.Point(0, 0);
             this.toolStripContainer.Name = "toolStripContainer";
@@ -110,6 +115,7 @@
             // toolStripContainer.TopToolStripPanel
             // 
             this.toolStripContainer.TopToolStripPanel.Controls.Add(this.menuStrip);
+            this.toolStripContainer.TopToolStripPanel.Controls.Add(this.toolStripMain);
             // 
             // statusStrip
             // 
@@ -133,7 +139,7 @@
             // 
             this.splitterMileages.Cursor = System.Windows.Forms.Cursors.HSplit;
             this.splitterMileages.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.splitterMileages.Location = new System.Drawing.Point(0, 178);
+            this.splitterMileages.Location = new System.Drawing.Point(0, 128);
             this.splitterMileages.MinSize = 160;
             this.splitterMileages.Name = "splitterMileages";
             this.splitterMileages.Size = new System.Drawing.Size(688, 8);
@@ -147,7 +153,7 @@
             this.panelTop.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelTop.Location = new System.Drawing.Point(0, 0);
             this.panelTop.Name = "panelTop";
-            this.panelTop.Size = new System.Drawing.Size(688, 186);
+            this.panelTop.Size = new System.Drawing.Size(688, 136);
             this.panelTop.TabIndex = 1;
             // 
             // splitterTechs
@@ -155,7 +161,7 @@
             this.splitterTechs.Cursor = System.Windows.Forms.Cursors.VSplit;
             this.splitterTechs.Location = new System.Drawing.Point(260, 0);
             this.splitterTechs.Name = "splitterTechs";
-            this.splitterTechs.Size = new System.Drawing.Size(8, 186);
+            this.splitterTechs.Size = new System.Drawing.Size(8, 136);
             this.splitterTechs.TabIndex = 3;
             this.splitterTechs.TabStop = false;
             // 
@@ -166,7 +172,7 @@
             this.panelTechs.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelTechs.Location = new System.Drawing.Point(0, 0);
             this.panelTechs.Name = "panelTechs";
-            this.panelTechs.Size = new System.Drawing.Size(260, 186);
+            this.panelTechs.Size = new System.Drawing.Size(260, 136);
             this.panelTechs.TabIndex = 4;
             // 
             // tvTechs
@@ -181,7 +187,7 @@
             this.tvTechs.Name = "tvTechs";
             this.tvTechs.SelectedImageIndex = 0;
             this.tvTechs.ShowRootLines = false;
-            this.tvTechs.Size = new System.Drawing.Size(260, 136);
+            this.tvTechs.Size = new System.Drawing.Size(260, 86);
             this.tvTechs.TabIndex = 0;
             this.tvTechs.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TvTechs_AfterSelect);
             this.tvTechs.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.TvTechs_NodeMouseClick);
@@ -270,14 +276,14 @@
             // miTechAddFolder
             // 
             this.miTechAddFolder.Name = "miTechAddFolder";
-            this.miTechAddFolder.Size = new System.Drawing.Size(180, 24);
+            this.miTechAddFolder.Size = new System.Drawing.Size(128, 24);
             this.miTechAddFolder.Text = "Папка";
             this.miTechAddFolder.Click += new System.EventHandler(this.MiTechAddFolder_Click);
             // 
             // miTechAddTech
             // 
             this.miTechAddTech.Name = "miTechAddTech";
-            this.miTechAddTech.Size = new System.Drawing.Size(180, 24);
+            this.miTechAddTech.Size = new System.Drawing.Size(128, 24);
             this.miTechAddTech.Text = "Техника";
             this.miTechAddTech.Click += new System.EventHandler(this.MiTechAddItem_Click);
             // 
@@ -306,7 +312,7 @@
             this.panelBottom.Controls.Add(this.dgvMileages);
             this.panelBottom.Controls.Add(this.toolStripMileages);
             this.panelBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelBottom.Location = new System.Drawing.Point(0, 186);
+            this.panelBottom.Location = new System.Drawing.Point(0, 136);
             this.panelBottom.Name = "panelBottom";
             this.panelBottom.Size = new System.Drawing.Size(688, 196);
             this.panelBottom.TabIndex = 2;
@@ -450,6 +456,21 @@
             this.miFileClose.Text = "Выход";
             this.miFileClose.Click += new System.EventHandler(this.MiFileClose_Click);
             // 
+            // miMainLists
+            // 
+            this.miMainLists.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.miListParts});
+            this.miMainLists.Name = "miMainLists";
+            this.miMainLists.Size = new System.Drawing.Size(67, 23);
+            this.miMainLists.Text = "Списки";
+            // 
+            // miListParts
+            // 
+            this.miListParts.Name = "miListParts";
+            this.miListParts.Size = new System.Drawing.Size(184, 24);
+            this.miListParts.Text = "Комплектующие";
+            this.miListParts.Click += new System.EventHandler(this.MiList_Click);
+            // 
             // miMainView
             // 
             this.miMainView.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -483,20 +504,45 @@
             this.miHelpAbout.Text = "О программе";
             this.miHelpAbout.Click += new System.EventHandler(this.MiHelpAbout_Click);
             // 
-            // miMainLists
+            // toolStripMain
             // 
-            this.miMainLists.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.miListParts});
-            this.miMainLists.Name = "miMainLists";
-            this.miMainLists.Size = new System.Drawing.Size(67, 23);
-            this.miMainLists.Text = "Списки";
+            this.toolStripMain.Dock = System.Windows.Forms.DockStyle.None;
+            this.toolStripMain.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.toolStripMain.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStripMain.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.toolStripMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsbtnListParts,
+            this.toolStripSeparator1,
+            this.tsbtnClose});
+            this.toolStripMain.Location = new System.Drawing.Point(3, 27);
+            this.toolStripMain.Name = "toolStripMain";
+            this.toolStripMain.Size = new System.Drawing.Size(225, 50);
+            this.toolStripMain.TabIndex = 1;
             // 
-            // miListParts
+            // tsbtnListParts
             // 
-            this.miListParts.Name = "miListParts";
-            this.miListParts.Size = new System.Drawing.Size(184, 24);
-            this.miListParts.Text = "Комплектующие";
-            this.miListParts.Click += new System.EventHandler(this.MiList_Click);
+            this.tsbtnListParts.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnListParts.Image")));
+            this.tsbtnListParts.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbtnListParts.Name = "tsbtnListParts";
+            this.tsbtnListParts.Size = new System.Drawing.Size(119, 47);
+            this.tsbtnListParts.Text = "Комплектующие";
+            this.tsbtnListParts.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tsbtnListParts.Click += new System.EventHandler(this.TsbtnList_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 50);
+            // 
+            // tsbtnClose
+            // 
+            this.tsbtnClose.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnClose.Image")));
+            this.tsbtnClose.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbtnClose.Name = "tsbtnClose";
+            this.tsbtnClose.Size = new System.Drawing.Size(66, 47);
+            this.tsbtnClose.Text = "Закрыть";
+            this.tsbtnClose.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tsbtnClose.Click += new System.EventHandler(this.TsbtnClose_Click);
             // 
             // Main
             // 
@@ -533,6 +579,8 @@
             this.toolStripMileages.PerformLayout();
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
+            this.toolStripMain.ResumeLayout(false);
+            this.toolStripMain.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -581,6 +629,10 @@
         private System.Windows.Forms.ToolStripMenuItem miViewToolStripsShowText;
         private System.Windows.Forms.ToolStripMenuItem miMainLists;
         private System.Windows.Forms.ToolStripMenuItem miListParts;
+        private System.Windows.Forms.ToolStrip toolStripMain;
+        private System.Windows.Forms.ToolStripButton tsbtnClose;
+        private System.Windows.Forms.ToolStripButton tsbtnListParts;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     }
 }
 

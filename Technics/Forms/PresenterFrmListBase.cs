@@ -1,4 +1,5 @@
-﻿using P3tr0viCh.Database;
+﻿using Newtonsoft.Json.Linq;
+using P3tr0viCh.Database;
 using P3tr0viCh.Utils;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,8 +36,7 @@ namespace Technics
 
         public async Task FormLoadAsync()
         {
-            FrmList.ToolStrip.SetShowText(AppSettings.Default.ToolStripsShowText);
-            FrmList.ToolStrip.ShowItemToolTips = !AppSettings.Default.ToolStripsShowText;
+            FrmList.ToolStrip.SetShowTextAndToolTips(AppSettings.Default.ToolStripsShowText);
 
             FrmList.DataGridView.MultiSelect = true;
 
@@ -169,15 +169,29 @@ namespace Technics
         protected abstract bool ShowItemChangeDialog(T value);
         protected abstract bool ShowItemDeleteDialog(List<T> list);
 
+        public async Task ListItemChangeAsync(T value)
+        {
+            if (!ShowItemChangeDialog(value)) return;
+
+            await ListItemSaveAsync(value);
+
+            ListItemChange(value);
+        }
+
         public async Task ListItemAddNewAsync()
         {
             var item = GetNewItem();
 
-            if (!ShowItemChangeDialog(item)) return;
+            await ListItemChangeAsync(item);
+        }
 
-            await ListItemSaveAsync(item);
+        public async Task ListItemChangeSelectedAsync()
+        {
+            var item = Selected;
 
-            ListItemChange(item);
+            SetSelectedRows(item);
+
+            await ListItemChangeAsync(item);
         }
 
         public async Task ListItemDeleteSelectedAsync()

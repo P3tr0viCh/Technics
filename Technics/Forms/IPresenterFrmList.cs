@@ -25,6 +25,8 @@ namespace Technics
 
         Task ListItemAddNewAsync();
 
+        Task ListItemChangeSelectedAsync();
+
         Task ListItemDeleteSelectedAsync();
     }
 }

@@ -92,9 +92,19 @@ namespace Technics
             await PresenterFrmList.ListItemAddNewAsync();
         }
 
+        private async void TsbtnChange_Click(object sender, EventArgs e)
+        {
+            await PresenterFrmList.ListItemChangeSelectedAsync();
+        }
+
         private async void TsbtnDelete_Click(object sender, EventArgs e)
         {
             await PresenterFrmList.ListItemDeleteSelectedAsync();
+        }
+
+        private async void DataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            await PresenterFrmList.ListItemChangeSelectedAsync();
         }
 
         private void BindingSource_ListChanged(object sender, ListChangedEventArgs e)
