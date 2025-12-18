@@ -1,6 +1,9 @@
-﻿using P3tr0viCh.Utils;
+﻿using P3tr0viCh.Database;
+using P3tr0viCh.Utils;
+using System;
 using System.Windows.Forms;
 using Technics.Properties;
+using static Technics.Database.Models;
 
 namespace Technics
 {
@@ -30,6 +33,18 @@ namespace Technics
         {
             toolStrip.SetShowText(value);
             toolStrip.ShowItemToolTips = !value;
+        }
+
+        public static void AssertComboBox<T>(ComboBox comboBox, string error) where T : BaseId
+        {
+            var item = comboBox.GetSelectedItem<T>();
+
+            if (item.IsNew)
+            {
+                comboBox.Focus();
+
+                throw new Exception(error);
+            }
         }
     }
 }

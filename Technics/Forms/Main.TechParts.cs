@@ -41,12 +41,12 @@ namespace Technics
 
         private void TechPartsListChanged()
         {
-           tsbtnTechPartDelete.Enabled = tsbtnTechPartChange.Enabled = bindingSourceTechParts.Count > 0;
+            tsbtnTechPartDelete.Enabled = tsbtnTechPartChange.Enabled = bindingSourceTechParts.Count > 0;
         }
 
         private async Task TechPartsChangeAsync(TechPartModel techPart)
         {
-            //if (!FrmTechPart.ShowDlg(this, techPart)) return;
+            if (!FrmTechPart.ShowDlg(this, techPart)) return;
 
             var status = ProgramStatus.Start(Status.SaveDatа);
 
@@ -71,7 +71,7 @@ namespace Technics
                     dgvTechParts.Refresh();
                 }
 
-//                await MileagesUpdateMileageCommonAsync(techPart);
+                //                await MileagesUpdateMileageCommonAsync(techPart);
             }
             catch (Exception e)
             {
@@ -140,7 +140,7 @@ namespace Technics
 
                 TechPartsListChanged();
 
-//                await TechPartsUpdateMileageCommonAsync(techPart);
+                //                await TechPartsUpdateMileageCommonAsync(techPart);
             }
             catch (Exception e)
             {

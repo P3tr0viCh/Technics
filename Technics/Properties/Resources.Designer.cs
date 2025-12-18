@@ -79,11 +79,29 @@ namespace Technics.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Деталь не указана..
+        /// </summary>
+        internal static string ErrorPartEmpty {
+            get {
+                return ResourceManager.GetString("ErrorPartEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Техника не указана..
         /// </summary>
         internal static string ErrorTechEmpty {
             get {
                 return ResourceManager.GetString("ErrorTechEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Дата снятия меньше даты установки..
+        /// </summary>
+        internal static string ErrorTechPartDatesWrong {
+            get {
+                return ResourceManager.GetString("ErrorTechPartDatesWrong", resourceCulture);
             }
         }
         

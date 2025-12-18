@@ -117,46 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CloseReasonApplicationExitCall" xml:space="preserve">
-    <value>closed from exit call</value>
-  </data>
-  <data name="CloseReasonShutDown" xml:space="preserve">
-    <value>windows shutdown</value>
-  </data>
-  <data name="CloseReasonTaskManager" xml:space="preserve">
-    <value>closed from task manager</value>
-  </data>
-  <data name="ListItemDeleteOk" xml:space="preserve">
-    <value>{0} item delete ok</value>
-  </data>
-  <data name="ListItemSaveOk" xml:space="preserve">
-    <value>{0} item save ok</value>
-  </data>
-  <data name="ListItemsDeleteOk" xml:space="preserve">
-    <value>{0} items (count={1}) delete ok</value>
-  </data>
-  <data name="LoadListOk" xml:space="preserve">
-    <value>ok, {0} count={1}</value>
-  </data>
-  <data name="LoadOk" xml:space="preserve">
-    <value>ok</value>
-  </data>
-  <data name="PathAppDirectory" xml:space="preserve">
-    <value>app directory</value>
-  </data>
-  <data name="PathDatabase" xml:space="preserve">
-    <value>database</value>
-  </data>
-  <data name="PathDataDirectory" xml:space="preserve">
-    <value>data directory</value>
-  </data>
-  <data name="PathDataDirectoryCreateOk" xml:space="preserve">
-    <value>created</value>
-  </data>
-  <data name="PathLogsDirectory" xml:space="preserve">
-    <value>logs directory</value>
-  </data>
-  <data name="PathSettings" xml:space="preserve">
-    <value>settings</value>
-  </data>
+  <metadata name="bindingSourceTechs.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <metadata name="bindingSourceTechs.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <metadata name="bindingSourceParts.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>177, 17</value>
+  </metadata>
 </root>

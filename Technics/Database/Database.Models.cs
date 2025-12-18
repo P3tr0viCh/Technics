@@ -72,6 +72,29 @@ namespace Technics
                 [Write(false)]
                 [Computed]
                 public string TechText { get; set; } = default;
+                
+                public new void Clear()
+                {
+                    base.Clear();
+
+                    TechId = null;
+                    TechText = default;
+                }
+
+                public void Assign(BaseTechId source)
+                {
+                    if (source == null)
+                    {
+                        Clear();
+
+                        return;
+                    }
+
+                    base.Assign(source);
+
+                    TechId = source.TechId;
+                    TechText = source.TechText;
+                }
             }
 
             // ---------------------------------------------------------------
@@ -92,9 +115,6 @@ namespace Technics
                 {
                     base.Clear();
 
-                    TechId = null;
-                    TechText = default;
-
                     DateTime = default;
 
                     Mileage = default;
@@ -113,9 +133,6 @@ namespace Technics
                     }
 
                     base.Assign(source);
-
-                    TechId = source.TechId;
-                    TechText = source.TechText;
 
                     DateTime = source.DateTime;
 
@@ -165,8 +182,8 @@ namespace Technics
                 {
                     base.Clear();
 
-                    TechId = null;
                     PartId = null;
+                    PartText = default;
 
                     DateTimeInstall = default;
                     DateTimeRemove = default;
@@ -183,8 +200,8 @@ namespace Technics
 
                     base.Assign(source);
 
-                    TechId = source.TechId;
                     PartId = source.PartId;
+                    PartText = source.PartText;
 
                     DateTimeInstall = source.DateTimeInstall;
                     DateTimeRemove = source.DateTimeRemove;

@@ -64,7 +64,7 @@ namespace Technics
             LoadData();
 
             Mileage = mileage;
-       }
+        }
 
         private void LoadData()
         {
@@ -131,14 +131,7 @@ namespace Technics
         {
             try
             {
-                var tech = cboxTech.GetSelectedItem<TechModel>();
-
-                if (tech.IsNew)
-                {
-                    cboxTech.Focus();
-
-                    throw new Exception(Resources.ErrorTechEmpty);
-                }
+                Utils.AssertComboBox<TechModel>(cboxTech, Resources.ErrorTechEmpty);
 
                 if (tboxMileage.IsEmpty() && tboxMileageCommon.IsEmpty())
                 {
@@ -146,6 +139,8 @@ namespace Technics
 
                     throw new Exception(Resources.ErrorMileagesEmpty);
                 }
+
+                var tech = cboxTech.GetSelectedItem<TechModel>();
 
                 mileageCommonPrev = await GetMileageCommonPrevAsync(tech.Id, dtpDateTime.GetDateTime());
 

@@ -202,6 +202,7 @@
             this.dgvTechParts.ReadOnly = true;
             this.dgvTechParts.Size = new System.Drawing.Size(500, 142);
             this.dgvTechParts.TabIndex = 3;
+            this.dgvTechParts.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DgvTechParts_CellMouseDoubleClick);
             this.dgvTechParts.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DataGridView_CellMouseDown);
             // 
             // TechPartsTechText

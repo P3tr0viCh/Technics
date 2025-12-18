@@ -123,8 +123,14 @@
   <data name="ErrorMileagesEmpty" xml:space="preserve">
     <value>Не один из пробегов не указан.</value>
   </data>
+  <data name="ErrorPartEmpty" xml:space="preserve">
+    <value>Деталь не указана.</value>
+  </data>
   <data name="ErrorTechEmpty" xml:space="preserve">
     <value>Техника не указана.</value>
+  </data>
+  <data name="ErrorTechPartDatesWrong" xml:space="preserve">
+    <value>Дата снятия меньше даты установки.</value>
   </data>
   <data name="ErrorValueNeedDouble" xml:space="preserve">
     <value>Необходимо указать число.</value>

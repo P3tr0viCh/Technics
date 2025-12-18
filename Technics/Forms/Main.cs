@@ -149,7 +149,7 @@ namespace Technics
 
         private void DataGridView_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
         {
-            Utils.SelectCellOnCellMouseDown(dgvMileages, e);
+            Utils.SelectCellOnCellMouseDown((DataGridView)sender, e);
         }
 
         private async void TvTechs_AfterSelect(object sender, TreeViewEventArgs e)
@@ -225,6 +225,13 @@ namespace Technics
             if (e.RowIndex < 0) return;
 
             await MileagesChangeSelectedAsync();
+        }
+
+        private async void DgvTechParts_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+
+            await TechPartsChangeSelectedAsync();
         }
 
         private bool ToolStripsShowText

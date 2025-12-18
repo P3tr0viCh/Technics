@@ -10,7 +10,7 @@ namespace Technics
 {
     public partial class Main
     {
-        private async Task<IEnumerable<T>> ListLoadAsync<T>(string sql)
+        private async Task<IEnumerable<T>> ListLoadAsync<T>(string sql) where T : BaseId
         {
             var result = await Database.Default.ListLoadAsync<T>(sql);
 
@@ -19,7 +19,7 @@ namespace Technics
             return result;
         }
 
-        private async Task<IEnumerable<T>> ListLoadAsync<T>()
+        public async Task<IEnumerable<T>> ListLoadAsync<T>() where T : BaseId
         {
             return await ListLoadAsync<T>(string.Empty);
         }
@@ -31,14 +31,21 @@ namespace Technics
             Utils.Log.Info(string.Format(ResourcesLog.ListItemSaveOk, typeof(T).Name));
         }
 
-        private async Task ListItemDeleteAsync<T>(T value) where T : BaseId
+        public async Task ListItemDeleteAsync<T>(T value) where T : BaseId
         {
             await Database.Default.ListItemDeleteAsync(value);
 
             Utils.Log.Info(string.Format(ResourcesLog.ListItemDeleteOk, typeof(T).Name));
         }
 
-        public string GetWhereSql(IEnumerable<TechModel> techs)
+        public async Task ListItemDeleteAsync<T>(IEnumerable<T> values) where T : BaseId
+        {
+            await Database.Default.ListItemDeleteAsync(values);
+
+            Utils.Log.Info(string.Format(ResourcesLog.ListItemDeleteOk, typeof(T).Name, values.Count()));
+        }
+
+        private string GetWhereSql(IEnumerable<TechModel> techs)
         {
             var where = string.Empty;
 
@@ -46,24 +53,29 @@ namespace Technics
 
             if (techList.Count != Lists.Default.Techs.Count)
             {
+                var fieldName = Sql.FieldName(nameof(BaseTechId.TechId));
+
                 if (techList.Count == 1)
                 {
-                    where = $" = {techList[0].Id}";
+                    where = $"{fieldName} = {techList[0].Id}";
                 }
                 else
                 {
                     techList.ForEach(tech => where = where.JoinExcludeEmpty(", ", tech.Id.ToString()));
 
-                    where = $" IN ({where})";
+                    where = $"{fieldName} IN ({where})";
                 }
+            }
 
-                where = $"WHERE {Sql.FieldName(nameof(BaseTechId.TechId)) + where}";
+            if (!where.IsEmpty())
+            {
+                where = $"WHERE {where}";
             }
 
             return where;
         }
 
-        public string GetMileagesSql(IEnumerable<TechModel> techs)
+        private string GetMileagesSql(IEnumerable<TechModel> techs)
         {
             var where = GetWhereSql(techs);
 
@@ -72,7 +84,7 @@ namespace Technics
             return sql;
         }
 
-        public string GetTechPartsSql(IEnumerable<TechModel> techs)
+        private string GetTechPartsSql(IEnumerable<TechModel> techs)
         {
             var where = GetWhereSql(techs);
 

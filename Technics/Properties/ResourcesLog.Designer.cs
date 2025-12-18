@@ -106,6 +106,15 @@ namespace Technics.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} items (count={1}) delete ok.
+        /// </summary>
+        internal static string ListItemsDeleteOk {
+            get {
+                return ResourceManager.GetString("ListItemsDeleteOk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ok, {0} count={1}.
         /// </summary>
         internal static string LoadListOk {
