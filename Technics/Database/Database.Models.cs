@@ -143,6 +143,55 @@ namespace Technics
                     base.Assign(source);
                 }
             }
+
+            // ---------------------------------------------------------------
+            [Table(Tables.techparts)]
+            public class TechPartModel : BaseId
+            {
+                public long? TechId { get; set; } = null;
+
+                [Write(false)]
+                [Computed]
+                public string TechText { get; set; } = default;
+
+                public long? PartId { get; set; } = null;
+
+                [Write(false)]
+                [Computed]
+                public string PartText { get; set; } = default;
+
+                public DateTime DateTimeInstall { get; set; } = default;
+                public DateTime DateTimeRemove { get; set; } = default;
+
+                public new void Clear()
+                {
+                    base.Clear();
+
+                    TechId = null;
+                    PartId = null;
+
+                    DateTimeInstall = default;
+                    DateTimeRemove = default;
+                }
+
+                public void Assign(TechPartModel source)
+                {
+                    if (source == null)
+                    {
+                        Clear();
+
+                        return;
+                    }
+
+                    base.Assign(source);
+
+                    TechId = source.TechId;
+                    PartId = source.PartId;
+
+                    DateTimeInstall = source.DateTimeInstall;
+                    DateTimeRemove = source.DateTimeRemove;
+                }
+            }
         }
     }
 }

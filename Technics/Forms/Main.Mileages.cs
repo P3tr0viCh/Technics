@@ -1,4 +1,5 @@
-﻿using P3tr0viCh.Utils;
+﻿using P3tr0viCh.Database;
+using P3tr0viCh.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,16 +21,18 @@ namespace Technics
             {
                 techs.ForEach(tech => DebugWrite.Line(tech.Text));
 
-                var mileagesList = await ListLoadAsync<MileageModel>(GetMileagesQuery(techs));
+                var mileageList = await ListLoadAsync<MileageModel>(GetMileagesSql(techs));
 
-                foreach (var mileage in mileagesList)
+                foreach (var mileage in mileageList)
                 {
-                    mileage.TechText = Lists.Default.Techs.Find(t => t.Id == mileage.TechId)?.Text;
+                    //mileage.TechText = Lists.Default.Techs.Find(t => t.Id == mileage.TechId)?.Text;
 
                     mileage.MileageCommon = await Database.Default.GetMileageCommonAsync(mileage);
                 }
 
-                bindingSourceMileages.DataSource = mileagesList;
+                bindingSourceMileages.DataSource = mileageList;
+
+                MileagesListChanged();
 
                 Utils.Log.Info(ResourcesLog.LoadOk);
             }
@@ -43,7 +46,12 @@ namespace Technics
 
         public MileageModel MileageSelected
         {
-            get => ((BindingSource)dgvMileages.DataSource).Current as MileageModel;
+            get => bindingSourceMileages.Current as MileageModel;
+        }
+
+        private void MileagesListChanged()
+        {
+            tsbtnMileagesDelete.Enabled = tsbtnMileagesChange.Enabled = bindingSourceMileages.Count > 0;
         }
 
         private void MileagesUpdateTechText(TechModel tech)
@@ -97,6 +105,8 @@ namespace Technics
                     bindingSourceMileages.Insert(0, mileage);
 
                     bindingSourceMileages.Position = 0;
+
+                    MileagesListChanged();
                 }
                 else
                 {
@@ -145,7 +155,7 @@ namespace Technics
 
             if (mileage == null) return;
 
-            Utils.SetSelectedRows(dgvMileages, mileage);
+            dgvMileages.SetSelectedRows(mileage);
 
             await MileagesChangeAsync(mileage);
         }
@@ -156,9 +166,10 @@ namespace Technics
 
             if (mileage == null) return;
 
-            Utils.SetSelectedRows(dgvMileages, mileage);
+            dgvMileages.SetSelectedRows(mileage);
 
-            if (!Msg.Question(Resources.QuestionMileageDelete, mileage.DateTime)) return;
+            if (!Msg.Question(Resources.QuestionMileageDelete,
+                    mileage.DateTime.ToString(AppSettings.Default.FormatDateTime))) return;
 
             var status = ProgramStatus.Start(Status.SaveDatа);
 
@@ -167,6 +178,8 @@ namespace Technics
                 await ListItemDeleteAsync(mileage);
 
                 bindingSourceMileages.Remove(mileage);
+
+                MileagesListChanged();
 
                 await MileagesUpdateMileageCommonAsync(mileage);
             }

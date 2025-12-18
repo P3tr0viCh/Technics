@@ -1,5 +1,4 @@
 ﻿using Dapper;
-using Dapper.Contrib.Extensions;
 using P3tr0viCh.Database;
 using P3tr0viCh.Utils;
 using System;
@@ -45,10 +44,7 @@ namespace Technics
                 connection.Execute(ResourcesSql.CreateTableTechs);
                 connection.Execute(ResourcesSql.CreateTableFolders);
                 connection.Execute(ResourcesSql.CreateTableMileages);
-
-                /* indexes */
-
-                /* triggers */
+                connection.Execute(ResourcesSql.CreateTableTechParts);
             }
         }
 
@@ -68,7 +64,7 @@ namespace Technics
             }
         }
 
-        public async Task ListItemDeleteAsync<T>(List<T> values) where T : BaseId
+        public async Task ListItemDeleteAsync<T>(IEnumerable<T> values) where T : BaseId
         {
             using (var connection = GetConnection())
             {
@@ -94,7 +90,15 @@ namespace Technics
             }
         }
 
-        public async Task<List<T>> ListLoadAsync<T>(Query query)
+        public async Task<IEnumerable<T>> ListLoadAsync<T>(string sql)
+        {
+            using (var connection = GetConnection())
+            {
+                return await Actions.ListLoadAsync<T>(connection, sql);
+            }
+        }
+
+        public async Task<IEnumerable<T>> ListLoadAsync<T>(Query query)
         {
             using (var connection = GetConnection())
             {
@@ -102,9 +106,9 @@ namespace Technics
             }
         }
 
-        public async Task<List<T>> ListLoadAsync<T>()
+        public async Task<IEnumerable<T>> ListLoadAsync<T>()
         {
-            return await ListLoadAsync<T>(null);
+            return await ListLoadAsync<T>(string.Empty);
         }
 
         public async Task<T> QueryFirstOrDefaultAsync<T>(string sql, object param)

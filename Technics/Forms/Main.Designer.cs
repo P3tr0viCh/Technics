@@ -35,6 +35,13 @@
             this.LabelStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.splitterMileages = new System.Windows.Forms.Splitter();
             this.panelTop = new System.Windows.Forms.Panel();
+            this.panelTechPart = new System.Windows.Forms.Panel();
+            this.dgvTechParts = new System.Windows.Forms.DataGridView();
+            this.bindingSourceTechParts = new System.Windows.Forms.BindingSource(this.components);
+            this.toolStripTechParts = new System.Windows.Forms.ToolStrip();
+            this.tsbtnTechPartAdd = new System.Windows.Forms.ToolStripButton();
+            this.tsbtnTechPartChange = new System.Windows.Forms.ToolStripButton();
+            this.tsbtnTechPartDelete = new System.Windows.Forms.ToolStripButton();
             this.splitterTechs = new System.Windows.Forms.Splitter();
             this.panelTechs = new System.Windows.Forms.Panel();
             this.tvTechs = new System.Windows.Forms.TreeView();
@@ -82,6 +89,10 @@
             this.toolStripContainer.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.panelTop.SuspendLayout();
+            this.panelTechPart.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvTechParts)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSourceTechParts)).BeginInit();
+            this.toolStripTechParts.SuspendLayout();
             this.panelTechs.SuspendLayout();
             this.menuTechs.SuspendLayout();
             this.toolStripTechs.SuspendLayout();
@@ -105,11 +116,11 @@
             this.toolStripContainer.ContentPanel.Controls.Add(this.splitterMileages);
             this.toolStripContainer.ContentPanel.Controls.Add(this.panelTop);
             this.toolStripContainer.ContentPanel.Controls.Add(this.panelBottom);
-            this.toolStripContainer.ContentPanel.Size = new System.Drawing.Size(688, 332);
+            this.toolStripContainer.ContentPanel.Size = new System.Drawing.Size(688, 388);
             this.toolStripContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolStripContainer.Location = new System.Drawing.Point(0, 0);
             this.toolStripContainer.Name = "toolStripContainer";
-            this.toolStripContainer.Size = new System.Drawing.Size(688, 433);
+            this.toolStripContainer.Size = new System.Drawing.Size(688, 489);
             this.toolStripContainer.TabIndex = 0;
             // 
             // toolStripContainer.TopToolStripPanel
@@ -139,7 +150,7 @@
             // 
             this.splitterMileages.Cursor = System.Windows.Forms.Cursors.HSplit;
             this.splitterMileages.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.splitterMileages.Location = new System.Drawing.Point(0, 128);
+            this.splitterMileages.Location = new System.Drawing.Point(0, 184);
             this.splitterMileages.MinSize = 160;
             this.splitterMileages.Name = "splitterMileages";
             this.splitterMileages.Size = new System.Drawing.Size(688, 8);
@@ -148,20 +159,90 @@
             // 
             // panelTop
             // 
+            this.panelTop.Controls.Add(this.panelTechPart);
             this.panelTop.Controls.Add(this.splitterTechs);
             this.panelTop.Controls.Add(this.panelTechs);
             this.panelTop.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelTop.Location = new System.Drawing.Point(0, 0);
             this.panelTop.Name = "panelTop";
-            this.panelTop.Size = new System.Drawing.Size(688, 136);
+            this.panelTop.Size = new System.Drawing.Size(688, 192);
             this.panelTop.TabIndex = 1;
+            // 
+            // panelTechPart
+            // 
+            this.panelTechPart.Controls.Add(this.dgvTechParts);
+            this.panelTechPart.Controls.Add(this.toolStripTechParts);
+            this.panelTechPart.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelTechPart.Location = new System.Drawing.Point(268, 0);
+            this.panelTechPart.Name = "panelTechPart";
+            this.panelTechPart.Size = new System.Drawing.Size(420, 192);
+            this.panelTechPart.TabIndex = 5;
+            // 
+            // dgvTechParts
+            // 
+            this.dgvTechParts.AllowUserToAddRows = false;
+            this.dgvTechParts.AllowUserToDeleteRows = false;
+            this.dgvTechParts.AllowUserToResizeRows = false;
+            this.dgvTechParts.AutoGenerateColumns = false;
+            this.dgvTechParts.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dgvTechParts.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvTechParts.DataSource = this.bindingSourceTechParts;
+            this.dgvTechParts.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvTechParts.Location = new System.Drawing.Point(0, 50);
+            this.dgvTechParts.Name = "dgvTechParts";
+            this.dgvTechParts.ReadOnly = true;
+            this.dgvTechParts.Size = new System.Drawing.Size(420, 142);
+            this.dgvTechParts.TabIndex = 3;
+            this.dgvTechParts.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DataGridView_CellMouseDown);
+            // 
+            // toolStripTechParts
+            // 
+            this.toolStripTechParts.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.toolStripTechParts.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStripTechParts.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.toolStripTechParts.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsbtnTechPartAdd,
+            this.tsbtnTechPartChange,
+            this.tsbtnTechPartDelete});
+            this.toolStripTechParts.Location = new System.Drawing.Point(0, 0);
+            this.toolStripTechParts.Name = "toolStripTechParts";
+            this.toolStripTechParts.ShowItemToolTips = false;
+            this.toolStripTechParts.Size = new System.Drawing.Size(420, 50);
+            this.toolStripTechParts.TabIndex = 2;
+            // 
+            // tsbtnTechPartAdd
+            // 
+            this.tsbtnTechPartAdd.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnTechPartAdd.Image")));
+            this.tsbtnTechPartAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbtnTechPartAdd.Name = "tsbtnTechPartAdd";
+            this.tsbtnTechPartAdd.Size = new System.Drawing.Size(74, 47);
+            this.tsbtnTechPartAdd.Text = "Добавить";
+            this.tsbtnTechPartAdd.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            // 
+            // tsbtnTechPartChange
+            // 
+            this.tsbtnTechPartChange.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnTechPartChange.Image")));
+            this.tsbtnTechPartChange.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbtnTechPartChange.Name = "tsbtnTechPartChange";
+            this.tsbtnTechPartChange.Size = new System.Drawing.Size(75, 47);
+            this.tsbtnTechPartChange.Text = "Изменить";
+            this.tsbtnTechPartChange.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            // 
+            // tsbtnTechPartDelete
+            // 
+            this.tsbtnTechPartDelete.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnTechPartDelete.Image")));
+            this.tsbtnTechPartDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbtnTechPartDelete.Name = "tsbtnTechPartDelete";
+            this.tsbtnTechPartDelete.Size = new System.Drawing.Size(64, 47);
+            this.tsbtnTechPartDelete.Text = "Удалить";
+            this.tsbtnTechPartDelete.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
             // splitterTechs
             // 
             this.splitterTechs.Cursor = System.Windows.Forms.Cursors.VSplit;
             this.splitterTechs.Location = new System.Drawing.Point(260, 0);
             this.splitterTechs.Name = "splitterTechs";
-            this.splitterTechs.Size = new System.Drawing.Size(8, 136);
+            this.splitterTechs.Size = new System.Drawing.Size(8, 192);
             this.splitterTechs.TabIndex = 3;
             this.splitterTechs.TabStop = false;
             // 
@@ -172,7 +253,7 @@
             this.panelTechs.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelTechs.Location = new System.Drawing.Point(0, 0);
             this.panelTechs.Name = "panelTechs";
-            this.panelTechs.Size = new System.Drawing.Size(260, 136);
+            this.panelTechs.Size = new System.Drawing.Size(260, 192);
             this.panelTechs.TabIndex = 4;
             // 
             // tvTechs
@@ -187,7 +268,7 @@
             this.tvTechs.Name = "tvTechs";
             this.tvTechs.SelectedImageIndex = 0;
             this.tvTechs.ShowRootLines = false;
-            this.tvTechs.Size = new System.Drawing.Size(260, 86);
+            this.tvTechs.Size = new System.Drawing.Size(260, 142);
             this.tvTechs.TabIndex = 0;
             this.tvTechs.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TvTechs_AfterSelect);
             this.tvTechs.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.TvTechs_NodeMouseClick);
@@ -312,7 +393,7 @@
             this.panelBottom.Controls.Add(this.dgvMileages);
             this.panelBottom.Controls.Add(this.toolStripMileages);
             this.panelBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelBottom.Location = new System.Drawing.Point(0, 136);
+            this.panelBottom.Location = new System.Drawing.Point(0, 192);
             this.panelBottom.Name = "panelBottom";
             this.panelBottom.Size = new System.Drawing.Size(688, 196);
             this.panelBottom.TabIndex = 2;
@@ -339,7 +420,7 @@
             this.dgvMileages.Size = new System.Drawing.Size(688, 146);
             this.dgvMileages.TabIndex = 3;
             this.dgvMileages.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DgvMileages_CellMouseDoubleClick);
-            this.dgvMileages.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DgvMileages_CellMouseDown);
+            this.dgvMileages.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DataGridView_CellMouseDown);
             // 
             // MileagesTechText
             // 
@@ -379,7 +460,6 @@
             // bindingSourceMileages
             // 
             this.bindingSourceMileages.DataSource = typeof(Technics.Database.Models.MileageModel);
-            this.bindingSourceMileages.ListChanged += new System.ComponentModel.ListChangedEventHandler(this.BindingSourceMileages_ListChanged);
             // 
             // toolStripMileages
             // 
@@ -516,7 +596,7 @@
             this.tsbtnClose});
             this.toolStripMain.Location = new System.Drawing.Point(3, 27);
             this.toolStripMain.Name = "toolStripMain";
-            this.toolStripMain.Size = new System.Drawing.Size(225, 50);
+            this.toolStripMain.Size = new System.Drawing.Size(194, 50);
             this.toolStripMain.TabIndex = 1;
             // 
             // tsbtnListParts
@@ -547,7 +627,7 @@
             // Main
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(688, 433);
+            this.ClientSize = new System.Drawing.Size(688, 489);
             this.Controls.Add(this.toolStripContainer);
             this.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -566,6 +646,12 @@
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
             this.panelTop.ResumeLayout(false);
+            this.panelTechPart.ResumeLayout(false);
+            this.panelTechPart.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvTechParts)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSourceTechParts)).EndInit();
+            this.toolStripTechParts.ResumeLayout(false);
+            this.toolStripTechParts.PerformLayout();
             this.panelTechs.ResumeLayout(false);
             this.panelTechs.PerformLayout();
             this.menuTechs.ResumeLayout(false);
@@ -633,6 +719,13 @@
         private System.Windows.Forms.ToolStripButton tsbtnClose;
         private System.Windows.Forms.ToolStripButton tsbtnListParts;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.BindingSource bindingSourceTechParts;
+        private System.Windows.Forms.Panel panelTechPart;
+        private System.Windows.Forms.ToolStrip toolStripTechParts;
+        private System.Windows.Forms.ToolStripButton tsbtnTechPartChange;
+        private System.Windows.Forms.ToolStripButton tsbtnTechPartDelete;
+        private System.Windows.Forms.DataGridView dgvTechParts;
+        private System.Windows.Forms.ToolStripButton tsbtnTechPartAdd;
     }
 }
 

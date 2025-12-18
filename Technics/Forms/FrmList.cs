@@ -70,6 +70,8 @@ namespace Technics
         private void PresenterFrmList_OnListChanged()
         {
             tsbtnChange.Enabled = tsbtnDelete.Enabled = PresenterFrmList.Count > 0;
+
+            statusStripPresenter.Count = PresenterFrmList.Count;
         }
 
         ToolStripStatusLabel PresenterStatusStrip<StatusLabel>.IPresenterStatusStrip.GetLabel(StatusLabel label)
@@ -105,11 +107,6 @@ namespace Technics
         private async void DataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             await PresenterFrmList.ListItemChangeSelectedAsync();
-        }
-
-        private void BindingSource_ListChanged(object sender, ListChangedEventArgs e)
-        {
-            statusStripPresenter.Count = PresenterFrmList.Count;
         }
 
         private void DataGridView_SelectionChanged(object sender, EventArgs e)

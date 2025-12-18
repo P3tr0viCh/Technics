@@ -92,20 +92,29 @@ namespace Technics.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to CREATE TABLE mileages (
+        ///   Looks up a localized string similar to CREATE TABLE parts (
         ///	id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-        ///	techid INTEGER,
-        ///	datetime TEXT,
-        ///	mileage REAL,
-        ///	description TEXT,
-        ///	FOREIGN KEY (techid) REFERENCES techs (id)
-        ///	ON DELETE CASCADE
-        ///	ON UPDATE CASCADE
+        ///	text TEXT
         ///);.
         /// </summary>
         internal static string CreateTableParts {
             get {
                 return ResourceManager.GetString("CreateTableParts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CREATE TABLE techparts (
+        ///	id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+        ///	techid INTEGER,
+        ///	partid INTEGER,
+        ///	datetimeinstall TEXT,
+        ///	datetimeremove TEXT
+        ///);.
+        /// </summary>
+        internal static string CreateTableTechParts {
+            get {
+                return ResourceManager.GetString("CreateTableTechParts", resourceCulture);
             }
         }
         
@@ -141,6 +150,17 @@ namespace Technics.Properties {
         internal static string GetMileageCommonPrev {
             get {
                 return ResourceManager.GetString("GetMileageCommonPrev", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SELECT IFNULL(SUM(mileage), 0.0)
+        ///FROM mileages
+        ///WHERE techid = :techid AND datetime &lt;= :datetime;.
+        /// </summary>
+        internal static string SelectMileages {
+            get {
+                return ResourceManager.GetString("SelectMileages", resourceCulture);
             }
         }
     }

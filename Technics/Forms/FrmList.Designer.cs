@@ -183,10 +183,6 @@
             this.tsbtnClose.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsbtnClose.Click += new System.EventHandler(this.TsbtnClose_Click);
             // 
-            // bindingSource
-            // 
-            this.bindingSource.ListChanged += new System.ComponentModel.ListChangedEventHandler(this.BindingSource_ListChanged);
-            // 
             // FrmList
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;

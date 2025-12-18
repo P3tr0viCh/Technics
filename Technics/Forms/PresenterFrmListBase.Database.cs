@@ -19,9 +19,11 @@ namespace Technics
 			{
 				var list = await Database.Default.ListLoadAsync<T>();
 
-				FrmList.BindingSource.DataSource = list.ToBindingList();
+				var bindingList = list.ToBindingList();
 
-				Utils.Log.Info(string.Format(ResourcesLog.LoadListOk, typeof(T).Name, list.Count));
+                FrmList.BindingSource.DataSource = bindingList;
+
+				Utils.Log.Info(string.Format(ResourcesLog.LoadListOk, typeof(T).Name, bindingList.Count));
 			}
 			catch (Exception e)
 			{
@@ -61,7 +63,7 @@ namespace Technics
 			}
 		}
 
-		private async Task ListItemDeleteAsync(List<T> list)
+		private async Task ListItemDeleteAsync(IEnumerable<T> list)
 		{
 			var status = FrmList.MainForm.ProgramStatus.Start(Status.SaveDatа);
 

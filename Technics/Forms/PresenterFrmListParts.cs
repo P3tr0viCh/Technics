@@ -64,17 +64,19 @@ namespace Technics
             return true;
         }
 
-        protected override bool ShowItemDeleteDialog(List<PartModel> list)
+        protected override bool ShowItemDeleteDialog(IEnumerable<PartModel> list)
         {
-            if (list?.Count == 0) return false;
+            var count = list?.Count();
+
+            if (count == 0) return false;
 
             var firstItem = list.FirstOrDefault();
 
             var text = firstItem.Text;
 
-            var question = list.Count == 1 ? Resources.QuestionItemDelete : Resources.QuestionItemListDelete;
+            var question = count == 1 ? Resources.QuestionItemDelete : Resources.QuestionItemListDelete;
 
-            return Utils.Msg.Question(question, text, list.Count - 1);
+            return Utils.Msg.Question(question, text, count - 1);
         }
     }
 }

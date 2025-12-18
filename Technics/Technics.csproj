@@ -113,6 +113,9 @@
     <Compile Include="Forms\Main.Mileages.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\Main.TechParts.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\Main.UpdateData.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -221,6 +224,8 @@
     <None Include="Resources\GetMileageCommon.sql" />
     <None Include="Resources\GetMileageCommonPrev.sql" />
     <None Include="Resources\CreateTableParts.sql" />
+    <None Include="Resources\CreateTableTechParts.sql" />
+    <None Include="Resources\SelectMileages.sql" />
     <Content Include="Technics.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

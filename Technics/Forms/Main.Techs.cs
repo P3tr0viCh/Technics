@@ -69,7 +69,9 @@ namespace Technics
                     folderNodes[(long)folder.ParentId].Nodes.Add(folderNode);
                 }
 
-                Lists.Default.Techs = await ListLoadAsync<TechModel>();
+                var techs = await ListLoadAsync<TechModel>();
+
+                Lists.Default.Techs = techs.ToList();
 
                 foreach (var tech in Lists.Default.Techs)
                 {

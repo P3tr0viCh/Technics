@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
-using P3tr0viCh.Database;
+﻿using P3tr0viCh.Database;
 using P3tr0viCh.Utils;
 using System.Collections.Generic;
 using System.Linq;
@@ -69,7 +68,7 @@ namespace Technics
 
             AppSettings.Save();
         }
-        
+
         public int Count => FrmList.BindingSource.Count;
         public int SelectedCount => FrmList.DataGridView.SelectedCells
                     .Cast<DataGridViewCell>().Select(cell => cell.OwningRow).Distinct().Count();
@@ -81,11 +80,11 @@ namespace Technics
 
         public T Selected
         {
-            get => ((BindingSource)FrmList.DataGridView.DataSource).Current as T;
+            get => FrmList.BindingSource.Current as T;
             set => FrmList.BindingSource.Position = FrmList.BindingSource.IndexOf(Find(value));
         }
 
-        public List<T> SelectedList
+        public IEnumerable<T> SelectedList
         {
             get
             {
@@ -97,33 +96,12 @@ namespace Technics
 
                 if (selectedRows?.Count() == 0) return null;
 
-                return selectedRows.Select(item => (T)item.DataBoundItem).ToList();
+                return selectedRows.Select(item => (T)item.DataBoundItem);
             }
             set
             {
-                SetSelectedRows(value);
+                FrmList.DataGridView.SetSelectedRows(value as BaseId);
             }
-        }
-
-        private void SetSelectedRows(List<T> values)
-        {
-            FrmList.DataGridView.ClearSelection();
-
-            foreach (var value in values)
-            {
-                foreach (var row in from DataGridViewRow row in FrmList.DataGridView.Rows
-                                    where (row.DataBoundItem as BaseId).Id == value.Id
-                                    select row)
-                {
-                    row.Selected = true;
-                    break;
-                }
-            }
-        }
-
-        private void SetSelectedRows(T value)
-        {
-            SetSelectedRows(new List<T>() { value });
         }
 
         private void PerformOnListChanged()
@@ -150,16 +128,19 @@ namespace Technics
                 FrmList.BindingSource.ResetItem(index);
             }
 
-            SetSelectedRows(value);
+            FrmList.DataGridView.SetSelectedRows(value);
 
             PerformOnListChanged();
 
             //            Sort();
         }
-        
-        private void ListItemDelete(List<T> list)
+
+        private void ListItemDelete(IEnumerable<T> list)
         {
-            list.ForEach(item => FrmList.BindingSource.Remove(item));
+            foreach (var item in list)
+            {
+                FrmList.BindingSource.Remove(item);
+            }
 
             PerformOnListChanged();
         }
@@ -167,7 +148,7 @@ namespace Technics
         protected abstract T GetNewItem();
 
         protected abstract bool ShowItemChangeDialog(T value);
-        protected abstract bool ShowItemDeleteDialog(List<T> list);
+        protected abstract bool ShowItemDeleteDialog(IEnumerable<T> list);
 
         public async Task ListItemChangeAsync(T value)
         {
@@ -189,7 +170,7 @@ namespace Technics
         {
             var item = Selected;
 
-            SetSelectedRows(item);
+            FrmList.DataGridView.SetSelectedRows(item);
 
             await ListItemChangeAsync(item);
         }
@@ -198,7 +179,7 @@ namespace Technics
         {
             var list = SelectedList;
 
-            SetSelectedRows(list);
+            FrmList.DataGridView.SetSelectedRows(list.Cast<BaseId>());
 
             if (!ShowItemDeleteDialog(list)) return;
 
