@@ -18,14 +18,11 @@ namespace Technics
 
             try
             {
-                var mileageList = await ListLoadAsync<MileageModel>(GetMileagesSql(techs));
+                var list = await ListLoadAsync<MileageModel>(Database.Default.GetMileagesSql(techs));
 
-                foreach (var mileage in mileageList)
-                {
-                    mileage.MileageCommon = await Database.Default.GetMileageCommonAsync(mileage);
-                }
+                bindingSourceMileages.DataSource = list;
 
-                bindingSourceMileages.DataSource = mileageList;
+                await MileagesUpdateMileageCommonAsync(list);
 
                 MileagesListChanged();
 
@@ -39,27 +36,22 @@ namespace Technics
 
         private IEnumerable<MileageModel> MileageList => bindingSourceMileages.Cast<MileageModel>();
 
-        public MileageModel MileageSelected
-        {
-            get => bindingSourceMileages.Current as MileageModel;
-        }
+        public MileageModel MileageSelected => bindingSourceMileages.Current as MileageModel;
 
         private void MileagesListChanged()
         {
             tsbtnMileageDelete.Enabled = tsbtnMileageChange.Enabled = bindingSourceMileages.Count > 0;
         }
 
-        private void MileagesUpdateTechText(TechModel tech)
+        private async Task MileagesUpdateMileageCommonAsync(IEnumerable<MileageModel> list)
         {
-            var changedList = MileageList.Where(m => m.TechId == tech.Id);
+            DebugWrite.Line($"count={list.Count()}");
 
-            DebugWrite.Line(changedList.Count());
+            if (!list.Any()) return;
 
-            if (!changedList.Any()) return;
-
-            foreach (var changed in changedList)
+            foreach (var item in list)
             {
-                changed.TechText = tech.Text;
+                item.MileageCommon = await Database.Default.GetMileageCommonAsync(item);
             }
 
             dgvMileages.Refresh();
@@ -67,18 +59,9 @@ namespace Technics
 
         private async Task MileagesUpdateMileageCommonAsync(MileageModel mileage)
         {
-            var changedList = MileageList.Where(m => m.TechId == mileage.TechId && m.DateTime >= mileage.DateTime);
+            var list = MileageList.Where(m => m.TechId == mileage.TechId && m.DateTime >= mileage.DateTime);
 
-            DebugWrite.Line(changedList.Count());
-
-            if (!changedList.Any()) return;
-
-            foreach (var changed in changedList)
-            {
-                changed.MileageCommon = await Database.Default.GetMileageCommonAsync(changed);
-            }
-
-            dgvMileages.Refresh();
+            await MileagesUpdateMileageCommonAsync(list);
         }
 
         private async Task MileagesChangeAsync(MileageModel mileage)
@@ -109,6 +92,8 @@ namespace Technics
                 }
 
                 await MileagesUpdateMileageCommonAsync(mileage);
+
+                await TechPartsUpdateMileageAsync(mileage);
             }
             catch (Exception e)
             {
@@ -177,6 +162,8 @@ namespace Technics
                 MileagesListChanged();
 
                 await MileagesUpdateMileageCommonAsync(mileage);
+
+                await TechPartsUpdateMileageAsync(mileage);
             }
             catch (Exception e)
             {

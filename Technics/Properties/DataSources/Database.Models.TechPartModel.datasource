@@ -6,5 +6,5 @@
     cause the file to be unrecognizable by the program.
 -->
 <GenericObjectDataSource DisplayName="Database+Models+TechPartModel" Version="1.0" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
-   <TypeInfo>Technics.Database+Models+TechPartModel, Technics, Version=0.1.9483.21516, Culture=neutral, PublicKeyToken=null</TypeInfo>
+   <TypeInfo>Technics.Database+Models+TechPartModel, Technics, Version=0.1.9484.21516, Culture=neutral, PublicKeyToken=null</TypeInfo>
 </GenericObjectDataSource>

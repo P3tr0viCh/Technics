@@ -217,7 +217,7 @@ namespace Technics
         {
             var text =
 #if DEBUG
-                $"Item {Str.Random(3)}";
+                $"Tech {Str.Random(3)}";
 #else
                 string.Empty;
 #endif
@@ -278,7 +278,8 @@ namespace Technics
 
                         Lists.Default.Techs.Add(tech);
 
-                        MileagesUpdateTechText(tech);
+                        UpdateTechText(bindingSourceMileages, tech);
+                        UpdateTechText(bindingSourceTechParts, tech);
                     }
                 }
 
@@ -298,6 +299,20 @@ namespace Technics
             }
 
             tvTechs.Focus();
+        }
+
+        private void UpdateTechText(BindingSource bindingSource, TechModel tech)
+        {
+            var list = bindingSource.Cast<BaseTechId>().ToList();
+
+            for (var i = 0; i < list.Count; i++)
+            {
+                if (list[i].TechId != tech.Id) continue;
+
+                list[i].TechText = tech.Text;
+
+                bindingSource.ResetItem(i);
+            }
         }
 
         private async Task TechsDeleteSelectedAsync()

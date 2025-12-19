@@ -79,11 +79,49 @@ namespace Technics.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Деталь «{0}» установлена на {1} {2}.
+        ///Необходимо указать дату снятия..
+        /// </summary>
+        internal static string ErrorPartDateInstallLessDateNextInstall {
+            get {
+                return ResourceManager.GetString("ErrorPartDateInstallLessDateNextInstall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Дата установки детали «{0}» меньше даты снятия с {1} ({2})..
+        /// </summary>
+        internal static string ErrorPartDateInstallLessDateRemove {
+            get {
+                return ResourceManager.GetString("ErrorPartDateInstallLessDateRemove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Деталь «{0}» установлена на {1} {2}.
+        ///Указанная дата снятия больше даты последующей установки..
+        /// </summary>
+        internal static string ErrorPartDateRemoveGreaterDateNextInstall {
+            get {
+                return ResourceManager.GetString("ErrorPartDateRemoveGreaterDateNextInstall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Деталь не указана..
         /// </summary>
         internal static string ErrorPartEmpty {
             get {
                 return ResourceManager.GetString("ErrorPartEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Деталь «{0}» уже установлена на {1} {2}..
+        /// </summary>
+        internal static string ErrorPartInUse {
+            get {
+                return ResourceManager.GetString("ErrorPartInUse", resourceCulture);
             }
         }
         

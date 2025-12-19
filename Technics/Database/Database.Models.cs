@@ -1,6 +1,7 @@
 ﻿using Dapper.Contrib.Extensions;
 using P3tr0viCh.Database;
 using System;
+using static Technics.Database.Interfaces;
 
 namespace Technics
 {
@@ -65,14 +66,14 @@ namespace Technics
             }
 
             // ---------------------------------------------------------------
-            public abstract class BaseTechId : BaseId
+            public abstract class BaseTechId : BaseId, ITechId
             {
                 public long? TechId { get; set; } = null;
 
                 [Write(false)]
                 [Computed]
                 public string TechText { get; set; } = default;
-                
+
                 public new void Clear()
                 {
                     base.Clear();
@@ -167,7 +168,7 @@ namespace Technics
 
             // ---------------------------------------------------------------
             [Table(Tables.techparts)]
-            public class TechPartModel : BaseTechId
+            public class TechPartModel : BaseTechId, IPartId
             {
                 public long? PartId { get; set; } = null;
 
@@ -177,6 +178,10 @@ namespace Technics
 
                 public DateTime DateTimeInstall { get; set; } = default;
                 public DateTime? DateTimeRemove { get; set; } = default;
+
+                [Write(false)]
+                [Computed]
+                public double Mileage { get; set; } = default;
 
                 public new void Clear()
                 {

@@ -1,4 +1,8 @@
-﻿using Dapper;
+﻿#if DEBUG
+#define _SHOW_SQL
+#endif
+
+using Dapper;
 using P3tr0viCh.Database;
 using P3tr0viCh.Utils;
 using System;
@@ -98,30 +102,22 @@ namespace Technics
             }
         }
 
-        public async Task<IEnumerable<T>> ListLoadAsync<T>(Query query)
-        {
-            using (var connection = GetConnection())
-            {
-                return await Actions.ListLoadAsync<T>(connection, query);
-            }
-        }
-
-        public async Task<IEnumerable<T>> ListLoadAsync<T>()
-        {
-            return await ListLoadAsync<T>(string.Empty);
-        }
-
         public async Task<T> QueryFirstOrDefaultAsync<T>(string sql, object param)
         {
             using (var connection = GetConnection())
             {
+#if SHOW_SQL
+                DebugWrite.Line(sql.ReplaceEol());
+                DebugWrite.Line(param);
+#endif
+
                 try
                 {
                     return await connection.QueryFirstOrDefaultAsync<T>(sql, param);
                 }
                 catch (Exception e)
                 {
-                    Sql.ExceptionAddQuery(e, sql);
+                    e.AddQuery(sql);
                     throw;
                 }
             }
@@ -141,6 +137,50 @@ namespace Technics
         public async Task<double> GetMileageCommonPrevAsync(MileageModel mileage)
         {
             return await GetMileageCommonInternalAsync(mileage, ResourcesSql.GetMileageCommonPrev);
+        }
+
+        public async Task<double> GetTechPartMileageAsync(TechPartModel techPart)
+        {
+            return await QueryFirstOrDefaultAsync<double>(ResourcesSql.GetTechPartMileage,
+                new
+                {
+                    techid = techPart.TechId,
+                    datetimeinstall = techPart.DateTimeInstall,
+                    datetimeremove = techPart.DateTimeRemove ?? DateTime.Today.AddDays(1)
+                });
+        }
+
+        public string GetMileagesSql(IEnumerable<TechModel> techs)
+        {
+            var filter = new Filter.Mileages()
+            {
+                Techs = techs
+            };
+
+            var where = Filter.GetWhereSql(filter);
+
+            var sql = string.Format(ResourcesSql.SelectMileages, where);
+
+            return sql;
+        }
+
+        public string GetTechPartsSql(Filter.TechParts filter)
+        {
+            var where = Filter.GetWhereSql(filter);
+
+            var sql = string.Format(ResourcesSql.SelectTechParts, where);
+
+            return sql;
+        }
+
+        public string GetTechPartsSql(IEnumerable<TechModel> techs)
+        {
+            var filter = new Filter.TechParts()
+            {
+                Techs = techs
+            };
+
+            return GetTechPartsSql(filter);
         }
     }
 }

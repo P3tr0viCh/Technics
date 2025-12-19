@@ -135,6 +135,7 @@ namespace Technics
 
             MileagesMileage.DefaultCellStyle =
             MileagesMileageCommon.DefaultCellStyle =
+            TechPartsMileage.DefaultCellStyle =
                 DataGridViewCellStyles.Mileage;
         }
 
@@ -262,14 +263,24 @@ namespace Technics
             return true;
         }
 
+        private DataLoad GetUpdateDataLoad(FrmListType listType)
+        {
+            switch (listType)
+            {
+                case FrmListType.Parts: return DataLoad.TechParts;
+                default: return default;
+            }
+        }
+
         private async Task ShowListAsync(FrmListType listType)
         {
             if (IsProgramBusy()) return;
 
             if (FrmList.ShowDlg(this, listType))
             {
-                await Task.Delay(500);
-                //                await UpdateDataAsync();
+                var dataLoad = GetUpdateDataLoad(listType);
+
+                await UpdateDataAsync(dataLoad);
             }
         }
 

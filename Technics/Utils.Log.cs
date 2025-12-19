@@ -54,7 +54,7 @@ namespace Technics
 
             public static void Query(Exception e, [CallerMemberName] string memberName = "")
             {
-                var query = Sql.ExceptionGetQuery(e);
+                var query = e.GetQuery();
 
                 if (query.IsEmpty()) return;
 

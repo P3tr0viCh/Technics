@@ -1,6 +1,8 @@
 ﻿using P3tr0viCh.Database;
 using P3tr0viCh.Utils;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Technics.Properties;
@@ -63,7 +65,7 @@ namespace Technics
 
             TechPart = techPart;
         }
-        
+
         private async Task LoadDataAsync()
         {
             DebugWrite.Line("start");
@@ -119,6 +121,81 @@ namespace Technics
             }
         }
 
+        private async Task AssertPartInUseAsync()
+        {
+            DebugWrite.Line("start");
+
+            try
+            {
+                var part = cboxPart.GetSelectedItem<PartModel>();
+
+                var filter = new Database.Filter.TechParts()
+                {
+                    Parts = new List<PartModel>() { part },
+                };
+
+                var sql = Database.Default.GetTechPartsSql(filter);
+
+                var techPartList = await MainForm.ListLoadAsync<TechPartModel>(sql);
+
+                var list = techPartList.Where(item => item.Id != TechPart.Id).ToList();
+
+                if (list.Count == 0) return;
+
+                var dateInstall = dtpDateTimeInstall.GetDateTime();
+                var dateRemove = dtpDateTimeRemove.GetDateTimeNullable();
+
+                var lastItem = list.First();
+
+                if (dateInstall > lastItem.DateTimeInstall)
+                {
+                    if (lastItem.DateTimeRemove == default)
+                    {
+                        throw new Exception(string.Format(Resources.ErrorPartInUse,
+                            lastItem.PartText,
+                            lastItem.TechText,
+                            lastItem.DateTimeInstall.ToString(AppSettings.Default.FormatDateTime)));
+                    }
+
+                    if (dateInstall < lastItem.DateTimeRemove)
+                    {
+                        throw new Exception(string.Format(Resources.ErrorPartDateInstallLessDateRemove,
+                            lastItem.PartText,
+                            lastItem.TechText,
+                            lastItem.DateTimeRemove?.ToString(AppSettings.Default.FormatDateTime)));
+                    }
+
+                    return;
+                }
+
+                list = list.Where(item => item.DateTimeInstall > dateInstall).ToList();
+
+                var nextItem = list.Last();
+
+                if (dateRemove == null)
+                {
+                    throw new Exception(string.Format(Resources.ErrorPartDateInstallLessDateNextInstall,
+                        nextItem.PartText,
+                        nextItem.TechText,
+                        nextItem.DateTimeInstall.ToString(AppSettings.Default.FormatDateTime)));
+                }
+                else
+                {
+                    if (dateRemove > nextItem.DateTimeInstall)
+                    {
+                        throw new Exception(string.Format(Resources.ErrorPartDateRemoveGreaterDateNextInstall,
+                            nextItem.PartText,
+                            nextItem.TechText,
+                            nextItem.DateTimeInstall.ToString(AppSettings.Default.FormatDateTime)));
+                    }
+                }
+            }
+            finally
+            {
+                DebugWrite.Line("end");
+            }
+        }
+
         private async Task<bool> CheckDataAsync()
         {
             try
@@ -129,10 +206,14 @@ namespace Technics
 
                 AssertDates();
 
-                return await Task.FromResult(true);
+                await AssertPartInUseAsync();
+
+                return true;
             }
             catch (Exception e)
             {
+                Utils.Log.Query(e);
+
                 Utils.Log.Error(e);
 
                 Utils.Msg.Error(e.Message);

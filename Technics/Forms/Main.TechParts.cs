@@ -18,9 +18,11 @@ namespace Technics
 
             try
             {
-                var techPartList = await ListLoadAsync<TechPartModel>(GetTechPartsSql(techs));
+                var list = await ListLoadAsync<TechPartModel>(Database.Default.GetTechPartsSql(techs));
 
-                bindingSourceTechParts.DataSource = techPartList;
+                bindingSourceTechParts.DataSource = list;
+
+                await TechPartsUpdateMileageAsync(list);
 
                 TechPartsListChanged();
 
@@ -34,14 +36,39 @@ namespace Technics
 
         private IEnumerable<TechPartModel> TechPartList => bindingSourceTechParts.Cast<TechPartModel>();
 
-        public TechPartModel TechPartSelected
-        {
-            get => bindingSourceTechParts.Current as TechPartModel;
-        }
+        public TechPartModel TechPartSelected => bindingSourceTechParts.Current as TechPartModel;
 
         private void TechPartsListChanged()
         {
             tsbtnTechPartDelete.Enabled = tsbtnTechPartChange.Enabled = bindingSourceTechParts.Count > 0;
+        }
+
+        private async Task TechPartsUpdateMileageAsync(IEnumerable<TechPartModel> list)
+        {
+            DebugWrite.Line($"count={list.Count()}");
+
+            if (!list.Any()) return;
+
+            foreach (var item in list)
+            {
+                item.Mileage = await Database.Default.GetTechPartMileageAsync(item);
+            }
+
+            dgvTechParts.Refresh();
+        }
+
+        private async Task TechPartsUpdateMileageAsync(TechPartModel techPart)
+        {
+            var list = TechPartList.Where(item => item.Id == techPart.Id);
+
+            await TechPartsUpdateMileageAsync(list);
+        }
+
+        private async Task TechPartsUpdateMileageAsync(MileageModel mileage)
+        {
+            var list = TechPartList.Where(item => item.TechId == mileage.TechId);
+
+            await TechPartsUpdateMileageAsync(list);
         }
 
         private async Task TechPartsChangeAsync(TechPartModel techPart)
@@ -71,7 +98,7 @@ namespace Technics
                     dgvTechParts.Refresh();
                 }
 
-                //                await MileagesUpdateMileageCommonAsync(techPart);
+                await TechPartsUpdateMileageAsync(techPart);
             }
             catch (Exception e)
             {

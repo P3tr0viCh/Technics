@@ -85,6 +85,8 @@
     <Compile Include="AppSettings\AppSettings.cs" />
     <Compile Include="AppSettings\AppSettings.FormState.cs" />
     <Compile Include="Database\Database.cs" />
+    <Compile Include="Database\Database.Filter.cs" />
+    <Compile Include="Database\Database.Interfaces.cs" />
     <Compile Include="Database\Database.Models.cs" />
     <Compile Include="Database\Database.Tables.cs" />
     <Compile Include="DataGridViewCellStyles.cs" />
@@ -240,6 +242,7 @@
     <None Include="Resources\CreateTableTechParts.sql" />
     <None Include="Resources\SelectMileages.sql" />
     <None Include="Resources\SelectTechParts.sql" />
+    <None Include="Resources\GetTechPartMileage.sql" />
     <Content Include="Technics.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

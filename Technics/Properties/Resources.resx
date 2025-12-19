@@ -123,8 +123,22 @@
   <data name="ErrorMileagesEmpty" xml:space="preserve">
     <value>Не один из пробегов не указан.</value>
   </data>
+  <data name="ErrorPartDateInstallLessDateNextInstall" xml:space="preserve">
+    <value>Деталь «{0}» установлена на {1} {2}.
+Необходимо указать дату снятия.</value>
+  </data>
+  <data name="ErrorPartDateInstallLessDateRemove" xml:space="preserve">
+    <value>Дата установки детали «{0}» меньше даты снятия с {1} ({2}).</value>
+  </data>
+  <data name="ErrorPartDateRemoveGreaterDateNextInstall" xml:space="preserve">
+    <value>Деталь «{0}» установлена на {1} {2}.
+Указанная дата снятия больше даты последующей установки.</value>
+  </data>
   <data name="ErrorPartEmpty" xml:space="preserve">
     <value>Деталь не указана.</value>
+  </data>
+  <data name="ErrorPartInUse" xml:space="preserve">
+    <value>Деталь «{0}» уже установлена на {1} {2}.</value>
   </data>
   <data name="ErrorTechEmpty" xml:space="preserve">
     <value>Техника не указана.</value>
