@@ -9,5 +9,8 @@ namespace Technics
 
         [Browsable(false)]
         public FormState FormStateListParts { get; set; }
+
+        [Browsable(false)]
+        public FormState FormStateListTechs { get; set; }
     }
 }

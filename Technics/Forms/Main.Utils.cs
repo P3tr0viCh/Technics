@@ -96,5 +96,14 @@ namespace Technics
 
             Utils.Log.Error(AppSettings.LastError);
         }
+
+        private void SetTags()
+        {
+            miListParts.Tag = FrmListType.Parts;
+            tsbtnListParts.Tag = FrmListType.Parts;
+
+            miListTechs.Tag = FrmListType.Techs;
+            tsbtnListTechs.Tag = FrmListType.Techs;
+        }
     }
 }

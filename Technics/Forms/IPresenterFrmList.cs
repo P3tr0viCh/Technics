@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using static Technics.Enums;
 
 namespace Technics
 {
@@ -7,7 +6,7 @@ namespace Technics
 
     internal interface IPresenterFrmList
     {
-        ListType ListType { get; }
+        FrmListType ListType { get; }
 
         IFrmList FrmList { get; }
 

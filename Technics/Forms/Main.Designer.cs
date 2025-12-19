@@ -87,6 +87,8 @@
             this.tsbtnListParts = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tsbtnClose = new System.Windows.Forms.ToolStripButton();
+            this.tsbtnListTechs = new System.Windows.Forms.ToolStripButton();
+            this.miListTechs = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripContainer.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer.ContentPanel.SuspendLayout();
             this.toolStripContainer.TopToolStripPanel.SuspendLayout();
@@ -584,6 +586,7 @@
             // miMainLists
             // 
             this.miMainLists.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.miListTechs,
             this.miListParts});
             this.miMainLists.Name = "miMainLists";
             this.miMainLists.Size = new System.Drawing.Size(67, 23);
@@ -636,12 +639,13 @@
             this.toolStripMain.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStripMain.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.toolStripMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsbtnListTechs,
             this.tsbtnListParts,
             this.toolStripSeparator1,
             this.tsbtnClose});
             this.toolStripMain.Location = new System.Drawing.Point(3, 27);
             this.toolStripMain.Name = "toolStripMain";
-            this.toolStripMain.Size = new System.Drawing.Size(194, 50);
+            this.toolStripMain.Size = new System.Drawing.Size(288, 50);
             this.toolStripMain.TabIndex = 1;
             // 
             // tsbtnListParts
@@ -668,6 +672,23 @@
             this.tsbtnClose.Text = "Закрыть";
             this.tsbtnClose.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsbtnClose.Click += new System.EventHandler(this.TsbtnClose_Click);
+            // 
+            // tsbtnListTechs
+            // 
+            this.tsbtnListTechs.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnListTechs.Image")));
+            this.tsbtnListTechs.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbtnListTechs.Name = "tsbtnListTechs";
+            this.tsbtnListTechs.Size = new System.Drawing.Size(63, 47);
+            this.tsbtnListTechs.Text = "Техника";
+            this.tsbtnListTechs.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tsbtnListTechs.Click += new System.EventHandler(this.TsbtnList_Click);
+            // 
+            // miListTechs
+            // 
+            this.miListTechs.Name = "miListTechs";
+            this.miListTechs.Size = new System.Drawing.Size(184, 24);
+            this.miListTechs.Text = "Техника";
+            this.miListTechs.Click += new System.EventHandler(this.MiList_Click);
             // 
             // Main
             // 
@@ -775,6 +796,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn TechPartsPartText;
         private System.Windows.Forms.DataGridViewTextBoxColumn TechPartsDateTimeInstall;
         private System.Windows.Forms.DataGridViewTextBoxColumn TechPartsDateTimeRemove;
+        private System.Windows.Forms.ToolStripMenuItem miListTechs;
+        private System.Windows.Forms.ToolStripButton tsbtnListTechs;
     }
 }
 

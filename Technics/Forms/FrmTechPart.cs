@@ -150,6 +150,11 @@ namespace Technics
                 techPart.TechId = tech.Id;
                 techPart.TechText = tech.Text;
 
+                var part = cboxPart.GetSelectedItem<PartModel>();
+
+                techPart.PartId = part.Id;
+                techPart.PartText = part.Text;
+
                 techPart.DateTimeInstall = dtpDateTimeInstall.GetDateTime();
                 techPart.DateTimeRemove = dtpDateTimeRemove.GetDateTimeNullable();
 

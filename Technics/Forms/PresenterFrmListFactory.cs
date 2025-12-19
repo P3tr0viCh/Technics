@@ -1,16 +1,17 @@
 ﻿using System;
-using static Technics.Enums;
 
 namespace Technics
 {
     internal class PresenterFrmListFactory
     {
-        public static IPresenterFrmList PresenterFrmListInstance(IFrmList frmList, ListType listType)
+        public static IPresenterFrmList PresenterFrmListInstance(IFrmList frmList, FrmListType listType)
         {
             switch (listType)
             {
-                case ListType.Parts:
+                case FrmListType.Parts:
                     return new PresenterFrmListParts(frmList);
+                case FrmListType.Techs:
+                    return new PresenterFrmListTechs(frmList);
                 default:
                     throw new NotImplementedException();
             }

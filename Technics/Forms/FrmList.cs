@@ -2,7 +2,7 @@
 using System;
 using System.Windows.Forms;
 using static Technics.Enums;
-using static Technics.PresenterStatusStripList;
+using static Technics.PresenterStatusStripFrmList;
 
 namespace Technics
 {
@@ -18,38 +18,27 @@ namespace Technics
 
         private IPresenterFrmList PresenterFrmList { get; set; }
 
-        private readonly PresenterStatusStripList statusStripPresenter;
+        private readonly PresenterStatusStripFrmList statusStripPresenter;
 
         public FrmList()
         {
             InitializeComponent();
 
-            statusStripPresenter = new PresenterStatusStripList(this);
+            statusStripPresenter = new PresenterStatusStripFrmList(this);
         }
 
-        public static bool ShowDlg(Form owner, ListType listType)
+        public static bool ShowDlg(Form owner, FrmListType listType)
         {
             using (var frm = new FrmList()
             {
                 Owner = owner,
             })
             {
-                Utils.Log.WriteFormOpen(frm);
-
                 frm.PresenterFrmList = PresenterFrmListFactory.PresenterFrmListInstance(frm, listType);
 
-                try
-                {
-                    Utils.Log.Info($"ListType = {frm.PresenterFrmList.ListType}");
+                frm.ShowDialog(owner);
 
-                    frm.ShowDialog(owner);
-
-                    return frm.PresenterFrmList.Changed;
-                }
-                finally
-                {
-                    Utils.Log.WriteFormClose(frm);
-                }
+                return frm.PresenterFrmList.Changed;
             }
         }
 

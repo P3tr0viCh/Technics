@@ -3,7 +3,7 @@ using Technics.Properties;
 
 namespace Technics
 {
-    internal class PresenterStatusStripList : PresenterStatusStrip<PresenterStatusStripList.StatusLabel>
+    internal class PresenterStatusStripFrmList : PresenterStatusStrip<PresenterStatusStripFrmList.StatusLabel>
     {
         public enum StatusLabel
         {
@@ -11,7 +11,7 @@ namespace Technics
             SelectedCount,
         }
 
-        public PresenterStatusStripList(IPresenterStatusStrip view) : base(view)
+        public PresenterStatusStripFrmList(IPresenterStatusStrip view) : base(view)
         {
             Count = 0;
             SelectedCount = 0;

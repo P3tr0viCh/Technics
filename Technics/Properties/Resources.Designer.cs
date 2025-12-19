@@ -292,6 +292,15 @@ namespace Technics.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Техника.
+        /// </summary>
+        internal static string TitleListTechs {
+            get {
+                return ResourceManager.GetString("TitleListTechs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Учёт и обслуживание техники {0}.
         /// </summary>
         internal static string TitleMain {

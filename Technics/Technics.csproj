@@ -138,8 +138,10 @@
     <Compile Include="Forms\PresenterFrmListBase.cs" />
     <Compile Include="Forms\PresenterFrmListFactory.cs" />
     <Compile Include="Forms\PresenterFrmListParts.cs" />
-    <Compile Include="Forms\PresenterStatusStripList.cs" />
+    <Compile Include="Forms\PresenterFrmListTechs.cs" />
+    <Compile Include="Forms\PresenterStatusStripFrmList.cs" />
     <Compile Include="Forms\PresenterStatusStripMain.cs" />
+    <Compile Include="Forms\FrmListType.cs" />
     <Compile Include="Properties\ResourcesColumnHeader.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

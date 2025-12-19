@@ -31,8 +31,7 @@ namespace Technics
 
             if (!SetProgramDirectory()) return;
 
-            miListParts.Tag = ListType.Parts;
-            tsbtnListParts.Tag = ListType.Parts;
+            SetTags();
 
             AddTechsRoot();
 
@@ -263,7 +262,7 @@ namespace Technics
             return true;
         }
 
-        private async Task ShowListAsync(ListType listType)
+        private async Task ShowListAsync(FrmListType listType)
         {
             if (IsProgramBusy()) return;
 
@@ -276,12 +275,12 @@ namespace Technics
 
         private async void MiList_Click(object sender, EventArgs e)
         {
-            await ShowListAsync((ListType)((ToolStripItem)sender).Tag);
+            await ShowListAsync((FrmListType)((ToolStripItem)sender).Tag);
         }
 
         private async void TsbtnList_Click(object sender, EventArgs e)
         {
-            await ShowListAsync((ListType)((ToolStripItem)sender).Tag);
+            await ShowListAsync((FrmListType)((ToolStripItem)sender).Tag);
         }
 
         private async void TsbtnTechPartAdd_Click(object sender, EventArgs e)

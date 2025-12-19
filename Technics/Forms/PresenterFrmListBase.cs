@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static Technics.Enums;
 
 namespace Technics
 {
@@ -12,9 +11,31 @@ namespace Technics
     {
         public IFrmList FrmList { get; private set; }
 
-        public abstract ListType ListType { get; }
+        public Form Form => FrmList as Form;
+
+        public abstract FrmListType ListType { get; }
 
         public bool Changed { get; set; } = false;
+
+        private bool readOnly = false;
+        protected bool ReadOnly
+        {
+            get => readOnly;
+            set
+            {
+                readOnly = value;
+
+                foreach (ToolStripItem item in FrmList.ToolStrip.Items)
+                {
+                    if (item.Name == "tsbtnClose")
+                    {
+                        continue;
+                    }
+
+                    item.Visible = !readOnly;
+                }
+            }
+        }
 
         public PresenterFrmListBase(IFrmList frmList)
         {
@@ -30,11 +51,19 @@ namespace Technics
             FrmList.DataGridView.DataSource = FrmList.BindingSource;
         }
 
+        protected abstract string FormTitle { get; }
+
         protected abstract void LoadFormState();
         protected abstract void UpdateColumns();
 
         public async Task FormLoadAsync()
         {
+            Utils.Log.WriteFormOpen(Form);
+
+            Utils.Log.Info($"ListType = {ListType}");
+
+            Form.Text = FormTitle;
+
             FrmList.ToolStrip.SetShowTextAndToolTips(AppSettings.Default.ToolStripsShowText);
 
             FrmList.DataGridView.MultiSelect = true;
@@ -53,11 +82,7 @@ namespace Technics
         private void UpdateCommonColumns()
         {
             FrmList.DataGridView.Columns[nameof(BaseId.Id)].Visible = false;
-
-            if (FrmList.DataGridView.ColumnExists(nameof(BaseId.IsNew)))
-            {
-                FrmList.DataGridView.Columns[nameof(BaseId.IsNew)].Visible = false;
-            }
+            FrmList.DataGridView.Columns[nameof(BaseId.IsNew)].Visible = false;
         }
 
         protected abstract void SaveFormState();
@@ -67,6 +92,8 @@ namespace Technics
             SaveFormState();
 
             AppSettings.Save();
+
+            Utils.Log.WriteFormClose(Form);
         }
 
         public int Count => FrmList.BindingSource.Count;
@@ -150,7 +177,7 @@ namespace Technics
         protected abstract bool ShowItemChangeDialog(T value);
         protected abstract bool ShowItemDeleteDialog(IEnumerable<T> list);
 
-        public async Task ListItemChangeAsync(T value)
+        private async Task ListItemChangeAsync(T value)
         {
             if (!ShowItemChangeDialog(value)) return;
 
@@ -161,6 +188,8 @@ namespace Technics
 
         public async Task ListItemAddNewAsync()
         {
+            if (ReadOnly) return;
+
             var item = GetNewItem();
 
             await ListItemChangeAsync(item);
@@ -172,6 +201,8 @@ namespace Technics
 
             FrmList.DataGridView.SetSelectedRows(item);
 
+            if (ReadOnly) return;
+
             await ListItemChangeAsync(item);
         }
 
@@ -180,6 +211,8 @@ namespace Technics
             var list = SelectedList;
 
             FrmList.DataGridView.SetSelectedRows(list.Cast<BaseId>());
+
+            if (ReadOnly) return;
 
             if (!ShowItemDeleteDialog(list)) return;
 

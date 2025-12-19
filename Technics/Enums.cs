@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using static P3tr0viCh.Utils.Converters;
 
 namespace Technics
@@ -15,11 +14,6 @@ namespace Technics
             LoadData,
             [Description("Сохранение данных...")]
             SaveDatа,
-        }
-        
-        public enum ListType
-        {
-            Parts,
         }
     }
 }

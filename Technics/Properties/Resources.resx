@@ -198,6 +198,9 @@
   <data name="TitleListParts" xml:space="preserve">
     <value>Комплектующие</value>
   </data>
+  <data name="TitleListTechs" xml:space="preserve">
+    <value>Техника</value>
+  </data>
   <data name="TitleMain" xml:space="preserve">
     <value>Учёт и обслуживание техники {0}</value>
   </data>

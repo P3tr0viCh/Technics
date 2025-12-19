@@ -20,7 +20,11 @@ namespace Technics
 				var list = await FrmList.MainForm.ListLoadAsync<T>();
 
                 FrmList.BindingSource.DataSource = list.ToBindingList();
-			}
+            
+				PerformOnListChanged();
+
+				Changed = false;
+            }
 			catch (Exception e)
 			{
 				Utils.Log.Query(e);

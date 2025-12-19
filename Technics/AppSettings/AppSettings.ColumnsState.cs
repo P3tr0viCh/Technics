@@ -12,5 +12,8 @@ namespace Technics
 
         [Browsable(false)]
         public ColumnState[] ColumnsListParts { get; set; }
+
+        [Browsable(false)]
+        public ColumnState[] ColumnsListTechs { get; set; }
     }
 }
