@@ -6,6 +6,6 @@ namespace Technics
 {
     internal class Lists : DefaultInstance<Lists>
     {
-        public List<TechModel> Techs { get; set; }
+        public List<TechModel> Techs { get; set; } = new List<TechModel>();
     }
 }

@@ -8,8 +8,7 @@ namespace Technics
     {
         ProgramStatus ProgramStatus { get; }
 
-        Task<IEnumerable<T>> ListLoadAsync<T>() where T : BaseId;
-        Task<IEnumerable<T>> ListLoadAsync<T>(string sql) where T : BaseId;
+        Task<IEnumerable<T>> ListLoadAsync<T>(string sql = null, object param = null);
 
         Task ListItemSaveAsync<T>(T value) where T : BaseId;
 

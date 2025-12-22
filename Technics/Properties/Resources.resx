@@ -186,7 +186,7 @@
   </data>
   <data name="QuestionTechDelete" xml:space="preserve">
     <value>Удалить «{0}» из базы данных?
-Все связанные записи пробега так же будут удалены.</value>
+Все связанные записи пробега будут отмечены пустым значением техники.</value>
   </data>
   <data name="QuestionTechPartDelete" xml:space="preserve">
     <value>Удалить «{0}» с датой установки {1} из базы данных?</value>
@@ -194,8 +194,14 @@
   <data name="StatusCount" xml:space="preserve">
     <value>Количество: {0}</value>
   </data>
+  <data name="StatusMileageCount" xml:space="preserve">
+    <value>Пробеги: {0}</value>
+  </data>
   <data name="StatusSelectedCount" xml:space="preserve">
     <value>Выделено: {0}</value>
+  </data>
+  <data name="StatusTechPartCount" xml:space="preserve">
+    <value>Детали: {0}</value>
   </data>
   <data name="TextLabelText" xml:space="preserve">
     <value>Наименование</value>

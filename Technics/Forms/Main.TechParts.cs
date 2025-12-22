@@ -18,7 +18,9 @@ namespace Technics
 
             try
             {
-                var list = await ListLoadAsync<TechPartModel>(Database.Default.GetTechPartsSql(techs));
+                var list = techs.Count() > 0
+                    ? await ListLoadAsync<TechPartModel>(Database.Default.GetTechPartsSql(techs))
+                    : Enumerable.Empty<TechPartModel>();
 
                 bindingSourceTechParts.DataSource = list;
 
@@ -41,6 +43,8 @@ namespace Technics
         private void TechPartsListChanged()
         {
             tsbtnTechPartDelete.Enabled = tsbtnTechPartChange.Enabled = bindingSourceTechParts.Count > 0;
+
+            statusStripPresenter.TechPartCount = bindingSourceTechParts.Count;
         }
 
         private async Task TechPartsUpdateMileageAsync(IEnumerable<TechPartModel> list)
@@ -81,9 +85,7 @@ namespace Technics
             {
                 var isNew = techPart.IsNew;
 
-                await Database.Default.ListItemSaveAsync(techPart);
-
-                Utils.Log.Info(string.Format(ResourcesLog.ListItemSaveOk, nameof(TechPartModel)));
+                await ListItemSaveAsync(techPart);
 
                 if (isNew)
                 {

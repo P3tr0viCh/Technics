@@ -79,9 +79,10 @@ namespace Technics.Properties {
         ///	techid INTEGER,
         ///	datetime TEXT,
         ///	mileage REAL,
+        ///	mileageCommon REAL,
         ///	description TEXT,
         ///	FOREIGN KEY (techid) REFERENCES techs (id)
-        ///	ON DELETE CASCADE
+        ///	ON DELETE SET NULL
         ///	ON UPDATE CASCADE
         ///);.
         /// </summary>
@@ -143,9 +144,11 @@ namespace Technics.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SELECT IFNULL(SUM(mileage), 0.0)
+        ///   Looks up a localized string similar to SELECT mileagecommon
         ///FROM mileages
-        ///WHERE techid = :techid AND datetime &lt; :datetime;.
+        ///WHERE techid = :techid AND datetime &lt; :datetime
+        ///ORDER BY datetime DESC
+        ///LIMIT 1;.
         /// </summary>
         internal static string GetMileageCommonPrev {
             get {
@@ -165,7 +168,7 @@ namespace Technics.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SELECT mileages.id, techid, techs.text AS techtext, datetime, mileage, description
+        ///   Looks up a localized string similar to SELECT mileages.id, techid, techs.text AS techtext, datetime, mileage, mileagecommon, description
         ///FROM mileages
         ///LEFT JOIN techs ON mileages.techid = techs.id
         ///{0}
@@ -174,6 +177,18 @@ namespace Technics.Properties {
         internal static string SelectMileages {
             get {
                 return ResourceManager.GetString("SelectMileages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SELECT id, techid, datetime
+        ///FROM mileages
+        ///WHERE datetime &gt; :datetime
+        ///ORDER BY datetime DESC;.
+        /// </summary>
+        internal static string SelectMileagesChangedByDateTime {
+            get {
+                return ResourceManager.GetString("SelectMileagesChangedByDateTime", resourceCulture);
             }
         }
         
@@ -188,6 +203,41 @@ namespace Technics.Properties {
         internal static string SelectTechParts {
             get {
                 return ResourceManager.GetString("SelectTechParts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DELETE FROM {0};.
+        /// </summary>
+        internal static string TruncateTable {
+            get {
+                return ResourceManager.GetString("TruncateTable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UPDATE
+        ///	mileages
+        ///SET
+        ///	mileagecommon = :mileagecommon
+        ///WHERE id = :id;.
+        /// </summary>
+        internal static string UpdateMileagesMileageCommonById {
+            get {
+                return ResourceManager.GetString("UpdateMileagesMileageCommonById", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UPDATE
+        ///	mileages
+        ///SET
+        ///	mileagecommon = null
+        ///WHERE techid = :techid;.
+        /// </summary>
+        internal static string UpdateMileagesMileageCommonByTechId {
+            get {
+                return ResourceManager.GetString("UpdateMileagesMileageCommonByTechId", resourceCulture);
             }
         }
     }

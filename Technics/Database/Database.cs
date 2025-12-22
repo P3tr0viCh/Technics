@@ -1,14 +1,12 @@
-﻿#if DEBUG
-#define _SHOW_SQL
-#endif
-
-using Dapper;
+﻿using Dapper;
 using P3tr0viCh.Database;
 using P3tr0viCh.Utils;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Data.SQLite;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Technics.Properties;
 using static Technics.Database.Models;
@@ -52,19 +50,44 @@ namespace Technics
             }
         }
 
+        private async Task TruncateTableAsync<T>(DbConnection connection)
+        {
+            var sql = string.Format(ResourcesSql.TruncateTable, Sql.TableName<T>());
+
+            await Actions.ExecuteAsync(connection, sql);
+        }
+
+        public async Task TruncateTableAsync<T>()
+        {
+            using (var connection = GetConnection())
+            {
+                await TruncateTableAsync<T>(connection);
+            }
+        }
+
         public async Task ListItemSaveAsync<T>(T value) where T : BaseId
         {
             using (var connection = GetConnection())
             {
-                await Actions.ListItemSaveAsync(connection, null, value);
+                await Actions.ListItemSaveAsync(connection, value, null);
             }
         }
+
+#if DEBUG
+        public async Task ListItemSaveAsync<T>(IEnumerable<T> values) where T : BaseId
+        {
+            using (var connection = GetConnection())
+            {
+                await Actions.ListItemSaveAsync(connection, values);
+            }
+        }
+#endif
 
         public async Task ListItemDeleteAsync<T>(T value) where T : BaseId
         {
             using (var connection = GetConnection())
             {
-                await Actions.ListItemDeleteAsync(connection, null, value);
+                await Actions.ListItemDeleteAsync(connection, value, null);
             }
         }
 
@@ -72,71 +95,30 @@ namespace Technics
         {
             using (var connection = GetConnection())
             {
-                await connection.OpenAsync();
-
-                using (var transaction = connection.BeginTransaction())
-                {
-                    try
-                    {
-                        foreach (var value in values)
-                        {
-                            await Actions.ListItemDeleteAsync(connection, transaction, value);
-                        }
-
-                        transaction.Commit();
-                    }
-                    catch (Exception)
-                    {
-                        transaction.Rollback();
-                        throw;
-                    }
-                }
+                await Actions.ListItemDeleteAsync(connection, values);
             }
         }
 
-        public async Task<IEnumerable<T>> ListLoadAsync<T>(string sql)
+        public async Task<IEnumerable<T>> ListLoadAsync<T>(string sql = null, object param = null)
         {
             using (var connection = GetConnection())
             {
-                return await Actions.ListLoadAsync<T>(connection, sql);
+                return await Actions.ListLoadAsync<T>(connection, sql, param);
             }
         }
 
-        public async Task<T> QueryFirstOrDefaultAsync<T>(string sql, object param)
+        private async Task<T> QueryFirstOrDefaultAsync<T>(string sql, object param)
         {
             using (var connection = GetConnection())
             {
-#if SHOW_SQL
-                DebugWrite.Line(sql.ReplaceEol());
-                DebugWrite.Line(param);
-#endif
-
-                try
-                {
-                    return await connection.QueryFirstOrDefaultAsync<T>(sql, param);
-                }
-                catch (Exception e)
-                {
-                    e.AddQuery(sql);
-                    throw;
-                }
+                return await Actions.QueryFirstOrDefaultAsync<T>(connection, sql, param);
             }
-        }
-
-        private async Task<double> GetMileageCommonInternalAsync(MileageModel mileage, string sql)
-        {
-            return await QueryFirstOrDefaultAsync<double>(sql,
-                new { techid = mileage.TechId, datetime = mileage.DateTime });
-        }
-
-        public async Task<double> GetMileageCommonAsync(MileageModel mileage)
-        {
-            return await GetMileageCommonInternalAsync(mileage, ResourcesSql.GetMileageCommon);
         }
 
         public async Task<double> GetMileageCommonPrevAsync(MileageModel mileage)
         {
-            return await GetMileageCommonInternalAsync(mileage, ResourcesSql.GetMileageCommonPrev);
+            return await QueryFirstOrDefaultAsync<double>(ResourcesSql.GetMileageCommonPrev,
+                new { techid = mileage.TechId, datetime = mileage.DateTime });
         }
 
         public async Task<double> GetTechPartMileageAsync(TechPartModel techPart)
@@ -181,6 +163,110 @@ namespace Technics
             };
 
             return GetTechPartsSql(filter);
+        }
+
+        private async Task<IEnumerable<MileageModel>> MileagesUpdateMileageCommonAsync(
+            DbConnection connection, DbTransaction transaction, DateTime dateTime)
+        {
+            var list = await Actions.ListLoadAsync<MileageModel>(connection,
+                ResourcesSql.SelectMileagesChangedByDateTime,
+                new { datetime = dateTime }, transaction);
+
+            DebugWrite.Line($"count={list.Count()}");
+
+            foreach (var item in list)
+            {
+                item.MileageCommon = await Actions.QueryFirstOrDefaultAsync<double>(connection,
+                    ResourcesSql.GetMileageCommon,
+                    new { techid = item.TechId, datetime = item.DateTime }, transaction);
+
+                await Actions.ExecuteAsync(connection,
+                    ResourcesSql.UpdateMileagesMileageCommonById,
+                    new { id = item.Id, mileagecommon = item.MileageCommon }, transaction);
+            }
+
+            return list;
+        }
+
+        public async Task<IEnumerable<MileageModel>> MileageSaveAsync(MileageModel mileage)
+        {
+            using (var connection = GetConnection())
+            {
+                await connection.OpenAsync();
+
+                using (var transaction = connection.BeginTransaction())
+                {
+                    try
+                    {
+                        await Actions.ListItemSaveAsync(connection, mileage, transaction);
+
+                        var changedList = await MileagesUpdateMileageCommonAsync(connection, transaction, mileage.DateTime);
+
+                        transaction.Commit();
+
+                        return changedList;
+                    }
+                    catch (Exception)
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
+                }
+            }
+        }
+
+        public async Task<IEnumerable<MileageModel>> MileageDeleteAsync(MileageModel mileage)
+        {
+            using (var connection = GetConnection())
+            {
+                await connection.OpenAsync();
+
+                using (var transaction = connection.BeginTransaction())
+                {
+                    try
+                    {
+                        await Actions.ListItemDeleteAsync(connection, mileage, transaction);
+
+                        var changedList = await MileagesUpdateMileageCommonAsync(connection, transaction, mileage.DateTime);
+
+                        transaction.Commit();
+
+                        return changedList;
+                    }
+                    catch (Exception)
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
+                }
+            }
+        }
+
+        public async Task TechDeleteAsync(TechModel tech)
+        {
+            using (var connection = GetConnection())
+            {
+                await connection.OpenAsync();
+
+                using (var transaction = connection.BeginTransaction())
+                {
+                    try
+                    {
+                        await Actions.ListItemDeleteAsync(connection, tech, transaction);
+
+                        await Actions.ExecuteAsync(connection,
+                            ResourcesSql.UpdateMileagesMileageCommonByTechId,
+                            new { techid = tech.Id }, transaction);
+
+                        transaction.Commit();
+                    }
+                    catch (Exception)
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
+                }
+            }
         }
     }
 }

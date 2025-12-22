@@ -1,3 +1,5 @@
-SELECT IFNULL(SUM(mileage), 0.0)
+SELECT mileagecommon
 FROM mileages
-WHERE techid = :techid AND datetime < :datetime;
+WHERE techid = :techid AND datetime < :datetime
+ORDER BY datetime DESC
+LIMIT 1;

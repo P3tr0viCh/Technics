@@ -170,6 +170,8 @@ namespace Technics
 
                 list = list.Where(item => item.DateTimeInstall > dateInstall).ToList();
 
+                if (list.Count == 0) return;
+
                 var nextItem = list.Last();
 
                 if (dateRemove == null)

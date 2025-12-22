@@ -3,5 +3,11 @@ CREATE TABLE techparts (
 	techid INTEGER,
 	partid INTEGER,
 	datetimeinstall TEXT,
-	datetimeremove TEXT
+	datetimeremove TEXT,
+	FOREIGN KEY (techid) REFERENCES techs (id)
+	ON DELETE SET NULL
+	ON UPDATE CASCADE,
+	FOREIGN KEY (partid) REFERENCES parts (id)
+	ON DELETE SET NULL
+	ON UPDATE CASCADE
 );

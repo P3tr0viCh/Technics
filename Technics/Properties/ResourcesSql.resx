@@ -145,7 +145,19 @@
   <data name="SelectMileages" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SelectMileages.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1251</value>
   </data>
+  <data name="SelectMileagesChangedByDateTime" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SelectMileagesChangedByDateTime.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1251</value>
+  </data>
   <data name="SelectTechParts" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SelectTechParts.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1251</value>
+  </data>
+  <data name="TruncateTable" xml:space="preserve">
+    <value>DELETE FROM {0};</value>
+  </data>
+  <data name="UpdateMileagesMileageCommonById" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\UpdateMileagesMileageCommonById.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1251</value>
+  </data>
+  <data name="UpdateMileagesMileageCommonByTechId" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\UpdateMileagesMileageCommonByTechId.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1251</value>
   </data>
 </root>

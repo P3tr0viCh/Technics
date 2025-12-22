@@ -3,7 +3,6 @@ using P3tr0viCh.Utils;
 using System;
 using System.Windows.Forms;
 using Technics.Properties;
-using static Technics.Database.Models;
 
 namespace Technics
 {

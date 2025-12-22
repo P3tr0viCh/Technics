@@ -118,7 +118,7 @@ namespace Technics
             }
         }
 
-        private void TextBoxSetValue(TextBox textBox, double value)
+        private void TextBoxSetValue(TextBox textBox, double? value)
         {
             selfChange = true;
 
@@ -197,7 +197,7 @@ namespace Technics
                 mileage.Mileage = tboxMileage.GetDouble();
                 mileage.MileageCommon = tboxMileageCommon.GetDouble();
 
-                mileage.Description = tboxDescription.GetTrimText();
+                mileage.Description = tboxDescription.GetTrimTextNullable();
 
                 return true;
             }

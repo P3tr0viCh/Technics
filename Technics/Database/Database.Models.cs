@@ -106,11 +106,9 @@ namespace Technics
 
                 public double Mileage { get; set; } = default;
 
-                [Write(false)]
-                [Computed]
-                public double MileageCommon { get; set; } = default;
+                public double? MileageCommon { get; set; } = null;
 
-                public string Description { get; set; } = default;
+                public string Description { get; set; } = null;
 
                 public new void Clear()
                 {
@@ -119,9 +117,9 @@ namespace Technics
                     DateTime = default;
 
                     Mileage = default;
-                    MileageCommon = default;
+                    MileageCommon = null;
 
-                    Description = default;
+                    Description = null;
                 }
 
                 public void Assign(MileageModel source)

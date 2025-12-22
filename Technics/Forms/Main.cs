@@ -1,6 +1,9 @@
-﻿using P3tr0viCh.Utils;
+﻿#if DEBUG
+#define DUMMY_DATABASE
+#endif
+
+using P3tr0viCh.Utils;
 using System;
-using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Technics.Properties;
@@ -50,6 +53,10 @@ namespace Technics
             ToolStripsShowText = AppSettings.Default.ToolStripsShowText;
 
             UpdateSettings();
+
+#if DUMMY_DATABASE
+            await new Database.Dummy().FillTables();
+#endif
 
             await UpdateDataAsync(DataLoad.Techs);
         }
@@ -120,6 +127,8 @@ namespace Technics
             switch (label)
             {
                 case StatusLabel.Status: return LabelStatus;
+                case StatusLabel.MileageCount: return LabelMileageCount;
+                case StatusLabel.TechPartCount: return LabelTechPartCount;
                 default: throw new ArgumentOutOfRangeException();
             }
         }

@@ -249,7 +249,7 @@ namespace Technics.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to Удалить «{0}» из базы данных?
-        ///Все связанные записи пробега так же будут удалены..
+        ///Все связанные записи пробега будут отмечены пустым значением техники..
         /// </summary>
         internal static string QuestionTechDelete {
             get {
@@ -276,11 +276,29 @@ namespace Technics.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Пробеги: {0}.
+        /// </summary>
+        internal static string StatusMileageCount {
+            get {
+                return ResourceManager.GetString("StatusMileageCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Выделено: {0}.
         /// </summary>
         internal static string StatusSelectedCount {
             get {
                 return ResourceManager.GetString("StatusSelectedCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Детали: {0}.
+        /// </summary>
+        internal static string StatusTechPartCount {
+            get {
+                return ResourceManager.GetString("StatusTechPartCount", resourceCulture);
             }
         }
         

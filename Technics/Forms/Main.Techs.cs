@@ -358,7 +358,7 @@ namespace Technics
                         {
                             nodeFolder.Folder.ParentId = parentNodeFolder.Id;
 
-                            await Database.Default.ListItemSaveAsync(nodeFolder.Folder);
+                            await ListItemSaveAsync(nodeFolder.Folder);
                         }
                         else
                         {
@@ -366,7 +366,7 @@ namespace Technics
                             {
                                 nodeTech.Tech.FolderId = parentNodeFolder.Id;
 
-                                await Database.Default.ListItemSaveAsync(nodeTech.Tech);
+                                await ListItemSaveAsync(nodeTech.Tech);
                             }
                         }
 
@@ -384,7 +384,7 @@ namespace Technics
                 {
                     if (deletedModel is TechModel tech)
                     {
-                        await ListItemDeleteAsync(tech);
+                        await Database.Default.TechDeleteAsync(tech);
 
                         Lists.Default.Techs.Remove(tech);
                     }
