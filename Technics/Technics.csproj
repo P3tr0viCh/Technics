@@ -99,6 +99,7 @@
     <Compile Include="Forms\FrmList.Designer.cs">
       <DependentUpon>FrmList.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\FrmListGrant.cs" />
     <Compile Include="Forms\FrmMileage.cs">
       <SubType>Form</SubType>
     </Compile>

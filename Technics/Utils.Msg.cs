@@ -1,4 +1,9 @@
-﻿using P3tr0viCh.Utils;
+﻿using P3tr0viCh.Database;
+using P3tr0viCh.Utils;
+using System.Collections.Generic;
+using System.Linq;
+using Technics.Properties;
+using static Technics.Database.Models;
 
 namespace Technics
 {
@@ -42,6 +47,21 @@ namespace Technics
             public static bool Question(string format, object arg0, object arg1)
             {
                 return Question(string.Format(format, arg0, arg1));
+            }
+
+            public static bool Question(IEnumerable<IBaseText> list)
+            {
+                var count = list?.Count();
+
+                if (count == 0) return false;
+
+                var firstItem = list.FirstOrDefault();
+
+                var text = firstItem.Text;
+
+                var question = count == 1 ? Resources.QuestionItemLinkedDelete : Resources.QuestionItemListLinkedDelete;
+
+                return Question(question, text, count - 1);
             }
 
             public static void Error(string text = "Error!")

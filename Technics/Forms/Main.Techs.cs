@@ -55,6 +55,8 @@ namespace Technics
 
             try
             {
+                tvTechs.Nodes[0].Nodes.Clear();
+
                 var folderList = await Database.Default.ListLoadAsync<FolderModel>();
 
                 folderList = folderList.OrderBy(f => f.Id).ToList();
@@ -85,6 +87,10 @@ namespace Technics
                 }
 
                 tvTechs.ExpandAll();
+
+                tvTechs.SelectedNode = tvTechs.Nodes[0];
+
+                await TechsSelectedChangedAsync();
 
                 Utils.Log.Info(ResourcesLog.LoadOk);
             }
@@ -234,9 +240,7 @@ namespace Technics
 
         private async Task TechsChangeSelectedAsync()
         {
-            var changedNode = (TreeNodeBase)tvTechs.SelectedNode;
-
-            if (changedNode == null) return;
+            if (!(tvTechs.SelectedNode is TreeNodeBase changedNode)) return;
 
             var changedModel = changedNode.Model;
 
@@ -317,19 +321,17 @@ namespace Technics
 
         private async Task TechsDeleteSelectedAsync()
         {
-            var deletedNode = (TreeNodeBase)tvTechs.SelectedNode;
-
-            if (deletedNode == null) return;
+            if (!(tvTechs.SelectedNode is TreeNodeBase deletedNode)) return;
 
             var deletedModel = deletedNode.Model;
 
             if (deletedModel.IsNew) return;
 
-            var question = string.Empty;
+            string question;
 
             if (deletedNode is TreeNodeTech)
             {
-                question = Resources.QuestionTechDelete;
+                question = Resources.QuestionItemLinkedDelete;
             }
             else
             {

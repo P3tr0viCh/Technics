@@ -118,7 +118,7 @@ namespace Technics
 
             if (count > 1)
             {
-                Utils.Log.Info(string.Format(ResourcesLog.ListItemsDeleteOk, typeof(T).Name, count));
+                Utils.Log.Info(string.Format(ResourcesLog.ListItemListDeleteOk, typeof(T).Name, count));
             }
             else
             {

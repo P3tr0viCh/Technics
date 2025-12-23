@@ -31,6 +31,8 @@ namespace Technics
 
             try
             {
+                SelfChanage = true;
+
                 if (load.HasFlag(DataLoad.Techs))
                 {
                     await TechsLoadAsync();
@@ -60,6 +62,8 @@ namespace Technics
             }
             finally
             {
+                SelfChanage = false;
+
                 ProgramStatus.Stop(status);
 
                 DebugWrite.Line("end");

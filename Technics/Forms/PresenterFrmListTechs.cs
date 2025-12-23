@@ -11,7 +11,7 @@ namespace Technics
 
         public PresenterFrmListTechs(IFrmList frmList) : base(frmList)
         {
-            ReadOnly = true;
+            Grants = FrmListGrant.Change | FrmListGrant.Delete;
         }
 
         protected override TechModel GetNewItem() { return new TechModel(); }
@@ -32,12 +32,18 @@ namespace Technics
 
         protected override bool ShowItemChangeDialog(TechModel value)
         {
-            throw new System.NotImplementedException();
+            var text = value.Text;
+
+            if (!Utils.TextInputBoxShow(ref text, Resources.TitleTech)) return false;
+
+            value.Text = text;
+
+            return true;
         }
 
         protected override bool ShowItemDeleteDialog(IEnumerable<TechModel> list)
         {
-            throw new System.NotImplementedException();
+            return Utils.Msg.Question(list);
         }
 
         protected override void UpdateColumns()

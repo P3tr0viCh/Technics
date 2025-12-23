@@ -57,17 +57,7 @@ namespace Technics
 
         protected override bool ShowItemDeleteDialog(IEnumerable<PartModel> list)
         {
-            var count = list?.Count();
-
-            if (count == 0) return false;
-
-            var firstItem = list.FirstOrDefault();
-
-            var text = firstItem.Text;
-
-            var question = count == 1 ? Resources.QuestionItemDelete : Resources.QuestionItemListDelete;
-
-            return Utils.Msg.Question(question, text, count - 1);
+            return Utils.Msg.Question(list);
         }
 
         protected override void UpdateColumns()

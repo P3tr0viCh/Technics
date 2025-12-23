@@ -178,15 +178,19 @@
   <data name="QuestionItemDelete" xml:space="preserve">
     <value>Удалить «{0}»?</value>
   </data>
+  <data name="QuestionItemLinkedDelete" xml:space="preserve">
+    <value>Удалить «{0}» из базы данных?
+Все значения в связанных записях будут отмечены пустыми.</value>
+  </data>
   <data name="QuestionItemListDelete" xml:space="preserve">
     <value>Удалить «{0}» и ещё {1}?</value>
   </data>
+  <data name="QuestionItemListLinkedDelete" xml:space="preserve">
+    <value>Удалить «{0}» и ещё {1} из базы данных?
+Все значения в связанных записях будут отмечены пустыми.</value>
+  </data>
   <data name="QuestionMileageDelete" xml:space="preserve">
     <value>Удалить «{0}» из базы данных?</value>
-  </data>
-  <data name="QuestionTechDelete" xml:space="preserve">
-    <value>Удалить «{0}» из базы данных?
-Все связанные записи пробега будут отмечены пустым значением техники.</value>
   </data>
   <data name="QuestionTechPartDelete" xml:space="preserve">
     <value>Удалить «{0}» с датой установки {1} из базы данных?</value>

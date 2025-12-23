@@ -106,20 +106,20 @@ namespace Technics.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} items (count={1}) delete ok.
+        /// </summary>
+        internal static string ListItemListDeleteOk {
+            get {
+                return ResourceManager.GetString("ListItemListDeleteOk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} item save ok.
         /// </summary>
         internal static string ListItemSaveOk {
             get {
                 return ResourceManager.GetString("ListItemSaveOk", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {0} items (count={1}) delete ok.
-        /// </summary>
-        internal static string ListItemsDeleteOk {
-            get {
-                return ResourceManager.GetString("ListItemsDeleteOk", resourceCulture);
             }
         }
         

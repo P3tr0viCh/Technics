@@ -172,6 +172,8 @@ namespace Technics
 
         private async void TvTechs_AfterSelect(object sender, TreeViewEventArgs e)
         {
+            if (SelfChanage) return;
+
             await TechsSelectedChangedAsync();
         }
 
@@ -285,6 +287,7 @@ namespace Technics
         {
             switch (listType)
             {
+                case FrmListType.Techs: return DataLoad.Techs;
                 case FrmListType.Parts: return DataLoad.TechParts;
                 default: return default;
             }

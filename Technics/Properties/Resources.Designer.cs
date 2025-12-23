@@ -230,6 +230,16 @@ namespace Technics.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Удалить «{0}» из базы данных?
+        ///Все значения в связанных записях будут отмечены пустыми..
+        /// </summary>
+        internal static string QuestionItemLinkedDelete {
+            get {
+                return ResourceManager.GetString("QuestionItemLinkedDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Удалить «{0}» и ещё {1}?.
         /// </summary>
         internal static string QuestionItemListDelete {
@@ -239,21 +249,21 @@ namespace Technics.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Удалить «{0}» и ещё {1} из базы данных?
+        ///Все значения в связанных записях будут отмечены пустыми..
+        /// </summary>
+        internal static string QuestionItemListLinkedDelete {
+            get {
+                return ResourceManager.GetString("QuestionItemListLinkedDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Удалить «{0}» из базы данных?.
         /// </summary>
         internal static string QuestionMileageDelete {
             get {
                 return ResourceManager.GetString("QuestionMileageDelete", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Удалить «{0}» из базы данных?
-        ///Все связанные записи пробега будут отмечены пустым значением техники..
-        /// </summary>
-        internal static string QuestionTechDelete {
-            get {
-                return ResourceManager.GetString("QuestionTechDelete", resourceCulture);
             }
         }
         

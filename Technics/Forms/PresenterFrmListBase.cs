@@ -17,13 +17,13 @@ namespace Technics
 
         public bool Changed { get; set; } = false;
 
-        private bool readOnly = false;
-        protected bool ReadOnly
+        private FrmListGrant grants = FrmListGrant.Add | FrmListGrant.Change | FrmListGrant.Delete;
+        protected FrmListGrant Grants
         {
-            get => readOnly;
+            get => grants;
             set
             {
-                readOnly = value;
+                grants = value;
 
                 foreach (ToolStripItem item in FrmList.ToolStrip.Items)
                 {
@@ -32,10 +32,36 @@ namespace Technics
                         continue;
                     }
 
-                    item.Visible = !readOnly;
+                    if (item.Name == "tsbtnAdd")
+                    {
+                        item.Visible = CanAdd;
+                        continue;
+                    }
+
+                    if (item.Name == "tsbtnChange")
+                    {
+                        item.Visible = CanChange;
+                        continue;
+                    }
+
+                    if (item.Name == "tsbtnDelete")
+                    {
+                        item.Visible = CanDelete;
+                        continue;
+                    }
+
+                    if (item.Name == "toolStripSeparator1")
+                    {
+                        item.Visible = CanAdd || CanChange || CanDelete;
+                        continue;
+                    }
                 }
             }
         }
+
+        private bool CanAdd => grants.HasFlag(FrmListGrant.Add);
+        private bool CanChange => grants.HasFlag(FrmListGrant.Change);
+        private bool CanDelete => grants.HasFlag(FrmListGrant.Delete);
 
         public PresenterFrmListBase(IFrmList frmList)
         {
@@ -188,7 +214,7 @@ namespace Technics
 
         public async Task ListItemAddNewAsync()
         {
-            if (ReadOnly) return;
+            if (!CanAdd) return;
 
             var item = GetNewItem();
 
@@ -197,22 +223,22 @@ namespace Technics
 
         public async Task ListItemChangeSelectedAsync()
         {
+            if (!CanChange) return;
+
             var item = Selected;
 
             FrmList.DataGridView.SetSelectedRows(item);
-
-            if (ReadOnly) return;
 
             await ListItemChangeAsync(item);
         }
 
         public async Task ListItemDeleteSelectedAsync()
         {
+            if (!CanDelete) return;
+
             var list = SelectedList;
 
             FrmList.DataGridView.SetSelectedRows(list.Cast<BaseId>());
-
-            if (ReadOnly) return;
 
             if (!ShowItemDeleteDialog(list)) return;
 
