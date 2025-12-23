@@ -1,5 +1,4 @@
-﻿using P3tr0viCh.Database;
-using P3tr0viCh.Utils;
+﻿using P3tr0viCh.Utils;
 using System.Collections.Generic;
 using Technics.Properties;
 using static Technics.Database.Models;
@@ -36,7 +35,7 @@ namespace Technics
             AppSettings.LoadFormState(Form, AppSettings.Default.FormStateListParts);
             AppSettings.LoadDataGridColumns(FrmList.DataGridView, AppSettings.Default.ColumnsListParts);
 
-            SortColumn = nameof(TechModel.Text);
+            presenterDataGridView.SortColumn = nameof(TechModel.Text);
         }
 
         protected override void SaveFormState()
@@ -63,12 +62,7 @@ namespace Technics
 
         protected override void UpdateColumns()
         {
-            FrmList.DataGridView.Columns[nameof(BaseText.Text)].HeaderText = ResourcesColumnHeader.Text;
-        }
-
-        protected override int Compare(PartModel x, PartModel y)
-        {
-            return x.Text.CompareTo(y.Text);
+            FrmList.DataGridView.Columns[nameof(PartModel.Text)].HeaderText = ResourcesColumnHeader.Text;
         }
     }
 }

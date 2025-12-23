@@ -16,10 +16,6 @@ namespace Technics
         int Count { get; }
         int SelectedCount { get; }
 
-        Task FormLoadAsync();
-
-        void FormClosing();
-
         event ListChanged OnListChanged;
 
         Task ListItemAddNewAsync();
@@ -27,8 +23,5 @@ namespace Technics
         Task ListItemChangeSelectedAsync();
 
         Task ListItemDeleteSelectedAsync();
-
-        void ColumnHeaderMouseClick(DataGridViewCellMouseEventArgs e);
-        void DataBindingComplete();
     }
 }

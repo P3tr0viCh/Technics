@@ -12,6 +12,8 @@ namespace Technics
 {
     public partial class Main
     {
+        internal readonly PresenterDataGridViewTechParts presenterDataGridViewTechParts;
+
         private async Task TechPartsLoadAsync(IEnumerable<TechModel> techs)
         {
             DebugWrite.Line("start");
@@ -23,6 +25,8 @@ namespace Technics
                     : Enumerable.Empty<TechPartModel>();
 
                 bindingSourceTechParts.DataSource = list;
+
+                presenterDataGridViewTechParts.Sort();
 
                 await TechPartsUpdateMileageAsync(list);
 
@@ -89,9 +93,9 @@ namespace Technics
 
                 if (isNew)
                 {
-                    bindingSourceTechParts.Insert(0, techPart);
+                    var pos = bindingSourceTechParts.Add(techPart);
 
-                    bindingSourceTechParts.Position = 0;
+                    bindingSourceTechParts.Position = pos;
 
                     TechPartsListChanged();
                 }
@@ -99,6 +103,8 @@ namespace Technics
                 {
                     dgvTechParts.Refresh();
                 }
+
+                presenterDataGridViewTechParts.Sort();
 
                 await TechPartsUpdateMileageAsync(techPart);
             }

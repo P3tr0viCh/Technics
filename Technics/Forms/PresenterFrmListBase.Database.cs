@@ -19,11 +19,13 @@ namespace Technics
 			{
 				var list = await Database.Default.ListLoadAsync<T>();
 
-                FrmList.BindingSource.DataSource = list.ToBindingList();
+                BindingSource.DataSource = list;
 
-				Sort();
-            
-				PerformOnListChanged();
+				presenterDataGridView.Sort();
+
+				BindingSource.Position = 0;
+
+                PerformOnListChanged();
 
 				Changed = false;
             }

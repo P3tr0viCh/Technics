@@ -1,5 +1,5 @@
 ﻿using P3tr0viCh.Database;
-using P3tr0viCh.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -20,6 +20,29 @@ namespace Technics
         private DataGridView DataGridView => FrmList.DataGridView;
         private BindingSource BindingSource => FrmList.BindingSource;
 
+        internal readonly PresenterDataGridViewFrmList presenterDataGridView;
+
+        public PresenterFrmListBase(IFrmList frmList)
+        {
+            FrmList = frmList;
+
+            Form.Load += new EventHandler(Form_Load);
+            Form.FormClosing += new FormClosingEventHandler(FrmList_FormClosing);
+
+            presenterDataGridView = new PresenterDataGridViewFrmList(DataGridView);
+
+            DataGridView.CellDoubleClick += new DataGridViewCellEventHandler(DataGridView_CellDoubleClick);
+        }
+
+        private async void Form_Load(object sender, System.EventArgs e)
+        {
+            await FormLoadAsync();
+        }
+
+        private void FrmList_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            FormClosing();
+        }
 
         private FrmListGrant grants = FrmListGrant.Add | FrmListGrant.Change | FrmListGrant.Delete;
         protected FrmListGrant Grants
@@ -67,16 +90,11 @@ namespace Technics
         private bool CanChange => grants.HasFlag(FrmListGrant.Change);
         private bool CanDelete => grants.HasFlag(FrmListGrant.Delete);
 
-        public PresenterFrmListBase(IFrmList frmList)
-        {
-            FrmList = frmList;
-        }
-
         public event ListChanged OnListChanged;
 
         private void SetDataSource()
         {
-            BindingSource.DataSource = typeof(T);
+            BindingSource.DataSource = Enumerable.Empty<T>();
 
             DataGridView.DataSource = BindingSource;
         }
@@ -86,7 +104,7 @@ namespace Technics
         protected abstract void LoadFormState();
         protected abstract void UpdateColumns();
 
-        public async Task FormLoadAsync()
+        private async Task FormLoadAsync()
         {
             Utils.Log.WriteFormOpen(Form);
 
@@ -111,8 +129,8 @@ namespace Technics
 
         private void UpdateCommonColumns()
         {
-            DataGridView.Columns[nameof(BaseId.Id)].Visible = false;
-            DataGridView.Columns[nameof(BaseId.IsNew)].Visible = false;
+            ////DataGridView.Columns[nameof(BaseId.Id)].Visible = false;
+            //DataGridView.Columns[nameof(BaseId.IsNew)].Visible = false;
         }
 
         protected abstract void SaveFormState();
@@ -187,7 +205,7 @@ namespace Technics
 
             DataGridView.SetSelectedRows(value);
 
-            Sort();
+            presenterDataGridView.Sort();
 
             PerformOnListChanged();
         }
@@ -251,21 +269,11 @@ namespace Technics
             ListItemDelete(list);
         }
         
-        public void ColumnHeaderMouseClick(DataGridViewCellMouseEventArgs e)
+        private async void DataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.Button != MouseButtons.Left) return;
+            if (e.RowIndex < 0) return;
 
-            SortColumn = GetSortColumn(e.ColumnIndex);
-
-            Sort();
-        }
-
-        public void DataBindingComplete()
-        {
-            if (SortColumn.IsEmpty()) return;
-
-            DataGridView.Columns[SortColumn].HeaderCell.SortGlyphDirection =
-                SortOrderDescending ? SortOrder.Descending : SortOrder.Ascending;
+            await ListItemChangeSelectedAsync();
         }
     }
 }

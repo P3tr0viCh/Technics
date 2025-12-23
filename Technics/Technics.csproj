@@ -136,8 +136,10 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\IPresenterFrmList.cs" />
+    <Compile Include="Forms\PresenterDataGridViewFrmList.cs" />
+    <Compile Include="Forms\PresenterDataGridViewMileages.cs" />
+    <Compile Include="Forms\PresenterDataGridViewTechParts.cs" />
     <Compile Include="Forms\PresenterFrmListBase.cs" />
-    <Compile Include="Forms\PresenterFrmListBase.Sort.cs" />
     <Compile Include="Forms\PresenterFrmListFactory.cs" />
     <Compile Include="Forms\PresenterFrmListParts.cs" />
     <Compile Include="Forms\PresenterFrmListTechs.cs" />

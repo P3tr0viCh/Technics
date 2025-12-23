@@ -7,6 +7,7 @@ using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Technics.Properties;
+using static Technics.Database.Models;
 using static Technics.Enums;
 using static Technics.PresenterStatusStripMain;
 
@@ -23,6 +24,9 @@ namespace Technics
             InitializeComponent();
 
             statusStripPresenter = new PresenterStatusStripMain(this);
+
+            presenterDataGridViewMileages = new PresenterDataGridViewMileages(dgvMileages);
+            presenterDataGridViewTechParts = new PresenterDataGridViewTechParts(dgvTechParts);
         }
 
         private async void Main_Load(object sender, EventArgs e)
@@ -52,6 +56,12 @@ namespace Technics
 
             ToolStripsShowText = AppSettings.Default.ToolStripsShowText;
 
+            presenterDataGridViewMileages.SortColumn = MileagesDateTime.Name;
+            presenterDataGridViewMileages.SortOrderDescending = true;
+
+            presenterDataGridViewTechParts.SortColumn = TechPartsDateTimeInstall.Name;
+            presenterDataGridViewTechParts.SortOrderDescending = true;
+
             UpdateSettings();
 
 #if DUMMY_DATABASE
@@ -66,7 +76,7 @@ namespace Technics
                 ProgramStatus.Stop(status);
             }
 #endif
-
+            
             await UpdateDataAsync(DataLoad.Techs);
         }
 

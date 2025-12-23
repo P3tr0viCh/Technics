@@ -111,9 +111,6 @@
             this.dataGridView.RowHeadersWidth = 32;
             this.dataGridView.Size = new System.Drawing.Size(384, 193);
             this.dataGridView.TabIndex = 1;
-            this.dataGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView_CellDoubleClick);
-            this.dataGridView.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DataGridView_ColumnHeaderMouseClick);
-            this.dataGridView.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.DataGridView_DataBindingComplete);
             this.dataGridView.SelectionChanged += new System.EventHandler(this.DataGridView_SelectionChanged);
             // 
             // toolStrip
@@ -200,8 +197,6 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.Text = "FrmList";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmList_FormClosing);
-            this.Load += new System.EventHandler(this.FrmList_Load);
             this.toolStripContainer.BottomToolStripPanel.ResumeLayout(false);
             this.toolStripContainer.BottomToolStripPanel.PerformLayout();
             this.toolStripContainer.ContentPanel.ResumeLayout(false);

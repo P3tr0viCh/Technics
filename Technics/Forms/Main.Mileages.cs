@@ -1,7 +1,6 @@
 ﻿using P3tr0viCh.Database;
 using P3tr0viCh.Utils;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,6 +12,8 @@ namespace Technics
 {
     public partial class Main
     {
+        internal readonly PresenterDataGridViewMileages presenterDataGridViewMileages;
+
         private async Task MileagesLoadAsync(IEnumerable<TechModel> techs)
         {
             DebugWrite.Line("start");
@@ -24,6 +25,8 @@ namespace Technics
                     : Enumerable.Empty<MileageModel>();
 
                 bindingSourceMileages.DataSource = list;
+
+                presenterDataGridViewMileages.Sort();
 
                 bindingSourceMileages.Position = 0;
 
@@ -88,6 +91,8 @@ namespace Technics
                 {
                     dgvMileages.Refresh();
                 }
+
+                presenterDataGridViewMileages.Sort();
 
                 MileagesListChanged();
 

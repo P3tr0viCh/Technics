@@ -34,6 +34,8 @@ namespace Technics
             })
             {
                 frm.PresenterFrmList = PresenterFrmListFactory.PresenterFrmListInstance(frm, listType);
+                
+                frm.PresenterFrmList.OnListChanged += frm.PresenterFrmList_OnListChanged;
 
                 frm.ShowDialog(owner);
 
@@ -41,23 +43,16 @@ namespace Technics
             }
         }
 
-        private async void FrmList_Load(object sender, EventArgs e)
-        {
-            PresenterFrmList.OnListChanged += PresenterFrmList_OnListChanged;
-
-            await PresenterFrmList.FormLoadAsync();
-        }
-
-        private void FrmList_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            PresenterFrmList.FormClosing();
-        }
-
         private void PresenterFrmList_OnListChanged()
         {
             tsbtnChange.Enabled = tsbtnDelete.Enabled = PresenterFrmList.Count > 0;
 
             statusStripPresenter.Count = PresenterFrmList.Count;
+        }
+
+        private void DataGridView_SelectionChanged(object sender, EventArgs e)
+        {
+            statusStripPresenter.SelectedCount = PresenterFrmList.SelectedCount;
         }
 
         ToolStripStatusLabel PresenterStatusStrip<StatusLabel>.IPresenterStatusStrip.GetLabel(StatusLabel label)
@@ -88,28 +83,6 @@ namespace Technics
         private async void TsbtnDelete_Click(object sender, EventArgs e)
         {
             await PresenterFrmList.ListItemDeleteSelectedAsync();
-        }
-
-        private async void DataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex < 0) return; 
-            
-            await PresenterFrmList.ListItemChangeSelectedAsync();
-        }
-
-        private void DataGridView_SelectionChanged(object sender, EventArgs e)
-        {
-            statusStripPresenter.SelectedCount = PresenterFrmList.SelectedCount;
-        }
-
-        private void DataGridView_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
-        {
-            PresenterFrmList.ColumnHeaderMouseClick(e);
-        }
-
-        private void DataGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
-        {
-            PresenterFrmList.DataBindingComplete();
         }
     }
 }
