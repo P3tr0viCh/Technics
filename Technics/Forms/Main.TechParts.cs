@@ -19,7 +19,7 @@ namespace Technics
             try
             {
                 var list = techs.Count() > 0
-                    ? await ListLoadAsync<TechPartModel>(Database.Default.GetTechPartsSql(techs))
+                    ? await Database.Default.ListLoadAsync<TechPartModel>(Database.Default.GetTechPartsSql(techs))
                     : Enumerable.Empty<TechPartModel>();
 
                 bindingSourceTechParts.DataSource = list;
@@ -85,7 +85,7 @@ namespace Technics
             {
                 var isNew = techPart.IsNew;
 
-                await ListItemSaveAsync(techPart);
+                await Database.Default.ListItemSaveAsync(techPart);
 
                 if (isNew)
                 {
@@ -155,7 +155,7 @@ namespace Technics
 
             dgvTechParts.SetSelectedRows(techPart);
 
-            if (!Msg.Question(Resources.QuestionTechPartDelete,
+            if (!Utils.Msg.Question(Resources.QuestionTechPartDelete,
                     techPart.PartText,
                     techPart.DateTimeInstall.ToString(AppSettings.Default.FormatDateTime))) return;
 
@@ -163,7 +163,7 @@ namespace Technics
 
             try
             {
-                await ListItemDeleteAsync(techPart);
+                await Database.Default.ListItemDeleteAsync(techPart);
 
                 bindingSourceTechParts.Remove(techPart);
 

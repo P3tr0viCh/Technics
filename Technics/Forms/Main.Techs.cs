@@ -55,7 +55,7 @@ namespace Technics
 
             try
             {
-                var folderList = await ListLoadAsync<FolderModel>();
+                var folderList = await Database.Default.ListLoadAsync<FolderModel>();
 
                 folderList = folderList.OrderBy(f => f.Id).ToList();
 
@@ -73,7 +73,7 @@ namespace Technics
                     folderNodes[(long)folder.ParentId].Nodes.Add(folderNode);
                 }
 
-                var techs = await ListLoadAsync<TechModel>();
+                var techs = await Database.Default.ListLoadAsync<TechModel>();
 
                 Lists.Default.Techs = techs.OrderBy(t => t.Text).ToList();
 
@@ -160,7 +160,7 @@ namespace Technics
 
                     node = new TreeNodeFolder(folder);
 
-                    await ListItemSaveAsync(folder);
+                    await Database.Default.ListItemSaveAsync(folder);
                 }
                 else
                 {
@@ -170,7 +170,7 @@ namespace Technics
 
                         node = new TreeNodeTech(tech);
 
-                        await ListItemSaveAsync(tech);
+                        await Database.Default.ListItemSaveAsync(tech);
 
                         Lists.Default.Techs.Add(tech);
                     }
@@ -266,13 +266,13 @@ namespace Technics
             {
                 if (changedModel is FolderModel folder)
                 {
-                    await ListItemSaveAsync(folder);
+                    await Database.Default.ListItemSaveAsync(folder);
                 }
                 else
                 {
                     if (changedModel is TechModel tech)
                     {
-                        await ListItemSaveAsync(tech);
+                        await Database.Default.ListItemSaveAsync(tech);
 
                         Lists.Default.Techs.Remove(tech);
 
@@ -338,7 +338,7 @@ namespace Technics
                     Resources.QuestionFolderDeleteNotEmpty;
             }
 
-            if (!Msg.Question(question, deletedModel.Text)) return;
+            if (!Utils.Msg.Question(question, deletedModel.Text)) return;
 
             var status = ProgramStatus.Start(Status.SaveDatа);
 
@@ -358,7 +358,7 @@ namespace Technics
                         {
                             nodeFolder.Folder.ParentId = parentNodeFolder.Id;
 
-                            await ListItemSaveAsync(nodeFolder.Folder);
+                            await Database.Default.ListItemSaveAsync(nodeFolder.Folder);
                         }
                         else
                         {
@@ -366,7 +366,7 @@ namespace Technics
                             {
                                 nodeTech.Tech.FolderId = parentNodeFolder.Id;
 
-                                await ListItemSaveAsync(nodeTech.Tech);
+                                await Database.Default.ListItemSaveAsync(nodeTech.Tech);
                             }
                         }
 
@@ -378,7 +378,7 @@ namespace Technics
 
                 if (deletedModel is FolderModel folder)
                 {
-                    await ListItemDeleteAsync(folder);
+                    await Database.Default.ListItemDeleteAsync(folder);
                 }
                 else
                 {

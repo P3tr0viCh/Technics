@@ -17,7 +17,7 @@ namespace Technics
 
 			try
 			{
-				var list = await FrmList.MainForm.ListLoadAsync<T>();
+				var list = await Database.Default.ListLoadAsync<T>();
 
                 FrmList.BindingSource.DataSource = list.ToBindingList();
             
@@ -47,7 +47,7 @@ namespace Technics
 
 			try
 			{
-				await FrmList.MainForm.ListItemSaveAsync(value);
+				await Database.Default.ListItemSaveAsync(value);
 			}
 			catch (Exception e)
 			{
@@ -69,7 +69,7 @@ namespace Technics
 
 			try
 			{
-				await FrmList.MainForm.ListItemDeleteAsync(list);
+				await Database.Default.ListItemDeleteAsync(list);
 			}
 			catch (Exception e)
 			{

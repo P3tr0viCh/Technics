@@ -78,7 +78,7 @@ namespace Technics
 
                 bindingSourceTechs.Insert(0, new TechModel());
 
-                var list = await MainForm.ListLoadAsync<PartModel>();
+                var list = await Database.Default.ListLoadAsync<PartModel>();
 
                 bindingSourceParts.DataSource = list.ToBindingList();
 
@@ -136,7 +136,7 @@ namespace Technics
 
                 var sql = Database.Default.GetTechPartsSql(filter);
 
-                var techPartList = await MainForm.ListLoadAsync<TechPartModel>(sql);
+                var techPartList = await Database.Default.ListLoadAsync<TechPartModel>(sql);
 
                 var list = techPartList.Where(item => item.Id != TechPart.Id).ToList();
 

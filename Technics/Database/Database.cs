@@ -1,4 +1,6 @@
 ﻿using Dapper;
+using Dapper.Contrib.Extensions;
+using Newtonsoft.Json.Linq;
 using P3tr0viCh.Database;
 using P3tr0viCh.Utils;
 using System;
@@ -48,13 +50,20 @@ namespace Technics
                 connection.Execute(ResourcesSql.CreateTableMileages);
                 connection.Execute(ResourcesSql.CreateTableTechParts);
             }
+
+            Utils.Log.Info(ResourcesLog.DatabaseCreateOk);
         }
 
+#if DEBUG
         private async Task TruncateTableAsync<T>(DbConnection connection)
         {
-            var sql = string.Format(ResourcesSql.TruncateTable, Sql.TableName<T>());
+            var tableName = Sql.TableName<T>();
+
+            var sql = string.Format(ResourcesSql.TruncateTable, tableName);
 
             await Actions.ExecuteAsync(connection, sql);
+
+            Utils.Log.Info($"truncate table {tableName} ok");
         }
 
         public async Task TruncateTableAsync<T>()
@@ -64,6 +73,7 @@ namespace Technics
                 await TruncateTableAsync<T>(connection);
             }
         }
+#endif
 
         public async Task ListItemSaveAsync<T>(T value) where T : BaseId
         {
@@ -71,6 +81,8 @@ namespace Technics
             {
                 await Actions.ListItemSaveAsync(connection, value, null);
             }
+
+            Utils.Log.Info(string.Format(ResourcesLog.ListItemSaveOk, typeof(T).Name));
         }
 
 #if DEBUG
@@ -80,6 +92,8 @@ namespace Technics
             {
                 await Actions.ListItemSaveAsync(connection, values);
             }
+
+            DebugWrite.Line($"{typeof(T).Name} items (count={values?.Count()}) save ok");
         }
 #endif
 
@@ -89,6 +103,8 @@ namespace Technics
             {
                 await Actions.ListItemDeleteAsync(connection, value, null);
             }
+
+            Utils.Log.Info(string.Format(ResourcesLog.ListItemDeleteOk, typeof(T).Name));
         }
 
         public async Task ListItemDeleteAsync<T>(IEnumerable<T> values) where T : BaseId
@@ -97,14 +113,31 @@ namespace Technics
             {
                 await Actions.ListItemDeleteAsync(connection, values);
             }
+
+            var count = values?.Count();
+
+            if (count > 1)
+            {
+                Utils.Log.Info(string.Format(ResourcesLog.ListItemsDeleteOk, typeof(T).Name, count));
+            }
+            else
+            {
+                Utils.Log.Info(string.Format(ResourcesLog.ListItemDeleteOk, typeof(T).Name));
+            }
         }
 
         public async Task<IEnumerable<T>> ListLoadAsync<T>(string sql = null, object param = null)
         {
+            var result = Enumerable.Empty<T>();
+
             using (var connection = GetConnection())
             {
-                return await Actions.ListLoadAsync<T>(connection, sql, param);
+                result = await Actions.ListLoadAsync<T>(connection, sql, param);
             }
+
+            Utils.Log.Info(string.Format(ResourcesLog.LoadListOk, typeof(T).Name, result.Count()));
+
+            return result;
         }
 
         private async Task<T> QueryFirstOrDefaultAsync<T>(string sql, object param)
@@ -231,6 +264,8 @@ namespace Technics
 
                         transaction.Commit();
 
+                        Utils.Log.Info(string.Format(ResourcesLog.ListItemDeleteOk, typeof(MileageModel).Name));
+
                         return changedList;
                     }
                     catch (Exception)
@@ -252,13 +287,15 @@ namespace Technics
                 {
                     try
                     {
-                        await Actions.ListItemDeleteAsync(connection, tech, transaction);
-
                         await Actions.ExecuteAsync(connection,
                             ResourcesSql.UpdateMileagesMileageCommonByTechId,
                             new { techid = tech.Id }, transaction);
 
+                        await Actions.ListItemDeleteAsync(connection, tech, transaction);
+
                         transaction.Commit();
+
+                        Utils.Log.Info(string.Format(ResourcesLog.ListItemDeleteOk, typeof(TechModel).Name));
                     }
                     catch (Exception)
                     {

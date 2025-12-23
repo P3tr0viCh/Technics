@@ -126,6 +126,9 @@
   <data name="CloseReasonTaskManager" xml:space="preserve">
     <value>closed from task manager</value>
   </data>
+  <data name="DatabaseCreateOk" xml:space="preserve">
+    <value>database create ok</value>
+  </data>
   <data name="ListItemDeleteOk" xml:space="preserve">
     <value>{0} item delete ok</value>
   </data>

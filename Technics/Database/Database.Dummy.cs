@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using static Technics.Database.Filter;
 using static Technics.Database.Models;
 
 namespace Technics
@@ -14,6 +13,11 @@ namespace Technics
         public class Dummy
         {
             private const int MileagesCount = 100;
+
+            private const int PartsCount = 10;
+
+            private const int TechPartsCount = 10;
+
 
             private readonly Random random = new Random();
 
@@ -69,7 +73,33 @@ namespace Technics
                 }
             }
 
-            private const int TechPartsCount = 10;
+            private async Task FillTableParts()
+            {
+                try
+                {
+                    await Default.TruncateTableAsync<PartModel>();
+
+                    var parts = new List<PartModel>();
+
+                    for (var i = 0; i < PartsCount; i++)
+                    {
+                        var part = new PartModel()
+                        {
+                            Text = $"Part {random.NextString(5)}"
+                        };
+
+                        parts.Add(part);
+                    }
+
+                    await Default.ListItemSaveAsync(parts);
+                }
+                catch (Exception e)
+                {
+                    DebugWrite.Error(e);
+
+                    Utils.Msg.Error(e.Message);
+                }
+            }
 
             private async Task FillTableTechParts()
             {
@@ -124,6 +154,8 @@ namespace Technics
             public async Task FillTables()
             {
                 await FillTableMileages();
+
+                await FillTableParts();
 
                 await FillTableTechParts();
             }

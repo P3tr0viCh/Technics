@@ -20,7 +20,7 @@ namespace Technics
             try
             {
                 var list = techs.Count() > 0
-                    ? await ListLoadAsync<MileageModel>(Database.Default.GetMileagesSql(techs))
+                    ? await Database.Default.ListLoadAsync<MileageModel>(Database.Default.GetMileagesSql(techs))
                     : Enumerable.Empty<MileageModel>();
 
                 bindingSourceMileages.DataSource = list;
@@ -148,7 +148,7 @@ namespace Technics
 
             dgvMileages.SetSelectedRows(mileage);
 
-            if (!Msg.Question(Resources.QuestionMileageDelete,
+            if (!Utils.Msg.Question(Resources.QuestionMileageDelete,
                     mileage.DateTime.ToString(AppSettings.Default.FormatDateTime))) return;
 
             var status = ProgramStatus.Start(Status.SaveDatа);

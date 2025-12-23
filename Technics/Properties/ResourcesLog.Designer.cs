@@ -88,6 +88,15 @@ namespace Technics.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to database create ok.
+        /// </summary>
+        internal static string DatabaseCreateOk {
+            get {
+                return ResourceManager.GetString("DatabaseCreateOk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} item delete ok.
         /// </summary>
         internal static string ListItemDeleteOk {

@@ -55,7 +55,16 @@ namespace Technics
             UpdateSettings();
 
 #if DUMMY_DATABASE
-            await new Database.Dummy().FillTables();
+            var status = ProgramStatus.Start(Status.SaveDatа);
+
+            try
+            {
+                await new Database.Dummy().FillTables();
+            }
+            finally
+            {
+                ProgramStatus.Stop(status);
+            }
 #endif
 
             await UpdateDataAsync(DataLoad.Techs);
