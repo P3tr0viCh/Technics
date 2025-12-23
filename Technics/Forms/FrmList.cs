@@ -92,12 +92,24 @@ namespace Technics
 
         private async void DataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (e.RowIndex < 0) return; 
+            
             await PresenterFrmList.ListItemChangeSelectedAsync();
         }
 
         private void DataGridView_SelectionChanged(object sender, EventArgs e)
         {
             statusStripPresenter.SelectedCount = PresenterFrmList.SelectedCount;
+        }
+
+        private void DataGridView_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            PresenterFrmList.ColumnHeaderMouseClick(e);
+        }
+
+        private void DataGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            PresenterFrmList.DataBindingComplete();
         }
     }
 }

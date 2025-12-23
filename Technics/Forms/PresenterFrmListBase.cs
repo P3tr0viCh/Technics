@@ -17,6 +17,10 @@ namespace Technics
 
         public bool Changed { get; set; } = false;
 
+        private DataGridView DataGridView => FrmList.DataGridView;
+        private BindingSource BindingSource => FrmList.BindingSource;
+
+
         private FrmListGrant grants = FrmListGrant.Add | FrmListGrant.Change | FrmListGrant.Delete;
         protected FrmListGrant Grants
         {
@@ -72,9 +76,9 @@ namespace Technics
 
         private void SetDataSource()
         {
-            FrmList.BindingSource.DataSource = typeof(T);
+            BindingSource.DataSource = typeof(T);
 
-            FrmList.DataGridView.DataSource = FrmList.BindingSource;
+            DataGridView.DataSource = BindingSource;
         }
 
         protected abstract string FormTitle { get; }
@@ -92,7 +96,7 @@ namespace Technics
 
             FrmList.ToolStrip.SetShowTextAndToolTips(AppSettings.Default.ToolStripsShowText);
 
-            FrmList.DataGridView.MultiSelect = true;
+            DataGridView.MultiSelect = true;
 
             SetDataSource();
 
@@ -107,8 +111,8 @@ namespace Technics
 
         private void UpdateCommonColumns()
         {
-            FrmList.DataGridView.Columns[nameof(BaseId.Id)].Visible = false;
-            FrmList.DataGridView.Columns[nameof(BaseId.IsNew)].Visible = false;
+            DataGridView.Columns[nameof(BaseId.Id)].Visible = false;
+            DataGridView.Columns[nameof(BaseId.IsNew)].Visible = false;
         }
 
         protected abstract void SaveFormState();
@@ -122,38 +126,38 @@ namespace Technics
             Utils.Log.WriteFormClose(Form);
         }
 
-        public int Count => FrmList.BindingSource.Count;
-        public int SelectedCount => FrmList.DataGridView.SelectedCells
+        public int Count => BindingSource.Count;
+        public int SelectedCount => DataGridView.SelectedCells
                     .Cast<DataGridViewCell>().Select(cell => cell.OwningRow).Distinct().Count();
 
         public T Find(T value)
         {
-            return FrmList.BindingSource.Cast<T>().Where(item => item.Id == value.Id).FirstOrDefault();
+            return BindingSource.Cast<T>().Where(item => item.Id == value.Id).FirstOrDefault();
         }
 
         public T Selected
         {
-            get => FrmList.BindingSource.Current as T;
-            set => FrmList.BindingSource.Position = FrmList.BindingSource.IndexOf(Find(value));
+            get => BindingSource.Current as T;
+            set => BindingSource.Position = BindingSource.IndexOf(Find(value));
         }
 
         public IEnumerable<T> SelectedList
         {
             get
             {
-                if (FrmList.DataGridView.SelectedCells.Count == 0) return default;
+                if (DataGridView.SelectedCells.Count == 0) return Enumerable.Empty<T>();
 
-                var selectedRows = FrmList.DataGridView.SelectedCells
+                var selectedRows = DataGridView.SelectedCells
                     .Cast<DataGridViewCell>()
                     .Select(cell => cell.OwningRow).Distinct();
 
-                if (selectedRows?.Count() == 0) return null;
+                if (selectedRows?.Count() == 0) return Enumerable.Empty<T>();
 
                 return selectedRows.Select(item => (T)item.DataBoundItem);
             }
             set
             {
-                FrmList.DataGridView.SetSelectedRows(value as BaseId);
+                DataGridView.SetSelectedRows(value as BaseId);
             }
         }
 
@@ -170,29 +174,29 @@ namespace Technics
 
             if (item == default)
             {
-                FrmList.BindingSource.Add(value);
+                BindingSource.Add(value);
             }
             else
             {
-                var index = FrmList.BindingSource.IndexOf(item);
+                var index = BindingSource.IndexOf(item);
 
-                FrmList.BindingSource.List[index] = value;
+                BindingSource.List[index] = value;
 
-                FrmList.BindingSource.ResetItem(index);
+                BindingSource.ResetItem(index);
             }
 
-            FrmList.DataGridView.SetSelectedRows(value);
+            DataGridView.SetSelectedRows(value);
+
+            Sort();
 
             PerformOnListChanged();
-
-            //            Sort();
         }
 
         private void ListItemDelete(IEnumerable<T> list)
         {
             foreach (var item in list)
             {
-                FrmList.BindingSource.Remove(item);
+                BindingSource.Remove(item);
             }
 
             PerformOnListChanged();
@@ -227,7 +231,7 @@ namespace Technics
 
             var item = Selected;
 
-            FrmList.DataGridView.SetSelectedRows(item);
+            DataGridView.SetSelectedRows(item);
 
             await ListItemChangeAsync(item);
         }
@@ -238,13 +242,30 @@ namespace Technics
 
             var list = SelectedList;
 
-            FrmList.DataGridView.SetSelectedRows(list.Cast<BaseId>());
+            DataGridView.SetSelectedRows(list.Cast<BaseId>());
 
             if (!ShowItemDeleteDialog(list)) return;
 
             await ListItemDeleteAsync(list);
 
             ListItemDelete(list);
+        }
+        
+        public void ColumnHeaderMouseClick(DataGridViewCellMouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Left) return;
+
+            SortColumn = GetSortColumn(e.ColumnIndex);
+
+            Sort();
+        }
+
+        public void DataBindingComplete()
+        {
+            if (SortColumn.IsEmpty()) return;
+
+            DataGridView.Columns[SortColumn].HeaderCell.SortGlyphDirection =
+                SortOrderDescending ? SortOrder.Descending : SortOrder.Ascending;
         }
     }
 }

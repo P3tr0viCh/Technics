@@ -154,6 +154,7 @@ namespace Technics
             MileagesMileage.DefaultCellStyle =
             MileagesMileageCommon.DefaultCellStyle =
             TechPartsMileage.DefaultCellStyle =
+            TechPartsMileageCommon.DefaultCellStyle =
                 DataGridViewCellStyles.Mileage;
         }
 

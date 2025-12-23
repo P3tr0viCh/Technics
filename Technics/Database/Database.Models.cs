@@ -181,6 +181,10 @@ namespace Technics
                 [Computed]
                 public double Mileage { get; set; } = default;
 
+                [Write(false)]
+                [Computed]
+                public double MileageCommon { get; set; } = default;
+
                 public new void Clear()
                 {
                     base.Clear();

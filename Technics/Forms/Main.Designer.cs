@@ -32,16 +32,13 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.toolStripContainer = new System.Windows.Forms.ToolStripContainer();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
+            this.LabelMileageCount = new System.Windows.Forms.ToolStripStatusLabel();
+            this.LabelTechPartCount = new System.Windows.Forms.ToolStripStatusLabel();
             this.LabelStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.splitterMileages = new System.Windows.Forms.Splitter();
             this.panelTop = new System.Windows.Forms.Panel();
             this.panelTechPart = new System.Windows.Forms.Panel();
             this.dgvTechParts = new System.Windows.Forms.DataGridView();
-            this.TechPartsTechText = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TechPartsPartText = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TechPartsDateTimeInstall = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TechPartsDateTimeRemove = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TechPartsMileage = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bindingSourceTechParts = new System.Windows.Forms.BindingSource(this.components);
             this.toolStripTechParts = new System.Windows.Forms.ToolStrip();
             this.tsbtnTechPartAdd = new System.Windows.Forms.ToolStripButton();
@@ -90,8 +87,12 @@
             this.tsbtnListParts = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tsbtnClose = new System.Windows.Forms.ToolStripButton();
-            this.LabelMileageCount = new System.Windows.Forms.ToolStripStatusLabel();
-            this.LabelTechPartCount = new System.Windows.Forms.ToolStripStatusLabel();
+            this.TechPartsTechText = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TechPartsPartText = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TechPartsDateTimeInstall = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TechPartsDateTimeRemove = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TechPartsMileage = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TechPartsMileageCommon = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolStripContainer.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer.ContentPanel.SuspendLayout();
             this.toolStripContainer.TopToolStripPanel.SuspendLayout();
@@ -151,10 +152,22 @@
             this.statusStrip.Size = new System.Drawing.Size(872, 24);
             this.statusStrip.TabIndex = 0;
             // 
+            // LabelMileageCount
+            // 
+            this.LabelMileageCount.Name = "LabelMileageCount";
+            this.LabelMileageCount.Size = new System.Drawing.Size(93, 19);
+            this.LabelMileageCount.Text = "mileages: 666";
+            // 
+            // LabelTechPartCount
+            // 
+            this.LabelTechPartCount.Name = "LabelTechPartCount";
+            this.LabelTechPartCount.Size = new System.Drawing.Size(89, 19);
+            this.LabelTechPartCount.Text = "techparts: 42";
+            // 
             // LabelStatus
             // 
             this.LabelStatus.Name = "LabelStatus";
-            this.LabelStatus.Size = new System.Drawing.Size(644, 19);
+            this.LabelStatus.Size = new System.Drawing.Size(675, 19);
             this.LabelStatus.Spring = true;
             this.LabelStatus.Text = "Status";
             // 
@@ -203,7 +216,8 @@
             this.TechPartsPartText,
             this.TechPartsDateTimeInstall,
             this.TechPartsDateTimeRemove,
-            this.TechPartsMileage});
+            this.TechPartsMileage,
+            this.TechPartsMileageCommon});
             this.dgvTechParts.DataSource = this.bindingSourceTechParts;
             this.dgvTechParts.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvTechParts.Location = new System.Drawing.Point(0, 50);
@@ -213,41 +227,6 @@
             this.dgvTechParts.TabIndex = 3;
             this.dgvTechParts.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DgvTechParts_CellMouseDoubleClick);
             this.dgvTechParts.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DataGridView_CellMouseDown);
-            // 
-            // TechPartsTechText
-            // 
-            this.TechPartsTechText.DataPropertyName = "TechText";
-            this.TechPartsTechText.HeaderText = "Техника";
-            this.TechPartsTechText.Name = "TechPartsTechText";
-            this.TechPartsTechText.ReadOnly = true;
-            // 
-            // TechPartsPartText
-            // 
-            this.TechPartsPartText.DataPropertyName = "PartText";
-            this.TechPartsPartText.HeaderText = "Деталь";
-            this.TechPartsPartText.Name = "TechPartsPartText";
-            this.TechPartsPartText.ReadOnly = true;
-            // 
-            // TechPartsDateTimeInstall
-            // 
-            this.TechPartsDateTimeInstall.DataPropertyName = "DateTimeInstall";
-            this.TechPartsDateTimeInstall.HeaderText = "Дата установки";
-            this.TechPartsDateTimeInstall.Name = "TechPartsDateTimeInstall";
-            this.TechPartsDateTimeInstall.ReadOnly = true;
-            // 
-            // TechPartsDateTimeRemove
-            // 
-            this.TechPartsDateTimeRemove.DataPropertyName = "DateTimeRemove";
-            this.TechPartsDateTimeRemove.HeaderText = "Дата снятия";
-            this.TechPartsDateTimeRemove.Name = "TechPartsDateTimeRemove";
-            this.TechPartsDateTimeRemove.ReadOnly = true;
-            // 
-            // TechPartsMileage
-            // 
-            this.TechPartsMileage.DataPropertyName = "Mileage";
-            this.TechPartsMileage.HeaderText = "Пробег";
-            this.TechPartsMileage.Name = "TechPartsMileage";
-            this.TechPartsMileage.ReadOnly = true;
             // 
             // bindingSourceTechParts
             // 
@@ -704,17 +683,47 @@
             this.tsbtnClose.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsbtnClose.Click += new System.EventHandler(this.TsbtnClose_Click);
             // 
-            // LabelMileageCount
+            // TechPartsTechText
             // 
-            this.LabelMileageCount.Name = "LabelMileageCount";
-            this.LabelMileageCount.Size = new System.Drawing.Size(93, 19);
-            this.LabelMileageCount.Text = "mileages: 666";
+            this.TechPartsTechText.DataPropertyName = "TechText";
+            this.TechPartsTechText.HeaderText = "Техника";
+            this.TechPartsTechText.Name = "TechPartsTechText";
+            this.TechPartsTechText.ReadOnly = true;
             // 
-            // LabelTechPartCount
+            // TechPartsPartText
             // 
-            this.LabelTechPartCount.Name = "LabelTechPartCount";
-            this.LabelTechPartCount.Size = new System.Drawing.Size(89, 19);
-            this.LabelTechPartCount.Text = "techparts: 42";
+            this.TechPartsPartText.DataPropertyName = "PartText";
+            this.TechPartsPartText.HeaderText = "Деталь";
+            this.TechPartsPartText.Name = "TechPartsPartText";
+            this.TechPartsPartText.ReadOnly = true;
+            // 
+            // TechPartsDateTimeInstall
+            // 
+            this.TechPartsDateTimeInstall.DataPropertyName = "DateTimeInstall";
+            this.TechPartsDateTimeInstall.HeaderText = "Дата установки";
+            this.TechPartsDateTimeInstall.Name = "TechPartsDateTimeInstall";
+            this.TechPartsDateTimeInstall.ReadOnly = true;
+            // 
+            // TechPartsDateTimeRemove
+            // 
+            this.TechPartsDateTimeRemove.DataPropertyName = "DateTimeRemove";
+            this.TechPartsDateTimeRemove.HeaderText = "Дата снятия";
+            this.TechPartsDateTimeRemove.Name = "TechPartsDateTimeRemove";
+            this.TechPartsDateTimeRemove.ReadOnly = true;
+            // 
+            // TechPartsMileage
+            // 
+            this.TechPartsMileage.DataPropertyName = "Mileage";
+            this.TechPartsMileage.HeaderText = "Пробег";
+            this.TechPartsMileage.Name = "TechPartsMileage";
+            this.TechPartsMileage.ReadOnly = true;
+            // 
+            // TechPartsMileageCommon
+            // 
+            this.TechPartsMileageCommon.DataPropertyName = "MileageCommon";
+            this.TechPartsMileageCommon.HeaderText = "Общий пробег";
+            this.TechPartsMileageCommon.Name = "TechPartsMileageCommon";
+            this.TechPartsMileageCommon.ReadOnly = true;
             // 
             // Main
             // 
@@ -820,13 +829,14 @@
         private System.Windows.Forms.ToolStripButton tsbtnTechPartAdd;
         private System.Windows.Forms.ToolStripMenuItem miListTechs;
         private System.Windows.Forms.ToolStripButton tsbtnListTechs;
+        private System.Windows.Forms.ToolStripStatusLabel LabelMileageCount;
+        private System.Windows.Forms.ToolStripStatusLabel LabelTechPartCount;
         private System.Windows.Forms.DataGridViewTextBoxColumn TechPartsTechText;
         private System.Windows.Forms.DataGridViewTextBoxColumn TechPartsPartText;
         private System.Windows.Forms.DataGridViewTextBoxColumn TechPartsDateTimeInstall;
         private System.Windows.Forms.DataGridViewTextBoxColumn TechPartsDateTimeRemove;
         private System.Windows.Forms.DataGridViewTextBoxColumn TechPartsMileage;
-        private System.Windows.Forms.ToolStripStatusLabel LabelMileageCount;
-        private System.Windows.Forms.ToolStripStatusLabel LabelTechPartCount;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TechPartsMileageCommon;
     }
 }
 

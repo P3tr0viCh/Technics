@@ -22,6 +22,8 @@ namespace Technics
         {
             AppSettings.LoadFormState(Form, AppSettings.Default.FormStateListTechs);
             AppSettings.LoadDataGridColumns(FrmList.DataGridView, AppSettings.Default.ColumnsListTechs);
+
+            SortColumn = nameof(TechModel.Text);
         }
 
         protected override void SaveFormState()
@@ -50,6 +52,11 @@ namespace Technics
         {
             FrmList.DataGridView.Columns[nameof(TechModel.FolderId)].Visible = false;
             FrmList.DataGridView.Columns[nameof(BaseText.Text)].HeaderText = ResourcesColumnHeader.Text;
+        }
+
+        protected override int Compare(TechModel x, TechModel y)
+        {
+            return x.Text.CompareTo(y.Text);
         }
     }
 }

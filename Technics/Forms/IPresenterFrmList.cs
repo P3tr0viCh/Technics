@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Technics
 {
@@ -26,5 +27,8 @@ namespace Technics
         Task ListItemChangeSelectedAsync();
 
         Task ListItemDeleteSelectedAsync();
+
+        void ColumnHeaderMouseClick(DataGridViewCellMouseEventArgs e);
+        void DataBindingComplete();
     }
 }

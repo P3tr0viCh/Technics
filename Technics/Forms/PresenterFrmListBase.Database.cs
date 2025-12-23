@@ -20,6 +20,8 @@ namespace Technics
 				var list = await Database.Default.ListLoadAsync<T>();
 
                 FrmList.BindingSource.DataSource = list.ToBindingList();
+
+				Sort();
             
 				PerformOnListChanged();
 
