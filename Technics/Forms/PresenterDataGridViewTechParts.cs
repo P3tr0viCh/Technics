@@ -11,7 +11,7 @@ namespace Technics
         {
         }
 
-        protected override int Compare(TechPartModel x, TechPartModel y, string dataPropertyName)
+        public override int Compare(TechPartModel x, TechPartModel y, string dataPropertyName)
         {
             var result = 0;
 

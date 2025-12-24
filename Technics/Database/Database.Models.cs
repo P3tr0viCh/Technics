@@ -42,7 +42,7 @@ namespace Technics
             public class TechModel : BaseText
             {
                 public long? FolderId { get; set; } = null;
-
+ 
                 public new void Clear()
                 {
                     base.Clear();

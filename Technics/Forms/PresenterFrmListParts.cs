@@ -1,4 +1,5 @@
 ﻿using P3tr0viCh.Utils;
+using System.Collections;
 using System.Collections.Generic;
 using Technics.Properties;
 using static Technics.Database.Models;
@@ -15,17 +16,15 @@ namespace Technics
 
         protected override PartModel GetNewItem()
         {
-            var text =
 #if DEBUG
-                $"Part {Str.Random(5)}";
-#else
-                string.Empty;
-#endif
+            var item = base.GetNewItem();
 
-            return new PartModel()
-            {
-                Text = text
-            };
+            item.Text = $"Part {Str.Random(5)}";
+
+            return item;
+#else
+            return base.GetNewItem();
+#endif
         }
 
         protected override string FormTitle => Resources.TitleListParts;
@@ -62,7 +61,12 @@ namespace Technics
 
         protected override void UpdateColumns()
         {
-            FrmList.DataGridView.Columns[nameof(PartModel.Text)].HeaderText = ResourcesColumnHeader.Text;
+            DataGridView.Columns[nameof(PartModel.Text)].HeaderText = ResourcesColumnHeader.Text;
+        }
+
+        public override int Compare(PartModel x, PartModel y, string dataPropertyName)
+        {
+            return Comparer.Default.Compare(x.Text, y.Text);
         }
     }
 }

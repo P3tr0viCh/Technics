@@ -1,19 +1,21 @@
 ﻿using P3tr0viCh.Database;
 using P3tr0viCh.Utils;
-using System.Collections;
-using System.Windows.Forms;
 
 namespace Technics
 {
-    internal class PresenterDataGridViewFrmList : PresenterDataGridView<IBaseText>
+    internal class PresenterDataGridViewFrmList<T> : PresenterDataGridView<T> where T : BaseId, new()
     {
-        public PresenterDataGridViewFrmList(DataGridView dataGridView) : base(dataGridView)
+        private readonly PresenterFrmListBase<T> presenterFrmList;
+
+        public PresenterDataGridViewFrmList(PresenterFrmListBase<T> presenterFrmList) : 
+            base(presenterFrmList.FrmList.DataGridView)
         {
+            this.presenterFrmList = presenterFrmList;
         }
 
-        protected override int Compare(IBaseText x, IBaseText y, string dataPropertyName)
+        public override int Compare(T x, T y, string dataPropertyName)
         {
-            return Comparer.Default.Compare(x.Text, y.Text);
+            return presenterFrmList.Compare(x, y, dataPropertyName);    
         }
     }
 }

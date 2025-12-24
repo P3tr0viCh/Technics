@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Forms;
 using Technics.Properties;
 using static Technics.Database.Models;
 
@@ -13,14 +16,16 @@ namespace Technics
             Grants = FrmListGrant.Change | FrmListGrant.Delete;
         }
 
-        protected override TechModel GetNewItem() { return new TechModel(); }
-
         protected override string FormTitle => Resources.TitleListTechs;
 
         protected override void LoadFormState()
         {
+            BindingSource.DataSource = Enumerable.Empty<TechModel>();
+
+            DataGridView.DataSource = BindingSource;
+
             AppSettings.LoadFormState(Form, AppSettings.Default.FormStateListTechs);
-            AppSettings.LoadDataGridColumns(FrmList.DataGridView, AppSettings.Default.ColumnsListTechs);
+            AppSettings.LoadDataGridColumns(DataGridView, AppSettings.Default.ColumnsListTechs);
 
             presenterDataGridView.SortColumn = nameof(TechModel.Text);
         }
@@ -28,7 +33,7 @@ namespace Technics
         protected override void SaveFormState()
         {
             AppSettings.Default.FormStateListTechs = AppSettings.SaveFormState(Form);
-            AppSettings.Default.ColumnsListTechs = AppSettings.SaveDataGridColumns(FrmList.DataGridView);
+            AppSettings.Default.ColumnsListTechs = AppSettings.SaveDataGridColumns(DataGridView);
         }
 
         protected override bool ShowItemChangeDialog(TechModel value)
@@ -49,8 +54,14 @@ namespace Technics
 
         protected override void UpdateColumns()
         {
-            FrmList.DataGridView.Columns[nameof(TechModel.FolderId)].Visible = false;
-            FrmList.DataGridView.Columns[nameof(TechModel.Text)].HeaderText = ResourcesColumnHeader.Text;
+            DataGridView.Columns[nameof(TechModel.FolderId)].Visible = false;
+
+            DataGridView.Columns[nameof(TechModel.Text)].HeaderText = ResourcesColumnHeader.Text;
+        }
+
+        public override int Compare(TechModel x, TechModel y, string dataPropertyName)
+        {
+            return Comparer.Default.Compare(x.Text, y.Text);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using P3tr0viCh.Database;
+using P3tr0viCh.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,9 @@ using System.Windows.Forms;
 
 namespace Technics
 {
-    internal abstract partial class PresenterFrmListBase<T> : IPresenterFrmList where T : BaseId, new()
+    internal abstract partial class PresenterFrmListBase<T> :
+        IPresenterFrmList,
+        IPresenterDataGridViewCompare<T> where T : BaseId, new()
     {
         public IFrmList FrmList { get; private set; }
 
@@ -17,10 +20,10 @@ namespace Technics
 
         public bool Changed { get; set; } = false;
 
-        private DataGridView DataGridView => FrmList.DataGridView;
-        private BindingSource BindingSource => FrmList.BindingSource;
+        public DataGridView DataGridView => FrmList.DataGridView;
+        public BindingSource BindingSource => FrmList.BindingSource;
 
-        internal readonly PresenterDataGridViewFrmList presenterDataGridView;
+        internal readonly PresenterDataGridViewFrmList<T> presenterDataGridView;
 
         public PresenterFrmListBase(IFrmList frmList)
         {
@@ -29,7 +32,7 @@ namespace Technics
             Form.Load += new EventHandler(Form_Load);
             Form.FormClosing += new FormClosingEventHandler(FrmList_FormClosing);
 
-            presenterDataGridView = new PresenterDataGridViewFrmList(DataGridView);
+            presenterDataGridView = new PresenterDataGridViewFrmList<T>(this);
 
             DataGridView.CellDoubleClick += new DataGridViewCellEventHandler(DataGridView_CellDoubleClick);
         }
@@ -90,8 +93,6 @@ namespace Technics
         private bool CanChange => grants.HasFlag(FrmListGrant.Change);
         private bool CanDelete => grants.HasFlag(FrmListGrant.Delete);
 
-        public event ListChanged OnListChanged;
-
         private void SetDataSource()
         {
             BindingSource.DataSource = Enumerable.Empty<T>();
@@ -129,8 +130,8 @@ namespace Technics
 
         private void UpdateCommonColumns()
         {
-            ////DataGridView.Columns[nameof(BaseId.Id)].Visible = false;
-            //DataGridView.Columns[nameof(BaseId.IsNew)].Visible = false;
+            DataGridView.Columns[nameof(BaseId.Id)].Visible = false;
+            DataGridView.Columns[nameof(BaseId.IsNew)].Visible = false;
         }
 
         protected abstract void SaveFormState();
@@ -144,10 +145,6 @@ namespace Technics
             Utils.Log.WriteFormClose(Form);
         }
 
-        public int Count => BindingSource.Count;
-        public int SelectedCount => DataGridView.SelectedCells
-                    .Cast<DataGridViewCell>().Select(cell => cell.OwningRow).Distinct().Count();
-
         public T Find(T value)
         {
             return BindingSource.Cast<T>().Where(item => item.Id == value.Id).FirstOrDefault();
@@ -155,29 +152,16 @@ namespace Technics
 
         public T Selected
         {
-            get => BindingSource.Current as T;
-            set => BindingSource.Position = BindingSource.IndexOf(Find(value));
+            get => presenterDataGridView.Selected;
+            set => presenterDataGridView.Selected = Find(value);
         }
 
         public IEnumerable<T> SelectedList
         {
-            get
-            {
-                if (DataGridView.SelectedCells.Count == 0) return Enumerable.Empty<T>();
-
-                var selectedRows = DataGridView.SelectedCells
-                    .Cast<DataGridViewCell>()
-                    .Select(cell => cell.OwningRow).Distinct();
-
-                if (selectedRows?.Count() == 0) return Enumerable.Empty<T>();
-
-                return selectedRows.Select(item => (T)item.DataBoundItem);
-            }
-            set
-            {
-                DataGridView.SetSelectedRows(value as BaseId);
-            }
+            get => DataGridView.GetSelectedList<T>();
         }
+
+        public event ListChanged OnListChanged;
 
         private void PerformOnListChanged()
         {
@@ -220,7 +204,7 @@ namespace Technics
             PerformOnListChanged();
         }
 
-        protected abstract T GetNewItem();
+        protected virtual T GetNewItem() => new T();
 
         protected abstract bool ShowItemChangeDialog(T value);
         protected abstract bool ShowItemDeleteDialog(IEnumerable<T> list);
@@ -268,12 +252,14 @@ namespace Technics
 
             ListItemDelete(list);
         }
-        
+
         private async void DataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
 
             await ListItemChangeSelectedAsync();
         }
+
+        public abstract int Compare(T x, T y, string dataPropertyName);
     }
 }

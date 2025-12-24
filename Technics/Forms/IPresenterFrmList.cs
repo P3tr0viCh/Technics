@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Technics
 {
@@ -11,12 +10,10 @@ namespace Technics
 
         IFrmList FrmList { get; }
 
-        bool Changed { get; }
-
-        int Count { get; }
-        int SelectedCount { get; }
 
         event ListChanged OnListChanged;
+
+        bool Changed { get; }
 
         Task ListItemAddNewAsync();
 
