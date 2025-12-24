@@ -11,17 +11,21 @@ namespace Technics
     {
         public static class Filter
         {
-            private static string ByIdToString(string fieldName, List<BaseId> list)
+            private static string ByIdToString(string fieldName, IEnumerable<long> list)
             {
-                var result = string.Empty;
+                var count = list.Count();
 
-                if (list.Count == 1)
+                if (count == 0) return string.Empty;
+
+                string result;
+
+                if (count == 1)
                 {
-                    result = $"{fieldName} = {list[0].Id}";
+                    result = $"{fieldName} = {list.First()}";
                 }
                 else
                 {
-                    list.ForEach(item => result = result.JoinExcludeEmpty(", ", item.Id.ToString()));
+                    result = string.Join(", ", list);
 
                     result = $"{fieldName} IN ({result})";
                 }
@@ -33,11 +37,11 @@ namespace Technics
             {
                 if (techs == null) return string.Empty;
 
-                var list = techs.Cast<BaseId>().ToList();
+                var list = techs.Select(item => item.Id);
 
-                if (list.Count == 0) return string.Empty;
+                if (!list.Any()) return string.Empty;
 
-                if (list.Count == Lists.Default.Techs.Count) return string.Empty;
+                if (list.Count() == Lists.Default.Techs.Count) return string.Empty;
 
                 var fieldName = Sql.FieldName(nameof(ITechId.TechId));
 
@@ -50,9 +54,9 @@ namespace Technics
             {
                 if (parts == null) return string.Empty;
 
-                var list = parts.Cast<BaseId>().ToList();
+                var list = parts.Select(item => item.Id);
 
-                if (list.Count == 0) return string.Empty;
+                if (!list.Any()) return string.Empty;
 
                 var fieldName = Sql.FieldName(nameof(IPartId.PartId));
 
@@ -61,17 +65,15 @@ namespace Technics
                 return result;
             }
 
-            public static string GetWhereSql(BaseFilter filter)
-            {
-                var where = filter.ToString();
-
-                if (where.IsEmpty()) return string.Empty;
-
-                return $"WHERE {where}";
-            }
-
             public abstract class BaseFilter
             {
+                protected string GetWhereSql(string conditional)
+                {
+                    if (conditional.IsEmpty()) return string.Empty;
+
+                    return $"WHERE {conditional}";
+                }
+
                 public abstract override string ToString();
             }
 
@@ -82,6 +84,8 @@ namespace Technics
                 public override string ToString()
                 {
                     var result = TechsToString(Techs);
+
+                    result = GetWhereSql(result);
 
                     return result;
                 }
@@ -98,6 +102,8 @@ namespace Technics
                     var result = TechsToString(Techs);
 
                     result = result.JoinExcludeEmpty(" AND ", PartsToString(Parts));
+
+                    result = GetWhereSql(result);
 
                     return result;
                 }

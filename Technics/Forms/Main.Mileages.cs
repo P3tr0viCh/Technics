@@ -54,18 +54,14 @@ namespace Technics
         private void MileagesUpdateMileageCommon(IEnumerable<MileageModel> changedList)
         {
             if (!changedList.Any()) return;
-
-            var mileageList = MileageList.ToList();
-
-            for (var i = 0; i < mileageList.Count; i++)
+            
+            foreach (var mileage in MileageList)
             {
-                var changed = changedList.Where(item => item.Id == mileageList[i].Id).FirstOrDefault();
+                var changed = changedList.Where(item => item.Id == mileage.Id).FirstOrDefault();
 
                 if (changed == null) continue;
 
-                mileageList[i].MileageCommon = changed.MileageCommon;
-
-                bindingSourceMileages.ResetItem(i);
+                mileage.MileageCommon = changed.MileageCommon;
             }
         }
 
@@ -96,7 +92,7 @@ namespace Technics
 
                 MileagesUpdateMileageCommon(changedList);
 
-                await TechPartsUpdateMileagesAsync(mileage);
+                TechPartsUpdateMileages(changedList);
 
                 MileagesListChanged();
             }
@@ -166,7 +162,7 @@ namespace Technics
 
                 MileagesUpdateMileageCommon(changedList);
 
-                await TechPartsUpdateMileagesAsync(mileage);
+                TechPartsUpdateMileages(changedList);
 
                 MileagesListChanged();
             }

@@ -1,16 +1,20 @@
 ﻿using Dapper;
 using Dapper.Contrib.Extensions;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using P3tr0viCh.Database;
 using P3tr0viCh.Utils;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data.Common;
 using System.Data.SQLite;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Transactions;
 using Technics.Properties;
+using static Technics.Database;
 using static Technics.Database.Models;
 
 namespace Technics
@@ -154,24 +158,25 @@ namespace Technics
                 new { techid = mileage.TechId, datetime = mileage.DateTime });
         }
 
-        private async Task<double> GetTechPartMileageAsync(TechPartModel techPart)
+        private async Task<double> GetTechPartMileageAsync(
+            DbConnection connection, DbTransaction transaction, TechPartModel techPart)
         {
-            return await QueryFirstOrDefaultAsync<double>(ResourcesSql.GetTechPartMileage,
-                new
-                {
-                    techid = techPart.TechId,
-                    datetimeinstall = techPart.DateTimeInstall,
-                    datetimeremove = techPart.DateTimeRemove ?? DateTime.Today.AddDays(1)
-                });
+            return await Actions.QueryFirstOrDefaultAsync<double>(connection,
+                ResourcesSql.GetTechPartMileage,
+                    new
+                    {
+                        techid = techPart.TechId,
+                        datetimeinstall = techPart.DateTimeInstall,
+                        datetimeremove = techPart.DateTimeRemove ?? DateTime.Today.AddDays(1)
+                    },
+                transaction);
         }
 
-        public async Task LoadTechPartMileagesAsync(IEnumerable<TechPartModel> techParts)
+        private async Task<double> GetTechPartMileageAsync(TechPartModel techPart)
         {
-            foreach (var techPart in techParts)
+            using (var connection = GetConnection())
             {
-                techPart.Mileage = await GetTechPartMileageAsync(techPart);
-                
-                techPart.MileageCommon++;
+                return await GetTechPartMileageAsync(connection, null, techPart);
             }
         }
 
@@ -182,7 +187,7 @@ namespace Technics
                 Techs = techs
             };
 
-            var where = Filter.GetWhereSql(filter);
+            var where = filter.ToString();
 
             var sql = string.Format(ResourcesSql.SelectMileages, where);
 
@@ -191,7 +196,7 @@ namespace Technics
 
         public string GetTechPartsSql(Filter.TechParts filter)
         {
-            var where = Filter.GetWhereSql(filter);
+            var where = filter.ToString();
 
             var sql = string.Format(ResourcesSql.SelectTechParts, where);
 
@@ -211,24 +216,56 @@ namespace Technics
         private async Task<IEnumerable<MileageModel>> MileagesUpdateMileageCommonAsync(
             DbConnection connection, DbTransaction transaction, DateTime dateTime)
         {
-            var list = await Actions.ListLoadAsync<MileageModel>(connection,
+            var mileageChangedList = await Actions.ListLoadAsync<MileageModel>(connection,
                 ResourcesSql.SelectMileagesChangedByDateTime,
                 new { datetime = dateTime }, transaction);
 
-            DebugWrite.Line($"count={list.Count()}");
+            DebugWrite.Line($"count={mileageChangedList.Count()}");
 
-            foreach (var item in list)
+            foreach (var mileage in mileageChangedList)
             {
-                item.MileageCommon = await Actions.QueryFirstOrDefaultAsync<double>(connection,
+                mileage.MileageCommon = await Actions.QueryFirstOrDefaultAsync<double>(connection,
                     ResourcesSql.GetMileageCommon,
-                    new { techid = item.TechId, datetime = item.DateTime }, transaction);
+                    new { techid = mileage.TechId, datetime = mileage.DateTime }, transaction);
 
                 await Actions.ExecuteAsync(connection,
                     ResourcesSql.UpdateMileagesMileageCommonById,
-                    new { id = item.Id, mileagecommon = item.MileageCommon }, transaction);
+                    new { id = mileage.Id, mileagecommon = mileage.MileageCommon }, transaction);
             }
 
-            return list;
+            return mileageChangedList;
+        }
+
+        private async Task TechPartsUpdateMileagesAsync(
+            DbConnection connection, DbTransaction transaction, MileageModel mileage)
+        {
+            if (mileage.TechId == null) return;
+
+            var query = new Query()
+            {
+                Fields = "id, techid, partid, datetimeinstall, datetimeremove",
+                Table = Tables.techparts,
+                Where = $"techid = {mileage.TechId}"
+            };
+
+            var techPartsChangedList = await Actions.ListLoadAsync<TechPartModel>(connection, query, transaction);
+
+            DebugWrite.Line($"count={techPartsChangedList.Count()}");
+
+            foreach (var techPart in techPartsChangedList)
+            {
+                DebugWrite.Line(JsonConvert.SerializeObject(techPart));
+
+                techPart.Mileage = await GetTechPartMileageAsync(connection, transaction, techPart);
+
+                var param = new { id = techPart.Id, mileage = techPart.Mileage };
+
+                DebugWrite.Line(param);
+
+                await Actions.ExecuteAsync(connection,
+                    ResourcesSql.UpdateTechPartsMileageById, param,
+                    transaction);
+            }
         }
 
         public async Task<IEnumerable<MileageModel>> MileageSaveAsync(MileageModel mileage)
@@ -244,6 +281,8 @@ namespace Technics
                         await Actions.ListItemSaveAsync(connection, mileage, transaction);
 
                         var changedList = await MileagesUpdateMileageCommonAsync(connection, transaction, mileage.DateTime);
+
+                        await TechPartsUpdateMileagesAsync(connection, transaction, mileage);
 
                         transaction.Commit();
 
@@ -271,6 +310,8 @@ namespace Technics
                         await Actions.ListItemDeleteAsync(connection, mileage, transaction);
 
                         var changedList = await MileagesUpdateMileageCommonAsync(connection, transaction, mileage.DateTime);
+
+                        await TechPartsUpdateMileagesAsync(connection, transaction, mileage);
 
                         transaction.Commit();
 

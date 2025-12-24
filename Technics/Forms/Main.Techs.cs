@@ -77,7 +77,7 @@ namespace Technics
 
                 var techs = await Database.Default.ListLoadAsync<TechModel>();
 
-                Lists.Default.Techs = techs.OrderBy(t => t.Text).ToList();
+                Lists.Default.Techs = techs.OrderBy(tech => tech.Text).ToList();
 
                 foreach (var tech in Lists.Default.Techs)
                 {

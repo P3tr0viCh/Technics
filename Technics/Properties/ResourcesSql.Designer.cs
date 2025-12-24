@@ -110,7 +110,15 @@ namespace Technics.Properties {
         ///	techid INTEGER,
         ///	partid INTEGER,
         ///	datetimeinstall TEXT,
-        ///	datetimeremove TEXT
+        ///	datetimeremove TEXT,
+        ///	mileage REAL,
+        ///	mileageCommon REAL,
+        ///	FOREIGN KEY (techid) REFERENCES techs (id)
+        ///	ON DELETE SET NULL
+        ///	ON UPDATE CASCADE,
+        ///	FOREIGN KEY (partid) REFERENCES parts (id)
+        ///	ON DELETE SET NULL
+        ///	ON UPDATE CASCADE
         ///);.
         /// </summary>
         internal static string CreateTableTechParts {
@@ -193,7 +201,10 @@ namespace Technics.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SELECT techparts.id, techid, techs.text AS techtext, partid, parts.text AS parttext, datetimeinstall, datetimeremove
+        ///   Looks up a localized string similar to SELECT
+        ///	techparts.id, techid, techs.text AS techtext, partid, parts.text AS parttext,
+        ///	datetimeinstall, datetimeremove,
+        ///	mileage, mileagecommon
         ///FROM techparts
         ///LEFT JOIN techs ON techparts.techid = techs.id
         ///LEFT JOIN parts ON techparts.partid = parts.id
@@ -238,6 +249,19 @@ namespace Technics.Properties {
         internal static string UpdateMileagesMileageCommonByTechId {
             get {
                 return ResourceManager.GetString("UpdateMileagesMileageCommonByTechId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UPDATE
+        ///	techparts
+        ///SET
+        ///	mileage = :mileage
+        ///WHERE id = :id;.
+        /// </summary>
+        internal static string UpdateTechPartsMileageById {
+            get {
+                return ResourceManager.GetString("UpdateTechPartsMileageById", resourceCulture);
             }
         }
     }

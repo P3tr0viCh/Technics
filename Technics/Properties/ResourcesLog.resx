@@ -133,13 +133,13 @@
     <value>{0} item delete ok</value>
   </data>
   <data name="ListItemListDeleteOk" xml:space="preserve">
-    <value>{0} items (count={1}) delete ok</value>
+    <value>{0} items delete, count={1} ok</value>
   </data>
   <data name="ListItemSaveOk" xml:space="preserve">
     <value>{0} item save ok</value>
   </data>
   <data name="LoadListOk" xml:space="preserve">
-    <value>ok, {0} count={1}</value>
+    <value>{0}, count={1} ok</value>
   </data>
   <data name="LoadOk" xml:space="preserve">
     <value>ok</value>

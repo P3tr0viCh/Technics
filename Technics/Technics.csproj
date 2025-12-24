@@ -205,6 +205,7 @@
     <EmbeddedResource Include="Properties\ResourcesSql.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ResourcesSql.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <Compile Include="Forms\PresenterFrmListBase.Database.cs" />
     <None Include="packages.config" />
@@ -248,6 +249,7 @@
     <None Include="Resources\UpdateMileagesMileageCommonById.sql" />
     <None Include="Resources\SelectMileagesChangedByDateTime.sql" />
     <None Include="Resources\UpdateMileagesMileageCommonByTechId.sql" />
+    <None Include="Resources\UpdateTechPartsMileageById.sql" />
     <Content Include="Technics.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

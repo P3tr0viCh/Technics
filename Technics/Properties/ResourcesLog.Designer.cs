@@ -106,7 +106,7 @@ namespace Technics.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} items (count={1}) delete ok.
+        ///   Looks up a localized string similar to {0} items delete, count={1} ok.
         /// </summary>
         internal static string ListItemListDeleteOk {
             get {
@@ -124,7 +124,7 @@ namespace Technics.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ok, {0} count={1}.
+        ///   Looks up a localized string similar to {0}, count={1} ok.
         /// </summary>
         internal static string LoadListOk {
             get {

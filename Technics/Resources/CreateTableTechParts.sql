@@ -4,6 +4,8 @@ CREATE TABLE techparts (
 	partid INTEGER,
 	datetimeinstall TEXT,
 	datetimeremove TEXT,
+	mileage REAL,
+	mileageCommon REAL,
 	FOREIGN KEY (techid) REFERENCES techs (id)
 	ON DELETE SET NULL
 	ON UPDATE CASCADE,

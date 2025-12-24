@@ -80,7 +80,7 @@ namespace Technics
 
                 var list = await Database.Default.ListLoadAsync<PartModel>();
 
-                bindingSourceParts.DataSource = list.ToBindingList();
+                bindingSourceParts.DataSource = list.OrderBy(part => part.Text).ToBindingList();
 
                 bindingSourceParts.Insert(0, new PartModel());
             }

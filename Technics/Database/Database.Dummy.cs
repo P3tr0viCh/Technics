@@ -12,7 +12,7 @@ namespace Technics
 #if DEBUG
         public class Dummy
         {
-            private const int MileagesCount = 100;
+            private const int MileagesCount = 10;
 
             private const int PartsCount = 10;
 
@@ -115,7 +115,10 @@ namespace Technics
 
                     foreach (var tech in techs)
                     {
-                        var mileages = (await Default.ListLoadAsync<MileageModel>(Default.GetMileagesSql(techs))).ToList();
+                        var mileages = (await Default.ListLoadAsync<MileageModel>(
+                            Default.GetMileagesSql(new List<TechModel>() { tech }))).ToList();
+
+                        if (!mileages.Any()) continue;
 
                         var dateTimeInstall = mileages.Min(item => item.DateTime);
                         var dateTimeRemove = dateTimeInstall.AddDays(2);
@@ -133,6 +136,8 @@ namespace Technics
                                 DateTimeInstall = dateTimeInstall,
                                 DateTimeRemove = dateTimeRemove,
                             };
+
+                            techPart.Mileage = await Default.GetTechPartMileageAsync(techPart);
 
                             techParts.Add(techPart);
 

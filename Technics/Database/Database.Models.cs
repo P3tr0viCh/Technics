@@ -42,7 +42,7 @@ namespace Technics
             public class TechModel : BaseText
             {
                 public long? FolderId { get; set; } = null;
- 
+
                 public new void Clear()
                 {
                     base.Clear();
@@ -177,13 +177,9 @@ namespace Technics
                 public DateTime DateTimeInstall { get; set; } = default;
                 public DateTime? DateTimeRemove { get; set; } = default;
 
-                [Write(false)]
-                [Computed]
                 public double Mileage { get; set; } = default;
 
-                [Write(false)]
-                [Computed]
-                public double MileageCommon { get; set; } = default;
+                public double? MileageCommon { get; set; } = null;
 
                 public new void Clear()
                 {
@@ -194,6 +190,9 @@ namespace Technics
 
                     DateTimeInstall = default;
                     DateTimeRemove = default;
+
+                    Mileage = default;
+                    MileageCommon = null;
                 }
 
                 public void Assign(TechPartModel source)
@@ -212,6 +211,9 @@ namespace Technics
 
                     DateTimeInstall = source.DateTimeInstall;
                     DateTimeRemove = source.DateTimeRemove;
+
+                    Mileage = source.Mileage;
+                    MileageCommon = source.MileageCommon;
                 }
             }
         }
