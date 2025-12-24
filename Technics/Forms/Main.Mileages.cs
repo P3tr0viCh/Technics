@@ -94,11 +94,11 @@ namespace Technics
 
                 presenterDataGridViewMileages.Sort();
 
-                MileagesListChanged();
-
                 MileagesUpdateMileageCommon(changedList);
 
-                await TechPartsUpdateMileageAsync(mileage);
+                await TechPartsUpdateMileagesAsync(mileage);
+
+                MileagesListChanged();
             }
             catch (Exception e)
             {
@@ -166,7 +166,7 @@ namespace Technics
 
                 MileagesUpdateMileageCommon(changedList);
 
-                await TechPartsUpdateMileageAsync(mileage);
+                await TechPartsUpdateMileagesAsync(mileage);
 
                 MileagesListChanged();
             }

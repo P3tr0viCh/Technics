@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Technics.Properties;
+using static Technics.Database.Filter;
 using static Technics.Database.Models;
 using static Technics.Enums;
 
@@ -28,7 +29,7 @@ namespace Technics
 
                 presenterDataGridViewTechParts.Sort();
 
-                await TechPartsUpdateMileageAsync(list);
+                await TechPartsUpdateMileagesAsync(list);
 
                 TechPartsListChanged();
 
@@ -51,32 +52,33 @@ namespace Technics
             statusStripPresenter.TechPartCount = bindingSourceTechParts.Count;
         }
 
-        private async Task TechPartsUpdateMileageAsync(IEnumerable<TechPartModel> list)
+        private async Task TechPartsUpdateMileagesAsync(IEnumerable<TechPartModel> list)
         {
             DebugWrite.Line($"count={list.Count()}");
 
             if (!list.Any()) return;
 
-            foreach (var item in list)
-            {
-                item.Mileage = await Database.Default.GetTechPartMileageAsync(item);
-            }
+            await Database.Default.LoadTechPartMileagesAsync(list);
 
             dgvTechParts.Refresh();
         }
 
-        private async Task TechPartsUpdateMileageAsync(TechPartModel techPart)
+        private async Task TechPartsUpdateMileagesAsync(TechPartModel techPart)
         {
-            var list = TechPartList.Where(item => item.Id == techPart.Id);
+            var list = TechPartList.Where(item => item.PartId == techPart.PartId);
 
-            await TechPartsUpdateMileageAsync(list);
+            await TechPartsUpdateMileagesAsync(list);
         }
 
-        private async Task TechPartsUpdateMileageAsync(MileageModel mileage)
+        private async Task TechPartsUpdateMileagesAsync(MileageModel mileage)
         {
             var list = TechPartList.Where(item => item.TechId == mileage.TechId);
 
-            await TechPartsUpdateMileageAsync(list);
+            var parts = list.Select(item => item.PartId);
+
+            list = TechPartList.Where(item => parts.Contains(item.PartId));
+
+            await TechPartsUpdateMileagesAsync(list);
         }
 
         private async Task TechPartsChangeAsync(TechPartModel techPart)
@@ -96,8 +98,6 @@ namespace Technics
                     var pos = bindingSourceTechParts.Add(techPart);
 
                     bindingSourceTechParts.Position = pos;
-
-                    TechPartsListChanged();
                 }
                 else
                 {
@@ -106,7 +106,9 @@ namespace Technics
 
                 presenterDataGridViewTechParts.Sort();
 
-                await TechPartsUpdateMileageAsync(techPart);
+                await TechPartsUpdateMileagesAsync(techPart);
+
+                TechPartsListChanged();
             }
             catch (Exception e)
             {
@@ -173,9 +175,9 @@ namespace Technics
 
                 bindingSourceTechParts.Remove(techPart);
 
-                TechPartsListChanged();
+                await TechPartsUpdateMileagesAsync(techPart);
 
-                //                await TechPartsUpdateMileageCommonAsync(techPart);
+                TechPartsListChanged();
             }
             catch (Exception e)
             {

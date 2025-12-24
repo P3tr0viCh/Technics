@@ -154,7 +154,7 @@ namespace Technics
                 new { techid = mileage.TechId, datetime = mileage.DateTime });
         }
 
-        public async Task<double> GetTechPartMileageAsync(TechPartModel techPart)
+        private async Task<double> GetTechPartMileageAsync(TechPartModel techPart)
         {
             return await QueryFirstOrDefaultAsync<double>(ResourcesSql.GetTechPartMileage,
                 new
@@ -163,6 +163,16 @@ namespace Technics
                     datetimeinstall = techPart.DateTimeInstall,
                     datetimeremove = techPart.DateTimeRemove ?? DateTime.Today.AddDays(1)
                 });
+        }
+
+        public async Task LoadTechPartMileagesAsync(IEnumerable<TechPartModel> techParts)
+        {
+            foreach (var techPart in techParts)
+            {
+                techPart.Mileage = await GetTechPartMileageAsync(techPart);
+                
+                techPart.MileageCommon++;
+            }
         }
 
         public string GetMileagesSql(IEnumerable<TechModel> techs)
