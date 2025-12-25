@@ -146,6 +146,9 @@
     <Compile Include="Forms\PresenterStatusStripFrmList.cs" />
     <Compile Include="Forms\PresenterStatusStripMain.cs" />
     <Compile Include="Forms\FrmListType.cs" />
+    <Compile Include="Models\ChangeMileageModel.cs" />
+    <Compile Include="Models\ChangeModel.cs" />
+    <Compile Include="Models\ChangeTechPartModel.cs" />
     <Compile Include="Properties\ResourcesColumnHeader.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -240,14 +243,12 @@
   <ItemGroup>
     <None Include="Resources\CreateTableMileages.sql" />
     <None Include="Resources\GetMileageCommon.sql" />
-    <None Include="Resources\GetMileageCommonPrev.sql" />
     <None Include="Resources\CreateTableParts.sql" />
     <None Include="Resources\CreateTableTechParts.sql" />
     <None Include="Resources\SelectMileages.sql" />
     <None Include="Resources\SelectTechParts.sql" />
     <None Include="Resources\GetTechPartMileage.sql" />
     <None Include="Resources\UpdateMileagesMileageCommonById.sql" />
-    <None Include="Resources\SelectMileagesChangedByDateTime.sql" />
     <None Include="Resources\UpdateMileagesMileageCommonByTechId.sql" />
     <None Include="Resources\UpdateTechPartsMileageById.sql" />
     <Content Include="Technics.ico" />

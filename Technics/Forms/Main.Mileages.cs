@@ -51,13 +51,13 @@ namespace Technics
             statusStripPresenter.MileageCount = bindingSourceMileages.Count;
         }
 
-        private void MileagesUpdateMileageCommon(IEnumerable<MileageModel> changedList)
+        private void MileagesUpdateChanged(ChangeModel changes)
         {
-            if (!changedList.Any()) return;
-            
+            DebugWrite.Line(changes.Mileages.Count);
+
             foreach (var mileage in MileageList)
             {
-                var changed = changedList.Where(item => item.Id == mileage.Id).FirstOrDefault();
+                var changed = changes.Mileages.Where(item => item.Id == mileage.Id).FirstOrDefault();
 
                 if (changed == null) continue;
 
@@ -75,7 +75,7 @@ namespace Technics
             {
                 var isNew = mileage.IsNew;
 
-                var changedList = await Database.Default.MileageSaveAsync(mileage);
+                var changes = await Database.Default.MileageSaveAsync(mileage);
 
                 if (isNew)
                 {
@@ -90,9 +90,11 @@ namespace Technics
 
                 presenterDataGridViewMileages.Sort();
 
-                MileagesUpdateMileageCommon(changedList);
+                dgvMileages.SetSelectedRows(mileage);
 
-                TechPartsUpdateMileages(changedList);
+                MileagesUpdateChanged(changes);
+
+                TechPartsUpdateChanged(changes);
 
                 MileagesListChanged();
             }
@@ -116,6 +118,9 @@ namespace Technics
         {
             var mileage = new MileageModel()
             {
+#if DEBUG
+                Mileage = 10,
+#endif
                 DateTime = DateTime.Now,
             };
 
@@ -160,9 +165,11 @@ namespace Technics
 
                 bindingSourceMileages.Remove(mileage);
 
-                MileagesUpdateMileageCommon(changedList);
+                dgvMileages.SetSelectedRows(dgvMileages.GetSelected<MileageModel>());
 
-                TechPartsUpdateMileages(changedList);
+                MileagesUpdateChanged(changedList);
+
+                TechPartsUpdateChanged(changedList);
 
                 MileagesListChanged();
             }

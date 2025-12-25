@@ -144,18 +144,21 @@ namespace Technics
             return result;
         }
 
-        private async Task<T> QueryFirstOrDefaultAsync<T>(string sql, object param)
-        {
-            using (var connection = GetConnection())
-            {
-                return await Actions.QueryFirstOrDefaultAsync<T>(connection, sql, param);
-            }
-        }
-
         public async Task<double> GetMileageCommonPrevAsync(MileageModel mileage)
         {
-            return await QueryFirstOrDefaultAsync<double>(ResourcesSql.GetMileageCommonPrev,
-                new { techid = mileage.TechId, datetime = mileage.DateTime });
+            var query = new Query()
+            {
+                Fields = "IFNULL(SUM(mileage), 0.0)",
+                Table = Tables.mileages,
+                Where = "id != :id AND techid = :techid AND datetime <= :datetime"
+            };
+
+            object param = new { id = mileage.Id, techid = mileage.TechId, datetime = mileage.DateTime };
+
+            using (var connection = GetConnection())
+            {
+                return await Actions.QueryFirstOrDefaultAsync<double>(connection, query, param);
+            }
         }
 
         private async Task<double> GetTechPartMileageAsync(
@@ -213,16 +216,94 @@ namespace Technics
             return GetTechPartsSql(filter);
         }
 
-        private async Task<IEnumerable<MileageModel>> MileagesUpdateMileageCommonAsync(
-            DbConnection connection, DbTransaction transaction, DateTime dateTime)
+        private Query GetMileagesGetChangedQuery()
         {
-            var mileageChangedList = await Actions.ListLoadAsync<MileageModel>(connection,
-                ResourcesSql.SelectMileagesChangedByDateTime,
-                new { datetime = dateTime }, transaction);
+            return new Query()
+            {
+                Fields = "id, techid, datetime",
+                Table = Tables.mileages,
+            };
+        }
 
-            DebugWrite.Line($"count={mileageChangedList.Count()}");
+        private async Task<MileageModel> MileageLoadAsync(
+            DbConnection connection, DbTransaction transaction, long id)
+        {
+            var query = GetMileagesGetChangedQuery();
 
-            foreach (var mileage in mileageChangedList)
+            query.Where = $"id = :id";
+
+            object param = new { id };
+
+            return await Actions.QueryFirstOrDefaultAsync<MileageModel>(connection, query, param, transaction);
+        }
+
+        private async Task<IEnumerable<MileageModel>> MileagesGetChangedAsync(
+            DbConnection connection, DbTransaction transaction, MileageModel mileage)
+        {
+            if (mileage.TechId == null) return Enumerable.Empty<MileageModel>();
+
+            var query = GetMileagesGetChangedQuery();
+
+            query.Where = $"techid = :techid AND datetime > :datetime";
+
+            object param = new
+            {
+                techid = mileage.TechId,
+                datetime = mileage.DateTime,
+            };
+
+            return await Actions.ListLoadAsync<MileageModel>(connection, query, param, transaction);
+        }
+
+        private async Task<IEnumerable<MileageModel>> MileagesGetChangedAfterNewAsync(
+            DbConnection connection, DbTransaction transaction, MileageModel mileage)
+        {
+            return await MileagesGetChangedAsync(connection, transaction, mileage);
+        }
+
+        private async Task<IEnumerable<MileageModel>> MileagesGetChangedAfterDeleteAsync(
+            DbConnection connection, DbTransaction transaction, MileageModel mileage)
+        {
+            return await MileagesGetChangedAsync(connection, transaction, mileage);
+        }
+
+        private async Task<IEnumerable<MileageModel>> MileagesGetChangedAfterChangeAsync(
+            DbConnection connection, DbTransaction transaction, MileageModel mileage)
+        {
+            if (mileage.IsNew)
+            {
+                return await MileagesGetChangedAfterNewAsync(connection, transaction, mileage);
+            }
+
+            var currentMileage = await MileageLoadAsync(connection, transaction, mileage.Id);
+
+            var changed = new List<MileageModel>();
+
+            IEnumerable<MileageModel> changes;
+
+            if (currentMileage.TechId != mileage.TechId ||
+                currentMileage.DateTime != mileage.DateTime)
+            {
+                changes = await MileagesGetChangedAsync(connection, transaction, currentMileage);
+
+                changed.AddRange(changes);
+            }
+
+            changes = await MileagesGetChangedAsync(connection, transaction, mileage);
+
+            changed.AddRange(changes);
+
+            return changed;
+        }
+
+        private async Task<List<ChangeMileageModel>> MileagesUpdateMileageCommonAsync(
+            DbConnection connection, DbTransaction transaction, IEnumerable<MileageModel> mileages)
+        {
+            var changed = new List<ChangeMileageModel>();
+
+            DebugWrite.Line($"count={mileages.Count()}");
+
+            foreach (var mileage in mileages)
             {
                 mileage.MileageCommon = await Actions.QueryFirstOrDefaultAsync<double>(connection,
                     ResourcesSql.GetMileageCommon,
@@ -231,24 +312,38 @@ namespace Technics
                 await Actions.ExecuteAsync(connection,
                     ResourcesSql.UpdateMileagesMileageCommonById,
                     new { id = mileage.Id, mileagecommon = mileage.MileageCommon }, transaction);
+
+                changed.Add(new ChangeMileageModel()
+                {
+                    Id = mileage.Id,
+                    MileageCommon = mileage.MileageCommon,
+                });
             }
 
-            return mileageChangedList;
+            return changed;
         }
 
-        private async Task TechPartsUpdateMileagesAsync(
+        private async Task<List<ChangeTechPartModel>> TechPartsUpdateMileagesAsync(
             DbConnection connection, DbTransaction transaction, MileageModel mileage)
         {
-            if (mileage.TechId == null) return;
+            var changed = new List<ChangeTechPartModel>(); return changed;
+
+            if (mileage.TechId == null) return changed;
 
             var query = new Query()
             {
                 Fields = "id, techid, partid, datetimeinstall, datetimeremove",
                 Table = Tables.techparts,
-                Where = $"techid = {mileage.TechId}"
+                Where = $"techid = :techid AND datetimeremove >= :datetime"
             };
 
-            var techPartsChangedList = await Actions.ListLoadAsync<TechPartModel>(connection, query, transaction);
+            object param = new
+            {
+                techid = mileage.TechId,
+                datetime = mileage.DateTime,
+            };
+
+            var techPartsChangedList = await Actions.ListLoadAsync<TechPartModel>(connection, query, param, transaction);
 
             DebugWrite.Line($"count={techPartsChangedList.Count()}");
 
@@ -258,17 +353,25 @@ namespace Technics
 
                 techPart.Mileage = await GetTechPartMileageAsync(connection, transaction, techPart);
 
-                var param = new { id = techPart.Id, mileage = techPart.Mileage };
+                param = new { id = techPart.Id, mileage = techPart.Mileage };
 
                 DebugWrite.Line(param);
 
                 await Actions.ExecuteAsync(connection,
                     ResourcesSql.UpdateTechPartsMileageById, param,
                     transaction);
+
+                changed.Add(new ChangeTechPartModel()
+                {
+                    Id = techPart.Id,
+                    Mileage = techPart.Mileage,
+                });
             }
+
+            return changed;
         }
 
-        public async Task<IEnumerable<MileageModel>> MileageSaveAsync(MileageModel mileage)
+        public async Task<ChangeModel> MileageSaveAsync(MileageModel mileage)
         {
             using (var connection = GetConnection())
             {
@@ -278,15 +381,19 @@ namespace Technics
                 {
                     try
                     {
+                        var changes = new ChangeModel();
+
+                        var changed = await MileagesGetChangedAfterChangeAsync(connection, transaction, mileage);
+
                         await Actions.ListItemSaveAsync(connection, mileage, transaction);
 
-                        var changedList = await MileagesUpdateMileageCommonAsync(connection, transaction, mileage.DateTime);
+                        changes.Mileages = await MileagesUpdateMileageCommonAsync(connection, transaction, changed);
 
-                        await TechPartsUpdateMileagesAsync(connection, transaction, mileage);
+                        changes.TechParts = await TechPartsUpdateMileagesAsync(connection, transaction, mileage);
 
                         transaction.Commit();
 
-                        return changedList;
+                        return changes;
                     }
                     catch (Exception)
                     {
@@ -297,7 +404,7 @@ namespace Technics
             }
         }
 
-        public async Task<IEnumerable<MileageModel>> MileageDeleteAsync(MileageModel mileage)
+        public async Task<ChangeModel> MileageDeleteAsync(MileageModel mileage)
         {
             using (var connection = GetConnection())
             {
@@ -307,17 +414,21 @@ namespace Technics
                 {
                     try
                     {
+                        var changes = new ChangeModel();
+
+                        var changed = await MileagesGetChangedAfterDeleteAsync(connection, transaction, mileage);
+
                         await Actions.ListItemDeleteAsync(connection, mileage, transaction);
 
-                        var changedList = await MileagesUpdateMileageCommonAsync(connection, transaction, mileage.DateTime);
+                        changes.Mileages = await MileagesUpdateMileageCommonAsync(connection, transaction, changed);
 
-                        await TechPartsUpdateMileagesAsync(connection, transaction, mileage);
+                        changes.TechParts = await TechPartsUpdateMileagesAsync(connection, transaction, mileage);
 
                         transaction.Commit();
 
                         Utils.Log.Info(string.Format(ResourcesLog.ListItemDeleteOk, typeof(MileageModel).Name));
 
-                        return changedList;
+                        return changes;
                     }
                     catch (Exception)
                     {

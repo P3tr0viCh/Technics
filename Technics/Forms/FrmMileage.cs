@@ -4,6 +4,7 @@ using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Technics.Properties;
+using static Technics.Database.Interfaces;
 using static Technics.Database.Models;
 
 namespace Technics
@@ -75,16 +76,10 @@ namespace Technics
             dtpDateTime.CustomFormat = AppSettings.Default.FormatDateTime;
         }
 
-        private async Task<double> GetMileageCommonPrevAsync(long techId, DateTime dateTime)
+        private async Task<double> GetMileageCommonPrevAsync(MileageModel mileage)
         {
             try
             {
-                var mileage = new MileageModel()
-                {
-                    TechId = techId,
-                    DateTime = dateTime,
-                };
-
                 return await Database.Default.GetMileageCommonPrevAsync(mileage);
             }
             catch (Exception e)
@@ -141,8 +136,15 @@ namespace Technics
                 }
 
                 var tech = cboxTech.GetSelectedItem<TechModel>();
+   
+                var mileagePrev = new MileageModel()
+                {
+                    Id = Mileage.Id,
+                    TechId = tech.Id,
+                    DateTime = dtpDateTime.GetDateTime(),
+                };
 
-                mileageCommonPrev = await GetMileageCommonPrevAsync(tech.Id, dtpDateTime.GetDateTime());
+                mileageCommonPrev = await GetMileageCommonPrevAsync(mileagePrev);
 
                 DebugWrite.Line($"mileageCommonPrev = {mileageCommonPrev}");
 

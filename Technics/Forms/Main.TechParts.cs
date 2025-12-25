@@ -51,41 +51,23 @@ namespace Technics
             statusStripPresenter.TechPartCount = bindingSourceTechParts.Count;
         }
 
-        private void TechPartsUpdateMileages(IEnumerable<TechPartModel> changedList)
+        private void TechPartsUpdateChanged(ChangeModel changes)
         {
-            if (!changedList.Any()) return;
+            DebugWrite.Line(changes.TechParts.Count);
 
-            foreach (var techPart in TechPartList)
+            var techParts = TechPartList.ToList();
+
+            for (var i = 0; i < techParts.Count; i++)
             {
-                var changed = changedList.Where(item => item.Id == techPart.Id).FirstOrDefault();
+                var changed = changes.TechParts.Where(item => item.Id == techParts[i].Id).FirstOrDefault();
 
                 if (changed == null) continue;
 
-                techPart.Mileage = changed.Mileage;
-                techPart.MileageCommon = changed.MileageCommon;
+                techParts[i].Mileage = changed.Mileage;
+                techParts[i].MileageCommon = changed.MileageCommon;
+
+                bindingSourceTechParts.ResetItem(i);
             }
-        }
-
-        private void TechPartsUpdateMileages(TechPartModel techPart)
-        {
-            var list = TechPartList.Where(item => item.PartId == techPart.PartId);
-
-            TechPartsUpdateMileages(list);
-        }
-
-        private void TechPartsUpdateMileages(IEnumerable<MileageModel> changedList)
-        {
-            if (!changedList.Any()) return;
-
-            var techs = changedList.Select(item => item.TechId);
-
-            var list = TechPartList.Where(item => techs.Contains(item.TechId));
-
-            var parts = list.Select(item => item.PartId);
-
-            list = TechPartList.Where(item => parts.Contains(item.PartId));
-
-            TechPartsUpdateMileages(list);
         }
 
         private async Task TechPartsChangeAsync(TechPartModel techPart)
@@ -112,6 +94,8 @@ namespace Technics
                 }
 
                 presenterDataGridViewTechParts.Sort();
+
+                dgvTechParts.SetSelectedRows(techPart);
 
                 //await TechPartsUpdateMileagesAsync(techPart);
 
@@ -181,6 +165,8 @@ namespace Technics
                 await Database.Default.ListItemDeleteAsync(techPart);
 
                 bindingSourceTechParts.Remove(techPart);
+
+                dgvTechParts.SetSelectedRows(dgvMileages.GetSelected<TechPartModel>());
 
                 //await TechPartsUpdateMileagesAsync(techPart);
 

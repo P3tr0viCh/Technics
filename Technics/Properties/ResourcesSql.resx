@@ -136,17 +136,11 @@
   <data name="GetMileageCommon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\GetMileageCommon.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1251</value>
   </data>
-  <data name="GetMileageCommonPrev" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\GetMileageCommonPrev.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1251</value>
-  </data>
   <data name="GetTechPartMileage" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\GetTechPartMileage.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1251</value>
   </data>
   <data name="SelectMileages" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SelectMileages.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1251</value>
-  </data>
-  <data name="SelectMileagesChangedByDateTime" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SelectMileagesChangedByDateTime.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1251</value>
   </data>
   <data name="SelectTechParts" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SelectTechParts.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1251</value>

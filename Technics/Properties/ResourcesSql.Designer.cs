@@ -152,19 +152,6 @@ namespace Technics.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SELECT mileagecommon
-        ///FROM mileages
-        ///WHERE techid = :techid AND datetime &lt; :datetime
-        ///ORDER BY datetime DESC
-        ///LIMIT 1;.
-        /// </summary>
-        internal static string GetMileageCommonPrev {
-            get {
-                return ResourceManager.GetString("GetMileageCommonPrev", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to SELECT IFNULL(SUM(mileage), 0.0)
         ///FROM mileages
         ///WHERE techid = :techid AND datetime &gt;= :datetimeinstall AND datetime &lt; :datetimeremove;.
@@ -185,18 +172,6 @@ namespace Technics.Properties {
         internal static string SelectMileages {
             get {
                 return ResourceManager.GetString("SelectMileages", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to SELECT id, techid, datetime
-        ///FROM mileages
-        ///WHERE datetime &gt; :datetime
-        ///ORDER BY datetime DESC;.
-        /// </summary>
-        internal static string SelectMileagesChangedByDateTime {
-            get {
-                return ResourceManager.GetString("SelectMileagesChangedByDateTime", resourceCulture);
             }
         }
         

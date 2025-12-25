@@ -177,7 +177,7 @@ namespace Technics
                 public DateTime DateTimeInstall { get; set; } = default;
                 public DateTime? DateTimeRemove { get; set; } = default;
 
-                public double Mileage { get; set; } = default;
+                public double? Mileage { get; set; } = null;
 
                 public double? MileageCommon { get; set; } = null;
 
@@ -191,7 +191,7 @@ namespace Technics
                     DateTimeInstall = default;
                     DateTimeRemove = default;
 
-                    Mileage = default;
+                    Mileage = null;
                     MileageCommon = null;
                 }
 
