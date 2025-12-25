@@ -2,7 +2,7 @@
 
 namespace Technics
 {
-    public class ChangeMileageModel : BaseId
+    public class UpdateMileageModel : BaseId
     {
         public double? MileageCommon { get; set; } = null;
     }

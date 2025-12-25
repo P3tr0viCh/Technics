@@ -80,7 +80,7 @@ namespace Technics
         {
             try
             {
-                return await Database.Default.GetMileageCommonPrevAsync(mileage);
+                return await Database.Default.MileagesGetMileageCommonPrevAsync(mileage);
             }
             catch (Exception e)
             {

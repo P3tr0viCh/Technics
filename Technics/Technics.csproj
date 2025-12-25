@@ -88,8 +88,11 @@
     <Compile Include="Database\Database.Dummy.cs" />
     <Compile Include="Database\Database.Filter.cs" />
     <Compile Include="Database\Database.Interfaces.cs" />
+    <Compile Include="Database\Database.Mileages.cs" />
     <Compile Include="Database\Database.Models.cs" />
     <Compile Include="Database\Database.Tables.cs" />
+    <Compile Include="Database\Database.TechParts.cs" />
+    <Compile Include="Database\Database.Techs.cs" />
     <Compile Include="DataGridViewCellStyles.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="AppSettings\AppSettings.ColumnsState.cs" />
@@ -146,9 +149,11 @@
     <Compile Include="Forms\PresenterStatusStripFrmList.cs" />
     <Compile Include="Forms\PresenterStatusStripMain.cs" />
     <Compile Include="Forms\FrmListType.cs" />
-    <Compile Include="Models\ChangeMileageModel.cs" />
-    <Compile Include="Models\ChangeModel.cs" />
-    <Compile Include="Models\ChangeTechPartModel.cs" />
+    <Compile Include="Models\ChangedMileageModel.cs" />
+    <Compile Include="Models\ChangedTechPartModel.cs" />
+    <Compile Include="Models\UpdateMileageModel.cs" />
+    <Compile Include="Models\UpdateModel.cs" />
+    <Compile Include="Models\UpdateTechPartModel.cs" />
     <Compile Include="Properties\ResourcesColumnHeader.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -242,15 +247,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\CreateTableMileages.sql" />
-    <None Include="Resources\GetMileageCommon.sql" />
     <None Include="Resources\CreateTableParts.sql" />
     <None Include="Resources\CreateTableTechParts.sql" />
     <None Include="Resources\SelectMileages.sql" />
     <None Include="Resources\SelectTechParts.sql" />
-    <None Include="Resources\GetTechPartMileage.sql" />
     <None Include="Resources\UpdateMileagesMileageCommonById.sql" />
-    <None Include="Resources\UpdateMileagesMileageCommonByTechId.sql" />
     <None Include="Resources\UpdateTechPartsMileageById.sql" />
+    <None Include="Resources\ClearMileagesMileageCommonByTechId.sql" />
+    <None Include="Resources\ClearTechPartsMileagesByTechId.sql" />
     <Content Include="Technics.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

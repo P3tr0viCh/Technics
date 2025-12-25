@@ -118,6 +118,12 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="ClearMileagesMileageCommonByTechId" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ClearMileagesMileageCommonByTechId.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1251</value>
+  </data>
+  <data name="ClearTechPartsMileagesByTechId" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ClearTechPartsMileagesByTechId.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1251</value>
+  </data>
   <data name="CreateTableFolders" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\CreateTableFolders.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;koi8-r</value>
   </data>
@@ -133,12 +139,6 @@
   <data name="CreateTableTechs" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\CreateTableTechs.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1251</value>
   </data>
-  <data name="GetMileageCommon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\GetMileageCommon.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1251</value>
-  </data>
-  <data name="GetTechPartMileage" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\GetTechPartMileage.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1251</value>
-  </data>
   <data name="SelectMileages" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SelectMileages.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1251</value>
   </data>
@@ -150,9 +150,6 @@
   </data>
   <data name="UpdateMileagesMileageCommonById" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\UpdateMileagesMileageCommonById.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1251</value>
-  </data>
-  <data name="UpdateMileagesMileageCommonByTechId" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\UpdateMileagesMileageCommonByTechId.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1251</value>
   </data>
   <data name="UpdateTechPartsMileageById" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\UpdateTechPartsMileageById.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1251</value>

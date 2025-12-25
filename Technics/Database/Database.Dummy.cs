@@ -137,7 +137,7 @@ namespace Technics
                                 DateTimeRemove = dateTimeRemove,
                             };
 
-                            techPart.Mileage = await Default.GetTechPartMileageAsync(techPart);
+                            techPart.Mileage = await Default.TechPartsGetMileageAsync(techPart);
 
                             techParts.Add(techPart);
 

@@ -51,7 +51,7 @@ namespace Technics
             statusStripPresenter.MileageCount = bindingSourceMileages.Count;
         }
 
-        private void MileagesUpdateChanged(ChangeModel changes)
+        private void MileagesUpdateChanged(UpdateModel changes)
         {
             DebugWrite.Line(changes.Mileages.Count);
 

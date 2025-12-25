@@ -61,6 +61,33 @@ namespace Technics.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to UPDATE
+        ///	mileages
+        ///SET
+        ///	mileagecommon = null
+        ///WHERE techid = :techid;.
+        /// </summary>
+        internal static string ClearMileagesMileageCommonByTechId {
+            get {
+                return ResourceManager.GetString("ClearMileagesMileageCommonByTechId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UPDATE
+        ///	techparts
+        ///SET
+        ///	mileage = null,
+        ///	mileagecommon = null
+        ///WHERE techid = :techid;.
+        /// </summary>
+        internal static string ClearTechPartsMileagesByTechId {
+            get {
+                return ResourceManager.GetString("ClearTechPartsMileagesByTechId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to CREATE TABLE folders (
         ///	id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
         ///	parentid INTEGER,
@@ -141,28 +168,6 @@ namespace Technics.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SELECT IFNULL(SUM(mileage), 0.0)
-        ///FROM mileages
-        ///WHERE techid = :techid AND datetime &lt;= :datetime;.
-        /// </summary>
-        internal static string GetMileageCommon {
-            get {
-                return ResourceManager.GetString("GetMileageCommon", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to SELECT IFNULL(SUM(mileage), 0.0)
-        ///FROM mileages
-        ///WHERE techid = :techid AND datetime &gt;= :datetimeinstall AND datetime &lt; :datetimeremove;.
-        /// </summary>
-        internal static string GetTechPartMileage {
-            get {
-                return ResourceManager.GetString("GetTechPartMileage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to SELECT mileages.id, techid, techs.text AS techtext, datetime, mileage, mileagecommon, description
         ///FROM mileages
         ///LEFT JOIN techs ON mileages.techid = techs.id
@@ -211,19 +216,6 @@ namespace Technics.Properties {
         internal static string UpdateMileagesMileageCommonById {
             get {
                 return ResourceManager.GetString("UpdateMileagesMileageCommonById", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to UPDATE
-        ///	mileages
-        ///SET
-        ///	mileagecommon = null
-        ///WHERE techid = :techid;.
-        /// </summary>
-        internal static string UpdateMileagesMileageCommonByTechId {
-            get {
-                return ResourceManager.GetString("UpdateMileagesMileageCommonByTechId", resourceCulture);
             }
         }
         

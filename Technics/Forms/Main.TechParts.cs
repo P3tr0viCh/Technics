@@ -51,7 +51,7 @@ namespace Technics
             statusStripPresenter.TechPartCount = bindingSourceTechParts.Count;
         }
 
-        private void TechPartsUpdateChanged(ChangeModel changes)
+        private void TechPartsUpdateChanged(UpdateModel changes)
         {
             DebugWrite.Line(changes.TechParts.Count);
 
@@ -80,7 +80,7 @@ namespace Technics
             {
                 var isNew = techPart.IsNew;
 
-                await Database.Default.ListItemSaveAsync(techPart);
+                var changes = await Database.Default.TechPartSaveAsync(techPart);
 
                 if (isNew)
                 {
@@ -97,7 +97,7 @@ namespace Technics
 
                 dgvTechParts.SetSelectedRows(techPart);
 
-                //await TechPartsUpdateMileagesAsync(techPart);
+                TechPartsUpdateChanged(changes);
 
                 TechPartsListChanged();
             }

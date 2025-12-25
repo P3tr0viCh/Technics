@@ -11,7 +11,7 @@ namespace Technics
     {
         public static class Filter
         {
-            private static string ByIdToString(string fieldName, IEnumerable<long> list)
+            public static string ByIdToString(string fieldName, IEnumerable<long> list)
             {
                 var count = list.Count();
 
