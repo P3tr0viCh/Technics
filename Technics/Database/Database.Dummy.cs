@@ -14,9 +14,9 @@ namespace Technics
         {
             private const int MileagesCount = 10;
 
-            private const int PartsCount = 10;
+            private const int PartsCount = 5;
 
-            private const int TechPartsCount = 10;
+            private const int TechPartsCount = 5;
 
 
             private readonly Random random = new Random();
@@ -109,14 +109,16 @@ namespace Technics
 
                     var techs = (await Default.ListLoadAsync<TechModel>()).ToList();
 
-                    var parts = (await Default.ListLoadAsync<PartModel>()).ToList();
+                    var parts = await Default.ListLoadAsync<PartModel>();
 
                     var techParts = new List<TechPartModel>();
 
-                    foreach (var tech in techs)
+                    foreach (var part in parts)
                     {
-                        var mileages = (await Default.ListLoadAsync<MileageModel>(
-                            Default.GetMileagesSql(new List<TechModel>() { tech }))).ToList();
+                        var tech = GetRandomItem(techs);
+
+                        var mileages = await Default.ListLoadAsync<MileageModel>(
+                            Default.GetMileagesSql(new List<TechModel>() { tech }));
 
                         if (!mileages.Any()) continue;
 
@@ -125,8 +127,6 @@ namespace Technics
 
                         for (var i = 0; i < TechPartsCount; i++)
                         {
-                            var part = GetRandomItem(parts);
-
                             var techPart = new TechPartModel()
                             {
                                 TechId = tech.Id,
@@ -137,8 +137,6 @@ namespace Technics
                                 DateTimeRemove = dateTimeRemove,
                             };
 
-                            techPart.Mileage = await Default.TechPartsGetMileageAsync(techPart);
-
                             techParts.Add(techPart);
 
                             dateTimeInstall = dateTimeRemove;
@@ -147,6 +145,32 @@ namespace Technics
                     }
 
                     await Default.ListItemSaveAsync(techParts);
+
+                    using (var connection = Default.GetConnection())
+                    {
+                        await connection.OpenAsync();
+
+                        using (var transaction = connection.BeginTransaction())
+                        {
+                            try
+                            {
+                                foreach (var techPart in techParts)
+                                {
+                                    techPart.Mileage = await Default.TechPartsGetMileageAsync(connection, transaction, techPart);
+                                    techPart.MileageCommon = await Default.TechPartsGetMileageCommonAsync(connection, transaction, techPart);
+
+                                    await Default.TechPartsUpdateMileagesAsync(connection, transaction, techPart);
+                                }
+
+                                transaction.Commit();
+                            }
+                            catch (Exception)
+                            {
+                                transaction.Rollback();
+                                throw;
+                            }
+                        }
+                    }
                 }
                 catch (Exception e)
                 {

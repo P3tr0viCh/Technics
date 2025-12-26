@@ -252,7 +252,7 @@
     <None Include="Resources\SelectMileages.sql" />
     <None Include="Resources\SelectTechParts.sql" />
     <None Include="Resources\UpdateMileagesMileageCommonById.sql" />
-    <None Include="Resources\UpdateTechPartsMileageById.sql" />
+    <None Include="Resources\UpdateTechPartsMileagesById.sql" />
     <None Include="Resources\ClearMileagesMileageCommonByTechId.sql" />
     <None Include="Resources\ClearTechPartsMileagesByTechId.sql" />
     <Content Include="Technics.ico" />

@@ -41,20 +41,55 @@ namespace Technics
             return await Actions.QueryFirstOrDefaultAsync<double?>(connection, query, param, transaction);
         }
 
-        private async Task<double?> TechPartsGetMileageAsync(TechPartModel techPart)
+        private async Task<double?> TechPartsGetMileageCommonAsync(
+            DbConnection connection, DbTransaction transaction, TechPartModel techPart)
         {
-            using (var connection = GetConnection())
+            var query = new Query()
             {
-                return await TechPartsGetMileageAsync(connection, null, techPart);
+                Fields = "id, techid, datetimeinstall, datetimeremove",
+                Table = Tables.techparts,
+                Where = "partid = :partid AND datetimeinstall <= :datetimeinstall",
+                Order = "datetimeinstall DESC"
+            };
+
+            object param = new
+            {
+                partid = techPart.PartId,
+                datetimeinstall = techPart.DateTimeInstall,
+                datetimeremove = techPart.DateTimeRemove
+            };
+
+            var parts = await Actions.ListLoadAsync<TechPartModel>(connection, query, param, transaction);
+
+            DebugWrite.Line($"{parts.Count()}");
+
+            var mileageCommon = 0.0;
+
+            foreach (var part in parts)
+            {
+                var mileage = await TechPartsGetMileageAsync(connection, transaction, part);
+
+                if (mileage == null) return null;
+                
+                mileageCommon += (double)mileage;
             }
+
+            if (mileageCommon != 0) return mileageCommon;
+
+            return null;
         }
 
         private async Task TechPartsUpdateMileagesAsync(
             DbConnection connection, DbTransaction transaction, TechPartModel techPart)
         {
             await Actions.ExecuteAsync(connection,
-                        ResourcesSql.UpdateTechPartsMileageById,
-                            new { id = techPart.Id, mileage = techPart.Mileage },
+                        ResourcesSql.UpdateTechPartsMileagesById,
+                            new
+                            {
+                                id = techPart.Id,
+                                mileage = techPart.Mileage,
+                                mileagecommon = techPart.MileageCommon
+                            },
                         transaction);
         }
 
@@ -169,6 +204,7 @@ namespace Technics
             foreach (var techPart in techParts)
             {
                 techPart.Mileage = await TechPartsGetMileageAsync(connection, transaction, techPart);
+                techPart.MileageCommon = await TechPartsGetMileageCommonAsync(connection, transaction, techPart);
 
                 await TechPartsUpdateMileagesAsync(connection, transaction, techPart);
 
@@ -176,6 +212,7 @@ namespace Technics
                 {
                     Id = techPart.Id,
                     Mileage = techPart.Mileage,
+                    MileageCommon = techPart.MileageCommon,
                 });
             }
 
@@ -190,6 +227,7 @@ namespace Technics
             var changedTechParts = await TechPartsGetChangedAfterChangeTechPartAsync(connection, transaction, techPart);
 
             techPart.Mileage = await TechPartsGetMileageAsync(connection, transaction, techPart);
+            techPart.MileageCommon = await TechPartsGetMileageCommonAsync(connection, transaction, techPart);
 
             DebugWrite.Line(JsonConvert.SerializeObject(techPart));
 

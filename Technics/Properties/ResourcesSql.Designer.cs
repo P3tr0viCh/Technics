@@ -223,12 +223,13 @@ namespace Technics.Properties {
         ///   Looks up a localized string similar to UPDATE
         ///	techparts
         ///SET
-        ///	mileage = :mileage
+        ///	mileage = :mileage,
+        ///	mileagecommon = :mileagecommon
         ///WHERE id = :id;.
         /// </summary>
-        internal static string UpdateTechPartsMileageById {
+        internal static string UpdateTechPartsMileagesById {
             get {
-                return ResourceManager.GetString("UpdateTechPartsMileageById", resourceCulture);
+                return ResourceManager.GetString("UpdateTechPartsMileagesById", resourceCulture);
             }
         }
     }

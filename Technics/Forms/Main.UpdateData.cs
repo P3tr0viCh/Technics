@@ -20,15 +20,11 @@ namespace Technics
 
         private async Task UpdateDataAsync(DataLoad load = default)
         {
-            var saveSelecteds = true;
-
             if (load == default)
             {
                 load = DataLoad.Techs |
                        DataLoad.Mileages |
                        DataLoad.TechParts;
-                
-                saveSelecteds = false;
             }
 
             DebugWrite.Line($"Loading data {load}");
@@ -46,36 +42,20 @@ namespace Technics
 
                 if (load.HasFlag(DataLoad.Mileages))
                 {
-                    IEnumerable<MileageModel> selectedList = null;
-
-                    if (saveSelecteds)
-                    {
-                        selectedList = MileageSelectedList;
-                    }
+                    var selectedList = MileageSelectedList;
 
                     await MileagesLoadAsync(SelectedTechList);
 
-                    if (selectedList != null)
-                    {
-                        MileageSelectedList = selectedList;
-                    }
+                    MileageSelectedList = selectedList;
                 }
 
                 if (load.HasFlag(DataLoad.TechParts))
                 {
-                    IEnumerable<TechPartModel> selectedList = null;
-
-                    if (saveSelecteds)
-                    {
-                        selectedList = TechPartSelectedList;
-                    }
+                    var selectedList = TechPartSelectedList;
 
                     await TechPartsLoadAsync(SelectedTechList);
 
-                    if (selectedList != null)
-                    {
-                        TechPartSelectedList = selectedList;
-                    }
+                    TechPartSelectedList = selectedList;
                 }
             }
             catch (TaskCanceledException e)
