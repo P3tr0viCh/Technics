@@ -4,7 +4,6 @@ using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Technics.Properties;
-using static Technics.Database.Interfaces;
 using static Technics.Database.Models;
 
 namespace Technics

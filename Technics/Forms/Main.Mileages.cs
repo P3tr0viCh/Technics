@@ -42,7 +42,17 @@ namespace Technics
 
         private IEnumerable<MileageModel> MileageList => bindingSourceMileages.Cast<MileageModel>();
 
-        public MileageModel MileageSelected => presenterDataGridViewMileages.Selected;
+        public MileageModel MileageSelected
+        {
+            get => presenterDataGridViewMileages.Selected; 
+            set => presenterDataGridViewMileages.Selected = value;
+        }
+        
+        public IEnumerable<MileageModel> MileageSelectedList
+        {
+            get => presenterDataGridViewMileages.SelectedList;
+            set => presenterDataGridViewMileages.SelectedList = value;
+        }
 
         private void MileagesListChanged()
         {

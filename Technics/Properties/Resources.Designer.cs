@@ -322,6 +322,15 @@ namespace Technics.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Редактировать список....
+        /// </summary>
+        internal static string TextListEdit {
+            get {
+                return ResourceManager.GetString("TextListEdit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Дождитесь окончания выполнения текущей операции..
         /// </summary>
         internal static string TextProgramBusy {

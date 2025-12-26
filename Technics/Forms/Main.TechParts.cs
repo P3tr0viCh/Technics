@@ -42,7 +42,17 @@ namespace Technics
 
         private IEnumerable<TechPartModel> TechPartList => bindingSourceTechParts.Cast<TechPartModel>();
 
-        public TechPartModel TechPartSelected => bindingSourceTechParts.Current as TechPartModel;
+        public TechPartModel TechPartSelected
+        {
+            get => presenterDataGridViewTechParts.Selected;
+            set => presenterDataGridViewTechParts.Selected = value;
+        }
+
+        public IEnumerable<TechPartModel> TechPartSelectedList
+        {
+            get => presenterDataGridViewTechParts.SelectedList;
+            set => presenterDataGridViewTechParts.SelectedList = value;
+        }
 
         private void TechPartsListChanged()
         {

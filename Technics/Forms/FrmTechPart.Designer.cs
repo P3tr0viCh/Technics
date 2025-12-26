@@ -149,6 +149,7 @@
             this.cboxPart.Size = new System.Drawing.Size(360, 25);
             this.cboxPart.TabIndex = 3;
             this.cboxPart.ValueMember = "Id";
+            this.cboxPart.SelectedIndexChanged += new System.EventHandler(this.CboxPart_SelectedIndexChanged);
             // 
             // bindingSourceParts
             // 

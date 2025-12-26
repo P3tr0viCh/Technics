@@ -1,7 +1,9 @@
 ﻿using P3tr0viCh.Utils;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Technics.Properties;
+using static Technics.Database.Models;
 using static Technics.Enums;
 
 namespace Technics
@@ -18,11 +20,15 @@ namespace Technics
 
         private async Task UpdateDataAsync(DataLoad load = default)
         {
+            var saveSelecteds = true;
+
             if (load == default)
             {
                 load = DataLoad.Techs |
                        DataLoad.Mileages |
                        DataLoad.TechParts;
+                
+                saveSelecteds = false;
             }
 
             DebugWrite.Line($"Loading data {load}");
@@ -31,7 +37,7 @@ namespace Technics
 
             try
             {
-                SelfChanage = true;
+                SelfChange = true;
 
                 if (load.HasFlag(DataLoad.Techs))
                 {
@@ -40,12 +46,36 @@ namespace Technics
 
                 if (load.HasFlag(DataLoad.Mileages))
                 {
+                    IEnumerable<MileageModel> selectedList = null;
+
+                    if (saveSelecteds)
+                    {
+                        selectedList = MileageSelectedList;
+                    }
+
                     await MileagesLoadAsync(SelectedTechList);
+
+                    if (selectedList != null)
+                    {
+                        MileageSelectedList = selectedList;
+                    }
                 }
 
                 if (load.HasFlag(DataLoad.TechParts))
                 {
+                    IEnumerable<TechPartModel> selectedList = null;
+
+                    if (saveSelecteds)
+                    {
+                        selectedList = TechPartSelectedList;
+                    }
+
                     await TechPartsLoadAsync(SelectedTechList);
+
+                    if (selectedList != null)
+                    {
+                        TechPartSelectedList = selectedList;
+                    }
                 }
             }
             catch (TaskCanceledException e)
@@ -62,7 +92,7 @@ namespace Technics
             }
             finally
             {
-                SelfChanage = false;
+                SelfChange = false;
 
                 ProgramStatus.Stop(status);
 

@@ -183,7 +183,7 @@ namespace Technics
 
         private async void TvTechs_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            if (SelfChanage) return;
+            if (SelfChange) return;
 
             await TechsSelectedChangedAsync();
         }
@@ -304,16 +304,20 @@ namespace Technics
             }
         }
 
-        private async Task ShowListAsync(FrmListType listType)
+        public async Task<bool> ShowListAsync(FrmListType listType)
         {
-            if (IsProgramBusy()) return;
+            if (IsProgramBusy()) return false;
 
             if (FrmList.ShowDlg(this, listType))
             {
                 var dataLoad = GetUpdateDataLoad(listType);
 
                 await UpdateDataAsync(dataLoad);
+
+                return true;
             }
+
+            return false;
         }
 
         private async void MiList_Click(object sender, EventArgs e)

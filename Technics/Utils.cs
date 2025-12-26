@@ -7,6 +7,8 @@ namespace Technics
 {
     public static partial class Utils
     {
+        public const int ListEditId = -1;
+
         public static BindingList<T> ToBindingList<T>(this IEnumerable<T> list) where T : BaseId
         {
             return new BindingList<T>(list.ToList());

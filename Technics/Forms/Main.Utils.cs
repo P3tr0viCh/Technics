@@ -14,7 +14,7 @@ namespace Technics
             set => Tag = value;
         }
 
-        private bool SelfChanage { get; set; } = false;
+        private bool SelfChange { get; set; } = false;
         
         private bool CreateProgramDirectory(string path)
         {

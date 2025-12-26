@@ -17,6 +17,8 @@ namespace Technics
 
         private readonly TechPartModel techPart = new TechPartModel();
 
+        private bool selfChange = false;
+
         private TechPartModel TechPart
         {
             get => techPart;
@@ -24,11 +26,15 @@ namespace Technics
             {
                 techPart.Assign(value);
 
+                selfChange = true;
+
                 cboxTech.SelectedValue = value.TechId ?? Sql.NewId;
                 cboxPart.SelectedValue = value.PartId ?? Sql.NewId;
 
                 dtpDateTimeInstall.SetDateTime(value.DateTimeInstall);
                 dtpDateTimeRemove.SetDateTime(value.DateTimeRemove);
+
+                selfChange = false;
             }
         }
 
@@ -72,17 +78,29 @@ namespace Technics
 
             var status = MainForm.ProgramStatus.Start(Status.LoadData);
 
+            selfChange = true;
+
             try
             {
                 bindingSourceTechs.DataSource = Lists.Default.Techs.ToBindingList();
 
                 bindingSourceTechs.Insert(0, new TechModel());
 
+                bindingSourceTechs.Position = 0;
+
                 var list = await Database.Default.ListLoadAsync<PartModel>();
 
                 bindingSourceParts.DataSource = list.OrderBy(part => part.Text).ToBindingList();
 
                 bindingSourceParts.Insert(0, new PartModel());
+
+                bindingSourceParts.Insert(1, new PartModel()
+                {
+                    Id = Utils.ListEditId,
+                    Text = Resources.TextListEdit
+                });
+
+                bindingSourceParts.Position = 0;
             }
             catch (Exception e)
             {
@@ -94,6 +112,8 @@ namespace Technics
             }
             finally
             {
+                selfChange = false;
+
                 MainForm.ProgramStatus.Stop(status);
             }
 
@@ -258,6 +278,38 @@ namespace Technics
             if (await CheckDataAsync() && UpdateData())
             {
                 DialogResult = DialogResult.OK;
+            }
+        }
+
+        private async Task ChangePartsAsync()
+        {
+            var changed = await MainForm.ShowListAsync(FrmListType.Parts);
+
+            selfChange = true;
+
+            cboxPart.SelectedIndex = 0;
+
+            selfChange = false;
+
+            if (changed)
+            {
+                var techPosition = bindingSourceTechs.Position;
+
+                await LoadDataAsync();
+                
+                bindingSourceTechs.Position = techPosition;
+            }
+        }
+
+        private async void CboxPart_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (selfChange) return;
+
+            var part = cboxPart.GetSelectedItem<PartModel>();
+
+            if (part?.Id == Utils.ListEditId)
+            {
+                await ChangePartsAsync();
             }
         }
     }
