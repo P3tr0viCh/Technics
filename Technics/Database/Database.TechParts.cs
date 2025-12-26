@@ -148,7 +148,7 @@ namespace Technics
                 Fields = "id, techid, partid, datetimeinstall, datetimeremove, mileage",
                 Table = Tables.techparts,
                 Where = $"{Filter.ByIdToString("techid", techsChanged)} AND " +
-                    $"(datetimeinstall <= :datetime OR datetimeremove > :datetime)"
+                    $"datetimeinstall <= :datetime AND (datetimeremove is NULL OR datetimeremove >= :datetime)"
             };
 
             object param = new
