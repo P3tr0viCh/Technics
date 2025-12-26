@@ -69,7 +69,7 @@ namespace Technics
             {
                 var mileage = await TechPartsGetMileageAsync(connection, transaction, part);
 
-                if (mileage == null) return null;
+                if (mileage == null) continue;
                 
                 mileageCommon += (double)mileage;
             }
@@ -82,6 +82,11 @@ namespace Technics
         private async Task TechPartsUpdateMileagesAsync(
             DbConnection connection, DbTransaction transaction, TechPartModel techPart)
         {
+            if (techPart.Mileage ==  null)
+            {
+                techPart.MileageCommon = null;
+            }
+
             await Actions.ExecuteAsync(connection,
                         ResourcesSql.UpdateTechPartsMileagesById,
                             new
@@ -182,16 +187,10 @@ namespace Technics
             {
                 Fields = "id, techid, partid, datetimeinstall, datetimeremove, mileage",
                 Table = Tables.techparts,
-                Where = $"{Filter.ByIdToString("techid", techsChanged)} AND " +
-                    $"datetimeinstall <= :datetime AND (datetimeremove is NULL OR datetimeremove >= :datetime)"
+                Where = $"{Filter.ByIdToString("techid", techsChanged)}"
             };
 
-            object param = new
-            {
-                datetime
-            };
-
-            return await Actions.ListLoadAsync<TechPartModel>(connection, query, param, transaction);
+            return await Actions.ListLoadAsync<TechPartModel>(connection, query, null, transaction);
         }
 
         private async Task<List<UpdateTechPartModel>> TechPartsUpdateMileagesAsync(
@@ -252,7 +251,7 @@ namespace Technics
 
                         transaction.Commit();
 
-                        Utils.Log.Info(string.Format(ResourcesLog.ListItemSaveOk, typeof(TechPartModel).Name));
+                        Utils.Log.ListItemSaveOk<TechPartModel>();
 
                         return changes;
                     }

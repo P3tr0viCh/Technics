@@ -213,7 +213,7 @@ namespace Technics
         {
             if (!ShowItemChangeDialog(value)) return;
 
-            await ListItemSaveAsync(value);
+            await PerformListItemSaveAsync(value);
 
             ListItemChange(value);
         }
@@ -248,7 +248,7 @@ namespace Technics
 
             if (!ShowItemDeleteDialog(list)) return;
 
-            await ListItemDeleteAsync(list);
+            await PerformListItemDeleteAsync(list);
 
             ListItemDelete(list);
         }

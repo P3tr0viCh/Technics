@@ -121,6 +121,9 @@
   <data name="ClearMileagesMileageCommonByTechId" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ClearMileagesMileageCommonByTechId.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1251</value>
   </data>
+  <data name="ClearTechPartsMileagesByPartId" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ClearTechPartsMileagesByPartId.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1251</value>
+  </data>
   <data name="ClearTechPartsMileagesByTechId" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ClearTechPartsMileagesByTechId.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1251</value>
   </data>

@@ -45,13 +45,18 @@ namespace Technics
 			DebugWrite.Line("end");
 		}
 
-		private async Task ListItemSaveAsync(T value)
+        protected virtual async Task ListItemSaveAsync(T value)
+        {
+            await Database.Default.ListItemSaveAsync(value);
+        }
+
+        private async Task PerformListItemSaveAsync(T value)
 		{
 			var status = FrmList.MainForm.ProgramStatus.Start(Status.SaveDatа);
 
 			try
 			{
-				await Database.Default.ListItemSaveAsync(value);
+				await ListItemSaveAsync(value);
 			}
 			catch (Exception e)
 			{
@@ -67,13 +72,18 @@ namespace Technics
 			}
 		}
 
-		private async Task ListItemDeleteAsync(IEnumerable<T> list)
+		protected virtual async Task ListItemDeleteAsync(IEnumerable<T> list)
+		{
+            await Database.Default.ListItemDeleteAsync(list);
+        }
+
+        private async Task PerformListItemDeleteAsync(IEnumerable<T> list)
 		{
 			var status = FrmList.MainForm.ProgramStatus.Start(Status.SaveDatа);
 
 			try
 			{
-				await Database.Default.ListItemDeleteAsync(list);
+				await ListItemDeleteAsync(list);
 			}
 			catch (Exception e)
 			{

@@ -81,7 +81,7 @@ namespace Technics
                 await Actions.ListItemSaveAsync(connection, value, null);
             }
 
-            Utils.Log.Info(string.Format(ResourcesLog.ListItemSaveOk, typeof(T).Name));
+            Utils.Log.ListItemSaveOk<T>();
         }
 
 #if DEBUG
@@ -103,7 +103,7 @@ namespace Technics
                 await Actions.ListItemDeleteAsync(connection, value, null);
             }
 
-            Utils.Log.Info(string.Format(ResourcesLog.ListItemDeleteOk, typeof(T).Name));
+            Utils.Log.ListItemDeleteOk<T>();
         }
 
         public async Task ListItemDeleteAsync<T>(IEnumerable<T> values) where T : BaseId
@@ -113,30 +113,21 @@ namespace Technics
                 await Actions.ListItemDeleteAsync(connection, values);
             }
 
-            var count = values?.Count();
-
-            if (count > 1)
-            {
-                Utils.Log.Info(string.Format(ResourcesLog.ListItemListDeleteOk, typeof(T).Name, count));
-            }
-            else
-            {
-                Utils.Log.Info(string.Format(ResourcesLog.ListItemDeleteOk, typeof(T).Name));
-            }
+            Utils.Log.ListItemDeleteOk(values);
         }
 
         public async Task<IEnumerable<T>> ListLoadAsync<T>(string sql = null, object param = null)
         {
-            var result = Enumerable.Empty<T>();
+            var list = Enumerable.Empty<T>();
 
             using (var connection = GetConnection())
             {
-                result = await Actions.ListLoadAsync<T>(connection, sql, param);
+                list = await Actions.ListLoadAsync<T>(connection, sql, param);
             }
 
-            Utils.Log.Info(string.Format(ResourcesLog.LoadListOk, typeof(T).Name, result.Count()));
+            Utils.Log.LoadListOk(list);
 
-            return result;
+            return list;
         }
 
         public string GetMileagesSql(IEnumerable<TechModel> techs)

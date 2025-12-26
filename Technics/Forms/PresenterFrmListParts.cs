@@ -1,6 +1,7 @@
 ﻿using P3tr0viCh.Utils;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Technics.Properties;
 using static Technics.Database.Models;
 
@@ -57,6 +58,11 @@ namespace Technics
         protected override bool ShowItemDeleteDialog(IEnumerable<PartModel> list)
         {
             return Utils.Msg.Question(list);
+        }
+
+        protected override async Task ListItemDeleteAsync(IEnumerable<PartModel> list)
+        {
+            await Database.Default.PartDeleteAsync(list);
         }
 
         protected override void UpdateColumns()

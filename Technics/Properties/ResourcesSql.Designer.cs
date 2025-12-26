@@ -81,6 +81,20 @@ namespace Technics.Properties {
         ///	mileagecommon = null
         ///WHERE techid = :techid;.
         /// </summary>
+        internal static string ClearTechPartsMileagesByPartId {
+            get {
+                return ResourceManager.GetString("ClearTechPartsMileagesByPartId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UPDATE
+        ///	techparts
+        ///SET
+        ///	mileage = null,
+        ///	mileagecommon = null
+        ///WHERE techid = :techid;.
+        /// </summary>
         internal static string ClearTechPartsMileagesByTechId {
             get {
                 return ResourceManager.GetString("ClearTechPartsMileagesByTechId", resourceCulture);

@@ -84,6 +84,7 @@
   <ItemGroup>
     <Compile Include="AppSettings\AppSettings.cs" />
     <Compile Include="AppSettings\AppSettings.FormState.cs" />
+    <Compile Include="Database\Database.Parts.cs" />
     <Compile Include="Database\Database.cs" />
     <Compile Include="Database\Database.Dummy.cs" />
     <Compile Include="Database\Database.Filter.cs" />
@@ -255,6 +256,7 @@
     <None Include="Resources\UpdateTechPartsMileagesById.sql" />
     <None Include="Resources\ClearMileagesMileageCommonByTechId.sql" />
     <None Include="Resources\ClearTechPartsMileagesByTechId.sql" />
+    <None Include="Resources\ClearTechPartsMileagesByPartId.sql" />
     <Content Include="Technics.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

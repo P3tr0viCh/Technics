@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Technics.Properties;
 using static Technics.Database.Models;
@@ -50,6 +51,11 @@ namespace Technics
         protected override bool ShowItemDeleteDialog(IEnumerable<TechModel> list)
         {
             return Utils.Msg.Question(list);
+        }
+
+        protected override async Task ListItemDeleteAsync(IEnumerable<TechModel> list)
+        {
+            await Database.Default.TechDeleteAsync(list);
         }
 
         protected override void UpdateColumns()

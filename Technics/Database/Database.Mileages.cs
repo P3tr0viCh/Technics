@@ -191,7 +191,7 @@ namespace Technics
 
                         transaction.Commit();
 
-                        Utils.Log.Info(string.Format(ResourcesLog.ListItemSaveOk, typeof(MileageModel).Name));
+                        Utils.Log.ListItemSaveOk<MileageModel>();
 
                         return changes;
                     }
@@ -236,7 +236,7 @@ namespace Technics
 
                         transaction.Commit();
 
-                        Utils.Log.Info(string.Format(ResourcesLog.ListItemDeleteOk, typeof(MileageModel).Name));
+                        Utils.Log.ListItemDeleteOk<MileageModel>();
 
                         return changes;
                     }

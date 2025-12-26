@@ -1,8 +1,13 @@
-﻿using P3tr0viCh.Utils;
-using P3tr0viCh.Database;
+﻿using P3tr0viCh.Database;
+using P3tr0viCh.Utils;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
+using Technics.Properties;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrackBar;
+using static Technics.Database.Models;
 
 namespace Technics
 {
@@ -27,7 +32,7 @@ namespace Technics
 
             public static void Info(string s, [CallerMemberName] string memberName = "")
             {
-                s = s.ReplaceEol();
+                s = s.SingleLine();
 
                 DebugWrite.Line(s, memberName);
 
@@ -45,7 +50,7 @@ namespace Technics
 
             public static void Error(string err, [CallerMemberName] string memberName = "")
             {
-                err = err.ReplaceEol();
+                err = err.SingleLine();
 
                 DebugWrite.Error(err, memberName);
 
@@ -58,7 +63,31 @@ namespace Technics
 
                 if (query.IsEmpty()) return;
 
-                Error($"query: {query.ReplaceEol()}", memberName);
+                Error($"query: {query.SingleLine()}", memberName);
+            }
+
+            public static void LoadListOk<T>(IEnumerable<T> list, [CallerMemberName] string memberName = "")
+            {
+                Info(string.Format(ResourcesLog.LoadListOk, typeof(T).Name, list.Count()), memberName);
+            }
+
+            public static void ListItemSaveOk<T>([CallerMemberName] string memberName = "")
+            {
+                Info(string.Format(ResourcesLog.ListItemSaveOk, typeof(T).Name), memberName);
+            }
+
+            public static void ListItemDeleteOk<T>(IEnumerable<T> values, [CallerMemberName] string memberName = "")
+            {
+                var count = values?.Count();
+
+                Info(count > 1 ?
+                    string.Format(ResourcesLog.ListItemListDeleteOk, typeof(T).Name, count) :
+                    string.Format(ResourcesLog.ListItemDeleteOk, typeof(T).Name), memberName);
+            }
+
+            public static void ListItemDeleteOk<T>([CallerMemberName] string memberName = "")
+            {
+                ListItemDeleteOk(Enumerable.Empty<T>(), memberName);
             }
         }
     }

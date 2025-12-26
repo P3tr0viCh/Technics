@@ -10,21 +10,17 @@ namespace Technics
 {
     public partial class Database
     {
-        private async Task TechDeleteAsync(
-            DbConnection connection, DbTransaction transaction, TechModel tech)
+        private async Task PartDeleteAsync(
+           DbConnection connection, DbTransaction transaction, PartModel part)
         {
             await Actions.ExecuteAsync(connection,
-                ResourcesSql.ClearMileagesMileageCommonByTechId,
-                new { techid = tech.Id }, transaction);
+                ResourcesSql.ClearTechPartsMileagesByPartId,
+                new { partid = part.Id }, transaction);
 
-            await Actions.ExecuteAsync(connection,
-                ResourcesSql.ClearTechPartsMileagesByTechId,
-                new { techid = tech.Id }, transaction);
-
-            await Actions.ListItemDeleteAsync(connection, tech, transaction);
+            await Actions.ListItemDeleteAsync(connection, part, transaction);
         }
 
-        public async Task TechDeleteAsync(IEnumerable<TechModel> techs)
+        public async Task PartDeleteAsync(IEnumerable<PartModel> parts)
         {
             using (var connection = GetConnection())
             {
@@ -34,14 +30,14 @@ namespace Technics
                 {
                     try
                     {
-                        foreach (var tech in techs)
+                        foreach (var part in parts)
                         {
-                            await TechDeleteAsync(connection, transaction, tech);
+                            await PartDeleteAsync(connection, transaction, part);
                         }
 
                         transaction.Commit();
 
-                        Utils.Log.ListItemDeleteOk(techs);
+                        Utils.Log.ListItemDeleteOk(parts);
                     }
                     catch (Exception)
                     {
@@ -52,9 +48,9 @@ namespace Technics
             }
         }
 
-        public async Task TechDeleteAsync(TechModel tech)
+        public async Task PartDeleteAsync(PartModel part)
         {
-            await TechDeleteAsync(new List<TechModel>() { tech });
+            await PartDeleteAsync(new List<PartModel>() { part });
         }
     }
 }
