@@ -344,5 +344,20 @@ namespace Technics
         {
             await TechPartsDeleteSelectedAsync();
         }
+
+        private void TsbtnMileageAddFromFile_ButtonClick(object sender, EventArgs e)
+        {
+
+        }
+
+        private void MiMileagesFromFiles_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void MiMileagesFromFolder_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

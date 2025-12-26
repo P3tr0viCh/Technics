@@ -39,6 +39,12 @@
             this.panelTop = new System.Windows.Forms.Panel();
             this.panelTechPart = new System.Windows.Forms.Panel();
             this.dgvTechParts = new System.Windows.Forms.DataGridView();
+            this.TechPartsTechText = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TechPartsPartText = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TechPartsDateTimeInstall = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TechPartsDateTimeRemove = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TechPartsMileage = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TechPartsMileageCommon = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bindingSourceTechParts = new System.Windows.Forms.BindingSource(this.components);
             this.toolStripTechParts = new System.Windows.Forms.ToolStrip();
             this.tsbtnTechPartAdd = new System.Windows.Forms.ToolStripButton();
@@ -87,12 +93,9 @@
             this.tsbtnListParts = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tsbtnClose = new System.Windows.Forms.ToolStripButton();
-            this.TechPartsTechText = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TechPartsPartText = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TechPartsDateTimeInstall = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TechPartsDateTimeRemove = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TechPartsMileage = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TechPartsMileageCommon = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tsbtnMileageAddFromFile = new System.Windows.Forms.ToolStripSplitButton();
+            this.miMileagesFromFiles = new System.Windows.Forms.ToolStripMenuItem();
+            this.miMileagesFromFolder = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripContainer.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer.ContentPanel.SuspendLayout();
             this.toolStripContainer.TopToolStripPanel.SuspendLayout();
@@ -227,6 +230,48 @@
             this.dgvTechParts.TabIndex = 3;
             this.dgvTechParts.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DgvTechParts_CellMouseDoubleClick);
             this.dgvTechParts.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DataGridView_CellMouseDown);
+            // 
+            // TechPartsTechText
+            // 
+            this.TechPartsTechText.DataPropertyName = "TechText";
+            this.TechPartsTechText.HeaderText = "Техника";
+            this.TechPartsTechText.Name = "TechPartsTechText";
+            this.TechPartsTechText.ReadOnly = true;
+            // 
+            // TechPartsPartText
+            // 
+            this.TechPartsPartText.DataPropertyName = "PartText";
+            this.TechPartsPartText.HeaderText = "Деталь";
+            this.TechPartsPartText.Name = "TechPartsPartText";
+            this.TechPartsPartText.ReadOnly = true;
+            // 
+            // TechPartsDateTimeInstall
+            // 
+            this.TechPartsDateTimeInstall.DataPropertyName = "DateTimeInstall";
+            this.TechPartsDateTimeInstall.HeaderText = "Дата установки";
+            this.TechPartsDateTimeInstall.Name = "TechPartsDateTimeInstall";
+            this.TechPartsDateTimeInstall.ReadOnly = true;
+            // 
+            // TechPartsDateTimeRemove
+            // 
+            this.TechPartsDateTimeRemove.DataPropertyName = "DateTimeRemove";
+            this.TechPartsDateTimeRemove.HeaderText = "Дата снятия";
+            this.TechPartsDateTimeRemove.Name = "TechPartsDateTimeRemove";
+            this.TechPartsDateTimeRemove.ReadOnly = true;
+            // 
+            // TechPartsMileage
+            // 
+            this.TechPartsMileage.DataPropertyName = "Mileage";
+            this.TechPartsMileage.HeaderText = "Пробег";
+            this.TechPartsMileage.Name = "TechPartsMileage";
+            this.TechPartsMileage.ReadOnly = true;
+            // 
+            // TechPartsMileageCommon
+            // 
+            this.TechPartsMileageCommon.DataPropertyName = "MileageCommon";
+            this.TechPartsMileageCommon.HeaderText = "Общий пробег";
+            this.TechPartsMileageCommon.Name = "TechPartsMileageCommon";
+            this.TechPartsMileageCommon.ReadOnly = true;
             // 
             // bindingSourceTechParts
             // 
@@ -397,14 +442,14 @@
             // miTechAddFolder
             // 
             this.miTechAddFolder.Name = "miTechAddFolder";
-            this.miTechAddFolder.Size = new System.Drawing.Size(128, 24);
+            this.miTechAddFolder.Size = new System.Drawing.Size(180, 24);
             this.miTechAddFolder.Text = "Папка";
             this.miTechAddFolder.Click += new System.EventHandler(this.MiTechAddFolder_Click);
             // 
             // miTechAddTech
             // 
             this.miTechAddTech.Name = "miTechAddTech";
-            this.miTechAddTech.Size = new System.Drawing.Size(128, 24);
+            this.miTechAddTech.Size = new System.Drawing.Size(180, 24);
             this.miTechAddTech.Text = "Техника";
             this.miTechAddTech.Click += new System.EventHandler(this.MiTechAddItem_Click);
             // 
@@ -508,6 +553,7 @@
             this.toolStripMileages.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.toolStripMileages.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsbtnMileageAdd,
+            this.tsbtnMileageAddFromFile,
             this.tsbtnMileageChange,
             this.tsbtnMileageDelete});
             this.toolStripMileages.Location = new System.Drawing.Point(0, 0);
@@ -683,47 +729,32 @@
             this.tsbtnClose.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsbtnClose.Click += new System.EventHandler(this.TsbtnClose_Click);
             // 
-            // TechPartsTechText
+            // tsbtnMileageAddFromFile
             // 
-            this.TechPartsTechText.DataPropertyName = "TechText";
-            this.TechPartsTechText.HeaderText = "Техника";
-            this.TechPartsTechText.Name = "TechPartsTechText";
-            this.TechPartsTechText.ReadOnly = true;
+            this.tsbtnMileageAddFromFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.miMileagesFromFiles,
+            this.miMileagesFromFolder});
+            this.tsbtnMileageAddFromFile.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnMileageAddFromFile.Image")));
+            this.tsbtnMileageAddFromFile.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbtnMileageAddFromFile.Name = "tsbtnMileageAddFromFile";
+            this.tsbtnMileageAddFromFile.Size = new System.Drawing.Size(57, 47);
+            this.tsbtnMileageAddFromFile.Text = "Файл";
+            this.tsbtnMileageAddFromFile.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tsbtnMileageAddFromFile.ButtonClick += new System.EventHandler(this.TsbtnMileageAddFromFile_ButtonClick);
             // 
-            // TechPartsPartText
+            // miMileagesFromFiles
             // 
-            this.TechPartsPartText.DataPropertyName = "PartText";
-            this.TechPartsPartText.HeaderText = "Деталь";
-            this.TechPartsPartText.Name = "TechPartsPartText";
-            this.TechPartsPartText.ReadOnly = true;
+            this.miMileagesFromFiles.Name = "miMileagesFromFiles";
+            this.miMileagesFromFiles.Size = new System.Drawing.Size(180, 24);
+            this.miMileagesFromFiles.Text = "Файлы";
+            this.miMileagesFromFiles.Click += new System.EventHandler(this.MiMileagesFromFiles_Click);
             // 
-            // TechPartsDateTimeInstall
+            // miMileagesFromFolder
             // 
-            this.TechPartsDateTimeInstall.DataPropertyName = "DateTimeInstall";
-            this.TechPartsDateTimeInstall.HeaderText = "Дата установки";
-            this.TechPartsDateTimeInstall.Name = "TechPartsDateTimeInstall";
-            this.TechPartsDateTimeInstall.ReadOnly = true;
-            // 
-            // TechPartsDateTimeRemove
-            // 
-            this.TechPartsDateTimeRemove.DataPropertyName = "DateTimeRemove";
-            this.TechPartsDateTimeRemove.HeaderText = "Дата снятия";
-            this.TechPartsDateTimeRemove.Name = "TechPartsDateTimeRemove";
-            this.TechPartsDateTimeRemove.ReadOnly = true;
-            // 
-            // TechPartsMileage
-            // 
-            this.TechPartsMileage.DataPropertyName = "Mileage";
-            this.TechPartsMileage.HeaderText = "Пробег";
-            this.TechPartsMileage.Name = "TechPartsMileage";
-            this.TechPartsMileage.ReadOnly = true;
-            // 
-            // TechPartsMileageCommon
-            // 
-            this.TechPartsMileageCommon.DataPropertyName = "MileageCommon";
-            this.TechPartsMileageCommon.HeaderText = "Общий пробег";
-            this.TechPartsMileageCommon.Name = "TechPartsMileageCommon";
-            this.TechPartsMileageCommon.ReadOnly = true;
+            this.miMileagesFromFolder.Name = "miMileagesFromFolder";
+            this.miMileagesFromFolder.Size = new System.Drawing.Size(180, 24);
+            this.miMileagesFromFolder.Text = "Папка";
+            this.miMileagesFromFolder.Click += new System.EventHandler(this.MiMileagesFromFolder_Click);
             // 
             // Main
             // 
@@ -837,6 +868,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn TechPartsDateTimeRemove;
         private System.Windows.Forms.DataGridViewTextBoxColumn TechPartsMileage;
         private System.Windows.Forms.DataGridViewTextBoxColumn TechPartsMileageCommon;
+        private System.Windows.Forms.ToolStripSplitButton tsbtnMileageAddFromFile;
+        private System.Windows.Forms.ToolStripMenuItem miMileagesFromFiles;
+        private System.Windows.Forms.ToolStripMenuItem miMileagesFromFolder;
     }
 }
 
