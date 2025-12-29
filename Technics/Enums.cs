@@ -14,6 +14,8 @@ namespace Technics
             LoadData,
             [Description("Сохранение данных...")]
             SaveDatа,
+            [Description("Чтение файлов...")]
+            ReadFiles,
         }
     }
 }

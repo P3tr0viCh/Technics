@@ -76,6 +76,9 @@
             this.bindingSourceMileages = new System.Windows.Forms.BindingSource(this.components);
             this.toolStripMileages = new System.Windows.Forms.ToolStrip();
             this.tsbtnMileageAdd = new System.Windows.Forms.ToolStripButton();
+            this.tsbtnMileageAddFromFile = new System.Windows.Forms.ToolStripSplitButton();
+            this.miMileagesFromFiles = new System.Windows.Forms.ToolStripMenuItem();
+            this.miMileagesFromDirectory = new System.Windows.Forms.ToolStripMenuItem();
             this.tsbtnMileageChange = new System.Windows.Forms.ToolStripButton();
             this.tsbtnMileageDelete = new System.Windows.Forms.ToolStripButton();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
@@ -93,9 +96,7 @@
             this.tsbtnListParts = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tsbtnClose = new System.Windows.Forms.ToolStripButton();
-            this.tsbtnMileageAddFromFile = new System.Windows.Forms.ToolStripSplitButton();
-            this.miMileagesFromFiles = new System.Windows.Forms.ToolStripMenuItem();
-            this.miMileagesFromFolder = new System.Windows.Forms.ToolStripMenuItem();
+            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.toolStripContainer.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer.ContentPanel.SuspendLayout();
             this.toolStripContainer.TopToolStripPanel.SuspendLayout();
@@ -442,14 +443,14 @@
             // miTechAddFolder
             // 
             this.miTechAddFolder.Name = "miTechAddFolder";
-            this.miTechAddFolder.Size = new System.Drawing.Size(180, 24);
+            this.miTechAddFolder.Size = new System.Drawing.Size(128, 24);
             this.miTechAddFolder.Text = "Папка";
             this.miTechAddFolder.Click += new System.EventHandler(this.MiTechAddFolder_Click);
             // 
             // miTechAddTech
             // 
             this.miTechAddTech.Name = "miTechAddTech";
-            this.miTechAddTech.Size = new System.Drawing.Size(180, 24);
+            this.miTechAddTech.Size = new System.Drawing.Size(128, 24);
             this.miTechAddTech.Text = "Техника";
             this.miTechAddTech.Click += new System.EventHandler(this.MiTechAddItem_Click);
             // 
@@ -571,6 +572,33 @@
             this.tsbtnMileageAdd.Text = "Добавить";
             this.tsbtnMileageAdd.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsbtnMileageAdd.Click += new System.EventHandler(this.TsbtnMileagesAdd_Click);
+            // 
+            // tsbtnMileageAddFromFile
+            // 
+            this.tsbtnMileageAddFromFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.miMileagesFromFiles,
+            this.miMileagesFromDirectory});
+            this.tsbtnMileageAddFromFile.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnMileageAddFromFile.Image")));
+            this.tsbtnMileageAddFromFile.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbtnMileageAddFromFile.Name = "tsbtnMileageAddFromFile";
+            this.tsbtnMileageAddFromFile.Size = new System.Drawing.Size(57, 47);
+            this.tsbtnMileageAddFromFile.Text = "Файл";
+            this.tsbtnMileageAddFromFile.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tsbtnMileageAddFromFile.ButtonClick += new System.EventHandler(this.TsbtnMileageAddFromFile_ButtonClick);
+            // 
+            // miMileagesFromFiles
+            // 
+            this.miMileagesFromFiles.Name = "miMileagesFromFiles";
+            this.miMileagesFromFiles.Size = new System.Drawing.Size(180, 24);
+            this.miMileagesFromFiles.Text = "Файлы";
+            this.miMileagesFromFiles.Click += new System.EventHandler(this.MiMileagesFromFiles_Click);
+            // 
+            // miMileagesFromDirectory
+            // 
+            this.miMileagesFromDirectory.Name = "miMileagesFromDirectory";
+            this.miMileagesFromDirectory.Size = new System.Drawing.Size(180, 24);
+            this.miMileagesFromDirectory.Text = "Папка";
+            this.miMileagesFromDirectory.Click += new System.EventHandler(this.MiMileagesFromDirectory_Click);
             // 
             // tsbtnMileageChange
             // 
@@ -729,32 +757,9 @@
             this.tsbtnClose.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsbtnClose.Click += new System.EventHandler(this.TsbtnClose_Click);
             // 
-            // tsbtnMileageAddFromFile
+            // openFileDialog
             // 
-            this.tsbtnMileageAddFromFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.miMileagesFromFiles,
-            this.miMileagesFromFolder});
-            this.tsbtnMileageAddFromFile.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnMileageAddFromFile.Image")));
-            this.tsbtnMileageAddFromFile.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbtnMileageAddFromFile.Name = "tsbtnMileageAddFromFile";
-            this.tsbtnMileageAddFromFile.Size = new System.Drawing.Size(57, 47);
-            this.tsbtnMileageAddFromFile.Text = "Файл";
-            this.tsbtnMileageAddFromFile.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.tsbtnMileageAddFromFile.ButtonClick += new System.EventHandler(this.TsbtnMileageAddFromFile_ButtonClick);
-            // 
-            // miMileagesFromFiles
-            // 
-            this.miMileagesFromFiles.Name = "miMileagesFromFiles";
-            this.miMileagesFromFiles.Size = new System.Drawing.Size(180, 24);
-            this.miMileagesFromFiles.Text = "Файлы";
-            this.miMileagesFromFiles.Click += new System.EventHandler(this.MiMileagesFromFiles_Click);
-            // 
-            // miMileagesFromFolder
-            // 
-            this.miMileagesFromFolder.Name = "miMileagesFromFolder";
-            this.miMileagesFromFolder.Size = new System.Drawing.Size(180, 24);
-            this.miMileagesFromFolder.Text = "Папка";
-            this.miMileagesFromFolder.Click += new System.EventHandler(this.MiMileagesFromFolder_Click);
+            this.openFileDialog.Multiselect = true;
             // 
             // Main
             // 
@@ -870,7 +875,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn TechPartsMileageCommon;
         private System.Windows.Forms.ToolStripSplitButton tsbtnMileageAddFromFile;
         private System.Windows.Forms.ToolStripMenuItem miMileagesFromFiles;
-        private System.Windows.Forms.ToolStripMenuItem miMileagesFromFolder;
+        private System.Windows.Forms.ToolStripMenuItem miMileagesFromDirectory;
+        private System.Windows.Forms.OpenFileDialog openFileDialog;
     }
 }
 

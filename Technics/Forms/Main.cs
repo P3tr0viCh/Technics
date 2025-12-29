@@ -1,5 +1,5 @@
 ﻿#if DEBUG
-#define DUMMY_DATABASE
+#define _DUMMY_DATABASE
 #endif
 
 using P3tr0viCh.Utils;
@@ -7,7 +7,6 @@ using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Technics.Properties;
-using static Technics.Database.Models;
 using static Technics.Enums;
 using static Technics.PresenterStatusStripMain;
 
@@ -345,19 +344,19 @@ namespace Technics
             await TechPartsDeleteSelectedAsync();
         }
 
-        private void TsbtnMileageAddFromFile_ButtonClick(object sender, EventArgs e)
+        private async void TsbtnMileageAddFromFile_ButtonClick(object sender, EventArgs e)
         {
-
+            await LoadFromFilesAsync(FilesDialogType.Files);
         }
 
-        private void MiMileagesFromFiles_Click(object sender, EventArgs e)
+        private async void MiMileagesFromFiles_Click(object sender, EventArgs e)
         {
-
+            await LoadFromFilesAsync(FilesDialogType.Files);
         }
 
-        private void MiMileagesFromFolder_Click(object sender, EventArgs e)
+        private async void MiMileagesFromDirectory_Click(object sender, EventArgs e)
         {
-
+            await LoadFromFilesAsync(FilesDialogType.Directory);
         }
     }
 }

@@ -49,7 +49,7 @@ namespace Technics
                 return Question(string.Format(format, arg0, arg1));
             }
 
-            public static bool Question(IEnumerable<IBaseText> list)
+            public static bool Question<T>(IEnumerable<T> list)
             {
                 var count = list?.Count();
 
@@ -57,9 +57,16 @@ namespace Technics
 
                 var firstItem = list.FirstOrDefault();
 
-                var text = firstItem.Text;
+                var text = string.Empty;
 
-                var question = count == 1 ? Resources.QuestionItemLinkedDelete : Resources.QuestionItemListLinkedDelete;
+                var question = string.Empty;
+
+                if (firstItem is IBaseText itemText)
+                {
+                    text = itemText.Text;
+
+                    question = count == 1 ? Resources.QuestionItemLinkedDelete : Resources.QuestionItemListLinkedDelete;
+                }
 
                 return Question(question, text, count - 1);
             }

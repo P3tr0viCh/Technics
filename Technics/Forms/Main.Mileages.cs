@@ -1,10 +1,13 @@
-﻿using P3tr0viCh.Database;
+﻿using Newtonsoft.Json;
 using P3tr0viCh.Utils;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Technics.Properties;
+using static System.Net.Mime.MediaTypeNames;
 using static Technics.Database.Models;
 using static Technics.Enums;
 
@@ -44,10 +47,10 @@ namespace Technics
 
         public MileageModel MileageSelected
         {
-            get => presenterDataGridViewMileages.Selected; 
+            get => presenterDataGridViewMileages.Selected;
             set => presenterDataGridViewMileages.Selected = value;
         }
-        
+
         public IEnumerable<MileageModel> MileageSelectedList
         {
             get => presenterDataGridViewMileages.SelectedList;
@@ -197,6 +200,56 @@ namespace Technics
             }
 
             dgvMileages.Focus();
+        }
+
+        private static DataTableFile MileagesCreateDataTableFile()
+        {
+            var table = Utils.DataTableCreateNew("Mileages");
+
+            Utils.DataTableFileAddColumn(table, typeof(string), "Tech");
+            Utils.DataTableFileAddColumn(table, typeof(DateTime), "DateTime");
+            Utils.DataTableFileAddColumn(table, typeof(double), "Mileage");
+            Utils.DataTableFileAddColumn(table, typeof(string), "Description");
+
+            return Utils.DataTableFileCreateNew(table);
+        }
+
+        private async Task MileagesLoadFromFileAsync(string fileName)
+        {
+            var dataTableFile = MileagesCreateDataTableFile();
+
+            dataTableFile.FileName = fileName;
+
+            await Task.Factory.StartNew(() =>
+            {
+                dataTableFile.ReadFromCsv();
+            });
+
+            var mileages = new List<MileageModel>();
+
+            foreach (DataRow row in dataTableFile.Table.Rows)
+            {
+                var tech = Lists.Default.Techs.Find(t => t.Text == Convert.ToString(row["Tech"]));
+
+                var description = Convert.ToString(row["Description"]);
+
+                if (description.IsEmpty()) description = null;
+
+                var mileage = new MileageModel()
+                {
+                    TechId = tech?.Id,
+                    DateTime = Convert.ToDateTime(row["DateTime"]),
+                    Mileage = Convert.ToDouble(row["Mileage"]),
+                    Description = description,
+                };
+
+                mileages.Add(mileage);
+            }
+
+            foreach (var mileage in mileages)
+            {
+                DebugWrite.Line(JsonConvert.SerializeObject(mileage));
+            }
         }
     }
 }

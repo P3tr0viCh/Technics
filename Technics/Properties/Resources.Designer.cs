@@ -61,6 +61,15 @@ namespace Technics.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Неверный формат файла (заголовок не соответствует заданному).
+        /// </summary>
+        internal static string ErrorCsvFileWrongHeader {
+            get {
+                return ResourceManager.GetString("ErrorCsvFileWrongHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Указанный общий пробег ({0}) меньше или равен уже внесённому в базу данных ({1})..
         /// </summary>
         internal static string ErrorMileageCommonWrong {
@@ -198,6 +207,25 @@ namespace Technics.Properties {
         internal static string MsgDatabaseLoadFail {
             get {
                 return ResourceManager.GetString("MsgDatabaseLoadFail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Во время чтения файла «{0}» произошла ошибка:
+        ///{1}..
+        /// </summary>
+        internal static string MsgFileReadFail {
+            get {
+                return ResourceManager.GetString("MsgFileReadFail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to csv|*.csv|Все файлы|*.*.
+        /// </summary>
+        internal static string OpenFileDialogFilterCsv {
+            get {
+                return ResourceManager.GetString("OpenFileDialogFilterCsv", resourceCulture);
             }
         }
         

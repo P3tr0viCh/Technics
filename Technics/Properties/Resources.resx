@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ErrorCsvFileWrongHeader" xml:space="preserve">
+    <value>Неверный формат файла (заголовок не соответствует заданному)</value>
+  </data>
   <data name="ErrorMileageCommonWrong" xml:space="preserve">
     <value>Указанный общий пробег ({0}) меньше или равен уже внесённому в базу данных ({1}).</value>
   </data>
@@ -167,6 +170,13 @@
   <data name="MsgDatabaseLoadFail" xml:space="preserve">
     <value>Во время обращения к базе данных произошла ошибка:
 {0}.</value>
+  </data>
+  <data name="MsgFileReadFail" xml:space="preserve">
+    <value>Во время чтения файла «{0}» произошла ошибка:
+{1}.</value>
+  </data>
+  <data name="OpenFileDialogFilterCsv" xml:space="preserve">
+    <value>csv|*.csv|Все файлы|*.*</value>
   </data>
   <data name="QuestionFolderDelete" xml:space="preserve">
     <value>Удалить «{0}» из базы данных?</value>
