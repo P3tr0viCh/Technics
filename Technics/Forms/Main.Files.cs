@@ -10,6 +10,48 @@ namespace Technics
 {
     public partial class Main
     {
+        private async Task<bool> LoadFromFilesAsync(string[] files)
+        {
+            DebugWrite.Line("start");
+
+            var status = ProgramStatus.Start(Status.ReadFiles);
+
+            var fileName = string.Empty;
+
+            try
+            {
+                foreach (var file in files)
+                {
+                    fileName = file;
+
+                    await MileagesLoadFromFileAsync(file);
+                }
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                Utils.Log.Error(e);
+
+                var errorMsg = e.Message;
+
+                if (e is CsvFileWrongHeaderException)
+                {
+                    errorMsg = Resources.ErrorCsvFileWrongHeader;
+                }
+
+                Utils.Msg.Error(Resources.MsgFileReadFail, fileName, errorMsg);
+
+                return false;
+            }
+            finally
+            {
+                ProgramStatus.Stop(status);
+
+                DebugWrite.Line("end");
+            }
+        }
+
         private enum FilesDialogType
         {
             Files,
@@ -38,49 +80,18 @@ namespace Technics
                 default: return;
             }
 
-            if (files.Length == 0)
+            if (files.Length == 0) return;
+
+            var result = await LoadFromFilesAsync(files);
+
+            if (result)
             {
-                return;
-            }
-
-            await LoadFromFilesAsync(files);
-        }
-
-        private async Task LoadFromFilesAsync(string[] files)
-        {
-            DebugWrite.Line("start");
-
-            var status = ProgramStatus.Start(Status.ReadFiles);
-
-            var fileName = string.Empty;
-
-            try
-            {
-                foreach (var file in files)
+                if (tvTechs.Nodes[0].IsSelected)
                 {
-                    fileName = file;
-
-                    await MileagesLoadFromFileAsync(file);
-                }
-            }
-            catch (Exception e)
-            {
-                Utils.Log.Error(e);
-
-                var errorMsg = e.Message;
-
-                if (e is CsvFileWrongHeaderException)
-                {
-                    errorMsg = Resources.ErrorCsvFileWrongHeader;
+                    await UpdateDataAsync(DataLoad.Mileages | DataLoad.TechParts);
                 }
 
-                Utils.Msg.Error(Resources.MsgFileReadFail, fileName, errorMsg);
-            }
-            finally
-            {
-                ProgramStatus.Stop(status);
-
-                DebugWrite.Line("end");
+                tvTechs.SelectedNode = tvTechs.Nodes[0];
             }
         }
     }

@@ -296,6 +296,16 @@ namespace Technics.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Удалить «{0}» и ещё {1} из базы данных?
+        ///Все значения в связанных записях будут обновлены..
+        /// </summary>
+        internal static string QuestionMileageListDelete {
+            get {
+                return ResourceManager.GetString("QuestionMileageListDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Удалить «{0}» с датой установки {1} из базы данных?.
         /// </summary>
         internal static string QuestionTechPartDelete {

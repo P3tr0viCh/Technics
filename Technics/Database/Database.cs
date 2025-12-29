@@ -1,8 +1,6 @@
 ﻿using Dapper;
-using Newtonsoft.Json;
 using P3tr0viCh.Database;
 using P3tr0viCh.Utils;
-using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Data.SQLite;
@@ -84,7 +82,6 @@ namespace Technics
             Utils.Log.ListItemSaveOk<T>();
         }
 
-#if DEBUG
         public async Task ListItemSaveAsync<T>(IEnumerable<T> values) where T : BaseId
         {
             using (var connection = GetConnection())
@@ -92,9 +89,8 @@ namespace Technics
                 await Actions.ListItemSaveAsync(connection, values);
             }
 
-            DebugWrite.Line($"{typeof(T).Name} items (count={values?.Count()}) save ok");
+            Utils.Log.ListItemSaveOk(values);
         }
-#endif
 
         public async Task ListItemDeleteAsync<T>(T value) where T : BaseId
         {
@@ -116,9 +112,22 @@ namespace Technics
             Utils.Log.ListItemDeleteOk(values);
         }
 
+        public async Task<T> ListItemLoadByIdAsync<T>(DbConnection connection, DbTransaction transaction, long id)
+        {
+            var query = new Query
+            {
+                Table = Sql.TableName<T>(),
+                Where = $"id = :id"
+            };
+
+            object param = new { id };
+
+            return await Actions.QueryFirstOrDefaultAsync<T>(connection, query, param, transaction);
+        }
+
         public async Task<IEnumerable<T>> ListLoadAsync<T>(string sql = null, object param = null)
         {
-            var list = Enumerable.Empty<T>();
+            IEnumerable<T> list;
 
             using (var connection = GetConnection())
             {

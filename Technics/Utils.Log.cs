@@ -71,23 +71,28 @@ namespace Technics
                 Info(string.Format(ResourcesLog.LoadListOk, typeof(T).Name, list.Count()), memberName);
             }
 
+            public static void ListItemSaveOk<T>(IEnumerable<T> values, [CallerMemberName] string memberName = "")
+            {
+                var count = values.Count();
+
+                Info(string.Format(ResourcesLog.ListItemSaveOk, typeof(T).Name, count), memberName);
+            }
+
             public static void ListItemSaveOk<T>([CallerMemberName] string memberName = "")
             {
-                Info(string.Format(ResourcesLog.ListItemSaveOk, typeof(T).Name), memberName);
+                Info(string.Format(ResourcesLog.ListItemSaveOk, typeof(T).Name, 1), memberName);
             }
 
             public static void ListItemDeleteOk<T>(IEnumerable<T> values, [CallerMemberName] string memberName = "")
             {
-                var count = values?.Count();
+                var count = values.Count();
 
-                Info(count > 1 ?
-                    string.Format(ResourcesLog.ListItemListDeleteOk, typeof(T).Name, count) :
-                    string.Format(ResourcesLog.ListItemDeleteOk, typeof(T).Name), memberName);
+                Info(string.Format(ResourcesLog.ListItemDeleteOk, typeof(T).Name, count), memberName);
             }
 
             public static void ListItemDeleteOk<T>([CallerMemberName] string memberName = "")
             {
-                ListItemDeleteOk(Enumerable.Empty<T>(), memberName);
+                Info(string.Format(ResourcesLog.ListItemDeleteOk, typeof(T).Name, 1), memberName);
             }
         }
     }

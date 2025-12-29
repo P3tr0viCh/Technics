@@ -88,7 +88,7 @@ namespace Technics
             {
                 var isNew = mileage.IsNew;
 
-                var changes = await Database.Default.MileageSaveAsync(mileage);
+                var updated = await Database.Default.MileageSaveAsync(mileage);
 
                 if (isNew)
                 {
@@ -105,9 +105,9 @@ namespace Technics
 
                 dgvMileages.SetSelectedRows(mileage);
 
-                MileagesUpdateChanged(changes);
+                MileagesUpdateChanged(updated);
 
-                TechPartsUpdateChanged(changes);
+                TechPartsUpdateChanged(updated);
 
                 MileagesListChanged();
             }
@@ -161,28 +161,30 @@ namespace Technics
 
         private async Task MileagesDeleteSelectedAsync()
         {
-            var mileage = MileageSelected;
+            var mileages = MileageSelectedList;
 
-            if (mileage == null) return;
+            if (!mileages.Any()) return;
 
-            dgvMileages.SetSelectedRows(mileage);
+            dgvMileages.SetSelectedRows(mileages);
 
-            if (!Utils.Msg.Question(Resources.QuestionMileageDelete,
-                    mileage.DateTime.ToString(AppSettings.Default.FormatDateTime))) return;
+            if (!Utils.Msg.Question(mileages)) return;
 
             var status = ProgramStatus.Start(Status.SaveDatа);
 
             try
             {
-                var changedList = await Database.Default.MileageDeleteAsync(mileage);
+                var updated = await Database.Default.MileageDeleteAsync(mileages);
 
-                bindingSourceMileages.Remove(mileage);
+                foreach (var mileage in mileages)
+                {
+                    bindingSourceMileages.Remove(mileage);
+                }
 
-                dgvMileages.SetSelectedRows(dgvMileages.GetSelected<MileageModel>());
+                dgvMileages.SetSelectedRows(dgvMileages.GetSelectedList<MileageModel>());
 
-                MileagesUpdateChanged(changedList);
+                MileagesUpdateChanged(updated);
 
-                TechPartsUpdateChanged(changedList);
+                TechPartsUpdateChanged(updated);
 
                 MileagesListChanged();
             }
@@ -246,10 +248,7 @@ namespace Technics
                 mileages.Add(mileage);
             }
 
-            foreach (var mileage in mileages)
-            {
-                DebugWrite.Line(JsonConvert.SerializeObject(mileage));
-            }
+            await Database.Default.MileageSaveAsync(mileages);
         }
     }
 }

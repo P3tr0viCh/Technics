@@ -49,28 +49,6 @@ namespace Technics
                 return Question(string.Format(format, arg0, arg1));
             }
 
-            public static bool Question<T>(IEnumerable<T> list)
-            {
-                var count = list?.Count();
-
-                if (count == 0) return false;
-
-                var firstItem = list.FirstOrDefault();
-
-                var text = string.Empty;
-
-                var question = string.Empty;
-
-                if (firstItem is IBaseText itemText)
-                {
-                    text = itemText.Text;
-
-                    question = count == 1 ? Resources.QuestionItemLinkedDelete : Resources.QuestionItemListLinkedDelete;
-                }
-
-                return Question(question, text, count - 1);
-            }
-
             public static void Error(string text = "Error!")
             {
                 Log.Info(text.SingleLine(), "Msg.Error");
@@ -112,6 +90,37 @@ namespace Technics
                 {
                     Error(message);
                 }
+            }
+
+            public static bool Question<T>(IEnumerable<T> list)
+            {
+                var count = list?.Count();
+
+                if (count == 0) return false;
+
+                var firstItem = list.FirstOrDefault();
+
+                var text = string.Empty;
+
+                var question = string.Empty;
+
+                if (firstItem is IBaseText itemText)
+                {
+                    text = itemText.Text;
+
+                    question = count == 1 ? Resources.QuestionItemLinkedDelete : Resources.QuestionItemListLinkedDelete;
+                }
+                else
+                {
+                    if (firstItem is MileageModel mileage)
+                    {
+                        text = mileage.DateTime.ToString(AppSettings.Default.FormatDateTime);
+
+                        question = count == 1 ? Resources.QuestionMileageDelete : Resources.QuestionMileageListDelete;
+                    }
+                }
+
+                return Question(question, text, count - 1);
             }
         }
     }
