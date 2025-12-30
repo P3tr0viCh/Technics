@@ -100,27 +100,38 @@ namespace Technics
 
                 var firstItem = list.FirstOrDefault();
 
-                var text = string.Empty;
-
                 var question = string.Empty;
 
                 if (firstItem is IBaseText itemText)
                 {
-                    text = itemText.Text;
-
-                    question = count == 1 ? Resources.QuestionItemLinkedDelete : Resources.QuestionItemListLinkedDelete;
+                    question = count == 1 ?
+                        string.Format(Resources.QuestionItemLinkedDelete, itemText.Text) :
+                        string.Format(Resources.QuestionItemListLinkedDelete, itemText.Text, count - 1);
                 }
                 else
                 {
                     if (firstItem is MileageModel mileage)
                     {
-                        text = mileage.DateTime.ToString(AppSettings.Default.FormatDateTime);
+                        var dt = mileage.DateTime.ToString(AppSettings.Default.FormatDateTime);
 
-                        question = count == 1 ? Resources.QuestionMileageDelete : Resources.QuestionMileageListDelete;
+                        question = count == 1 ?
+                            string.Format(Resources.QuestionMileageDelete, dt) :
+                            string.Format(Resources.QuestionMileageListDelete, dt, count - 1);
+                    }
+                    else
+                    {
+                        if (firstItem is TechPartModel techPart)
+                        {
+                            var dt = techPart.DateTimeInstall.ToString(AppSettings.Default.FormatDateTime);
+
+                            question = count == 1 ?
+                                string.Format(Resources.QuestionTechPartDelete, techPart.PartText, dt) :
+                                string.Format(Resources.QuestionTechPartListDelete, techPart.PartText, dt, count - 1);
+                        }
                     }
                 }
 
-                return Question(question, text, count - 1);
+                return Question(question);
             }
         }
     }

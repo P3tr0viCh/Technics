@@ -11,9 +11,9 @@ namespace Technics
     {
         public static class Filter
         {
-            public static string ByIdToString(string fieldName, IEnumerable<long> list)
+            public static string ByIdToString(string fieldName, IEnumerable<long?> ids)
             {
-                var count = list.Count();
+                var count = ids.Count();
 
                 if (count == 0) return string.Empty;
 
@@ -21,11 +21,11 @@ namespace Technics
 
                 if (count == 1)
                 {
-                    result = $"{fieldName} = {list.First()}";
+                    result = $"{fieldName} = {ids.First()}";
                 }
                 else
                 {
-                    result = string.Join(", ", list);
+                    result = string.Join(", ", ids);
 
                     result = $"{fieldName} IN ({result})";
                 }
@@ -33,19 +33,26 @@ namespace Technics
                 return result;
             }
 
+            public static string ByIdToString(string fieldName, IEnumerable<IBaseId> list)
+            {
+                var count = list.Count();
+
+                if (count == 0) return string.Empty;
+
+                var ids = list.Select(x => (long?)x.Id);
+
+                return ByIdToString(fieldName, ids);
+            }
+ 
             private static string TechsToString(IEnumerable<TechModel> techs)
             {
                 if (techs == null) return string.Empty;
 
-                var list = techs.Select(item => item.Id);
-
-                if (!list.Any()) return string.Empty;
-
-                if (list.Count() == Lists.Default.Techs.Count) return string.Empty;
+                if (techs.Count() == Lists.Default.Techs.Count) return string.Empty;
 
                 var fieldName = Sql.FieldName(nameof(ITechId.TechId));
 
-                var result = ByIdToString(fieldName, list);
+                var result = ByIdToString(fieldName, techs);
 
                 return result;
             }
@@ -54,26 +61,15 @@ namespace Technics
             {
                 if (parts == null) return string.Empty;
 
-                var list = parts.Select(item => item.Id);
-
-                if (!list.Any()) return string.Empty;
-
                 var fieldName = Sql.FieldName(nameof(IPartId.PartId));
 
-                var result = ByIdToString(fieldName, list);
+                var result = ByIdToString(fieldName, parts);
 
                 return result;
             }
 
             public abstract class BaseFilter
             {
-                protected string GetWhereSql(string conditional)
-                {
-                    if (conditional.IsEmpty()) return string.Empty;
-
-                    return $"WHERE {conditional}";
-                }
-
                 public abstract override string ToString();
             }
 
@@ -84,8 +80,6 @@ namespace Technics
                 public override string ToString()
                 {
                     var result = TechsToString(Techs);
-
-                    result = GetWhereSql(result);
 
                     return result;
                 }
@@ -102,8 +96,6 @@ namespace Technics
                     var result = TechsToString(Techs);
 
                     result = result.JoinExcludeEmpty(" AND ", PartsToString(Parts));
-
-                    result = GetWhereSql(result);
 
                     return result;
                 }

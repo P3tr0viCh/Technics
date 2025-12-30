@@ -7,24 +7,28 @@ using System.Data.Common;
 using System.Linq;
 using System.Threading.Tasks;
 using Technics.Properties;
+using static Technics.Database.Filter;
 using static Technics.Database.Models;
 
 namespace Technics
 {
     public partial class Database
     {
-        public async Task<IEnumerable<MileageModel>> MileagesLoadAsync(Filter.Mileages filter)
+        public async Task<IEnumerable<MileageModel>> MileagesLoadAsync(Mileages filter)
         {
-            var where = filter.ToString();
+            var query = new Query
+            {
+                Sql = ResourcesSql.SelectMileages,
+                Where = filter.ToString(),
+                Order = "datetime DESC"
+            };
 
-            var sql = string.Format(ResourcesSql.SelectMileages, where);
-
-            return await ListLoadAsync<MileageModel>(sql);
+            return await ListLoadAsync<MileageModel>(query);
         }
 
         public async Task<IEnumerable<MileageModel>> MileagesLoadAsync(IEnumerable<TechModel> techs)
         {
-            var filter = new Filter.Mileages()
+            var filter = new Mileages()
             {
                 Techs = techs
             };
@@ -89,15 +93,15 @@ namespace Technics
         }
 
         private async Task<List<UpdateMileageModel>> MileagesUpdateMileagesAsync(
-            DbConnection connection, DbTransaction transaction, IEnumerable<long?> techs)
+            DbConnection connection, DbTransaction transaction, IEnumerable<long?> techIds)
         {
             var updated = new List<UpdateMileageModel>();
 
-            DebugWrite.Line($"techs: {JsonConvert.SerializeObject(techs)}");
+            DebugWrite.Line($"techs: {JsonConvert.SerializeObject(techIds)}");
 
-            foreach (var tech in techs)
+            foreach (var techId in techIds)
             {
-                var changed = await MileagesUpdateMileagesAsync(connection, transaction, tech);
+                var changed = await MileagesUpdateMileagesAsync(connection, transaction, techId);
 
                 updated.AddRange(changed);
             }
@@ -122,7 +126,7 @@ namespace Technics
                     {
                         var update = new UpdateModel();
 
-                        var techs = new List<long?>() { mileage.TechId };
+                        var techIds = new List<long?>() { mileage.TechId };
 
                         if (!mileage.IsNew)
                         {
@@ -130,13 +134,15 @@ namespace Technics
 
                             if (prevValue?.TechId != mileage.TechId)
                             {
-                                techs.Add(prevValue.TechId);
+                                techIds.Add(prevValue.TechId);
                             }
                         }
 
                         await connection.ListItemSaveAsync(mileage, transaction);
 
-                        update.Mileages = await MileagesUpdateMileagesAsync(connection, transaction, techs);
+                        update.Mileages = await MileagesUpdateMileagesAsync(connection, transaction, techIds);
+
+                        update.TechParts = await TechPartsUpdateMileagesForTechsAsync(connection, transaction, techIds);
 
                         transaction.Commit();
 
@@ -167,9 +173,11 @@ namespace Technics
 
                         await connection.ListItemSaveAsync(mileages, transaction);
 
-                        var techs = mileages.Select(m => m.TechId).Distinct();
+                        var techs = mileages.Select(mileage => mileage.TechId).Distinct();
 
                         update.Mileages = await MileagesUpdateMileagesAsync(connection, transaction, techs);
+
+                        update.TechParts = await TechPartsUpdateMileagesForTechsAsync(connection, transaction, techs);
 
                         transaction.Commit();
 
@@ -204,9 +212,7 @@ namespace Technics
 
                         update.Mileages = await MileagesUpdateMileagesAsync(connection, transaction, techs);
 
-                        //            var changedTechParts = await TechPartsGetChangedAfterChangeMileagesAsync(connection, transaction, changedMileages.ChangedMileages);
-
-                        //            update.TechParts = await TechPartsUpdateMileagesAsync(connection, transaction, changedTechParts);
+                        update.TechParts = await TechPartsUpdateMileagesForTechsAsync(connection, transaction, techs);
 
                         transaction.Commit();
 

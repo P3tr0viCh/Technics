@@ -5,5 +5,3 @@ SELECT
 FROM techparts
 LEFT JOIN techs ON techparts.techid = techs.id
 LEFT JOIN parts ON techparts.partid = parts.id
-{0}
-ORDER BY datetimeinstall DESC;

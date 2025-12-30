@@ -125,5 +125,10 @@ namespace Technics
 
             return list;
         }
+
+        public async Task<IEnumerable<T>> ListLoadAsync<T>(Query query)
+        {
+            return await ListLoadAsync<T>(query.ToString());
+        }
     }
 }

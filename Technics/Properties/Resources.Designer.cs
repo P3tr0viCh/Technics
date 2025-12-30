@@ -315,6 +315,16 @@ namespace Technics.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Удалить «{0}» с датой установки {1}  и ещё {2} из базы данных?
+        ///Все значения в связанных записях будут обновлены..
+        /// </summary>
+        internal static string QuestionTechPartListDelete {
+            get {
+                return ResourceManager.GetString("QuestionTechPartListDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Количество: {0}.
         /// </summary>
         internal static string StatusCount {

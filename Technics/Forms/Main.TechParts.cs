@@ -155,27 +155,28 @@ namespace Technics
 
         private async Task TechPartsDeleteSelectedAsync()
         {
-            var techPart = TechPartSelected;
+            var techParts = TechPartSelectedList;
 
-            if (techPart == null) return;
+            if (!techParts.Any()) return;
 
-            dgvTechParts.SetSelectedRows(techPart);
+            dgvTechParts.SetSelectedRows(techParts);
 
-            if (!Utils.Msg.Question(Resources.QuestionTechPartDelete,
-                    techPart.PartText,
-                    techPart.DateTimeInstall.ToString(AppSettings.Default.FormatDateTime))) return;
+            if (!Utils.Msg.Question(techParts)) return;
 
             var status = ProgramStatus.Start(Status.SaveDatа);
 
             try
             {
-                await Database.Default.ListItemDeleteAsync(techPart);
+                var updated = await Database.Default.TechPartDeleteAsync(techParts);
 
-                bindingSourceTechParts.Remove(techPart);
+                foreach (var techPart in techParts)
+                {
+                    bindingSourceTechParts.Remove(techPart);
+                }
 
-                dgvTechParts.SetSelectedRows(dgvMileages.GetSelected<TechPartModel>());
+                dgvTechParts.SetSelectedRows(dgvTechParts.GetSelected<TechPartModel>());
 
-                //await TechPartsUpdateMileagesAsync(techPart);
+                TechPartsUpdateChanged(updated);
 
                 TechPartsListChanged();
             }

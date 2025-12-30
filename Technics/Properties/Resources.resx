@@ -209,6 +209,10 @@
   <data name="QuestionTechPartDelete" xml:space="preserve">
     <value>Удалить «{0}» с датой установки {1} из базы данных?</value>
   </data>
+  <data name="QuestionTechPartListDelete" xml:space="preserve">
+    <value>Удалить «{0}» с датой установки {1}  и ещё {2} из базы данных?
+Все значения в связанных записях будут обновлены.</value>
+  </data>
   <data name="StatusCount" xml:space="preserve">
     <value>Количество: {0}</value>
   </data>
