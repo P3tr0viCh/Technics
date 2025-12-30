@@ -231,18 +231,14 @@ namespace Technics
 
             foreach (DataRow row in dataTableFile.Table.Rows)
             {
-                var tech = Lists.Default.Techs.Find(t => t.Text == Convert.ToString(row["Tech"]));
-
-                var description = Convert.ToString(row["Description"]);
-
-                if (description.IsEmpty()) description = null;
+                var tech = Lists.Default.Techs.Find(t => t.Text == row.AsString("Tech"));
 
                 var mileage = new MileageModel()
                 {
                     TechId = tech?.Id,
-                    DateTime = Convert.ToDateTime(row["DateTime"]),
-                    Mileage = Convert.ToDouble(row["Mileage"]),
-                    Description = description,
+                    DateTime = row.AsDateTime("DateTime"),
+                    Mileage = row.AsDouble("Mileage"),
+                    Description = row.AsStringNullable("Description"),
                 };
 
                 mileages.Add(mileage);
