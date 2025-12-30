@@ -145,29 +145,15 @@ namespace Technics
 
                     await Default.ListItemSaveAsync(techParts);
 
+                    var partIds = techParts.Select(techPart => techPart.PartId).ToList();
+
                     using (var connection = Default.GetConnection())
                     {
                         await connection.OpenAsync();
 
                         using (var transaction = connection.BeginTransaction())
                         {
-                            try
-                            {
-                                foreach (var techPart in techParts)
-                                {
-                                    techPart.Mileage = await Default.TechPartsGetMileageAsync(connection, transaction, techPart);
-                                    techPart.MileageCommon = await Default.TechPartsGetMileageCommonAsync(connection, transaction, techPart);
-
-                                    await Default.TechPartsUpdateMileagesAsync(connection, transaction, techPart);
-                                }
-
-                                transaction.Commit();
-                            }
-                            catch (Exception)
-                            {
-                                transaction.Rollback();
-                                throw;
-                            }
+                            await Default.TechPartsUpdateMileagesForPartsAsync(connection, transaction, partIds);
                         }
                     }
                 }

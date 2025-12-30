@@ -64,44 +64,6 @@ namespace Technics
             return await connection.QuerySingleRowAsync<double?>(query, param, transaction);
         }
 
-        private async Task<double?> TechPartsGetMileageCommonAsync(
-            DbConnection connection, DbTransaction transaction, TechPartModel techPart)
-        {
-            var query = new Query()
-            {
-                Fields = "id, techid, datetimeinstall, datetimeremove",
-                Table = Tables.techparts,
-                Where = "partid = :partid AND datetimeinstall <= :datetimeinstall",
-                Order = "datetimeinstall DESC"
-            };
-
-            object param = new
-            {
-                partid = techPart.PartId,
-                datetimeinstall = techPart.DateTimeInstall,
-                datetimeremove = techPart.DateTimeRemove
-            };
-
-            var parts = await connection.ListLoadAsync<TechPartModel>(query, param, transaction);
-
-            DebugWrite.Line($"{parts.Count()}");
-
-            var mileageCommon = 0.0;
-
-            foreach (var part in parts)
-            {
-                var mileage = await TechPartsGetMileageAsync(connection, transaction, part);
-
-                if (mileage == null) continue;
-
-                mileageCommon += (double)mileage;
-            }
-
-            if (mileageCommon != 0) return mileageCommon;
-
-            return null;
-        }
-
         private async Task TechPartsUpdateMileagesAsync(
             DbConnection connection, DbTransaction transaction, TechPartModel techPart)
         {
@@ -170,42 +132,16 @@ namespace Technics
             return updated;
         }
 
-        private async Task<List<UpdateTechPartModel>> TechPartsUpdateMileagesForTechsAsync(
-            DbConnection connection, DbTransaction transaction, IEnumerable<long?> techIds)
+        private async Task<List<UpdateTechPartModel>> TechPartsUpdateMileagesForPartsAsync(
+            DbConnection connection, DbTransaction transaction, IEnumerable<long?> partIds)
         {
+            DebugWrite.Line($"partIds: {JsonConvert.SerializeObject(partIds)}");
+
             var updated = new List<UpdateTechPartModel>();
 
-            DebugWrite.Line($"techs: {JsonConvert.SerializeObject(techIds)}");
-
-            var query = new Query()
+            foreach (var partId in partIds)
             {
-                Fields = "id, partid",
-                Table = Tables.techparts,
-            };
-
-            var techs = new List<TechModel>();
-
-            foreach (var techId in techIds)
-            {
-                if (techId == null) continue;
-
-                techs.Add(new TechModel() { Id = (long)techId });
-            }
-
-            var filter = new TechParts()
-            {
-                Techs = techs
-            };
-
-            query.Where = filter.ToString();
-
-            var techParts = await connection.ListLoadAsync<TechPartModel>(query, null, transaction);
-
-            var parts = techParts.Select(techPart => techPart.PartId).Distinct();
-
-            foreach (var part in parts)
-            {
-                var changed = await TechPartsUpdateMileagesForPartAsync(connection, transaction, part);
+                var changed = await TechPartsUpdateMileagesForPartAsync(connection, transaction, partId);
 
                 updated.AddRange(changed);
             }
@@ -218,17 +154,37 @@ namespace Technics
             return updated;
         }
 
+        private async Task<List<UpdateTechPartModel>> TechPartsUpdateMileagesForTechsAsync(
+            DbConnection connection, DbTransaction transaction, IEnumerable<long?> techIds)
+        {
+            DebugWrite.Line($"techIds: {JsonConvert.SerializeObject(techIds)}");
+
+            var query = new Query()
+            {
+                Fields = "id, partid",
+                Table = Tables.techparts,
+                Where = ByIdToString("techid", techIds)
+            };
+
+            var techParts = await connection.ListLoadAsync<TechPartModel>(query, null, transaction);
+
+            var parts = techParts.Select(techPart => techPart.PartId).Distinct();
+
+            var updated = await TechPartsUpdateMileagesForPartsAsync(connection, transaction, parts);
+
+            return updated;
+        }
+
         private async Task<List<UpdateTechPartModel>> TechPartsUpdateMileagesForTechsOrPartAsync(
             DbConnection connection, DbTransaction transaction,
             IEnumerable<long?> techIds, IEnumerable<long?> partIds)
         {
-            var updated = new List<UpdateTechPartModel>();
-
-            DebugWrite.Line($"techs: {JsonConvert.SerializeObject(techIds)}");
+            DebugWrite.Line($"techIds: {JsonConvert.SerializeObject(techIds)}, partIds: {JsonConvert.SerializeObject(partIds)}");
 
             var query = new Query()
             {
-               Table = Tables.techparts,
+                Fields = "id, partid",
+                Table = Tables.techparts,
             };
 
             var where = ByIdToString("techid", techIds);
@@ -239,86 +195,9 @@ namespace Technics
 
             var techParts = await connection.ListLoadAsync<TechPartModel>(query, null, transaction);
 
-            var changed = await TechPartsUpdateMileagesAsync(connection, transaction, techParts);
+            var parts = techParts.Select(techPart => techPart.PartId).Distinct();
 
-            updated.AddRange(changed);
-
-            if (updated.Count > 0)
-            {
-                Utils.Log.Info(string.Format(ResourcesLog.ListItemSaveOk, typeof(TechParts).Name, updated.Count));
-            }
-
-            return updated;
-        }
-
-        private Query TechPartsGetChangedQuery()
-        {
-            return new Query()
-            {
-                Table = Tables.techparts,
-            };
-        }
-
-        private async Task<TechPartModel> TechPartsGetChangedCurrentAsync(
-            DbConnection connection, DbTransaction transaction, long id)
-        {
-            var query = TechPartsGetChangedQuery();
-
-            query.Where = $"id = :id";
-
-            object param = new { id };
-
-            return await connection.QuerySingleRowAsync<TechPartModel>(query, param, transaction);
-        }
-
-        private async Task<IEnumerable<TechPartModel>> TechPartsGetUpdatedAsync(
-            DbConnection connection, DbTransaction transaction, TechPartModel techPart)
-        {
-            var query = TechPartsGetChangedQuery();
-
-            query.Where = $"id != :id AND partid = :partid AND datetimeinstall > :datetimeinstall";
-
-            object param = new
-            {
-                id = techPart.Id,
-                partid = techPart.PartId,
-                datetimeinstall = techPart.DateTimeInstall,
-            };
-
-            return await connection.ListLoadAsync<TechPartModel>(query, param, transaction);
-        }
-
-        private async Task TechPartsGetChangedAsync(
-            DbConnection connection, DbTransaction transaction, ChangedTechPartModel changed, TechPartModel techPart)
-        {
-            changed.ChangedTechParts.Add(techPart);
-
-            var updated = await TechPartsGetUpdatedAsync(connection, transaction, techPart);
-
-            changed.UpdatedTechParts.AddRange(updated);
-        }
-
-        private async Task<List<UpdateTechPartModel>> TechPartsUpdateMileagesAsync(
-            DbConnection connection, DbTransaction transaction, IEnumerable<TechPartModel> techParts)
-        {
-            var updated = new List<UpdateTechPartModel>();
-
-            DebugWrite.Line($"count={techParts.Count()}");
-
-            foreach (var techPart in techParts)
-            {
-                techPart.Mileage = await TechPartsGetMileageAsync(connection, transaction, techPart);
-                techPart.MileageCommon = await TechPartsGetMileageCommonAsync(connection, transaction, techPart);
-
-                await TechPartsUpdateMileagesAsync(connection, transaction, techPart);
-
-                updated.Add(new UpdateTechPartModel()
-                {
-                    Id = techPart.Id,
-                    Mileage = techPart.Mileage,
-                    MileageCommon = techPart.MileageCommon,
-                });
-            }
+            var updated = await TechPartsUpdateMileagesForPartsAsync(connection, transaction, parts);
 
             return updated;
         }
