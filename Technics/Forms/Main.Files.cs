@@ -1,48 +1,68 @@
 ﻿using P3tr0viCh.Utils;
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Technics.Properties;
 using static P3tr0viCh.Utils.DataTableFile;
+using static Technics.Database.Models;
 using static Technics.Enums;
 
 namespace Technics
 {
     public partial class Main
     {
+        private async Task<IEnumerable<MileageModel>> LoadFromFileAsync(string file)
+        {
+            try
+            {
+                var loaded = await MileagesLoadFromFileAsync(file);
+
+                Utils.Log.Info(string.Format(ResourcesLog.LoadFromFileOk, file, loaded.Count()));
+
+                return loaded;
+            }
+            catch (Exception e)
+            {
+                string errorMsg;
+
+                if (e is CsvFileWrongHeaderException)
+                {
+                    errorMsg = string.Format(ResourcesLog.LoadFromFileFailWrongHeader, file);
+                }
+                else
+                {
+                    errorMsg = string.Format(ResourcesLog.LoadFromFileFail, e.Message, file);
+                }
+
+                Utils.Log.Error(errorMsg);
+
+                return Enumerable.Empty<MileageModel>();
+            }
+        }
+
         private async Task<bool> LoadFromFilesAsync(string[] files)
         {
             DebugWrite.Line("start");
 
             var status = ProgramStatus.Start(Status.ReadFiles);
 
-            var fileName = string.Empty;
-
             try
             {
+                var mileages = new List<MileageModel>();
+
                 foreach (var file in files)
                 {
-                    fileName = file;
+                    var loaded = await LoadFromFileAsync(file);
 
-                    await MileagesLoadFromFileAsync(file);
+                    mileages.AddRange(loaded);
                 }
 
-                return true;
-            }
-            catch (Exception e)
-            {
-                Utils.Log.Error(e);
+                await Database.Default.MileageSaveAsync(mileages);
 
-                var errorMsg = e.Message;
-
-                if (e is CsvFileWrongHeaderException)
-                {
-                    errorMsg = Resources.ErrorCsvFileWrongHeader;
-                }
-
-                Utils.Msg.Error(Resources.MsgFileReadFail, fileName, errorMsg);
-
-                return false;
+                return mileages.Count > 0;
             }
             finally
             {
@@ -60,15 +80,16 @@ namespace Technics
 
         private async Task LoadFromFilesAsync(FilesDialogType type)
         {
-            var files = Array.Empty<string>();
+            string[] files;
 
             switch (type)
             {
                 case FilesDialogType.Files:
                     openFileDialog.FileName = string.Empty;
 
-                    openFileDialog.DefaultExt = ".csv";
-                    openFileDialog.Filter = Resources.OpenFileDialogFilterCsv;
+                    openFileDialog.InitialDirectory = AppSettings.Default.DirectoryLastMileages;
+
+                    openFileDialog.Filter = Resources.FilterOpenFileDialogMileages;
 
                     if (openFileDialog.ShowDialog() != DialogResult.OK) return;
 
@@ -76,11 +97,24 @@ namespace Technics
 
                     break;
                 case FilesDialogType.Directory:
+                    folderBrowserDialog.SelectedPath = AppSettings.Default.DirectoryLastMileages;
+
+                    if (folderBrowserDialog.ShowDialog() != DialogResult.OK) return;
+
+                    files = await Utils.GetFilesAsync(folderBrowserDialog.SelectedPath, Resources.FilterFolderBrowserDialogMileages);
+
+                    foreach (var file in files)
+                    {
+                        DebugWrite.Line(file);
+                    }
+
                     break;
                 default: return;
             }
 
             if (files.Length == 0) return;
+
+            AppSettings.Default.DirectoryLastMileages = Directory.GetParent(files[0]).FullName;
 
             var result = await LoadFromFilesAsync(files);
 

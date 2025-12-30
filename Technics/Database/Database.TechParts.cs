@@ -155,7 +155,7 @@ namespace Technics
         }
 
         private async Task<List<UpdateTechPartModel>> TechPartsUpdateMileagesForTechsAsync(
-            DbConnection connection, DbTransaction transaction, IEnumerable<long?> techIds)
+            DbConnection connection, DbTransaction transaction, IEnumerable<long> techIds)
         {
             DebugWrite.Line($"techIds: {JsonConvert.SerializeObject(techIds)}");
 
@@ -177,7 +177,7 @@ namespace Technics
 
         private async Task<List<UpdateTechPartModel>> TechPartsUpdateMileagesForTechsOrPartAsync(
             DbConnection connection, DbTransaction transaction,
-            IEnumerable<long?> techIds, IEnumerable<long?> partIds)
+            IEnumerable<long> techIds, IEnumerable<long> partIds)
         {
             DebugWrite.Line($"techIds: {JsonConvert.SerializeObject(techIds)}, partIds: {JsonConvert.SerializeObject(partIds)}");
 
@@ -214,9 +214,12 @@ namespace Technics
                     {
                         var update = new UpdateModel();
 
-                        var techIds = new List<long?>() { techPart.TechId };
+                        var techIds = new List<long>();
 
-                        var partIds = new List<long?>() { techPart.PartId };
+                        var partIds = new List<long>();
+
+                        Utils.ListAddNotNull(techIds, techPart.TechId);
+                        Utils.ListAddNotNull(techIds, techPart.PartId);
 
                         if (!techPart.IsNew)
                         {
@@ -224,12 +227,12 @@ namespace Technics
 
                             if (prevValue?.TechId != techPart.TechId)
                             {
-                                techIds.Add(prevValue.TechId);
+                                Utils.ListAddNotNull(techIds, prevValue.TechId);
                             }
 
                             if (prevValue?.PartId != techPart.PartId)
                             {
-                                partIds.Add(prevValue.PartId);
+                                Utils.ListAddNotNull(partIds, prevValue.PartId);
                             }
                         }
 
@@ -267,9 +270,9 @@ namespace Technics
 
                         await connection.ListItemDeleteAsync(techParts, transaction);
 
-                        var techIds = techParts.Select(techPart => techPart.TechId).Distinct();
+                        var techIds = techParts.Select(techPart => techPart.TechId).DistinctNotNullLong();
 
-                        var partIds = techParts.Select(techPart => techPart.PartId).Distinct();
+                        var partIds = techParts.Select(techPart => techPart.PartId).DistinctNotNullLong();
 
                         update.TechParts = await TechPartsUpdateMileagesForTechsOrPartAsync(
                             connection, transaction, techIds, partIds);

@@ -124,6 +124,33 @@ namespace Technics.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} in {1}.
+        /// </summary>
+        internal static string LoadFromFileFail {
+            get {
+                return ResourceManager.GetString("LoadFromFileFail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to wrong header in {0}.
+        /// </summary>
+        internal static string LoadFromFileFailWrongHeader {
+            get {
+                return ResourceManager.GetString("LoadFromFileFailWrongHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} ok, count={1}.
+        /// </summary>
+        internal static string LoadFromFileOk {
+            get {
+                return ResourceManager.GetString("LoadFromFileOk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ok.
         /// </summary>
         internal static string LoadOk {

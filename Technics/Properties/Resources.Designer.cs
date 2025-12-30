@@ -171,6 +171,24 @@ namespace Technics.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to *.csv.
+        /// </summary>
+        internal static string FilterFolderBrowserDialogMileages {
+            get {
+                return ResourceManager.GetString("FilterFolderBrowserDialogMileages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to csv|*.csv|Все файлы|*.*.
+        /// </summary>
+        internal static string FilterOpenFileDialogMileages {
+            get {
+                return ResourceManager.GetString("FilterOpenFileDialogMileages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Во время создания базы данных произошла ошибка:
         ///{0}.
         /// </summary>
@@ -217,15 +235,6 @@ namespace Technics.Properties {
         internal static string MsgFileReadFail {
             get {
                 return ResourceManager.GetString("MsgFileReadFail", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to csv|*.csv|Все файлы|*.*.
-        /// </summary>
-        internal static string OpenFileDialogFilterCsv {
-            get {
-                return ResourceManager.GetString("OpenFileDialogFilterCsv", resourceCulture);
             }
         }
         

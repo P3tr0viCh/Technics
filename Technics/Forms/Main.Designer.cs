@@ -97,6 +97,7 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tsbtnClose = new System.Windows.Forms.ToolStripButton();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.toolStripContainer.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer.ContentPanel.SuspendLayout();
             this.toolStripContainer.TopToolStripPanel.SuspendLayout();
@@ -589,14 +590,14 @@
             // miMileagesFromFiles
             // 
             this.miMileagesFromFiles.Name = "miMileagesFromFiles";
-            this.miMileagesFromFiles.Size = new System.Drawing.Size(180, 24);
+            this.miMileagesFromFiles.Size = new System.Drawing.Size(120, 24);
             this.miMileagesFromFiles.Text = "Файлы";
             this.miMileagesFromFiles.Click += new System.EventHandler(this.MiMileagesFromFiles_Click);
             // 
             // miMileagesFromDirectory
             // 
             this.miMileagesFromDirectory.Name = "miMileagesFromDirectory";
-            this.miMileagesFromDirectory.Size = new System.Drawing.Size(180, 24);
+            this.miMileagesFromDirectory.Size = new System.Drawing.Size(120, 24);
             this.miMileagesFromDirectory.Text = "Папка";
             this.miMileagesFromDirectory.Click += new System.EventHandler(this.MiMileagesFromDirectory_Click);
             // 
@@ -761,6 +762,10 @@
             // 
             this.openFileDialog.Multiselect = true;
             // 
+            // folderBrowserDialog
+            // 
+            this.folderBrowserDialog.ShowNewFolderButton = false;
+            // 
             // Main
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -877,6 +882,7 @@
         private System.Windows.Forms.ToolStripMenuItem miMileagesFromFiles;
         private System.Windows.Forms.ToolStripMenuItem miMileagesFromDirectory;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
     }
 }
 

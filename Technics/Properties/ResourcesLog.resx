@@ -138,6 +138,15 @@
   <data name="ListLoadOk" xml:space="preserve">
     <value>{0} ok, count={1}</value>
   </data>
+  <data name="LoadFromFileFail" xml:space="preserve">
+    <value>{0} in {1}</value>
+  </data>
+  <data name="LoadFromFileFailWrongHeader" xml:space="preserve">
+    <value>wrong header in {0}</value>
+  </data>
+  <data name="LoadFromFileOk" xml:space="preserve">
+    <value>{0} ok, count={1}</value>
+  </data>
   <data name="LoadOk" xml:space="preserve">
     <value>ok</value>
   </data>

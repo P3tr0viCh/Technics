@@ -54,11 +54,11 @@ namespace Technics
         }
 
         private async Task<List<UpdateMileageModel>> MileagesUpdateMileagesAsync(
-            DbConnection connection, DbTransaction transaction, long? techId)
+            DbConnection connection, DbTransaction transaction, long techId)
         {
             var updated = new List<UpdateMileageModel>();
 
-            if (techId == null || techId == Sql.NewId) return updated;
+            if (techId == Sql.NewId) return updated;
 
             var query = new Query()
             {
@@ -93,7 +93,7 @@ namespace Technics
         }
 
         private async Task<List<UpdateMileageModel>> MileagesUpdateMileagesAsync(
-            DbConnection connection, DbTransaction transaction, IEnumerable<long?> techIds)
+            DbConnection connection, DbTransaction transaction, IEnumerable<long> techIds)
         {
             var updated = new List<UpdateMileageModel>();
 
@@ -126,7 +126,9 @@ namespace Technics
                     {
                         var update = new UpdateModel();
 
-                        var techIds = new List<long?>() { mileage.TechId };
+                        var techIds = new List<long>();
+
+                        Utils.ListAddNotNull(techIds, mileage.TechId);
 
                         if (!mileage.IsNew)
                         {
@@ -134,7 +136,7 @@ namespace Technics
 
                             if (prevValue?.TechId != mileage.TechId)
                             {
-                                techIds.Add(prevValue.TechId);
+                                Utils.ListAddNotNull(techIds, prevValue.TechId);
                             }
                         }
 
@@ -173,11 +175,11 @@ namespace Technics
 
                         await connection.ListItemSaveAsync(mileages, transaction);
 
-                        var techs = mileages.Select(mileage => mileage.TechId).Distinct();
+                        var techIds = mileages.Select(mileage => mileage.TechId).DistinctNotNullLong();
 
-                        update.Mileages = await MileagesUpdateMileagesAsync(connection, transaction, techs);
+                        update.Mileages = await MileagesUpdateMileagesAsync(connection, transaction, techIds);
 
-                        update.TechParts = await TechPartsUpdateMileagesForTechsAsync(connection, transaction, techs);
+                        update.TechParts = await TechPartsUpdateMileagesForTechsAsync(connection, transaction, techIds);
 
                         transaction.Commit();
 
@@ -208,11 +210,12 @@ namespace Technics
 
                         await connection.ListItemDeleteAsync(mileages, transaction);
 
-                        var techs = mileages.Select(m => m.TechId).Distinct();
+                        var techIds = mileages.Select(mileage => mileage.TechId).Distinct()
+                            .Where(id => id != null).Cast<long>();
 
-                        update.Mileages = await MileagesUpdateMileagesAsync(connection, transaction, techs);
+                        update.Mileages = await MileagesUpdateMileagesAsync(connection, transaction, techIds);
 
-                        update.TechParts = await TechPartsUpdateMileagesForTechsAsync(connection, transaction, techs);
+                        update.TechParts = await TechPartsUpdateMileagesForTechsAsync(connection, transaction, techIds);
 
                         transaction.Commit();
 

@@ -1,13 +1,10 @@
-﻿using Newtonsoft.Json;
-using P3tr0viCh.Utils;
+﻿using P3tr0viCh.Utils;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Technics.Properties;
-using static System.Net.Mime.MediaTypeNames;
 using static Technics.Database.Models;
 using static Technics.Enums;
 
@@ -214,7 +211,7 @@ namespace Technics
             return new DataTableFile(table);
         }
 
-        private async Task MileagesLoadFromFileAsync(string fileName)
+        private async Task<IEnumerable<MileageModel>> MileagesLoadFromFileAsync(string fileName)
         {
             var dataTableFile = MileagesCreateDataTableFile();
 
@@ -242,7 +239,7 @@ namespace Technics
                 mileages.Add(mileage);
             }
 
-            await Database.Default.MileageSaveAsync(mileages);
+            return mileages;
         }
     }
 }

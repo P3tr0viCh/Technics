@@ -16,6 +16,9 @@ namespace Technics
         [Browsable(false)]
         public bool ToolStripsShowText { get; set; } = true;
 
+        [Browsable(false)]
+        public string DirectoryLastMileages { get; set; } = string.Empty;
+
         public void Check()
         {
         }

@@ -155,6 +155,12 @@
   <data name="ErrorValueNeedGreaterZero" xml:space="preserve">
     <value>Значение должно быть больше нуля.</value>
   </data>
+  <data name="FilterFolderBrowserDialogMileages" xml:space="preserve">
+    <value>*.csv</value>
+  </data>
+  <data name="FilterOpenFileDialogMileages" xml:space="preserve">
+    <value>csv|*.csv|Все файлы|*.*</value>
+  </data>
   <data name="MsgDatabaseCreateFail" xml:space="preserve">
     <value>Во время создания базы данных произошла ошибка:
 {0}</value>
@@ -174,9 +180,6 @@
   <data name="MsgFileReadFail" xml:space="preserve">
     <value>Во время чтения файла «{0}» произошла ошибка:
 {1}.</value>
-  </data>
-  <data name="OpenFileDialogFilterCsv" xml:space="preserve">
-    <value>csv|*.csv|Все файлы|*.*</value>
   </data>
   <data name="QuestionFolderDelete" xml:space="preserve">
     <value>Удалить «{0}» из базы данных?</value>
