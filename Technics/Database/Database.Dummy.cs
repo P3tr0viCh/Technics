@@ -117,8 +117,7 @@ namespace Technics
                     {
                         var tech = GetRandomItem(techs);
 
-                        var mileages = await Default.ListLoadAsync<MileageModel>(
-                            Default.GetMileagesSql(new List<TechModel>() { tech }));
+                        var mileages = await Default.MileagesLoadAsync(new List<TechModel>() { tech });
 
                         if (!mileages.Any()) continue;
 

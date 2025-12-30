@@ -13,6 +13,25 @@ namespace Technics
 {
     public partial class Database
     {
+        public async Task<IEnumerable<MileageModel>> MileagesLoadAsync(Filter.Mileages filter)
+        {
+            var where = filter.ToString();
+
+            var sql = string.Format(ResourcesSql.SelectMileages, where);
+
+            return await ListLoadAsync<MileageModel>(sql);
+        }
+
+        public async Task<IEnumerable<MileageModel>> MileagesLoadAsync(IEnumerable<TechModel> techs)
+        {
+            var filter = new Filter.Mileages()
+            {
+                Techs = techs
+            };
+
+            return await MileagesLoadAsync(filter);
+        }
+
         public async Task<double> MileagesGetMileageCommonPrevAsync(MileageModel mileage)
         {
             var query = new Query()
@@ -26,7 +45,7 @@ namespace Technics
 
             using (var connection = GetConnection())
             {
-                return await Actions.QueryFirstOrDefaultAsync<double>(connection, query, param);
+                return await connection.QuerySingleRowAsync<double>(query, param);
             }
         }
 
@@ -46,7 +65,7 @@ namespace Technics
 
             object param = new { techid = techId };
 
-            var mileages = await Actions.ListLoadAsync<MileageModel>(connection, query, param, transaction);
+            var mileages = await connection.ListLoadAsync<MileageModel>(query, param, transaction);
 
             if (!mileages.Any()) return updated;
 
@@ -60,8 +79,7 @@ namespace Technics
 
                 mileage.MileageCommon = mileageCommon;
 
-                await Actions.ExecuteAsync(connection,
-                    ResourcesSql.UpdateMileagesMileageCommonById,
+                await connection.ExecuteSqlAsync(ResourcesSql.UpdateMileagesMileageCommonById,
                     new { id = mileage.Id, mileagecommon = mileage.MileageCommon }, transaction);
 
                 updated.Add(new UpdateMileageModel() { Id = mileage.Id, MileageCommon = mileageCommon });
@@ -108,7 +126,7 @@ namespace Technics
 
                         if (!mileage.IsNew)
                         {
-                            var prevValue = await ListItemLoadByIdAsync<MileageModel>(connection, transaction, mileage.Id);
+                            var prevValue = await connection.ListItemLoadByIdAsync<MileageModel>(transaction, mileage.Id);
 
                             if (prevValue?.TechId != mileage.TechId)
                             {
@@ -116,7 +134,7 @@ namespace Technics
                             }
                         }
 
-                        await Actions.ListItemSaveAsync(connection, mileage, transaction);
+                        await connection.ListItemSaveAsync(mileage, transaction);
 
                         update.Mileages = await MileagesUpdateMileagesAsync(connection, transaction, techs);
 
@@ -147,7 +165,7 @@ namespace Technics
                     {
                         var update = new UpdateModel();
 
-                        await Actions.ListItemSaveAsync(connection, mileages, transaction);
+                        await connection.ListItemSaveAsync(mileages, transaction);
 
                         var techs = mileages.Select(m => m.TechId).Distinct();
 
@@ -180,7 +198,7 @@ namespace Technics
                     {
                         var update = new UpdateModel();
 
-                        await Actions.ListItemDeleteAsync(connection, mileages, transaction);
+                        await connection.ListItemDeleteAsync(mileages, transaction);
 
                         var techs = mileages.Select(m => m.TechId).Distinct();
 

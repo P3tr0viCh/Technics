@@ -154,9 +154,7 @@ namespace Technics
                     Parts = new List<PartModel>() { part },
                 };
 
-                var sql = Database.Default.GetTechPartsSql(filter);
-
-                var techPartList = await Database.Default.ListLoadAsync<TechPartModel>(sql);
+                var techPartList = await Database.Default.TechPartsLoadAsync(filter);
 
                 var list = techPartList.Where(item => item.Id != TechPart.Id).ToList();
 

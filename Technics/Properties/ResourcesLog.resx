@@ -135,7 +135,7 @@
   <data name="ListItemSaveOk" xml:space="preserve">
     <value>{0} items save ok, count={1}</value>
   </data>
-  <data name="LoadListOk" xml:space="preserve">
+  <data name="ListLoadOk" xml:space="preserve">
     <value>{0} ok, count={1}</value>
   </data>
   <data name="LoadOk" xml:space="preserve">

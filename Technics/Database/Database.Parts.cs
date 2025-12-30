@@ -13,11 +13,10 @@ namespace Technics
         private async Task PartDeleteAsync(
            DbConnection connection, DbTransaction transaction, PartModel part)
         {
-            await Actions.ExecuteAsync(connection,
-                ResourcesSql.ClearTechPartsMileagesByPartId,
+            await connection.ExecuteSqlAsync(ResourcesSql.ClearTechPartsMileagesByPartId,
                 new { partid = part.Id }, transaction);
 
-            await Actions.ListItemDeleteAsync(connection, part, transaction);
+            await connection.ListItemDeleteAsync(part, transaction);
         }
 
         public async Task PartDeleteAsync(IEnumerable<PartModel> parts)

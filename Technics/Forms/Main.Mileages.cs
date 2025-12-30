@@ -23,9 +23,7 @@ namespace Technics
 
             try
             {
-                var list = techs.Count() > 0
-                    ? await Database.Default.ListLoadAsync<MileageModel>(Database.Default.GetMileagesSql(techs))
-                    : Enumerable.Empty<MileageModel>();
+                var list = await Database.Default.MileagesLoadAsync(techs);
 
                 bindingSourceMileages.DataSource = list;
 
@@ -206,14 +204,14 @@ namespace Technics
 
         private static DataTableFile MileagesCreateDataTableFile()
         {
-            var table = Utils.DataTableCreateNew("Mileages");
+            var table = new DataTable("Mileages");
 
-            Utils.DataTableFileAddColumn(table, typeof(string), "Tech");
-            Utils.DataTableFileAddColumn(table, typeof(DateTime), "DateTime");
-            Utils.DataTableFileAddColumn(table, typeof(double), "Mileage");
-            Utils.DataTableFileAddColumn(table, typeof(string), "Description");
+            table.Columns.Add("Tech", typeof(string));
+            table.Columns.Add("DateTime", typeof(DateTime));
+            table.Columns.Add("Mileage", typeof(double));
+            table.Columns.Add("Description", typeof(string));
 
-            return Utils.DataTableFileCreateNew(table);
+            return new DataTableFile(table);
         }
 
         private async Task MileagesLoadFromFileAsync(string fileName)

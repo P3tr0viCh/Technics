@@ -19,9 +19,7 @@ namespace Technics
 
             try
             {
-                var list = techs.Count() > 0
-                    ? await Database.Default.ListLoadAsync<TechPartModel>(Database.Default.GetTechPartsSql(techs))
-                    : Enumerable.Empty<TechPartModel>();
+                var list = await Database.Default.TechPartsLoadAsync(techs);
 
                 bindingSourceTechParts.DataSource = list;
 

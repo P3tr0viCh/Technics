@@ -58,7 +58,7 @@ namespace Technics
 
             var sql = string.Format(ResourcesSql.TruncateTable, tableName);
 
-            await Actions.ExecuteAsync(connection, sql);
+            await connection.ExecuteSqlAsync(sql);
 
             Utils.Log.Info($"truncate table {tableName} ok");
         }
@@ -76,7 +76,7 @@ namespace Technics
         {
             using (var connection = GetConnection())
             {
-                await Actions.ListItemSaveAsync(connection, value, null);
+                await connection.ListItemSaveAsync(value, null);
             }
 
             Utils.Log.ListItemSaveOk<T>();
@@ -86,7 +86,7 @@ namespace Technics
         {
             using (var connection = GetConnection())
             {
-                await Actions.ListItemSaveAsync(connection, values);
+                await connection.ListItemSaveAsync(values);
             }
 
             Utils.Log.ListItemSaveOk(values);
@@ -96,7 +96,7 @@ namespace Technics
         {
             using (var connection = GetConnection())
             {
-                await Actions.ListItemDeleteAsync(connection, value, null);
+                await connection.ListItemDeleteAsync(value, null);
             }
 
             Utils.Log.ListItemDeleteOk<T>();
@@ -106,23 +106,10 @@ namespace Technics
         {
             using (var connection = GetConnection())
             {
-                await Actions.ListItemDeleteAsync(connection, values);
+                await connection.ListItemDeleteAsync(values);
             }
 
             Utils.Log.ListItemDeleteOk(values);
-        }
-
-        public async Task<T> ListItemLoadByIdAsync<T>(DbConnection connection, DbTransaction transaction, long id)
-        {
-            var query = new Query
-            {
-                Table = Sql.TableName<T>(),
-                Where = $"id = :id"
-            };
-
-            object param = new { id };
-
-            return await Actions.QueryFirstOrDefaultAsync<T>(connection, query, param, transaction);
         }
 
         public async Task<IEnumerable<T>> ListLoadAsync<T>(string sql = null, object param = null)
@@ -131,45 +118,12 @@ namespace Technics
 
             using (var connection = GetConnection())
             {
-                list = await Actions.ListLoadAsync<T>(connection, sql, param);
+                list = await connection.ListLoadAsync<T>(sql, param);
             }
 
-            Utils.Log.LoadListOk(list);
+            Utils.Log.ListLoadOk(list);
 
             return list;
-        }
-
-        public string GetMileagesSql(IEnumerable<TechModel> techs)
-        {
-            var filter = new Filter.Mileages()
-            {
-                Techs = techs
-            };
-
-            var where = filter.ToString();
-
-            var sql = string.Format(ResourcesSql.SelectMileages, where);
-
-            return sql;
-        }
-
-        public string GetTechPartsSql(Filter.TechParts filter)
-        {
-            var where = filter.ToString();
-
-            var sql = string.Format(ResourcesSql.SelectTechParts, where);
-
-            return sql;
-        }
-
-        public string GetTechPartsSql(IEnumerable<TechModel> techs)
-        {
-            var filter = new Filter.TechParts()
-            {
-                Techs = techs
-            };
-
-            return GetTechPartsSql(filter);
         }
     }
 }

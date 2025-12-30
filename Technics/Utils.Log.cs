@@ -66,9 +66,9 @@ namespace Technics
                 Error($"query: {query.SingleLine()}", memberName);
             }
 
-            public static void LoadListOk<T>(IEnumerable<T> list, [CallerMemberName] string memberName = "")
+            public static void ListLoadOk<T>(IEnumerable<T> list, [CallerMemberName] string memberName = "")
             {
-                Info(string.Format(ResourcesLog.LoadListOk, typeof(T).Name, list.Count()), memberName);
+                Info(string.Format(ResourcesLog.ListLoadOk, typeof(T).Name, list.Count()), memberName);
             }
 
             public static void ListItemSaveOk<T>(IEnumerable<T> values, [CallerMemberName] string memberName = "")

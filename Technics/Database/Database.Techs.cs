@@ -13,15 +13,13 @@ namespace Technics
         private async Task TechDeleteAsync(
             DbConnection connection, DbTransaction transaction, TechModel tech)
         {
-            await Actions.ExecuteAsync(connection,
-                ResourcesSql.ClearMileagesMileageCommonByTechId,
+            await connection.ExecuteSqlAsync(ResourcesSql.ClearMileagesMileageCommonByTechId,
                 new { techid = tech.Id }, transaction);
 
-            await Actions.ExecuteAsync(connection,
-                ResourcesSql.ClearTechPartsMileagesByTechId,
+            await connection.ExecuteSqlAsync(ResourcesSql.ClearTechPartsMileagesByTechId,
                 new { techid = tech.Id }, transaction);
 
-            await Actions.ListItemDeleteAsync(connection, tech, transaction);
+            await connection.ListItemDeleteAsync(tech, transaction);
         }
 
         public async Task TechDeleteAsync(IEnumerable<TechModel> techs)

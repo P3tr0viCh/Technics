@@ -117,9 +117,9 @@ namespace Technics.Properties {
         /// <summary>
         ///   Looks up a localized string similar to {0} ok, count={1}.
         /// </summary>
-        internal static string LoadListOk {
+        internal static string ListLoadOk {
             get {
-                return ResourceManager.GetString("LoadListOk", resourceCulture);
+                return ResourceManager.GetString("ListLoadOk", resourceCulture);
             }
         }
         

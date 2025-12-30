@@ -13,6 +13,25 @@ namespace Technics
 {
     public partial class Database
     {
+        public async Task<IEnumerable<TechPartModel>> TechPartsLoadAsync(Filter.TechParts filter)
+        {
+            var where = filter.ToString();
+
+            var sql = string.Format(ResourcesSql.SelectTechParts, where);
+
+            return await ListLoadAsync<TechPartModel>(sql);
+        }
+
+        public async Task<IEnumerable<TechPartModel>> TechPartsLoadAsync(IEnumerable<TechModel> techs)
+        {
+            var filter = new Filter.TechParts()
+            {
+                Techs = techs
+            };
+
+            return await TechPartsLoadAsync(filter);
+        }
+
         private async Task<double?> TechPartsGetMileageAsync(
             DbConnection connection, DbTransaction transaction, TechPartModel techPart)
         {
@@ -38,7 +57,7 @@ namespace Technics
                 datetimeremove = techPart.DateTimeRemove
             };
 
-            return await Actions.QueryFirstOrDefaultAsync<double?>(connection, query, param, transaction);
+            return await connection.QuerySingleRowAsync<double?>(query, param, transaction);
         }
 
         private async Task<double?> TechPartsGetMileageCommonAsync(
@@ -59,7 +78,7 @@ namespace Technics
                 datetimeremove = techPart.DateTimeRemove
             };
 
-            var parts = await Actions.ListLoadAsync<TechPartModel>(connection, query, param, transaction);
+            var parts = await connection.ListLoadAsync<TechPartModel>(query, param, transaction);
 
             DebugWrite.Line($"{parts.Count()}");
 
@@ -70,7 +89,7 @@ namespace Technics
                 var mileage = await TechPartsGetMileageAsync(connection, transaction, part);
 
                 if (mileage == null) continue;
-                
+
                 mileageCommon += (double)mileage;
             }
 
@@ -82,13 +101,12 @@ namespace Technics
         private async Task TechPartsUpdateMileagesAsync(
             DbConnection connection, DbTransaction transaction, TechPartModel techPart)
         {
-            if (techPart.Mileage ==  null)
+            if (techPart.Mileage == null)
             {
                 techPart.MileageCommon = null;
             }
 
-            await Actions.ExecuteAsync(connection,
-                        ResourcesSql.UpdateTechPartsMileagesById,
+            await connection.ExecuteSqlAsync(ResourcesSql.UpdateTechPartsMileagesById,
                             new
                             {
                                 id = techPart.Id,
@@ -115,7 +133,7 @@ namespace Technics
 
             object param = new { id };
 
-            return await Actions.QueryFirstOrDefaultAsync<TechPartModel>(connection, query, param, transaction);
+            return await connection.QuerySingleRowAsync<TechPartModel>(query, param, transaction);
         }
 
         private async Task<IEnumerable<TechPartModel>> TechPartsGetUpdatedAsync(
@@ -132,7 +150,7 @@ namespace Technics
                 datetimeinstall = techPart.DateTimeInstall,
             };
 
-            return await Actions.ListLoadAsync<TechPartModel>(connection, query, param, transaction);
+            return await connection.ListLoadAsync<TechPartModel>(query, param, transaction);
         }
 
         private async Task TechPartsGetChangedAsync(
@@ -190,7 +208,7 @@ namespace Technics
                 Where = $"{Filter.ByIdToString("techid", techsChanged)}"
             };
 
-            return await Actions.ListLoadAsync<TechPartModel>(connection, query, null, transaction);
+            return await connection.ListLoadAsync<TechPartModel>(query, null, transaction);
         }
 
         private async Task<List<UpdateTechPartModel>> TechPartsUpdateMileagesAsync(
@@ -230,7 +248,7 @@ namespace Technics
 
             DebugWrite.Line(JsonConvert.SerializeObject(techPart));
 
-            await Actions.ListItemSaveAsync(connection, techPart, transaction);
+            await connection.ListItemSaveAsync(techPart, transaction);
 
             update.TechParts = await TechPartsUpdateMileagesAsync(connection, transaction, changedTechParts.UpdatedTechParts);
 
