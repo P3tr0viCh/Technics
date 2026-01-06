@@ -234,6 +234,12 @@
   <data name="TextListEdit" xml:space="preserve">
     <value>Редактировать список...</value>
   </data>
+  <data name="TextMenuItemCopy" xml:space="preserve">
+    <value>Копировать</value>
+  </data>
+  <data name="TextMenuItemPaste" xml:space="preserve">
+    <value>Вставить</value>
+  </data>
   <data name="TextProgramBusy" xml:space="preserve">
     <value>Дождитесь окончания выполнения текущей операции.</value>
   </data>

@@ -388,6 +388,24 @@ namespace Technics.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Копировать.
+        /// </summary>
+        internal static string TextMenuItemCopy {
+            get {
+                return ResourceManager.GetString("TextMenuItemCopy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Вставить.
+        /// </summary>
+        internal static string TextMenuItemPaste {
+            get {
+                return ResourceManager.GetString("TextMenuItemPaste", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Дождитесь окончания выполнения текущей операции..
         /// </summary>
         internal static string TextProgramBusy {

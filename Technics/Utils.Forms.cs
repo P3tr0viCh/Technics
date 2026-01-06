@@ -45,5 +45,58 @@ namespace Technics
                 throw new Exception(error);
             }
         }
+
+        public static ContextMenuStrip CreateMenuDateTimePicker()
+        {
+            var menuDateTimePicker = new ContextMenuStrip();
+
+            var menuItemCopy = new ToolStripMenuItem()
+            {
+                Text = Resources.TextMenuItemCopy
+            };
+
+            menuItemCopy.Click += MenuItemCopy_Click;
+
+            menuDateTimePicker.Items.Add(menuItemCopy);
+
+            var menuItemPaste = new ToolStripMenuItem()
+            {
+                Text = Resources.TextMenuItemPaste
+            };
+
+            menuItemPaste.Click += MenuItemPaste_Click;
+
+            menuDateTimePicker.Items.Add(menuItemPaste);
+
+            return menuDateTimePicker;
+        }
+
+        private static DateTimePicker GetDateTimePickerFromMenuItem(object sender)
+        {
+            var menuItem = sender as ToolStripMenuItem;
+
+            var contextMenuStrip = menuItem.GetCurrentParent() as ContextMenuStrip;
+
+            if (contextMenuStrip.SourceControl is DateTimePicker dateTimePicker)
+            {
+                return dateTimePicker;
+            }
+
+            return null;
+        }
+
+        public static void MenuItemCopy_Click(object sender, EventArgs e)
+        {
+            var dateTimePicker = GetDateTimePickerFromMenuItem(sender);
+
+            dateTimePicker?.CopyToClipboard();
+        }
+
+        private static void MenuItemPaste_Click(object sender, EventArgs e)
+        {
+            var dateTimePicker = GetDateTimePickerFromMenuItem(sender);
+
+            dateTimePicker?.PasteFromClipboard();
+        }
     }
 }

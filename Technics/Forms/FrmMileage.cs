@@ -61,6 +61,8 @@ namespace Technics
 
         private void FrmMileage_Load(MileageModel mileage)
         {
+            dtpDateTime.ContextMenuStrip = Utils.CreateMenuDateTimePicker();
+
             LoadData();
 
             Mileage = mileage;
@@ -135,7 +137,7 @@ namespace Technics
                 }
 
                 var tech = cboxTech.GetSelectedItem<TechModel>();
-   
+
                 var mileagePrev = new MileageModel()
                 {
                     Id = Mileage.Id,
