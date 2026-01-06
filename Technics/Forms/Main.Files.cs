@@ -104,12 +104,6 @@ namespace Technics
             }
         }
 
-        private enum FilesDialogType
-        {
-            Files,
-            Directory
-        }
-
         private async Task LoadFromFilesAsync(FilesDialogType type)
         {
             string[] files;

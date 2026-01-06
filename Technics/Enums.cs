@@ -18,6 +18,12 @@ namespace Technics
             ReadFiles,
         }
 
+        public enum FilesDialogType
+        {
+            Files,
+            Directory
+        }
+
         public enum FileExt
         {
             Csv,

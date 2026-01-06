@@ -663,15 +663,15 @@
             // miListTechs
             // 
             this.miListTechs.Name = "miListTechs";
-            this.miListTechs.Size = new System.Drawing.Size(184, 24);
+            this.miListTechs.Size = new System.Drawing.Size(180, 24);
             this.miListTechs.Text = "Техника";
             this.miListTechs.Click += new System.EventHandler(this.MiList_Click);
             // 
             // miListParts
             // 
             this.miListParts.Name = "miListParts";
-            this.miListParts.Size = new System.Drawing.Size(184, 24);
-            this.miListParts.Text = "Комплектующие";
+            this.miListParts.Size = new System.Drawing.Size(180, 24);
+            this.miListParts.Text = "Детали";
             this.miListParts.Click += new System.EventHandler(this.MiList_Click);
             // 
             // miMainView
@@ -720,7 +720,7 @@
             this.tsbtnClose});
             this.toolStripMain.Location = new System.Drawing.Point(3, 27);
             this.toolStripMain.Name = "toolStripMain";
-            this.toolStripMain.Size = new System.Drawing.Size(257, 50);
+            this.toolStripMain.Size = new System.Drawing.Size(196, 50);
             this.toolStripMain.TabIndex = 1;
             // 
             // tsbtnListTechs
@@ -738,8 +738,8 @@
             this.tsbtnListParts.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnListParts.Image")));
             this.tsbtnListParts.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnListParts.Name = "tsbtnListParts";
-            this.tsbtnListParts.Size = new System.Drawing.Size(119, 47);
-            this.tsbtnListParts.Text = "Комплектующие";
+            this.tsbtnListParts.Size = new System.Drawing.Size(58, 47);
+            this.tsbtnListParts.Text = "Детали";
             this.tsbtnListParts.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsbtnListParts.Click += new System.EventHandler(this.TsbtnList_Click);
             // 

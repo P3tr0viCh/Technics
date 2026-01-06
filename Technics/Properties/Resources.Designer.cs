@@ -415,7 +415,7 @@ namespace Technics.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Комплектующие.
+        ///   Looks up a localized string similar to Детали.
         /// </summary>
         internal static string TitleListParts {
             get {
