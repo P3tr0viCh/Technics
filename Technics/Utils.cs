@@ -1,4 +1,5 @@
 ﻿using P3tr0viCh.Database;
+using P3tr0viCh.Utils;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
@@ -29,12 +30,16 @@ namespace Technics
             }
         }
 
-        public static async Task<string[]> GetFilesAsync(string path, string searchPattern)
+        public static async Task<string[]> EnumerateFilesAsync(string path, string extensions)
         {
-            return await Task.Factory.StartNew(() =>
-            {
-                return Directory.GetFiles(path, searchPattern);
-            });
+            var files = await Files.DirectoryEnumerateFilesAsync(path, SearchOption.AllDirectories);
+
+            var exts = extensions.ToLower().Split(';');
+
+            files = files.Where(file =>
+                exts.Any(ext => ext == Path.GetExtension(file).ToLower()));
+
+            return files.ToArray();
         }
     }
 }

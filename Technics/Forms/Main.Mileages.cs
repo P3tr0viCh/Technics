@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Technics.Properties;
+using static P3tr0viCh.Utils.Gpx;
 using static Technics.Database.Models;
 using static Technics.Enums;
 
@@ -211,7 +212,7 @@ namespace Technics
             return new DataTableFile(table);
         }
 
-        private async Task<IEnumerable<MileageModel>> MileagesLoadFromFileAsync(string fileName)
+        private async Task<IEnumerable<MileageModel>> MileagesLoadFromFileCsvAsync(string fileName)
         {
             var dataTableFile = MileagesCreateDataTableFile();
 
@@ -240,6 +241,22 @@ namespace Technics
             }
 
             return mileages;
+        }
+
+        private async Task<MileageModel> MileagesLoadFromFileGpxAsync(string fileName)
+        {
+            var gpx = new Track();
+
+            await gpx.OpenFromFileAsync(fileName);
+
+            var mileage = new MileageModel
+            {
+                DateTime = gpx.DateTimeStart,
+                Mileage = gpx.Distance / 1000.0,
+                Description = gpx.Text
+            };
+
+            return mileage;
         }
     }
 }

@@ -14,11 +14,41 @@ namespace Technics
 {
     public partial class Main
     {
+        private FileExt GetFileExt(string file)
+        {
+            var ext = Path.GetExtension(file);
+
+            switch (ext)
+            {
+                case ".csv": return FileExt.Csv;
+                case ".gpx": return FileExt.Gpx;
+                default: return FileExt.Other;
+            }
+        }
+
         private async Task<IEnumerable<MileageModel>> LoadFromFileAsync(string file)
         {
             try
             {
-                var loaded = await MileagesLoadFromFileAsync(file);
+                IEnumerable<MileageModel> loaded;
+
+                var ext = GetFileExt(file);
+
+                switch (ext)
+                {
+                    case FileExt.Csv:
+                        loaded = await MileagesLoadFromFileCsvAsync(file);
+
+                        break;
+                    case FileExt.Gpx:
+                        var mileage = await MileagesLoadFromFileGpxAsync(file);
+
+                        loaded = new List<MileageModel>() { mileage };
+
+                        break;
+                    default:
+                        return Enumerable.Empty<MileageModel>();
+                }
 
                 Utils.Log.Info(string.Format(ResourcesLog.LoadFromFileOk, file, loaded.Count()));
 
@@ -60,9 +90,11 @@ namespace Technics
                     mileages.AddRange(loaded);
                 }
 
+                if (mileages.Count == 0) return false;
+
                 await Database.Default.MileageSaveAsync(mileages);
 
-                return mileages.Count > 0;
+                return true;
             }
             finally
             {
@@ -82,39 +114,53 @@ namespace Technics
         {
             string[] files;
 
-            switch (type)
+            string directoryLastMileages;
+
+            try
             {
-                case FilesDialogType.Files:
-                    openFileDialog.FileName = string.Empty;
+                switch (type)
+                {
+                    case FilesDialogType.Files:
+                        openFileDialog.FileName = string.Empty;
 
-                    openFileDialog.InitialDirectory = AppSettings.Default.DirectoryLastMileages;
+                        openFileDialog.InitialDirectory = AppSettings.Default.DirectoryLastMileages;
 
-                    openFileDialog.Filter = Resources.FilterOpenFileDialogMileages;
+                        openFileDialog.Filter = Resources.FilterOpenFileDialogMileages;
 
-                    if (openFileDialog.ShowDialog() != DialogResult.OK) return;
+                        if (openFileDialog.ShowDialog() != DialogResult.OK) return;
 
-                    files = openFileDialog.FileNames;
+                        files = openFileDialog.FileNames;
 
-                    break;
-                case FilesDialogType.Directory:
-                    folderBrowserDialog.SelectedPath = AppSettings.Default.DirectoryLastMileages;
+                        directoryLastMileages = Directory.GetParent(files[0]).FullName;
 
-                    if (folderBrowserDialog.ShowDialog() != DialogResult.OK) return;
+                        break;
+                    case FilesDialogType.Directory:
+                        folderBrowserDialog.SelectedPath = AppSettings.Default.DirectoryLastMileages;
 
-                    files = await Utils.GetFilesAsync(folderBrowserDialog.SelectedPath, Resources.FilterFolderBrowserDialogMileages);
+                        if (folderBrowserDialog.ShowDialog() != DialogResult.OK) return;
 
-                    foreach (var file in files)
-                    {
-                        DebugWrite.Line(file);
-                    }
+                        directoryLastMileages = folderBrowserDialog.SelectedPath;
 
-                    break;
-                default: return;
+                        files = await Utils.EnumerateFilesAsync(folderBrowserDialog.SelectedPath, Resources.FilterFolderBrowserDialogMileages);
+
+                        break;
+                    default: return;
+                }
+            }
+            catch (Exception e)
+            {
+                Utils.Log.Error(e);
+
+                Utils.Msg.Error(e.Message);
+
+                return;
             }
 
-            if (files.Length == 0) return;
+            AppSettings.Default.DirectoryLastMileages = directoryLastMileages;
 
-            AppSettings.Default.DirectoryLastMileages = Directory.GetParent(files[0]).FullName;
+            Utils.Log.Info(string.Format(ResourcesLog.OpenFiles, directoryLastMileages, files.Length));
+
+            if (files.Length == 0) return;
 
             var result = await LoadFromFilesAsync(files);
 

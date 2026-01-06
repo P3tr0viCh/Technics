@@ -17,5 +17,12 @@ namespace Technics
             [Description("Чтение файлов...")]
             ReadFiles,
         }
+
+        public enum FileExt
+        {
+            Csv,
+            Gpx,
+            Other
+        }
     }
 }

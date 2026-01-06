@@ -171,7 +171,7 @@ namespace Technics.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to *.csv.
+        ///   Looks up a localized string similar to .gpx;.csv.
         /// </summary>
         internal static string FilterFolderBrowserDialogMileages {
             get {
@@ -180,7 +180,7 @@ namespace Technics.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to csv|*.csv|Все файлы|*.*.
+        ///   Looks up a localized string similar to Поддерживаемые форматы|*.gpx;*.csv|gpx|*.gpx|csv|*.csv|Все файлы|*.*.
         /// </summary>
         internal static string FilterOpenFileDialogMileages {
             get {

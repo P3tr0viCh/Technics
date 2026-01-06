@@ -160,6 +160,15 @@ namespace Technics.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to open files in {0}, count={1}.
+        /// </summary>
+        internal static string OpenFiles {
+            get {
+                return ResourceManager.GetString("OpenFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to app directory.
         /// </summary>
         internal static string PathAppDirectory {

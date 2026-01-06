@@ -6,6 +6,7 @@ namespace Technics
     [TypeConverter(typeof(PropertySortedConverter))]
     internal partial class AppSettings : SettingsBase<AppSettings>
     {
+        public string FormatMileage { get; set; } = "#,0.00";
         public string FormatDateTime { get; set; } = "yyyy.MM.dd HH:mm";
 
         [Browsable(false)]

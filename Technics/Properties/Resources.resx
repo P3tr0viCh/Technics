@@ -156,10 +156,10 @@
     <value>Значение должно быть больше нуля.</value>
   </data>
   <data name="FilterFolderBrowserDialogMileages" xml:space="preserve">
-    <value>*.csv</value>
+    <value>.gpx;.csv</value>
   </data>
   <data name="FilterOpenFileDialogMileages" xml:space="preserve">
-    <value>csv|*.csv|Все файлы|*.*</value>
+    <value>Поддерживаемые форматы|*.gpx;*.csv|gpx|*.gpx|csv|*.csv|Все файлы|*.*</value>
   </data>
   <data name="MsgDatabaseCreateFail" xml:space="preserve">
     <value>Во время создания базы данных произошла ошибка:

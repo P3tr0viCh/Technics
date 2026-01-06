@@ -116,7 +116,7 @@ namespace Technics
         {
             selfChange = true;
 
-            textBox.SetDouble(value);
+            textBox.SetDouble(value, AppSettings.Default.FormatMileage);
 
             selfChange = false;
         }

@@ -6,18 +6,17 @@ namespace Technics
     {
         public static readonly DataGridViewCellStyle DateTime = new DataGridViewCellStyle()
         {
-            
         };
 
         public static readonly DataGridViewCellStyle Mileage = new DataGridViewCellStyle()
         {
-            Alignment = DataGridViewContentAlignment.TopRight,
-            Format = "0.00"
+            Alignment = DataGridViewContentAlignment.TopRight
         };
 
         public static void UpdateSettings()
         {
             DateTime.Format = AppSettings.Default.FormatDateTime;
+            Mileage.Format = AppSettings.Default.FormatMileage;
         }
     }
 }
