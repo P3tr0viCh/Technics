@@ -231,11 +231,12 @@
             this.dgvTechParts.Location = new System.Drawing.Point(0, 61);
             this.dgvTechParts.Name = "dgvTechParts";
             this.dgvTechParts.ReadOnly = true;
-            this.dgvTechParts.RowHeadersWidth = 62;
+            this.dgvTechParts.RowHeadersWidth = 32;
             this.dgvTechParts.Size = new System.Drawing.Size(604, 155);
             this.dgvTechParts.TabIndex = 3;
             this.dgvTechParts.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DgvTechParts_CellMouseDoubleClick);
             this.dgvTechParts.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DataGridView_CellMouseDown);
+            this.dgvTechParts.SelectionChanged += new System.EventHandler(this.DgvTechParts_SelectionChanged);
             // 
             // TechPartsTechText
             // 
@@ -521,11 +522,12 @@
             this.dgvMileages.Location = new System.Drawing.Point(0, 61);
             this.dgvMileages.Name = "dgvMileages";
             this.dgvMileages.ReadOnly = true;
-            this.dgvMileages.RowHeadersWidth = 62;
+            this.dgvMileages.RowHeadersWidth = 32;
             this.dgvMileages.Size = new System.Drawing.Size(872, 135);
             this.dgvMileages.TabIndex = 3;
             this.dgvMileages.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DgvMileages_CellMouseDoubleClick);
             this.dgvMileages.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DataGridView_CellMouseDown);
+            this.dgvMileages.SelectionChanged += new System.EventHandler(this.DgvMileages_SelectionChanged);
             // 
             // MileagesTechText
             // 
@@ -708,14 +710,14 @@
             // miListTechs
             // 
             this.miListTechs.Name = "miListTechs";
-            this.miListTechs.Size = new System.Drawing.Size(270, 36);
+            this.miListTechs.Size = new System.Drawing.Size(187, 36);
             this.miListTechs.Text = "Техника";
             this.miListTechs.Click += new System.EventHandler(this.MiList_Click);
             // 
             // miListParts
             // 
             this.miListParts.Name = "miListParts";
-            this.miListParts.Size = new System.Drawing.Size(270, 36);
+            this.miListParts.Size = new System.Drawing.Size(187, 36);
             this.miListParts.Text = "Детали";
             this.miListParts.Click += new System.EventHandler(this.MiList_Click);
             // 
@@ -732,7 +734,7 @@
             this.miViewToolStripsShowText.Checked = true;
             this.miViewToolStripsShowText.CheckState = System.Windows.Forms.CheckState.Checked;
             this.miViewToolStripsShowText.Name = "miViewToolStripsShowText";
-            this.miViewToolStripsShowText.Size = new System.Drawing.Size(270, 36);
+            this.miViewToolStripsShowText.Size = new System.Drawing.Size(269, 36);
             this.miViewToolStripsShowText.Text = "Подписи кнопок";
             this.miViewToolStripsShowText.Click += new System.EventHandler(this.MiViewToolStripsShowText_Click);
             // 

@@ -273,4 +273,10 @@
 Каталог с базой данных установлен по умолчанию:
 {1}</value>
   </data>
+  <data name="StatusMileageSelectedCount" xml:space="preserve">
+    <value>(выделено: {0})</value>
+  </data>
+  <data name="StatusTechPartSelectedCount" xml:space="preserve">
+    <value>(выделено: {0})</value>
+  </data>
 </root>

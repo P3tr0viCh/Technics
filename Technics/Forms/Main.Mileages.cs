@@ -57,7 +57,7 @@ namespace Technics
         {
             tsbtnMileageDelete.Enabled = tsbtnMileageChange.Enabled = bindingSourceMileages.Count > 0;
 
-            statusStripPresenter.MileageCount = bindingSourceMileages.Count;
+            presenterStatusStrip.MileageCount = bindingSourceMileages.Count;
         }
 
         private void MileagesUpdateChanged(UpdateModel changes)

@@ -14,7 +14,7 @@ namespace Technics
 {
     public partial class Main : Form, IMainForm, PresenterStatusStrip<StatusLabel>.IPresenterStatusStrip
     {
-        private readonly PresenterStatusStripMain statusStripPresenter;
+        private readonly PresenterStatusStripMain presenterStatusStrip;
 
         public ProgramStatus ProgramStatus { get; } = new ProgramStatus();
 
@@ -22,7 +22,7 @@ namespace Technics
         {
             InitializeComponent();
 
-            statusStripPresenter = new PresenterStatusStripMain(this);
+            presenterStatusStrip = new PresenterStatusStripMain(this);
 
             presenterDataGridViewMileages = new PresenterDataGridViewMileages(dgvMileages);
             presenterDataGridViewTechParts = new PresenterDataGridViewTechParts(dgvTechParts);
@@ -77,13 +77,13 @@ namespace Technics
                 ProgramStatus.Stop(status);
             }
 #endif
-            
+
             await UpdateDataAsync(DataLoad.Techs);
         }
 
         private void ProgramStatus_StatusChanged(object sender, Status status)
         {
-            statusStripPresenter.Status = status;
+            presenterStatusStrip.Status = status;
 
             UseWaitCursor = !ProgramStatus.IsIdle;
         }
@@ -348,6 +348,16 @@ namespace Technics
         private async void MiFileSettings_Click(object sender, EventArgs e)
         {
             await ShowSettingsAsync();
+        }
+
+        private void DgvMileages_SelectionChanged(object sender, EventArgs e)
+        {
+            presenterStatusStrip.MileageSelectedCount = dgvMileages.SelectedCount();
+        }
+
+        private void DgvTechParts_SelectionChanged(object sender, EventArgs e)
+        {
+            presenterStatusStrip.TechPartSelectedCount = dgvTechParts.SelectedCount();
         }
     }
 }

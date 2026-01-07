@@ -373,6 +373,15 @@ namespace Technics.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to (выделено: {0}).
+        /// </summary>
+        internal static string StatusMileageSelectedCount {
+            get {
+                return ResourceManager.GetString("StatusMileageSelectedCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Выделено: {0}.
         /// </summary>
         internal static string StatusSelectedCount {
@@ -387,6 +396,15 @@ namespace Technics.Properties {
         internal static string StatusTechPartCount {
             get {
                 return ResourceManager.GetString("StatusTechPartCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (выделено: {0}).
+        /// </summary>
+        internal static string StatusTechPartSelectedCount {
+            get {
+                return ResourceManager.GetString("StatusTechPartSelectedCount", resourceCulture);
             }
         }
         

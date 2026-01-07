@@ -73,7 +73,7 @@ namespace Technics
             }
         }
 
-        private async Task<bool> LoadFromFilesAsync(string[] files)
+        private async Task<IEnumerable<MileageModel>> LoadFromFilesAsync(string[] files)
         {
             DebugWrite.Line("start");
 
@@ -90,11 +90,11 @@ namespace Technics
                     mileages.AddRange(loaded);
                 }
 
-                if (mileages.Count == 0) return false;
+                if (mileages.Count == 0) return Enumerable.Empty<MileageModel>();
 
                 await Database.Default.MileageSaveAsync(mileages);
 
-                return true;
+                return mileages;
             }
             finally
             {
@@ -156,17 +156,18 @@ namespace Technics
 
             if (files.Length == 0) return;
 
-            var result = await LoadFromFilesAsync(files);
+            var mileages = await LoadFromFilesAsync(files);
 
-            if (result)
+            if (!mileages.Any()) return;
+
+            if (tvTechs.Nodes[0].IsSelected)
             {
-                if (tvTechs.Nodes[0].IsSelected)
-                {
-                    await UpdateDataAsync(DataLoad.Mileages | DataLoad.TechParts);
-                }
-
-                tvTechs.SelectedNode = tvTechs.Nodes[0];
+                await UpdateDataAsync(DataLoad.Mileages | DataLoad.TechParts);
             }
+
+            tvTechs.SelectedNode = tvTechs.Nodes[0];
+
+            MileageSelectedList = mileages;
         }
     }
 }

@@ -55,7 +55,7 @@ namespace Technics
         {
             tsbtnTechPartDelete.Enabled = tsbtnTechPartChange.Enabled = bindingSourceTechParts.Count > 0;
 
-            statusStripPresenter.TechPartCount = bindingSourceTechParts.Count;
+            presenterStatusStrip.TechPartCount = bindingSourceTechParts.Count;
         }
 
         private void TechPartsUpdateChanged(UpdateModel changes)
