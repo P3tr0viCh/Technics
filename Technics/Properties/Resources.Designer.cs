@@ -70,6 +70,15 @@ namespace Technics.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Каталог «{0}» не существует..
+        /// </summary>
+        internal static string ErrorDirectoryNotExists {
+            get {
+                return ResourceManager.GetString("ErrorDirectoryNotExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Указанный общий пробег ({0}) меньше или равен уже внесённому в базу данных ({1})..
         /// </summary>
         internal static string ErrorMileageCommonWrong {
@@ -191,6 +200,8 @@ namespace Technics.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Во время создания базы данных произошла ошибка:
         ///{0}.
+        ///Каталог с базой данных установлен по умолчанию:
+        ///{1}.
         /// </summary>
         internal static string MsgDatabaseCreateFail {
             get {
@@ -225,6 +236,16 @@ namespace Technics.Properties {
         internal static string MsgDatabaseLoadFail {
             get {
                 return ResourceManager.GetString("MsgDatabaseLoadFail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Во время создания каталога данных произошла ошибка:
+        ///{0}.
+        /// </summary>
+        internal static string MsgDirectoriesCreateFail {
+            get {
+                return ResourceManager.GetString("MsgDirectoriesCreateFail", resourceCulture);
             }
         }
         

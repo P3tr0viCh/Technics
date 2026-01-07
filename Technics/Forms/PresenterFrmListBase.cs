@@ -140,7 +140,7 @@ namespace Technics
         {
             SaveFormState();
 
-            AppSettings.Save();
+            AppSettings.Default.Load();
 
             Utils.Log.WriteFormClose(Form);
         }

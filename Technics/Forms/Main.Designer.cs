@@ -83,6 +83,8 @@
             this.tsbtnMileageDelete = new System.Windows.Forms.ToolStripButton();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.miMainFile = new System.Windows.Forms.ToolStripMenuItem();
+            this.miFileSettings = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.miFileClose = new System.Windows.Forms.ToolStripMenuItem();
             this.miMainLists = new System.Windows.Forms.ToolStripMenuItem();
             this.miListTechs = new System.Windows.Forms.ToolStripMenuItem();
@@ -131,11 +133,11 @@
             this.toolStripContainer.ContentPanel.Controls.Add(this.splitterMileages);
             this.toolStripContainer.ContentPanel.Controls.Add(this.panelTop);
             this.toolStripContainer.ContentPanel.Controls.Add(this.panelBottom);
-            this.toolStripContainer.ContentPanel.Size = new System.Drawing.Size(872, 388);
+            this.toolStripContainer.ContentPanel.Size = new System.Drawing.Size(872, 412);
             this.toolStripContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolStripContainer.Location = new System.Drawing.Point(0, 0);
             this.toolStripContainer.Name = "toolStripContainer";
-            this.toolStripContainer.Size = new System.Drawing.Size(872, 489);
+            this.toolStripContainer.Size = new System.Drawing.Size(872, 544);
             this.toolStripContainer.TabIndex = 0;
             // 
             // toolStripContainer.TopToolStripPanel
@@ -148,31 +150,32 @@
             this.statusStrip.AutoSize = false;
             this.statusStrip.Dock = System.Windows.Forms.DockStyle.None;
             this.statusStrip.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.statusStrip.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.LabelMileageCount,
             this.LabelTechPartCount,
             this.LabelStatus});
             this.statusStrip.Location = new System.Drawing.Point(0, 0);
             this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(872, 24);
+            this.statusStrip.Size = new System.Drawing.Size(872, 35);
             this.statusStrip.TabIndex = 0;
             // 
             // LabelMileageCount
             // 
             this.LabelMileageCount.Name = "LabelMileageCount";
-            this.LabelMileageCount.Size = new System.Drawing.Size(93, 19);
+            this.LabelMileageCount.Size = new System.Drawing.Size(131, 28);
             this.LabelMileageCount.Text = "mileages: 666";
             // 
             // LabelTechPartCount
             // 
             this.LabelTechPartCount.Name = "LabelTechPartCount";
-            this.LabelTechPartCount.Size = new System.Drawing.Size(89, 19);
+            this.LabelTechPartCount.Size = new System.Drawing.Size(124, 28);
             this.LabelTechPartCount.Text = "techparts: 42";
             // 
             // LabelStatus
             // 
             this.LabelStatus.Name = "LabelStatus";
-            this.LabelStatus.Size = new System.Drawing.Size(675, 19);
+            this.LabelStatus.Size = new System.Drawing.Size(602, 28);
             this.LabelStatus.Spring = true;
             this.LabelStatus.Text = "Status";
             // 
@@ -180,7 +183,7 @@
             // 
             this.splitterMileages.Cursor = System.Windows.Forms.Cursors.HSplit;
             this.splitterMileages.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.splitterMileages.Location = new System.Drawing.Point(0, 184);
+            this.splitterMileages.Location = new System.Drawing.Point(0, 208);
             this.splitterMileages.MinSize = 160;
             this.splitterMileages.Name = "splitterMileages";
             this.splitterMileages.Size = new System.Drawing.Size(872, 8);
@@ -195,7 +198,7 @@
             this.panelTop.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelTop.Location = new System.Drawing.Point(0, 0);
             this.panelTop.Name = "panelTop";
-            this.panelTop.Size = new System.Drawing.Size(872, 192);
+            this.panelTop.Size = new System.Drawing.Size(872, 216);
             this.panelTop.TabIndex = 1;
             // 
             // panelTechPart
@@ -205,7 +208,7 @@
             this.panelTechPart.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelTechPart.Location = new System.Drawing.Point(268, 0);
             this.panelTechPart.Name = "panelTechPart";
-            this.panelTechPart.Size = new System.Drawing.Size(604, 192);
+            this.panelTechPart.Size = new System.Drawing.Size(604, 216);
             this.panelTechPart.TabIndex = 5;
             // 
             // dgvTechParts
@@ -225,10 +228,11 @@
             this.TechPartsMileageCommon});
             this.dgvTechParts.DataSource = this.bindingSourceTechParts;
             this.dgvTechParts.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvTechParts.Location = new System.Drawing.Point(0, 50);
+            this.dgvTechParts.Location = new System.Drawing.Point(0, 61);
             this.dgvTechParts.Name = "dgvTechParts";
             this.dgvTechParts.ReadOnly = true;
-            this.dgvTechParts.Size = new System.Drawing.Size(604, 142);
+            this.dgvTechParts.RowHeadersWidth = 62;
+            this.dgvTechParts.Size = new System.Drawing.Size(604, 155);
             this.dgvTechParts.TabIndex = 3;
             this.dgvTechParts.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DgvTechParts_CellMouseDoubleClick);
             this.dgvTechParts.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DataGridView_CellMouseDown);
@@ -237,43 +241,55 @@
             // 
             this.TechPartsTechText.DataPropertyName = "TechText";
             this.TechPartsTechText.HeaderText = "Техника";
+            this.TechPartsTechText.MinimumWidth = 8;
             this.TechPartsTechText.Name = "TechPartsTechText";
             this.TechPartsTechText.ReadOnly = true;
+            this.TechPartsTechText.Width = 150;
             // 
             // TechPartsPartText
             // 
             this.TechPartsPartText.DataPropertyName = "PartText";
             this.TechPartsPartText.HeaderText = "Деталь";
+            this.TechPartsPartText.MinimumWidth = 8;
             this.TechPartsPartText.Name = "TechPartsPartText";
             this.TechPartsPartText.ReadOnly = true;
+            this.TechPartsPartText.Width = 150;
             // 
             // TechPartsDateTimeInstall
             // 
             this.TechPartsDateTimeInstall.DataPropertyName = "DateTimeInstall";
             this.TechPartsDateTimeInstall.HeaderText = "Дата установки";
+            this.TechPartsDateTimeInstall.MinimumWidth = 8;
             this.TechPartsDateTimeInstall.Name = "TechPartsDateTimeInstall";
             this.TechPartsDateTimeInstall.ReadOnly = true;
+            this.TechPartsDateTimeInstall.Width = 150;
             // 
             // TechPartsDateTimeRemove
             // 
             this.TechPartsDateTimeRemove.DataPropertyName = "DateTimeRemove";
             this.TechPartsDateTimeRemove.HeaderText = "Дата снятия";
+            this.TechPartsDateTimeRemove.MinimumWidth = 8;
             this.TechPartsDateTimeRemove.Name = "TechPartsDateTimeRemove";
             this.TechPartsDateTimeRemove.ReadOnly = true;
+            this.TechPartsDateTimeRemove.Width = 150;
             // 
             // TechPartsMileage
             // 
             this.TechPartsMileage.DataPropertyName = "Mileage";
             this.TechPartsMileage.HeaderText = "Пробег";
+            this.TechPartsMileage.MinimumWidth = 8;
             this.TechPartsMileage.Name = "TechPartsMileage";
             this.TechPartsMileage.ReadOnly = true;
+            this.TechPartsMileage.Width = 150;
             // 
             // TechPartsMileageCommon
             // 
             this.TechPartsMileageCommon.DataPropertyName = "MileageCommon";
             this.TechPartsMileageCommon.HeaderText = "Общий пробег";
+            this.TechPartsMileageCommon.MinimumWidth = 8;
             this.TechPartsMileageCommon.Name = "TechPartsMileageCommon";
             this.TechPartsMileageCommon.ReadOnly = true;
+            this.TechPartsMileageCommon.Width = 150;
             // 
             // bindingSourceTechParts
             // 
@@ -291,7 +307,7 @@
             this.toolStripTechParts.Location = new System.Drawing.Point(0, 0);
             this.toolStripTechParts.Name = "toolStripTechParts";
             this.toolStripTechParts.ShowItemToolTips = false;
-            this.toolStripTechParts.Size = new System.Drawing.Size(604, 50);
+            this.toolStripTechParts.Size = new System.Drawing.Size(604, 61);
             this.toolStripTechParts.TabIndex = 2;
             // 
             // tsbtnTechPartAdd
@@ -299,7 +315,7 @@
             this.tsbtnTechPartAdd.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnTechPartAdd.Image")));
             this.tsbtnTechPartAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnTechPartAdd.Name = "tsbtnTechPartAdd";
-            this.tsbtnTechPartAdd.Size = new System.Drawing.Size(74, 47);
+            this.tsbtnTechPartAdd.Size = new System.Drawing.Size(105, 56);
             this.tsbtnTechPartAdd.Text = "Добавить";
             this.tsbtnTechPartAdd.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsbtnTechPartAdd.Click += new System.EventHandler(this.TsbtnTechPartAdd_Click);
@@ -309,7 +325,7 @@
             this.tsbtnTechPartChange.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnTechPartChange.Image")));
             this.tsbtnTechPartChange.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnTechPartChange.Name = "tsbtnTechPartChange";
-            this.tsbtnTechPartChange.Size = new System.Drawing.Size(75, 47);
+            this.tsbtnTechPartChange.Size = new System.Drawing.Size(106, 56);
             this.tsbtnTechPartChange.Text = "Изменить";
             this.tsbtnTechPartChange.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsbtnTechPartChange.Click += new System.EventHandler(this.TsbtnTechPartChange_Click);
@@ -319,7 +335,7 @@
             this.tsbtnTechPartDelete.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnTechPartDelete.Image")));
             this.tsbtnTechPartDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnTechPartDelete.Name = "tsbtnTechPartDelete";
-            this.tsbtnTechPartDelete.Size = new System.Drawing.Size(64, 47);
+            this.tsbtnTechPartDelete.Size = new System.Drawing.Size(89, 56);
             this.tsbtnTechPartDelete.Text = "Удалить";
             this.tsbtnTechPartDelete.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsbtnTechPartDelete.Click += new System.EventHandler(this.TsbtnTechPartDelete_Click);
@@ -329,7 +345,7 @@
             this.splitterTechs.Cursor = System.Windows.Forms.Cursors.VSplit;
             this.splitterTechs.Location = new System.Drawing.Point(260, 0);
             this.splitterTechs.Name = "splitterTechs";
-            this.splitterTechs.Size = new System.Drawing.Size(8, 192);
+            this.splitterTechs.Size = new System.Drawing.Size(8, 216);
             this.splitterTechs.TabIndex = 3;
             this.splitterTechs.TabStop = false;
             // 
@@ -340,7 +356,7 @@
             this.panelTechs.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelTechs.Location = new System.Drawing.Point(0, 0);
             this.panelTechs.Name = "panelTechs";
-            this.panelTechs.Size = new System.Drawing.Size(260, 192);
+            this.panelTechs.Size = new System.Drawing.Size(260, 216);
             this.panelTechs.TabIndex = 4;
             // 
             // tvTechs
@@ -351,11 +367,11 @@
             this.tvTechs.ImageIndex = 0;
             this.tvTechs.ImageList = this.imageList16;
             this.tvTechs.Indent = 16;
-            this.tvTechs.Location = new System.Drawing.Point(0, 50);
+            this.tvTechs.Location = new System.Drawing.Point(0, 61);
             this.tvTechs.Name = "tvTechs";
             this.tvTechs.SelectedImageIndex = 0;
             this.tvTechs.ShowRootLines = false;
-            this.tvTechs.Size = new System.Drawing.Size(260, 142);
+            this.tvTechs.Size = new System.Drawing.Size(260, 155);
             this.tvTechs.TabIndex = 0;
             this.tvTechs.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TvTechs_AfterSelect);
             this.tvTechs.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.TvTechs_NodeMouseClick);
@@ -363,12 +379,13 @@
             // 
             // menuTechs
             // 
+            this.menuTechs.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.menuTechs.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.miTechAdd,
             this.miTechChange,
             this.miTechDelete});
             this.menuTechs.Name = "menuTechs";
-            this.menuTechs.Size = new System.Drawing.Size(129, 70);
+            this.menuTechs.Size = new System.Drawing.Size(164, 100);
             // 
             // miTechAdd
             // 
@@ -376,34 +393,34 @@
             this.miTechAddFolder2,
             this.miTechAddTech2});
             this.miTechAdd.Name = "miTechAdd";
-            this.miTechAdd.Size = new System.Drawing.Size(128, 22);
+            this.miTechAdd.Size = new System.Drawing.Size(163, 32);
             this.miTechAdd.Text = "Добавить";
             // 
             // miTechAddFolder2
             // 
             this.miTechAddFolder2.Name = "miTechAddFolder2";
-            this.miTechAddFolder2.Size = new System.Drawing.Size(118, 22);
+            this.miTechAddFolder2.Size = new System.Drawing.Size(178, 34);
             this.miTechAddFolder2.Text = "Папка";
             this.miTechAddFolder2.Click += new System.EventHandler(this.MiTechAddFolder2_Click);
             // 
             // miTechAddTech2
             // 
             this.miTechAddTech2.Name = "miTechAddTech2";
-            this.miTechAddTech2.Size = new System.Drawing.Size(118, 22);
+            this.miTechAddTech2.Size = new System.Drawing.Size(178, 34);
             this.miTechAddTech2.Text = "Техника";
             this.miTechAddTech2.Click += new System.EventHandler(this.MiTechAddTech2_Click);
             // 
             // miTechChange
             // 
             this.miTechChange.Name = "miTechChange";
-            this.miTechChange.Size = new System.Drawing.Size(128, 22);
+            this.miTechChange.Size = new System.Drawing.Size(163, 32);
             this.miTechChange.Text = "Изменить";
             this.miTechChange.Click += new System.EventHandler(this.MiTechChange_Click);
             // 
             // miTechDelete
             // 
             this.miTechDelete.Name = "miTechDelete";
-            this.miTechDelete.Size = new System.Drawing.Size(128, 22);
+            this.miTechDelete.Size = new System.Drawing.Size(163, 32);
             this.miTechDelete.Text = "Удалить";
             this.miTechDelete.Click += new System.EventHandler(this.MiTechDelete_Click);
             // 
@@ -426,7 +443,7 @@
             this.toolStripTechs.Location = new System.Drawing.Point(0, 0);
             this.toolStripTechs.Name = "toolStripTechs";
             this.toolStripTechs.ShowItemToolTips = false;
-            this.toolStripTechs.Size = new System.Drawing.Size(260, 50);
+            this.toolStripTechs.Size = new System.Drawing.Size(260, 61);
             this.toolStripTechs.TabIndex = 1;
             // 
             // tsbtnTechAdd
@@ -437,21 +454,21 @@
             this.tsbtnTechAdd.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnTechAdd.Image")));
             this.tsbtnTechAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnTechAdd.Name = "tsbtnTechAdd";
-            this.tsbtnTechAdd.Size = new System.Drawing.Size(83, 47);
+            this.tsbtnTechAdd.Size = new System.Drawing.Size(119, 56);
             this.tsbtnTechAdd.Text = "Добавить";
             this.tsbtnTechAdd.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
             // miTechAddFolder
             // 
             this.miTechAddFolder.Name = "miTechAddFolder";
-            this.miTechAddFolder.Size = new System.Drawing.Size(128, 24);
+            this.miTechAddFolder.Size = new System.Drawing.Size(187, 36);
             this.miTechAddFolder.Text = "Папка";
             this.miTechAddFolder.Click += new System.EventHandler(this.MiTechAddFolder_Click);
             // 
             // miTechAddTech
             // 
             this.miTechAddTech.Name = "miTechAddTech";
-            this.miTechAddTech.Size = new System.Drawing.Size(128, 24);
+            this.miTechAddTech.Size = new System.Drawing.Size(187, 36);
             this.miTechAddTech.Text = "Техника";
             this.miTechAddTech.Click += new System.EventHandler(this.MiTechAddItem_Click);
             // 
@@ -460,7 +477,7 @@
             this.tsbtnTechChange.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnTechChange.Image")));
             this.tsbtnTechChange.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnTechChange.Name = "tsbtnTechChange";
-            this.tsbtnTechChange.Size = new System.Drawing.Size(75, 47);
+            this.tsbtnTechChange.Size = new System.Drawing.Size(106, 56);
             this.tsbtnTechChange.Text = "Изменить";
             this.tsbtnTechChange.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsbtnTechChange.Click += new System.EventHandler(this.TsbtnTechChange_Click);
@@ -470,7 +487,7 @@
             this.tsbtnTechDelete.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnTechDelete.Image")));
             this.tsbtnTechDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnTechDelete.Name = "tsbtnTechDelete";
-            this.tsbtnTechDelete.Size = new System.Drawing.Size(64, 47);
+            this.tsbtnTechDelete.Size = new System.Drawing.Size(89, 56);
             this.tsbtnTechDelete.Text = "Удалить";
             this.tsbtnTechDelete.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsbtnTechDelete.Click += new System.EventHandler(this.TsbtnTechDelete_Click);
@@ -480,7 +497,7 @@
             this.panelBottom.Controls.Add(this.dgvMileages);
             this.panelBottom.Controls.Add(this.toolStripMileages);
             this.panelBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelBottom.Location = new System.Drawing.Point(0, 192);
+            this.panelBottom.Location = new System.Drawing.Point(0, 216);
             this.panelBottom.Name = "panelBottom";
             this.panelBottom.Size = new System.Drawing.Size(872, 196);
             this.panelBottom.TabIndex = 2;
@@ -501,10 +518,11 @@
             this.MileagesDescription});
             this.dgvMileages.DataSource = this.bindingSourceMileages;
             this.dgvMileages.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvMileages.Location = new System.Drawing.Point(0, 50);
+            this.dgvMileages.Location = new System.Drawing.Point(0, 61);
             this.dgvMileages.Name = "dgvMileages";
             this.dgvMileages.ReadOnly = true;
-            this.dgvMileages.Size = new System.Drawing.Size(872, 146);
+            this.dgvMileages.RowHeadersWidth = 62;
+            this.dgvMileages.Size = new System.Drawing.Size(872, 135);
             this.dgvMileages.TabIndex = 3;
             this.dgvMileages.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DgvMileages_CellMouseDoubleClick);
             this.dgvMileages.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DataGridView_CellMouseDown);
@@ -513,36 +531,46 @@
             // 
             this.MileagesTechText.DataPropertyName = "TechText";
             this.MileagesTechText.HeaderText = "Техника";
+            this.MileagesTechText.MinimumWidth = 8;
             this.MileagesTechText.Name = "MileagesTechText";
             this.MileagesTechText.ReadOnly = true;
+            this.MileagesTechText.Width = 150;
             // 
             // MileagesDateTime
             // 
             this.MileagesDateTime.DataPropertyName = "DateTime";
             this.MileagesDateTime.HeaderText = "Дата и время";
+            this.MileagesDateTime.MinimumWidth = 8;
             this.MileagesDateTime.Name = "MileagesDateTime";
             this.MileagesDateTime.ReadOnly = true;
+            this.MileagesDateTime.Width = 150;
             // 
             // MileagesMileage
             // 
             this.MileagesMileage.DataPropertyName = "Mileage";
             this.MileagesMileage.HeaderText = "Пробег";
+            this.MileagesMileage.MinimumWidth = 8;
             this.MileagesMileage.Name = "MileagesMileage";
             this.MileagesMileage.ReadOnly = true;
+            this.MileagesMileage.Width = 150;
             // 
             // MileagesMileageCommon
             // 
             this.MileagesMileageCommon.DataPropertyName = "MileageCommon";
             this.MileagesMileageCommon.HeaderText = "Общий пробег";
+            this.MileagesMileageCommon.MinimumWidth = 8;
             this.MileagesMileageCommon.Name = "MileagesMileageCommon";
             this.MileagesMileageCommon.ReadOnly = true;
+            this.MileagesMileageCommon.Width = 150;
             // 
             // MileagesDescription
             // 
             this.MileagesDescription.DataPropertyName = "Description";
             this.MileagesDescription.HeaderText = "Описание";
+            this.MileagesDescription.MinimumWidth = 8;
             this.MileagesDescription.Name = "MileagesDescription";
             this.MileagesDescription.ReadOnly = true;
+            this.MileagesDescription.Width = 150;
             // 
             // bindingSourceMileages
             // 
@@ -561,7 +589,7 @@
             this.toolStripMileages.Location = new System.Drawing.Point(0, 0);
             this.toolStripMileages.Name = "toolStripMileages";
             this.toolStripMileages.ShowItemToolTips = false;
-            this.toolStripMileages.Size = new System.Drawing.Size(872, 50);
+            this.toolStripMileages.Size = new System.Drawing.Size(872, 61);
             this.toolStripMileages.TabIndex = 2;
             // 
             // tsbtnMileageAdd
@@ -569,7 +597,7 @@
             this.tsbtnMileageAdd.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnMileageAdd.Image")));
             this.tsbtnMileageAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnMileageAdd.Name = "tsbtnMileageAdd";
-            this.tsbtnMileageAdd.Size = new System.Drawing.Size(74, 47);
+            this.tsbtnMileageAdd.Size = new System.Drawing.Size(105, 56);
             this.tsbtnMileageAdd.Text = "Добавить";
             this.tsbtnMileageAdd.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsbtnMileageAdd.Click += new System.EventHandler(this.TsbtnMileagesAdd_Click);
@@ -582,7 +610,7 @@
             this.tsbtnMileageAddFromFile.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnMileageAddFromFile.Image")));
             this.tsbtnMileageAddFromFile.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnMileageAddFromFile.Name = "tsbtnMileageAddFromFile";
-            this.tsbtnMileageAddFromFile.Size = new System.Drawing.Size(57, 47);
+            this.tsbtnMileageAddFromFile.Size = new System.Drawing.Size(81, 56);
             this.tsbtnMileageAddFromFile.Text = "Файл";
             this.tsbtnMileageAddFromFile.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsbtnMileageAddFromFile.ButtonClick += new System.EventHandler(this.TsbtnMileageAddFromFile_ButtonClick);
@@ -590,14 +618,14 @@
             // miMileagesFromFiles
             // 
             this.miMileagesFromFiles.Name = "miMileagesFromFiles";
-            this.miMileagesFromFiles.Size = new System.Drawing.Size(120, 24);
+            this.miMileagesFromFiles.Size = new System.Drawing.Size(176, 36);
             this.miMileagesFromFiles.Text = "Файлы";
             this.miMileagesFromFiles.Click += new System.EventHandler(this.MiMileagesFromFiles_Click);
             // 
             // miMileagesFromDirectory
             // 
             this.miMileagesFromDirectory.Name = "miMileagesFromDirectory";
-            this.miMileagesFromDirectory.Size = new System.Drawing.Size(120, 24);
+            this.miMileagesFromDirectory.Size = new System.Drawing.Size(176, 36);
             this.miMileagesFromDirectory.Text = "Папка";
             this.miMileagesFromDirectory.Click += new System.EventHandler(this.MiMileagesFromDirectory_Click);
             // 
@@ -606,7 +634,7 @@
             this.tsbtnMileageChange.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnMileageChange.Image")));
             this.tsbtnMileageChange.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnMileageChange.Name = "tsbtnMileageChange";
-            this.tsbtnMileageChange.Size = new System.Drawing.Size(75, 47);
+            this.tsbtnMileageChange.Size = new System.Drawing.Size(106, 56);
             this.tsbtnMileageChange.Text = "Изменить";
             this.tsbtnMileageChange.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsbtnMileageChange.Click += new System.EventHandler(this.TsbtnMileagesChange_Click);
@@ -616,7 +644,7 @@
             this.tsbtnMileageDelete.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnMileageDelete.Image")));
             this.tsbtnMileageDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnMileageDelete.Name = "tsbtnMileageDelete";
-            this.tsbtnMileageDelete.Size = new System.Drawing.Size(64, 47);
+            this.tsbtnMileageDelete.Size = new System.Drawing.Size(89, 56);
             this.tsbtnMileageDelete.Text = "Удалить";
             this.tsbtnMileageDelete.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsbtnMileageDelete.Click += new System.EventHandler(this.TsbtnMileagesDelete_Click);
@@ -625,6 +653,8 @@
             // 
             this.menuStrip.Dock = System.Windows.Forms.DockStyle.None;
             this.menuStrip.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.menuStrip.GripMargin = new System.Windows.Forms.Padding(2, 2, 0, 2);
+            this.menuStrip.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.miMainFile,
             this.miMainLists,
@@ -632,22 +662,37 @@
             this.miMainHelp});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(872, 27);
+            this.menuStrip.Size = new System.Drawing.Size(872, 36);
             this.menuStrip.TabIndex = 0;
             // 
             // miMainFile
             // 
             this.miMainFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.miFileSettings,
+            this.toolStripSeparator2,
             this.miFileClose});
             this.miMainFile.Name = "miMainFile";
-            this.miMainFile.Size = new System.Drawing.Size(53, 23);
+            this.miMainFile.Size = new System.Drawing.Size(76, 32);
             this.miMainFile.Text = "Файл";
+            // 
+            // miFileSettings
+            // 
+            this.miFileSettings.Name = "miFileSettings";
+            this.miFileSettings.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
+            this.miFileSettings.Size = new System.Drawing.Size(285, 36);
+            this.miFileSettings.Text = "Настройки";
+            this.miFileSettings.Click += new System.EventHandler(this.MiFileSettings_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(282, 6);
             // 
             // miFileClose
             // 
             this.miFileClose.Name = "miFileClose";
             this.miFileClose.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.miFileClose.Size = new System.Drawing.Size(169, 24);
+            this.miFileClose.Size = new System.Drawing.Size(285, 36);
             this.miFileClose.Text = "Выход";
             this.miFileClose.Click += new System.EventHandler(this.MiFileClose_Click);
             // 
@@ -657,20 +702,20 @@
             this.miListTechs,
             this.miListParts});
             this.miMainLists.Name = "miMainLists";
-            this.miMainLists.Size = new System.Drawing.Size(67, 23);
+            this.miMainLists.Size = new System.Drawing.Size(95, 32);
             this.miMainLists.Text = "Списки";
             // 
             // miListTechs
             // 
             this.miListTechs.Name = "miListTechs";
-            this.miListTechs.Size = new System.Drawing.Size(180, 24);
+            this.miListTechs.Size = new System.Drawing.Size(270, 36);
             this.miListTechs.Text = "Техника";
             this.miListTechs.Click += new System.EventHandler(this.MiList_Click);
             // 
             // miListParts
             // 
             this.miListParts.Name = "miListParts";
-            this.miListParts.Size = new System.Drawing.Size(180, 24);
+            this.miListParts.Size = new System.Drawing.Size(270, 36);
             this.miListParts.Text = "Детали";
             this.miListParts.Click += new System.EventHandler(this.MiList_Click);
             // 
@@ -679,7 +724,7 @@
             this.miMainView.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.miViewToolStripsShowText});
             this.miMainView.Name = "miMainView";
-            this.miMainView.Size = new System.Drawing.Size(45, 23);
+            this.miMainView.Size = new System.Drawing.Size(62, 32);
             this.miMainView.Text = "Вид";
             // 
             // miViewToolStripsShowText
@@ -687,7 +732,7 @@
             this.miViewToolStripsShowText.Checked = true;
             this.miViewToolStripsShowText.CheckState = System.Windows.Forms.CheckState.Checked;
             this.miViewToolStripsShowText.Name = "miViewToolStripsShowText";
-            this.miViewToolStripsShowText.Size = new System.Drawing.Size(184, 24);
+            this.miViewToolStripsShowText.Size = new System.Drawing.Size(270, 36);
             this.miViewToolStripsShowText.Text = "Подписи кнопок";
             this.miViewToolStripsShowText.Click += new System.EventHandler(this.MiViewToolStripsShowText_Click);
             // 
@@ -696,14 +741,14 @@
             this.miMainHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.miHelpAbout});
             this.miMainHelp.Name = "miMainHelp";
-            this.miMainHelp.Size = new System.Drawing.Size(74, 23);
+            this.miMainHelp.Size = new System.Drawing.Size(105, 32);
             this.miMainHelp.Text = "Справка";
             // 
             // miHelpAbout
             // 
             this.miHelpAbout.Name = "miHelpAbout";
             this.miHelpAbout.ShortcutKeys = System.Windows.Forms.Keys.F1;
-            this.miHelpAbout.Size = new System.Drawing.Size(188, 24);
+            this.miHelpAbout.Size = new System.Drawing.Size(271, 36);
             this.miHelpAbout.Text = "О программе";
             this.miHelpAbout.Click += new System.EventHandler(this.MiHelpAbout_Click);
             // 
@@ -718,9 +763,9 @@
             this.tsbtnListParts,
             this.toolStripSeparator1,
             this.tsbtnClose});
-            this.toolStripMain.Location = new System.Drawing.Point(3, 27);
+            this.toolStripMain.Location = new System.Drawing.Point(4, 36);
             this.toolStripMain.Name = "toolStripMain";
-            this.toolStripMain.Size = new System.Drawing.Size(196, 50);
+            this.toolStripMain.Size = new System.Drawing.Size(271, 61);
             this.toolStripMain.TabIndex = 1;
             // 
             // tsbtnListTechs
@@ -728,7 +773,7 @@
             this.tsbtnListTechs.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnListTechs.Image")));
             this.tsbtnListTechs.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnListTechs.Name = "tsbtnListTechs";
-            this.tsbtnListTechs.Size = new System.Drawing.Size(63, 47);
+            this.tsbtnListTechs.Size = new System.Drawing.Size(89, 56);
             this.tsbtnListTechs.Text = "Техника";
             this.tsbtnListTechs.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsbtnListTechs.Click += new System.EventHandler(this.TsbtnList_Click);
@@ -738,7 +783,7 @@
             this.tsbtnListParts.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnListParts.Image")));
             this.tsbtnListParts.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnListParts.Name = "tsbtnListParts";
-            this.tsbtnListParts.Size = new System.Drawing.Size(58, 47);
+            this.tsbtnListParts.Size = new System.Drawing.Size(81, 56);
             this.tsbtnListParts.Text = "Детали";
             this.tsbtnListParts.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsbtnListParts.Click += new System.EventHandler(this.TsbtnList_Click);
@@ -746,14 +791,14 @@
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 50);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 61);
             // 
             // tsbtnClose
             // 
             this.tsbtnClose.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnClose.Image")));
             this.tsbtnClose.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnClose.Name = "tsbtnClose";
-            this.tsbtnClose.Size = new System.Drawing.Size(66, 47);
+            this.tsbtnClose.Size = new System.Drawing.Size(91, 56);
             this.tsbtnClose.Text = "Закрыть";
             this.tsbtnClose.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsbtnClose.Click += new System.EventHandler(this.TsbtnClose_Click);
@@ -769,12 +814,13 @@
             // Main
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(872, 489);
+            this.ClientSize = new System.Drawing.Size(872, 544);
             this.Controls.Add(this.toolStripContainer);
             this.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip;
             this.Margin = new System.Windows.Forms.Padding(4);
+            this.MinimumSize = new System.Drawing.Size(640, 480);
             this.Name = "Main";
             this.Text = "Technics";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Main_FormClosing);
@@ -883,6 +929,8 @@
         private System.Windows.Forms.ToolStripMenuItem miMileagesFromDirectory;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
+        private System.Windows.Forms.ToolStripMenuItem miFileSettings;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
     }
 }
 

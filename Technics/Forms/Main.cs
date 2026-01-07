@@ -35,13 +35,15 @@ namespace Technics
             splitterMileages.Cursor = Cursors.SizeNS;
             splitterTechs.Cursor = Cursors.SizeWE;
 
-            if (!SetProgramDirectory()) return;
+            if (!SetDirectories()) return;
+
+            AppSettingsLoad();
+
+            if (!SetDatabase()) return;
 
             SetTags();
 
             AddTechsRoot();
-
-            AppSettingsLoad();
 
             ProgramStatus.StatusChanged += ProgramStatus_StatusChanged;
 
@@ -149,22 +151,6 @@ namespace Technics
                 case StatusLabel.TechPartCount: return LabelTechPartCount;
                 default: throw new ArgumentOutOfRangeException();
             }
-        }
-
-        public void UpdateSettings()
-        {
-            DataGridViewCellStyles.UpdateSettings();
-
-            MileagesDateTime.DefaultCellStyle =
-            TechPartsDateTimeInstall.DefaultCellStyle =
-            TechPartsDateTimeRemove.DefaultCellStyle =
-                DataGridViewCellStyles.DateTime;
-
-            MileagesMileage.DefaultCellStyle =
-            MileagesMileageCommon.DefaultCellStyle =
-            TechPartsMileage.DefaultCellStyle =
-            TechPartsMileageCommon.DefaultCellStyle =
-                DataGridViewCellStyles.Mileage;
         }
 
         private void TvTechs_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
@@ -357,6 +343,11 @@ namespace Technics
         private async void MiMileagesFromDirectory_Click(object sender, EventArgs e)
         {
             await LoadFromFilesAsync(FilesDialogType.Directory);
+        }
+
+        private async void MiFileSettings_Click(object sender, EventArgs e)
+        {
+            await ShowSettingsAsync();
         }
     }
 }

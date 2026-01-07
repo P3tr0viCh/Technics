@@ -12,5 +12,8 @@ namespace Technics
 
         [Browsable(false)]
         public FormState FormStateListTechs { get; set; }
+
+        [Browsable(false)]
+        public FormState FormStateSettings { get; set; }
     }
 }

@@ -1,12 +1,27 @@
 ﻿using P3tr0viCh.Utils;
 using System.ComponentModel;
+using System.Drawing.Design;
+using System.Windows.Forms.Design;
 
 namespace Technics
 {
     [TypeConverter(typeof(PropertySortedConverter))]
     internal partial class AppSettings : SettingsBase<AppSettings>
     {
+        private const string Resource = "Properties.ResourcesSettings";
+        
+        [LocalizedAttribute.Category("Category.Directories", Resource)]
+        [LocalizedAttribute.DisplayName("DirectoryDatabase.DisplayName", Resource)]
+        [LocalizedAttribute.Description("DirectoryDatabase.Description", Resource)]
+        [Editor(typeof(FolderNameEditor), typeof(UITypeEditor))]
+        public string DirectoryDatabase { get; set; } = string.Empty;
+
+        [LocalizedAttribute.Category("Category.Format", Resource)]
+        [LocalizedAttribute.DisplayName("Format.FormatMileage.DisplayName", Resource)]
         public string FormatMileage { get; set; } = "#,0.00";
+
+        [LocalizedAttribute.Category("Category.Format", Resource)]
+        [LocalizedAttribute.DisplayName("Format.FormatDateTime.DisplayName", Resource)]
         public string FormatDateTime { get; set; } = "yyyy.MM.dd HH:mm";
 
         [Browsable(false)]

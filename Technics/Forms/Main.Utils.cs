@@ -15,7 +15,7 @@ namespace Technics
         }
 
         private bool SelfChange { get; set; } = false;
-        
+
         private bool CreateProgramDirectory(string path)
         {
             if (Directory.Exists(path))
@@ -28,7 +28,7 @@ namespace Technics
             return true;
         }
 
-        private bool SetProgramDirectory()
+        private bool SetDirectories()
         {
             try
             {
@@ -60,7 +60,51 @@ namespace Technics
 
                 Utils.Log.Info(AppSettings.FilePath, ResourcesLog.PathSettings);
 
-                Database.Default.FileName = Path.Combine(programDataDirectory, Files.DatabaseFileName());
+                return true;
+            }
+            catch (Exception e)
+            {
+                Utils.Log.Error(e.Message);
+
+                Utils.Msg.Error(Resources.MsgDirectoriesCreateFail, e.Message);
+
+                WindowState = FormWindowState.Minimized;
+
+                AbnormalExit = true;
+
+                Application.Exit();
+
+                return false;
+            }
+        }
+
+        private bool SetDatabase()
+        {
+            try
+            {
+                var databaseDirectory = AppSettings.Default.DirectoryDatabase;
+
+                if (databaseDirectory.IsEmpty())
+                {
+                    databaseDirectory = AppSettings.Directory;
+                }
+
+                try
+                {
+                    Files.CheckDirectoryExists(databaseDirectory);
+                }
+                catch (Exception e)
+                {
+                    Utils.Log.Error(e);
+
+                    databaseDirectory = AppSettings.Directory;
+
+                    AppSettings.Default.DirectoryDatabase = string.Empty;
+
+                    Utils.Msg.Error(Resources.MsgDatabaseCreateFail, e.Message, databaseDirectory);
+                }
+
+                Database.Default.FileName = Path.Combine(databaseDirectory, Files.DatabaseFileName());
 
                 Utils.Log.Info(Database.Default.FileName, ResourcesLog.PathDatabase);
 
@@ -70,7 +114,7 @@ namespace Technics
             {
                 Utils.Log.Error(e.Message);
 
-                Utils.Msg.Error(Resources.MsgDatabaseCreateFail, e.Message);
+                Utils.Msg.Error(Resources.MsgDirectoriesCreateFail, e.Message);
 
                 WindowState = FormWindowState.Minimized;
 
@@ -84,7 +128,7 @@ namespace Technics
 
         public void AppSettingsLoad()
         {
-            if (!AppSettings.Load())
+            if (!AppSettings.Default.Load())
             {
                 Utils.Log.Error(AppSettings.LastError);
             }
@@ -94,7 +138,7 @@ namespace Technics
 
         public void AppSettingsSave()
         {
-            if (AppSettings.Save()) return;
+            if (AppSettings.Default.Save()) return;
 
             Utils.Log.Error(AppSettings.LastError);
         }
