@@ -98,7 +98,7 @@ namespace Technics.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Формат даты и времени.
+        ///   Looks up a localized string similar to Дата и время.
         /// </summary>
         internal static string Format_FormatDateTime_DisplayName {
             get {
@@ -107,11 +107,38 @@ namespace Technics.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Формат пробега.
+        ///   Looks up a localized string similar to Пробеги: пробег.
         /// </summary>
-        internal static string Format_FormatMileage_DisplayName {
+        internal static string Format_FormatMileagesMileage_DisplayName {
             get {
-                return ResourceManager.GetString("Format.FormatMileage.DisplayName", resourceCulture);
+                return ResourceManager.GetString("Format.FormatMileagesMileage.DisplayName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Пробеги: общий пробег.
+        /// </summary>
+        internal static string Format_FormatMileagesMileageCommon_DisplayName {
+            get {
+                return ResourceManager.GetString("Format.FormatMileagesMileageCommon.DisplayName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Детали: пробег.
+        /// </summary>
+        internal static string Format_FormatTechPartsMileage_DisplayName {
+            get {
+                return ResourceManager.GetString("Format.FormatTechPartsMileage.DisplayName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Детали: общий пробег.
+        /// </summary>
+        internal static string Format_FormatTechPartsMileageCommon_DisplayName {
+            get {
+                return ResourceManager.GetString("Format.FormatTechPartsMileageCommon.DisplayName", resourceCulture);
             }
         }
     }

@@ -17,12 +17,24 @@ namespace Technics
         public string DirectoryDatabase { get; set; } = string.Empty;
 
         [LocalizedAttribute.Category("Category.Format", Resource)]
-        [LocalizedAttribute.DisplayName("Format.FormatMileage.DisplayName", Resource)]
-        public string FormatMileage { get; set; } = "#,0.00";
-
-        [LocalizedAttribute.Category("Category.Format", Resource)]
         [LocalizedAttribute.DisplayName("Format.FormatDateTime.DisplayName", Resource)]
         public string FormatDateTime { get; set; } = "yyyy.MM.dd HH:mm";
+
+        [LocalizedAttribute.Category("Category.Format", Resource)]
+        [LocalizedAttribute.DisplayName("Format.FormatMileagesMileage.DisplayName", Resource)]
+        public string FormatMileagesMileage { get; set; } = "#,0.00";
+
+        [LocalizedAttribute.Category("Category.Format", Resource)]
+        [LocalizedAttribute.DisplayName("Format.FormatMileagesMileageCommon.DisplayName", Resource)]
+        public string FormatMileagesMileageCommon { get; set; } = "#,0";
+
+        [LocalizedAttribute.Category("Category.Format", Resource)]
+        [LocalizedAttribute.DisplayName("Format.FormatTechPartsMileage.DisplayName", Resource)]
+        public string FormatTechPartsMileage { get; set; } = "#,0";
+
+        [LocalizedAttribute.Category("Category.Format", Resource)]
+        [LocalizedAttribute.DisplayName("Format.FormatTechPartsMileageCommon.DisplayName", Resource)]
+        public string FormatTechPartsMileageCommon { get; set; } = "#,0";
 
         [Browsable(false)]
         public int PanelTechsWidth { get; set; } = 260;

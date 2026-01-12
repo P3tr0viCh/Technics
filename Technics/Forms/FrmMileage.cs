@@ -27,8 +27,8 @@ namespace Technics
 
                 dtpDateTime.SetDateTime(value.DateTime);
 
-                TextBoxSetValue(tboxMileage, value.Mileage);
-                TextBoxSetValue(tboxMileageCommon, value.MileageCommon);
+                TextBoxSetValue(tboxMileage, value.Mileage, AppSettings.Default.FormatMileagesMileage);
+                TextBoxSetValue(tboxMileageCommon, value.MileageCommon, AppSettings.Default.FormatMileagesMileageCommon);
 
                 tboxDescription.SetText(value.Description);
             }
@@ -114,11 +114,11 @@ namespace Technics
             }
         }
 
-        private void TextBoxSetValue(TextBox textBox, double? value)
+        private void TextBoxSetValue(TextBox textBox, double? value, string format)
         {
             selfChange = true;
 
-            textBox.SetDouble(value, AppSettings.Default.FormatMileage);
+            textBox.SetDouble(value, format);
 
             selfChange = false;
         }
@@ -155,7 +155,8 @@ namespace Technics
 
                 if (mileage > 0.0)
                 {
-                    TextBoxSetValue(tboxMileageCommon, mileageCommonPrev + mileage);
+                    TextBoxSetValue(tboxMileageCommon, mileageCommonPrev + mileage,
+                        AppSettings.Default.FormatMileagesMileageCommon);
 
                     return true;
                 }
@@ -172,7 +173,8 @@ namespace Technics
                         mileageCommon, mileageCommonPrev));
                 }
 
-                TextBoxSetValue(tboxMileage, mileageCommon - mileageCommonPrev);
+                TextBoxSetValue(tboxMileage, mileageCommon - mileageCommonPrev,
+                    AppSettings.Default.FormatMileagesMileage);
 
                 return true;
             }

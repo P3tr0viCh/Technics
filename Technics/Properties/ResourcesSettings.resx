@@ -124,10 +124,10 @@
     <value>Формат</value>
   </data>
   <data name="Format.FormatDateTime.DisplayName" xml:space="preserve">
-    <value>Формат даты и времени</value>
+    <value>Дата и время</value>
   </data>
-  <data name="Format.FormatMileage.DisplayName" xml:space="preserve">
-    <value>Формат пробега</value>
+  <data name="Format.FormatMileagesMileage.DisplayName" xml:space="preserve">
+    <value>Пробеги: пробег</value>
   </data>
   <data name="DirectoryDatabase.DisplayName" xml:space="preserve">
     <value>База данных</value>
@@ -135,5 +135,14 @@
   <data name="DirectoryDatabase.Description" xml:space="preserve">
     <value>Расположение файла базы данных.
 Пустое значение — \AppData\Local\P3tr0viCh\Technics\</value>
+  </data>
+  <data name="Format.FormatMileagesMileageCommon.DisplayName" xml:space="preserve">
+    <value>Пробеги: общий пробег</value>
+  </data>
+  <data name="Format.FormatTechPartsMileage.DisplayName" xml:space="preserve">
+    <value>Детали: пробег</value>
+  </data>
+  <data name="Format.FormatTechPartsMileageCommon.DisplayName" xml:space="preserve">
+    <value>Детали: общий пробег</value>
   </data>
 </root>
