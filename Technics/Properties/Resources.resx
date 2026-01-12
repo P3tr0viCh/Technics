@@ -279,4 +279,23 @@
   <data name="StatusTechPartSelectedCount" xml:space="preserve">
     <value>(выделено: {0})</value>
   </data>
+  <data name="QuestionNewTrackFinded1" xml:space="preserve">
+    <value>Обнаружен новый трек:
+{0}
+
+Добавить в базу?</value>
+  </data>
+  <data name="QuestionNewTrackFinded2" xml:space="preserve">
+    <value>Обнаружены новые треки:
+{0}
+
+Добавить в базу?</value>
+  </data>
+  <data name="QuestionNewTrackFinded3" xml:space="preserve">
+    <value>Обнаружены новые треки:
+{0}
+и ещё {1}.
+
+Добавить в базу?</value>
+  </data>
 </root>

@@ -15,6 +15,7 @@ namespace Technics
 
             MileagesMileage.DefaultCellStyle = DataGridViewCellStyles.MileagesMileage;
             MileagesMileageCommon.DefaultCellStyle = DataGridViewCellStyles.MileagesMileageCommon;
+
             TechPartsMileage.DefaultCellStyle = DataGridViewCellStyles.TechPartsMileage;
             TechPartsMileageCommon.DefaultCellStyle = DataGridViewCellStyles.TechPartsMileageCommon;
         }

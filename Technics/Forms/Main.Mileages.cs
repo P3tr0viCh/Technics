@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Technics.Properties;
 using static P3tr0viCh.Utils.Gpx;
+using static Technics.Database.Filter;
 using static Technics.Database.Models;
 using static Technics.Enums;
 
@@ -257,6 +258,20 @@ namespace Technics
             };
 
             return mileage;
+        }
+
+        private async Task SelectMileagesAsync(IEnumerable<MileageModel> mileages)
+        {
+            if (!mileages.Any()) return;
+
+            if (tvTechs.Nodes[0].IsSelected)
+            {
+                await UpdateDataAsync(DataLoad.Mileages | DataLoad.TechParts);
+            }
+
+            tvTechs.SelectedNode = tvTechs.Nodes[0];
+
+            MileageSelectedList = mileages;
         }
     }
 }

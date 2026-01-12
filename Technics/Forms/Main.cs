@@ -41,6 +41,8 @@ namespace Technics
 
             if (!SetDatabase()) return;
 
+            SelfChange = true;
+
             SetTags();
 
             AddTechsRoot();
@@ -77,8 +79,12 @@ namespace Technics
                 ProgramStatus.Stop(status);
             }
 #endif
-
+            
             await UpdateDataAsync(DataLoad.Techs);
+
+            await LoadFromFilesAsync(LoadFilesType.DirectoryTracks);
+
+            SelfChange = false;
         }
 
         private void ProgramStatus_StatusChanged(object sender, Status status)
@@ -120,6 +126,11 @@ namespace Technics
             AppSettingsSave();
 
             Utils.Log.WriteProgramStop();
+        }
+
+        private void Main_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            CancelTokens();
         }
 
         private void TsbtnClose_Click(object sender, EventArgs e)
@@ -332,17 +343,17 @@ namespace Technics
 
         private async void TsbtnMileageAddFromFile_ButtonClick(object sender, EventArgs e)
         {
-            await LoadFromFilesAsync(FilesDialogType.Files);
+            await LoadFromFilesAsync(LoadFilesType.FileDialog);
         }
 
         private async void MiMileagesFromFiles_Click(object sender, EventArgs e)
         {
-            await LoadFromFilesAsync(FilesDialogType.Files);
+            await LoadFromFilesAsync(LoadFilesType.FileDialog);
         }
 
         private async void MiMileagesFromDirectory_Click(object sender, EventArgs e)
         {
-            await LoadFromFilesAsync(FilesDialogType.Directory);
+            await LoadFromFilesAsync(LoadFilesType.FolderDialog);
         }
 
         private async void MiFileSettings_Click(object sender, EventArgs e)

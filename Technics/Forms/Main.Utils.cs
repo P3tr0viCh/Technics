@@ -151,5 +151,10 @@ namespace Technics
             miListTechs.Tag = FrmListType.Techs;
             tsbtnListTechs.Tag = FrmListType.Techs;
         }
+
+        private void CancelTokens()
+        {
+            ctsCheckDirectoryTracks.Cancel();
+        }
     }
 }

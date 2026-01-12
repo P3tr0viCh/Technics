@@ -336,6 +336,43 @@ namespace Technics.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Обнаружен новый трек:
+        ///{0}
+        ///
+        ///Добавить в базу?.
+        /// </summary>
+        internal static string QuestionNewTrackFinded1 {
+            get {
+                return ResourceManager.GetString("QuestionNewTrackFinded1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Обнаружены новые треки:
+        ///{0}
+        ///
+        ///Добавить в базу?.
+        /// </summary>
+        internal static string QuestionNewTrackFinded2 {
+            get {
+                return ResourceManager.GetString("QuestionNewTrackFinded2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Обнаружены новые треки:
+        ///{0}
+        ///и ещё {1}.
+        ///
+        ///Добавить в базу?.
+        /// </summary>
+        internal static string QuestionNewTrackFinded3 {
+            get {
+                return ResourceManager.GetString("QuestionNewTrackFinded3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Удалить «{0}» с датой установки {1} из базы данных?.
         /// </summary>
         internal static string QuestionTechPartDelete {

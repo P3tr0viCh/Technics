@@ -1,6 +1,7 @@
 ﻿using P3tr0viCh.Utils;
 using System;
 using System.IO;
+using System.Windows.Forms;
 using Technics.Properties;
 
 namespace Technics
@@ -31,25 +32,44 @@ namespace Technics
             AppSettings.LoadFormState(this, AppSettings.Default.FormStateSettings);
         }
 
+        private string GetFullPath(string path)
+        {
+            if (path.IsEmpty()) return string.Empty;
+
+            return Path.GetFullPath(path);
+        }
+
+        private void GetFullPaths()
+        {
+            AppSettings.Default.DirectoryDatabase = GetFullPath(AppSettings.Default.DirectoryDatabase);
+
+            AppSettings.Default.DirectoryTracks = GetFullPath(AppSettings.Default.DirectoryTracks);
+
+            PropertyGrid.Refresh();
+        }
+
         private void AssertDirectory(string path)
         {
             if (path.IsEmpty()) return;
 
             if (Directory.Exists(path)) return;
 
-            throw new Exceptions.DirectoryNotExistsException(
-                Resources.ErrorDirectoryNotExists, path);
+            throw new Exceptions.DirectoryNotExistsException(Resources.ErrorDirectoryNotExists, path);
         }
 
         private void AssertDirectories()
         {
             AssertDirectory(AppSettings.Default.DirectoryDatabase);
+
+            AssertDirectory(AppSettings.Default.DirectoryTracks);
         }
 
         protected override bool CheckSettings()
         {
             try
             {
+                GetFullPaths();
+
                 AssertDirectories();
 
                 return true;

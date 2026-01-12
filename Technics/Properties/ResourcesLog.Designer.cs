@@ -61,6 +61,42 @@ namespace Technics.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to add tracks canceled.
+        /// </summary>
+        internal static string CheckDirectoryTracksCancel {
+            get {
+                return ResourceManager.GetString("CheckDirectoryTracksCancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to directory tracks not exists.
+        /// </summary>
+        internal static string CheckDirectoryTracksNotExists {
+            get {
+                return ResourceManager.GetString("CheckDirectoryTracksNotExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to found files={0}, new files={1}.
+        /// </summary>
+        internal static string CheckDirectoryTracksOk {
+            get {
+                return ResourceManager.GetString("CheckDirectoryTracksOk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to directory tracks empty.
+        /// </summary>
+        internal static string CheckDirectoryTracksPathEmpty {
+            get {
+                return ResourceManager.GetString("CheckDirectoryTracksPathEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to closed from exit call.
         /// </summary>
         internal static string CloseReasonApplicationExitCall {

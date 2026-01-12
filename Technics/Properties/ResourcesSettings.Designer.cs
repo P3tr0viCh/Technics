@@ -98,6 +98,24 @@ namespace Technics.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Расположение каталога с треками. Пустое значение — поиск новых треков отключен..
+        /// </summary>
+        internal static string DirectoryTracks_Description {
+            get {
+                return ResourceManager.GetString("DirectoryTracks.Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Треки.
+        /// </summary>
+        internal static string DirectoryTracks_DisplayName {
+            get {
+                return ResourceManager.GetString("DirectoryTracks.DisplayName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Дата и время.
         /// </summary>
         internal static string Format_FormatDateTime_DisplayName {

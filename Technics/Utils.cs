@@ -30,16 +30,9 @@ namespace Technics
             }
         }
 
-        public static async Task<string[]> EnumerateFilesAsync(string path, string extensions)
+        public static async Task<IEnumerable<string>> EnumerateFilesAsync(string path, string extensions)
         {
-            var files = await Files.DirectoryEnumerateFilesAsync(path, SearchOption.AllDirectories);
-
-            var exts = extensions.ToLower().Split(';');
-
-            files = files.Where(file =>
-                exts.Any(ext => ext == Path.GetExtension(file).ToLower()));
-
-            return files.ToArray();
+            return await Files.DirectoryEnumerateFilesAsync(path, SearchOption.AllDirectories, extensions);
         }
     }
 }

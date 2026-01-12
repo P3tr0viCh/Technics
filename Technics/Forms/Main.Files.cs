@@ -73,7 +73,7 @@ namespace Technics
             }
         }
 
-        private async Task<IEnumerable<MileageModel>> LoadFromFilesAsync(string[] files)
+        private async Task<IEnumerable<MileageModel>> LoadFromFilesAsync(IEnumerable<string> files)
         {
             DebugWrite.Line("start");
 
@@ -104,17 +104,17 @@ namespace Technics
             }
         }
 
-        private async Task LoadFromFilesAsync(FilesDialogType type)
+        private async Task LoadFromFilesAsync(LoadFilesType type)
         {
-            string[] files;
+            IEnumerable<string> files;
 
-            string directoryLastMileages;
+            var directoryLastMileages = string.Empty;
 
             try
             {
                 switch (type)
                 {
-                    case FilesDialogType.Files:
+                    case LoadFilesType.FileDialog:
                         openFileDialog.FileName = string.Empty;
 
                         openFileDialog.InitialDirectory = AppSettings.Default.DirectoryLastMileages;
@@ -125,17 +125,22 @@ namespace Technics
 
                         files = openFileDialog.FileNames;
 
-                        directoryLastMileages = Directory.GetParent(files[0]).FullName;
+                        directoryLastMileages = Directory.GetParent(files.First()).FullName;
 
                         break;
-                    case FilesDialogType.Directory:
+                    case LoadFilesType.FolderDialog:
                         folderBrowserDialog.SelectedPath = AppSettings.Default.DirectoryLastMileages;
 
                         if (folderBrowserDialog.ShowDialog() != DialogResult.OK) return;
 
                         directoryLastMileages = folderBrowserDialog.SelectedPath;
 
-                        files = await Utils.EnumerateFilesAsync(folderBrowserDialog.SelectedPath, Resources.FilterFolderBrowserDialogMileages);
+                        files = await Utils.EnumerateFilesAsync(folderBrowserDialog.SelectedPath,
+                            Resources.FilterFolderBrowserDialogMileages);
+
+                        break;
+                    case LoadFilesType.DirectoryTracks:
+                        files = await CheckDirectoryTracksAsync();
 
                         break;
                     default: return;
@@ -150,24 +155,24 @@ namespace Technics
                 return;
             }
 
-            AppSettings.Default.DirectoryLastMileages = directoryLastMileages;
+            var count = files.Count();
 
-            Utils.Log.Info(string.Format(ResourcesLog.OpenFiles, directoryLastMileages, files.Length));
+            switch (type)
+            {
+                case LoadFilesType.FileDialog:
+                case LoadFilesType.FolderDialog:
+                    AppSettings.Default.DirectoryLastMileages = directoryLastMileages;
 
-            if (files.Length == 0) return;
+                    Utils.Log.Info(string.Format(ResourcesLog.OpenFiles, directoryLastMileages, count));
+
+                    break;
+            }
+
+            if (count == 0) return;
 
             var mileages = await LoadFromFilesAsync(files);
 
-            if (!mileages.Any()) return;
-
-            if (tvTechs.Nodes[0].IsSelected)
-            {
-                await UpdateDataAsync(DataLoad.Mileages | DataLoad.TechParts);
-            }
-
-            tvTechs.SelectedNode = tvTechs.Nodes[0];
-
-            MileageSelectedList = mileages;
+            await SelectMileagesAsync(mileages);
         }
     }
 }

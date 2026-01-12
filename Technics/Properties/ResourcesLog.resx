@@ -117,6 +117,18 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CheckDirectoryTracksCancel" xml:space="preserve">
+    <value>add tracks canceled</value>
+  </data>
+  <data name="CheckDirectoryTracksNotExists" xml:space="preserve">
+    <value>directory tracks not exists</value>
+  </data>
+  <data name="CheckDirectoryTracksOk" xml:space="preserve">
+    <value>found files={0}, new files={1}</value>
+  </data>
+  <data name="CheckDirectoryTracksPathEmpty" xml:space="preserve">
+    <value>directory tracks empty</value>
+  </data>
   <data name="CloseReasonApplicationExitCall" xml:space="preserve">
     <value>closed from exit call</value>
   </data>

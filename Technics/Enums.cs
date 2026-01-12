@@ -16,12 +16,15 @@ namespace Technics
             SaveDatа,
             [Description("Чтение файлов...")]
             ReadFiles,
+            [Description("Поиск файлов gpx...")]
+            CheckDirectoryTracks,
         }
 
-        public enum FilesDialogType
+        public enum LoadFilesType
         {
-            Files,
-            Directory
+            FileDialog,
+            FolderDialog,
+            DirectoryTracks,
         }
 
         public enum FileExt

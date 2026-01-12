@@ -145,4 +145,10 @@
   <data name="Format.FormatTechPartsMileageCommon.DisplayName" xml:space="preserve">
     <value>Детали: общий пробег</value>
   </data>
+  <data name="DirectoryTracks.Description" xml:space="preserve">
+    <value>Расположение каталога с треками. Пустое значение — поиск новых треков отключен.</value>
+  </data>
+  <data name="DirectoryTracks.DisplayName" xml:space="preserve">
+    <value>Треки</value>
+  </data>
 </root>
