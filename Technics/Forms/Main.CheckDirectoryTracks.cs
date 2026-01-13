@@ -57,7 +57,7 @@ namespace Technics
 
             GpxFiles.Default.Load();
 
-            var newFiles = files.Except(GpxFiles.Default.Files);
+            var newFiles = files.Except(GpxFiles.Default.Files, new PathComparer());
 
             GpxFiles.Default.Files = files;
 

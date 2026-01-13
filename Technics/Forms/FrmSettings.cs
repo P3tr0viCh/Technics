@@ -64,24 +64,18 @@ namespace Technics
             AssertDirectory(AppSettings.Default.DirectoryTracks);
         }
 
-        protected override bool CheckSettings()
+        protected override void CheckSettings()
         {
-            try
-            {
-                GetFullPaths();
+            GetFullPaths();
 
-                AssertDirectories();
+            AssertDirectories();
+        }
 
-                return true;
-            }
-            catch (Exception e)
-            {
-                Utils.Log.Error(e);
+        protected override void SettingsHasError(Exception e)
+        {
+            Utils.Log.Error(e);
 
-                Utils.Msg.Error(e.Message);
-
-                return false;
-            }
+            Utils.Msg.Error(e.Message);
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using P3tr0viCh.Utils;
 using System.ComponentModel;
 using System.Drawing.Design;
-using System.IO;
 using System.Windows.Forms.Design;
 
 namespace Technics
