@@ -3,12 +3,15 @@
 #endif
 
 using P3tr0viCh.Utils;
+using P3tr0viCh.Utils.Extensions;
+using P3tr0viCh.Utils.Forms;
 using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Technics.Presenters;
 using Technics.Properties;
 using static Technics.Enums;
-using static Technics.PresenterStatusStripMain;
+using static Technics.Presenters.PresenterStatusStripMain;
 
 namespace Technics
 {

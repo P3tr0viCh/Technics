@@ -1,7 +1,7 @@
 ﻿using P3tr0viCh.Utils;
 using Technics.Properties;
 
-namespace Technics
+namespace Technics.Presenters
 {
     internal class PresenterStatusStripFrmList : PresenterStatusStrip<PresenterStatusStripFrmList.StatusLabel>
     {

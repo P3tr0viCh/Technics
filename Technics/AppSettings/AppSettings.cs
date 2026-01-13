@@ -1,4 +1,5 @@
 ﻿using P3tr0viCh.Utils;
+using P3tr0viCh.Utils.Attributes;
 using System.ComponentModel;
 using System.Drawing.Design;
 using System.Windows.Forms.Design;
@@ -10,37 +11,39 @@ namespace Technics
     {
         private const string Resource = "Properties.ResourcesSettings";
 
-        [LocalizedAttribute.Category("Category.Directories", Resource)]
-        [LocalizedAttribute.DisplayName("DirectoryDatabase.DisplayName", Resource)]
-        [LocalizedAttribute.Description("DirectoryDatabase.Description", Resource)]
+        [LocalizedCategory("Category.Directories", Resource)]
+        [LocalizedDisplayName("DirectoryDatabase.DisplayName", Resource)]
+        [LocalizedDescription("DirectoryDatabase.Description", Resource)]
         [Editor(typeof(FolderNameEditor), typeof(UITypeEditor))]
+        [CheckDirectory(false, true, true)]
         public string DirectoryDatabase { get; set; } = string.Empty;
 
-        [LocalizedAttribute.Category("Category.Directories", Resource)]
-        [LocalizedAttribute.DisplayName("DirectoryTracks.DisplayName", Resource)]
-        [LocalizedAttribute.Description("DirectoryTracks.Description", Resource)]
+        [LocalizedCategory("Category.Directories", Resource)]
+        [LocalizedDisplayName("DirectoryTracks.DisplayName", Resource)]
+        [LocalizedDescription("DirectoryTracks.Description", Resource)]
         [Editor(typeof(FolderNameEditor), typeof(UITypeEditor))]
+        [CheckDirectory]
         public string DirectoryTracks { get; set; } = string.Empty;
 
         // --------------------------------------------------------------------------------------------------------
-        [LocalizedAttribute.Category("Category.Format", Resource)]
-        [LocalizedAttribute.DisplayName("Format.FormatDateTime.DisplayName", Resource)]
+        [LocalizedCategory("Category.Format", Resource)]
+        [LocalizedDisplayName("Format.FormatDateTime.DisplayName", Resource)]
         public string FormatDateTime { get; set; } = "yyyy.MM.dd HH:mm";
 
-        [LocalizedAttribute.Category("Category.Format", Resource)]
-        [LocalizedAttribute.DisplayName("Format.FormatMileagesMileage.DisplayName", Resource)]
+        [LocalizedCategory("Category.Format", Resource)]
+        [LocalizedDisplayName("Format.FormatMileagesMileage.DisplayName", Resource)]
         public string FormatMileagesMileage { get; set; } = "#,0.00";
 
-        [LocalizedAttribute.Category("Category.Format", Resource)]
-        [LocalizedAttribute.DisplayName("Format.FormatMileagesMileageCommon.DisplayName", Resource)]
+        [LocalizedCategory("Category.Format", Resource)]
+        [LocalizedDisplayName("Format.FormatMileagesMileageCommon.DisplayName", Resource)]
         public string FormatMileagesMileageCommon { get; set; } = "#,0";
 
-        [LocalizedAttribute.Category("Category.Format", Resource)]
-        [LocalizedAttribute.DisplayName("Format.FormatTechPartsMileage.DisplayName", Resource)]
+        [LocalizedCategory("Category.Format", Resource)]
+        [LocalizedDisplayName("Format.FormatTechPartsMileage.DisplayName", Resource)]
         public string FormatTechPartsMileage { get; set; } = "#,0";
 
-        [LocalizedAttribute.Category("Category.Format", Resource)]
-        [LocalizedAttribute.DisplayName("Format.FormatTechPartsMileageCommon.DisplayName", Resource)]
+        [LocalizedCategory("Category.Format", Resource)]
+        [LocalizedDisplayName("Format.FormatTechPartsMileageCommon.DisplayName", Resource)]
         public string FormatTechPartsMileageCommon { get; set; } = "#,0";
 
         // --------------------------------------------------------------------------------------------------------

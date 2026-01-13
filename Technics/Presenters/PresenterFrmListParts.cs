@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Technics.Properties;
 using static Technics.Database.Models;
 
-namespace Technics
+namespace Technics.Presenters
 {
     internal class PresenterFrmListParts : PresenterFrmListBase<PartModel>
     {

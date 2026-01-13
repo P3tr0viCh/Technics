@@ -1,13 +1,12 @@
-﻿using P3tr0viCh.Database;
+﻿using P3tr0viCh.Database.Extensions;
 using P3tr0viCh.Utils;
+using P3tr0viCh.Utils.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 using Technics.Properties;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrackBar;
-using static Technics.Database.Models;
 
 namespace Technics
 {

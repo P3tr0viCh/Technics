@@ -3,7 +3,7 @@ using System.Collections;
 using System.Windows.Forms;
 using static Technics.Database.Models;
 
-namespace Technics
+namespace Technics.Presenters
 {
     internal class PresenterDataGridViewMileages : PresenterDataGridView<MileageModel>
     {

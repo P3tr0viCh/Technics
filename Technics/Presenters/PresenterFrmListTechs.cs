@@ -6,7 +6,7 @@ using System.Windows.Forms;
 using Technics.Properties;
 using static Technics.Database.Models;
 
-namespace Technics
+namespace Technics.Presenters
 {
     internal class PresenterFrmListTechs : PresenterFrmListBase<TechModel>
     {

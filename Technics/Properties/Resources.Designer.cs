@@ -70,15 +70,6 @@ namespace Technics.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Каталог «{0}» не существует..
-        /// </summary>
-        internal static string ErrorDirectoryNotExists {
-            get {
-                return ResourceManager.GetString("ErrorDirectoryNotExists", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Указанный общий пробег ({0}) меньше или равен уже внесённому в базу данных ({1})..
         /// </summary>
         internal static string ErrorMileageCommonWrong {

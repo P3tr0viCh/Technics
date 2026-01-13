@@ -1,4 +1,5 @@
 ﻿using P3tr0viCh.Database;
+using P3tr0viCh.Database.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Data.Common;

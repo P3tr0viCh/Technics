@@ -1,7 +1,7 @@
 ﻿using P3tr0viCh.Database;
-using P3tr0viCh.Utils;
+using P3tr0viCh.Utils.Extensions;
+using P3tr0viCh.Utils.Forms;
 using System;
-using System.Drawing;
 using System.Windows.Forms;
 using Technics.Properties;
 

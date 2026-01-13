@@ -153,18 +153,16 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\IPresenterFrmList.cs" />
-    <Compile Include="Forms\PresenterDataGridViewFrmList.cs" />
-    <Compile Include="Forms\PresenterDataGridViewMileages.cs" />
-    <Compile Include="Forms\PresenterDataGridViewTechParts.cs" />
-    <Compile Include="Forms\PresenterFrmListBase.cs" />
-    <Compile Include="Forms\PresenterFrmListFactory.cs" />
-    <Compile Include="Forms\PresenterFrmListParts.cs" />
-    <Compile Include="Forms\PresenterFrmListTechs.cs" />
-    <Compile Include="Forms\PresenterStatusStripFrmList.cs" />
-    <Compile Include="Forms\PresenterStatusStripMain.cs" />
+    <Compile Include="Presenters\PresenterDataGridViewFrmList.cs" />
+    <Compile Include="Presenters\PresenterDataGridViewMileages.cs" />
+    <Compile Include="Presenters\PresenterDataGridViewTechParts.cs" />
+    <Compile Include="Presenters\PresenterFrmListBase.cs" />
+    <Compile Include="Presenters\PresenterFrmListFactory.cs" />
+    <Compile Include="Presenters\PresenterFrmListParts.cs" />
+    <Compile Include="Presenters\PresenterFrmListTechs.cs" />
+    <Compile Include="Presenters\PresenterStatusStripFrmList.cs" />
+    <Compile Include="Presenters\PresenterStatusStripMain.cs" />
     <Compile Include="Forms\FrmListType.cs" />
-    <Compile Include="Models\ChangedMileageModel.cs" />
-    <Compile Include="Models\ChangedTechPartModel.cs" />
     <Compile Include="Models\UpdateMileageModel.cs" />
     <Compile Include="Models\UpdateModel.cs" />
     <Compile Include="Models\UpdateTechPartModel.cs" />
@@ -238,7 +236,7 @@
       <LastGenOutput>ResourcesSql.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <Compile Include="Forms\PresenterFrmListBase.Database.cs" />
+    <Compile Include="Presenters\PresenterFrmListBase.Database.cs" />
     <None Include="packages.config" />
     <None Include="Properties\DataSources\Database.Models.MileageModel.datasource" />
     <None Include="Properties\DataSources\Database.Models.PartModel.datasource" />

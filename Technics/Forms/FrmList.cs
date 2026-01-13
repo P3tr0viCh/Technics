@@ -1,7 +1,9 @@
 ﻿using P3tr0viCh.Utils;
+using P3tr0viCh.Utils.Extensions;
 using System;
 using System.Windows.Forms;
-using static Technics.PresenterStatusStripFrmList;
+using Technics.Presenters;
+using static Technics.Presenters.PresenterStatusStripFrmList;
 
 namespace Technics
 {

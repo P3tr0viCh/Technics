@@ -1,7 +1,7 @@
 ﻿using P3tr0viCh.Database;
 using P3tr0viCh.Utils;
 
-namespace Technics
+namespace Technics.Presenters
 {
     internal class PresenterDataGridViewFrmList<T> : PresenterDataGridView<T> where T : BaseId, new()
     {

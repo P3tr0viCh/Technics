@@ -1,12 +1,13 @@
 ﻿using P3tr0viCh.Utils;
+using P3tr0viCh.Utils.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using Technics.Presenters;
 using Technics.Properties;
 using static P3tr0viCh.Utils.Gpx;
-using static Technics.Database.Filter;
 using static Technics.Database.Models;
 using static Technics.Enums;
 

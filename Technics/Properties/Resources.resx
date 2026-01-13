@@ -120,9 +120,6 @@
   <data name="ErrorCsvFileWrongHeader" xml:space="preserve">
     <value>Неверный формат файла (заголовок не соответствует заданному)</value>
   </data>
-  <data name="ErrorDirectoryNotExists" xml:space="preserve">
-    <value>Каталог «{0}» не существует.</value>
-  </data>
   <data name="ErrorMileageCommonWrong" xml:space="preserve">
     <value>Указанный общий пробег ({0}) меньше или равен уже внесённому в базу данных ({1}).</value>
   </data>

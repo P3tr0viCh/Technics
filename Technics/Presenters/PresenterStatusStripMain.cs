@@ -1,9 +1,8 @@
-﻿using Newtonsoft.Json.Linq;
-using P3tr0viCh.Utils;
+﻿using P3tr0viCh.Utils;
 using Technics.Properties;
 using static Technics.Enums;
 
-namespace Technics
+namespace Technics.Presenters
 {
     internal class PresenterStatusStripMain : PresenterStatusStrip<PresenterStatusStripMain.StatusLabel>
     {

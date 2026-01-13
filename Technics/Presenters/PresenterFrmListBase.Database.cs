@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Technics.Properties;
 using static Technics.Enums;
 
-namespace Technics
+namespace Technics.Presenters
 {
 	internal abstract partial class PresenterFrmListBase<T>
 	{

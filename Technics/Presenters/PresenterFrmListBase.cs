@@ -1,12 +1,13 @@
 ﻿using P3tr0viCh.Database;
 using P3tr0viCh.Utils;
+using P3tr0viCh.Utils.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Technics
+namespace Technics.Presenters
 {
     internal abstract partial class PresenterFrmListBase<T> :
         IPresenterFrmList,

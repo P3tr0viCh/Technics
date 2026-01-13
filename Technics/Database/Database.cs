@@ -1,14 +1,13 @@
 ﻿using Dapper;
 using P3tr0viCh.Database;
+using P3tr0viCh.Database.Extensions;
 using P3tr0viCh.Utils;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Data.SQLite;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using Technics.Properties;
-using static Technics.Database.Models;
 
 namespace Technics
 {
