@@ -100,8 +100,14 @@ namespace Technics
 
                 bindingSourceParts.Insert(1, new PartModel()
                 {
-                    Id = Utils.ListEditId,
+                    Id = Consts.Id.ListEdit,
                     Text = Resources.TextListEdit
+                });
+
+                bindingSourceParts.Insert(2, new PartModel()
+                {
+                    Id = Consts.Id.ListAdd,
+                    Text = Resources.TextListAdd
                 });
 
                 bindingSourceParts.Position = 0;
@@ -283,24 +289,86 @@ namespace Technics
             }
         }
 
-        private async Task ChangePartsAsync()
+        private void BeforeChangeList()
         {
-            var changed = await MainForm.ShowListAsync(FrmListType.Parts);
-
             selfChange = true;
 
             cboxPart.SelectedIndex = 0;
 
             selfChange = false;
+        }
 
-            if (changed)
+        private async Task AfterChangeListAsync(PartModel value)
+        {
+            selfChange = true;
+
+            var tech = cboxTech.GetSelectedItem<TechModel>();
+
+            await LoadDataAsync();
+
+            cboxTech.SelectedValue = tech?.Id ?? Sql.NewId;
+
+            cboxPart.SelectedValue = value?.Id ?? Sql.NewId;
+
+            selfChange = false;
+        }
+
+        private async Task<bool> ListItemSaveAsync(PartModel value)
+        {
+            var status = MainForm.ProgramStatus.Start(Status.LoadData);
+
+            try
             {
-                var techPosition = bindingSourceTechs.Position;
+                await Database.Default.ListItemSaveAsync(value);
 
-                await LoadDataAsync();
-                
-                bindingSourceTechs.Position = techPosition;
+                return true;
             }
+            catch (Exception e)
+            {
+                Utils.Log.Query(e);
+
+                Utils.Log.Error(e);
+
+                Utils.Msg.Error(Resources.MsgDatabaseListItemSaveFail, e.Message);
+
+                return false;
+            }
+            finally
+            {
+                MainForm.ProgramStatus.Stop(status);
+            }
+        }
+
+        private async Task AddPartAsync()
+        {
+            BeforeChangeList();
+
+            var value = new PartModel();
+#if DEBUG
+
+            value.Text = $"Part {Str.Random(5)}";
+#endif
+
+            var text = value.Text;
+
+            if (!Utils.TextInputBoxShow(ref text, Resources.TitlePart)) return;
+
+            value.Text = text;
+
+            if (!await ListItemSaveAsync(value)) return;
+
+            await AfterChangeListAsync(value);
+        }
+
+        private async Task ChangePartsAsync()
+        {
+            BeforeChangeList();
+
+            var changed = await MainForm.ShowListAsync(FrmListType.Parts);
+
+            if (!changed) return;
+
+            await AfterChangeListAsync(null);
         }
 
         private async void CboxPart_SelectedIndexChanged(object sender, EventArgs e)
@@ -309,9 +377,16 @@ namespace Technics
 
             var part = cboxPart.GetSelectedItem<PartModel>();
 
-            if (part?.Id == Utils.ListEditId)
+            switch (part?.Id)
             {
-                await ChangePartsAsync();
+                case Consts.Id.ListAdd:
+                    await AddPartAsync();
+
+                    break;
+                case Consts.Id.ListEdit:
+                    await ChangePartsAsync();
+
+                    break;
             }
         }
     }

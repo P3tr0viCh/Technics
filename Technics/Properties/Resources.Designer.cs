@@ -189,6 +189,15 @@ namespace Technics.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to https://github.com/P3tr0viCh/Technics.
+        /// </summary>
+        internal static string GitHubLink {
+            get {
+                return ResourceManager.GetString("GitHubLink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Во время создания базы данных произошла ошибка:
         ///{0}.
         ///Каталог с базой данных установлен по умолчанию:
@@ -442,6 +451,15 @@ namespace Technics.Properties {
         internal static string TextLabelText {
             get {
                 return ResourceManager.GetString("TextLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Добавить элемент....
+        /// </summary>
+        internal static string TextListAdd {
+            get {
+                return ResourceManager.GetString("TextListAdd", resourceCulture);
             }
         }
         

@@ -148,7 +148,11 @@ namespace Technics
 
         private void ShowAbout()
         {
-            FrmAbout.Show(14);
+            FrmAbout.Show(new FrmAbout.Options()
+            {
+                AppNameFontSize = 14,
+                Link = Resources.GitHubLink
+            });
         }
 
         private void MiHelpAbout_Click(object sender, EventArgs e)

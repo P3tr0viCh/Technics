@@ -276,6 +276,9 @@
   <data name="StatusTechPartSelectedCount" xml:space="preserve">
     <value>(выделено: {0})</value>
   </data>
+  <data name="GitHubLink" xml:space="preserve">
+    <value>https://github.com/P3tr0viCh/Technics</value>
+  </data>
   <data name="QuestionNewTrackFinded1" xml:space="preserve">
     <value>Обнаружен новый трек:
 {0}
@@ -294,5 +297,8 @@
 и ещё {1}.
 
 Добавить в базу?</value>
+  </data>
+  <data name="TextListAdd" xml:space="preserve">
+    <value>Добавить элемент...</value>
   </data>
 </root>

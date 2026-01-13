@@ -85,6 +85,7 @@
   <ItemGroup>
     <Compile Include="AppSettings\AppSettings.cs" />
     <Compile Include="AppSettings\AppSettings.FormState.cs" />
+    <Compile Include="Consts.cs" />
     <Compile Include="Database\Database.Parts.cs" />
     <Compile Include="Database\Database.cs" />
     <Compile Include="Database\Database.Dummy.cs" />
