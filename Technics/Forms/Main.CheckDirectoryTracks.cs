@@ -1,5 +1,5 @@
 ﻿#if DEBUG
-#define SHOW_FILES
+#define _SHOW_FILES
 #endif
 
 using P3tr0viCh.Utils;
@@ -98,7 +98,7 @@ namespace Technics
 
         private async Task<IEnumerable<string>> GetNewFilesAsync(string directory)
         {
-            var status = ProgramStatus.Start(Status.CheckDirectoryTracks);
+            var status = ProgramStatus.Default.Start(Status.CheckDirectoryTracks);
 
             try
             {
@@ -115,7 +115,7 @@ namespace Technics
             }
             finally
             {
-                ProgramStatus.Stop(status);
+                ProgramStatus.Default.Stop(status);
             }
         }
 

@@ -80,7 +80,7 @@ namespace Technics
         {
             DebugWrite.Line("start");
 
-            var status = MainForm.ProgramStatus.Start(Status.LoadData);
+            var status = ProgramStatus.Default.Start(Status.LoadData);
 
             selfChange = true;
 
@@ -124,7 +124,7 @@ namespace Technics
             {
                 selfChange = false;
 
-                MainForm.ProgramStatus.Stop(status);
+                ProgramStatus.Default.Stop(status);
             }
 
             DebugWrite.Line("end");
@@ -315,7 +315,7 @@ namespace Technics
 
         private async Task<bool> ListItemSaveAsync(PartModel value)
         {
-            var status = MainForm.ProgramStatus.Start(Status.LoadData);
+            var status = ProgramStatus.Default.Start(Status.LoadData);
 
             try
             {
@@ -335,7 +335,7 @@ namespace Technics
             }
             finally
             {
-                MainForm.ProgramStatus.Stop(status);
+                ProgramStatus.Default.Stop(status);
             }
         }
 

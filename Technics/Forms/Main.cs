@@ -12,14 +12,13 @@ using Technics.Presenters;
 using Technics.Properties;
 using static Technics.Enums;
 using static Technics.Presenters.PresenterStatusStripMain;
+using static Technics.ProgramStatus;
 
 namespace Technics
 {
     public partial class Main : Form, IMainForm, PresenterStatusStrip<StatusLabel>.IPresenterStatusStrip
     {
         private readonly PresenterStatusStripMain presenterStatusStrip;
-
-        public ProgramStatus ProgramStatus { get; } = new ProgramStatus();
 
         public Main()
         {
@@ -50,7 +49,7 @@ namespace Technics
 
             AddTechsRoot();
 
-            ProgramStatus.StatusChanged += ProgramStatus_StatusChanged;
+            ProgramStatus.Default.StatusChanged += ProgramStatus_StatusChanged;
 
             AppSettings.LoadFormState(this, AppSettings.Default.FormStates);
 
@@ -94,7 +93,7 @@ namespace Technics
         {
             presenterStatusStrip.Status = status;
 
-            UseWaitCursor = !ProgramStatus.IsIdle;
+            UseWaitCursor = !ProgramStatus.Default.IsIdle;
         }
 
         private void Main_FormClosing(object sender, FormClosingEventArgs e)
@@ -290,7 +289,7 @@ namespace Technics
 
         private bool IsProgramBusy()
         {
-            if (ProgramStatus.IsIdle) return false;
+            if (ProgramStatus.Default.IsIdle) return false;
 
             Utils.Msg.Error(Resources.TextProgramBusy);
 

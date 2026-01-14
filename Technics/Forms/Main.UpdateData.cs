@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Technics.Properties;
 using static Technics.Database.Models;
 using static Technics.Enums;
+using static Technics.ProgramStatus;
 
 namespace Technics
 {
@@ -29,11 +30,13 @@ namespace Technics
 
             DebugWrite.Line($"Loading data {load}");
 
-            var status = ProgramStatus.Start(Status.LoadData);
+            var status = ProgramStatus.Default.Start(Status.LoadData);
 
             try
             {
                 SelfChange = true;
+
+                await Task.Delay(100);
 
                 if (load.HasFlag(DataLoad.Techs))
                 {
@@ -74,7 +77,7 @@ namespace Technics
             {
                 SelfChange = false;
 
-                ProgramStatus.Stop(status);
+                ProgramStatus.Default.Stop(status);
 
                 DebugWrite.Line("end");
             }

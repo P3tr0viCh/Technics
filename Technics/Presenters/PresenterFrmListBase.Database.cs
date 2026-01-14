@@ -13,7 +13,7 @@ namespace Technics.Presenters
 		{
 			DebugWrite.Line("start");
 
-			var status = FrmList.MainForm.ProgramStatus.Start(Status.LoadData);
+			var status = ProgramStatus.Default.Start(Status.LoadData);
 
 			try
 			{
@@ -39,7 +39,7 @@ namespace Technics.Presenters
 			}
 			finally
 			{
-				FrmList.MainForm.ProgramStatus.Stop(status);
+				ProgramStatus.Default.Stop(status);
 			}
 
 			DebugWrite.Line("end");
@@ -52,7 +52,7 @@ namespace Technics.Presenters
 
         private async Task PerformListItemSaveAsync(T value)
 		{
-			var status = FrmList.MainForm.ProgramStatus.Start(Status.SaveDatа);
+			var status = ProgramStatus.Default.Start(Status.SaveDatа);
 
 			try
 			{
@@ -68,7 +68,7 @@ namespace Technics.Presenters
 			}
 			finally
 			{
-				FrmList.MainForm.ProgramStatus.Stop(status);
+				ProgramStatus.Default.Stop(status);
 			}
 		}
 
@@ -79,7 +79,7 @@ namespace Technics.Presenters
 
         private async Task PerformListItemDeleteAsync(IEnumerable<T> list)
 		{
-			var status = FrmList.MainForm.ProgramStatus.Start(Status.SaveDatа);
+			var status = ProgramStatus.Default.Start(Status.SaveDatа);
 
 			try
 			{
@@ -95,7 +95,7 @@ namespace Technics.Presenters
 			}
 			finally
 			{
-				FrmList.MainForm.ProgramStatus.Stop(status);
+				ProgramStatus.Default.Stop(status);
 			}
 		}
 	}

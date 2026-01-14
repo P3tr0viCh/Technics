@@ -80,7 +80,7 @@ namespace Technics
         {
             if (!FrmMileage.ShowDlg(this, mileage)) return;
 
-            var status = ProgramStatus.Start(Status.SaveDatа);
+            var status = ProgramStatus.Default.Start(Status.SaveDatа);
 
             try
             {
@@ -119,7 +119,7 @@ namespace Technics
             }
             finally
             {
-                ProgramStatus.Stop(status);
+                ProgramStatus.Default.Stop(status);
             }
 
             dgvMileages.Focus();
@@ -167,7 +167,7 @@ namespace Technics
 
             if (!Utils.Msg.Question(mileages)) return;
 
-            var status = ProgramStatus.Start(Status.SaveDatа);
+            var status = ProgramStatus.Default.Start(Status.SaveDatа);
 
             try
             {
@@ -196,7 +196,7 @@ namespace Technics
             }
             finally
             {
-                ProgramStatus.Stop(status);
+                ProgramStatus.Default.Stop(status);
             }
 
             dgvMileages.Focus();

@@ -1,6 +1,6 @@
 ﻿using P3tr0viCh.Utils;
 using Technics.Properties;
-using static Technics.Enums;
+using static Technics.ProgramStatus;
 
 namespace Technics.Presenters
 {

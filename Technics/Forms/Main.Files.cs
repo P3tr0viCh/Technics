@@ -77,7 +77,7 @@ namespace Technics
         {
             DebugWrite.Line("start");
 
-            var status = ProgramStatus.Start(Status.ReadFiles);
+            var status = ProgramStatus.Default.Start(Status.ReadFiles);
 
             try
             {
@@ -98,7 +98,7 @@ namespace Technics
             }
             finally
             {
-                ProgramStatus.Stop(status);
+                ProgramStatus.Default.Stop(status);
 
                 DebugWrite.Line("end");
             }

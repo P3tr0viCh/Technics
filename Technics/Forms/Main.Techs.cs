@@ -152,7 +152,7 @@ namespace Technics
 
         private async Task TechsAddNewItemAsync(BaseId value)
         {
-            var status = ProgramStatus.Start(Status.SaveDatа);
+            var status = ProgramStatus.Default.Start(Status.SaveDatа);
 
             try
             {
@@ -194,7 +194,7 @@ namespace Technics
             }
             finally
             {
-                ProgramStatus.Stop(status);
+                ProgramStatus.Default.Stop(status);
             }
 
             tvTechs.Focus();
@@ -264,7 +264,7 @@ namespace Technics
 
             changedModel.Text = text;
 
-            var status = ProgramStatus.Start(Status.SaveDatа);
+            var status = ProgramStatus.Default.Start(Status.SaveDatа);
 
             try
             {
@@ -299,7 +299,7 @@ namespace Technics
             }
             finally
             {
-                ProgramStatus.Stop(status);
+                ProgramStatus.Default.Stop(status);
             }
 
             tvTechs.Focus();
@@ -342,7 +342,7 @@ namespace Technics
 
             if (!Utils.Msg.Question(question, deletedModel.Text)) return;
 
-            var status = ProgramStatus.Start(Status.SaveDatа);
+            var status = ProgramStatus.Default.Start(Status.SaveDatа);
 
             try
             {
@@ -406,7 +406,7 @@ namespace Technics
             }
             finally
             {
-                ProgramStatus.Stop(status);
+                ProgramStatus.Default.Stop(status);
             }
 
             tvTechs.Focus();
