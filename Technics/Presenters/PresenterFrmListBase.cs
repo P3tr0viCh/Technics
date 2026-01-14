@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static Technics.Database.Models;
 
 namespace Technics.Presenters
 {
@@ -103,7 +104,18 @@ namespace Technics.Presenters
 
         protected abstract string FormTitle { get; }
 
-        protected abstract void LoadFormState();
+        protected virtual void LoadFormState()
+        {
+            AppSettings.LoadFormState(Form, ListType.ToString(), AppSettings.Default.FormStates);
+            AppSettings.LoadDataGridColumns(FrmList.DataGridView, ListType.ToString(), AppSettings.Default.ColumnStates);
+        }
+
+        protected virtual void SaveFormState()
+        {
+            AppSettings.SaveFormState(Form, ListType.ToString(), AppSettings.Default.FormStates);
+            AppSettings.SaveDataGridColumns(FrmList.DataGridView, ListType.ToString(), AppSettings.Default.ColumnStates);
+        }
+
         protected abstract void UpdateColumns();
 
         private async Task FormLoadAsync()
@@ -134,8 +146,6 @@ namespace Technics.Presenters
             DataGridView.Columns[nameof(BaseId.Id)].Visible = false;
             DataGridView.Columns[nameof(BaseId.IsNew)].Visible = false;
         }
-
-        protected abstract void SaveFormState();
 
         public void FormClosing()
         {

@@ -25,16 +25,9 @@ namespace Technics.Presenters
 
             DataGridView.DataSource = BindingSource;
 
-            AppSettings.LoadFormState(Form, AppSettings.Default.FormStateListTechs);
-            AppSettings.LoadDataGridColumns(DataGridView, AppSettings.Default.ColumnsListTechs);
+            base.LoadFormState();
 
             presenterDataGridView.SortColumn = nameof(TechModel.Text);
-        }
-
-        protected override void SaveFormState()
-        {
-            AppSettings.Default.FormStateListTechs = AppSettings.SaveFormState(Form);
-            AppSettings.Default.ColumnsListTechs = AppSettings.SaveDataGridColumns(DataGridView);
         }
 
         protected override bool ShowItemChangeDialog(TechModel value)

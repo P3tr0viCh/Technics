@@ -52,10 +52,10 @@ namespace Technics
 
             ProgramStatus.StatusChanged += ProgramStatus_StatusChanged;
 
-            AppSettings.LoadFormState(this, AppSettings.Default.FormStateMain);
+            AppSettings.LoadFormState(this, AppSettings.Default.FormStates);
 
-            AppSettings.LoadDataGridColumns(dgvMileages, AppSettings.Default.ColumnsMileages);
-            AppSettings.LoadDataGridColumns(dgvTechParts, AppSettings.Default.ColumnsTechParts);
+            AppSettings.LoadDataGridColumns(dgvMileages, AppSettings.Default.ColumnStates);
+            AppSettings.LoadDataGridColumns(dgvTechParts, AppSettings.Default.ColumnStates);
 
             tvTechs.Width = AppSettings.Default.PanelTechsWidth;
             panelBottom.Height = AppSettings.Default.PanelBottomHeight;
@@ -116,10 +116,10 @@ namespace Technics
                     break;
             }
 
-            AppSettings.Default.FormStateMain = AppSettings.SaveFormState(this);
+            AppSettings.SaveFormState(this, AppSettings.Default.FormStates);
 
-            AppSettings.Default.ColumnsMileages = AppSettings.SaveDataGridColumns(dgvMileages);
-            AppSettings.Default.ColumnsTechParts = AppSettings.SaveDataGridColumns(dgvTechParts);
+            AppSettings.SaveDataGridColumns(dgvMileages, AppSettings.Default.ColumnStates);
+            AppSettings.SaveDataGridColumns(dgvTechParts, AppSettings.Default.ColumnStates);
 
             AppSettings.Default.PanelTechsWidth = tvTechs.Width;
             AppSettings.Default.PanelBottomHeight = panelBottom.Height;

@@ -1,5 +1,6 @@
 ﻿using P3tr0viCh.Utils;
 using P3tr0viCh.Utils.Attributes;
+using P3tr0viCh.Utils.Settings;
 using System.ComponentModel;
 using System.Drawing.Design;
 using System.Windows.Forms.Design;
@@ -15,7 +16,7 @@ namespace Technics
         [LocalizedDisplayName("DirectoryDatabase.DisplayName", Resource)]
         [LocalizedDescription("DirectoryDatabase.Description", Resource)]
         [Editor(typeof(FolderNameEditor), typeof(UITypeEditor))]
-        [CheckDirectory(false, true, true)]
+        [CheckDirectory()]
         public string DirectoryDatabase { get; set; } = string.Empty;
 
         [LocalizedCategory("Category.Directories", Resource)]
@@ -59,8 +60,24 @@ namespace Technics
         public string DirectoryLastMileages { get; set; } = string.Empty;
 
         // --------------------------------------------------------------------------------------------------------
-        public void Check()
+        [Browsable(false)]
+        public FormStates FormStates { get; private set; } = new FormStates();
+
+        [Browsable(false)]
+        public ColumnStates ColumnStates { get; private set; } = new ColumnStates();
+
+        // --------------------------------------------------------------------------------------------------------
+        protected override void Check()
         {
+            if (FormStates == null)
+            {
+                FormStates = new FormStates();
+            }
+
+            if (ColumnStates == null)
+            {
+                ColumnStates = new ColumnStates();
+            }
         }
     }
 }

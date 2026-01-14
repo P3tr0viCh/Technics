@@ -84,7 +84,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppSettings\AppSettings.cs" />
-    <Compile Include="AppSettings\AppSettings.FormState.cs" />
     <Compile Include="Consts.cs" />
     <Compile Include="Database\Database.Parts.cs" />
     <Compile Include="Database\Database.cs" />
@@ -98,7 +97,6 @@
     <Compile Include="Database\Database.Techs.cs" />
     <Compile Include="DataGridViewCellStyles.cs" />
     <Compile Include="Enums.cs" />
-    <Compile Include="AppSettings\AppSettings.ColumnsState.cs" />
     <Compile Include="Forms\FrmList.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -1,5 +1,5 @@
-﻿using P3tr0viCh.Utils;
-using P3tr0viCh.Utils.Forms;
+﻿using P3tr0viCh.Utils.Forms;
+using P3tr0viCh.Utils.Settings;
 using System;
 
 namespace Technics
@@ -22,12 +22,12 @@ namespace Technics
 
         protected override void SaveFormState()
         {
-            AppSettings.Default.FormStateSettings = AppSettings.SaveFormState(this);
+            AppSettings.SaveFormState(this, AppSettings.Default.FormStates);
         }
 
         protected override void LoadFormState()
         {
-            AppSettings.LoadFormState(this, AppSettings.Default.FormStateSettings);
+            AppSettings.LoadFormState(this, AppSettings.Default.FormStates);
         }
 
         protected override void SettingsHasError(Exception e)

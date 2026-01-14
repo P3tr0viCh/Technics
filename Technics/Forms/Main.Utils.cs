@@ -133,8 +133,6 @@ namespace Technics
             {
                 Utils.Log.Error(AppSettings.LastError);
             }
-
-            AppSettings.Default.Check();
         }
 
         public void AppSettingsSave()

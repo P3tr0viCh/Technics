@@ -4,6 +4,7 @@
 
 using P3tr0viCh.Utils;
 using P3tr0viCh.Utils.Extensions;
+using P3tr0viCh.Utils.Settings;
 using System;
 using System.Collections.Generic;
 using System.IO;

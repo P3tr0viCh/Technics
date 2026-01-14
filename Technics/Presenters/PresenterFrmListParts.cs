@@ -32,16 +32,9 @@ namespace Technics.Presenters
 
         protected override void LoadFormState()
         {
-            AppSettings.LoadFormState(Form, AppSettings.Default.FormStateListParts);
-            AppSettings.LoadDataGridColumns(FrmList.DataGridView, AppSettings.Default.ColumnsListParts);
+            base.LoadFormState();
 
             presenterDataGridView.SortColumn = nameof(TechModel.Text);
-        }
-
-        protected override void SaveFormState()
-        {
-            AppSettings.Default.FormStateListParts = AppSettings.SaveFormState(Form);
-            AppSettings.Default.ColumnsListParts = AppSettings.SaveDataGridColumns(FrmList.DataGridView);
         }
 
         protected override bool ShowItemChangeDialog(PartModel value)
