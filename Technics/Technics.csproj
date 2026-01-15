@@ -110,6 +110,12 @@
     <Compile Include="Forms\FrmMileage.Designer.cs">
       <DependentUpon>FrmMileage.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\FrmMileageList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmMileageList.Designer.cs">
+      <DependentUpon>FrmMileageList.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\FrmSettings.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -201,6 +207,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FrmMileage.resx">
       <DependentUpon>FrmMileage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FrmMileageList.resx">
+      <DependentUpon>FrmMileageList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FrmTechPart.resx">
       <DependentUpon>FrmTechPart.cs</DependentUpon>

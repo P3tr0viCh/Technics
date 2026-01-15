@@ -13,9 +13,9 @@ namespace Technics
     {
         public IMainForm MainForm => Owner as IMainForm;
 
-        private readonly MileageModel mileage = new MileageModel();
-
         private bool selfChange = false;
+
+        private readonly MileageModel mileage = new MileageModel();
 
         private MileageModel Mileage
         {

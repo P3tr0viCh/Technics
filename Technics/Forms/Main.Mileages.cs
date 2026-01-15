@@ -125,6 +125,44 @@ namespace Technics
             dgvMileages.Focus();
         }
 
+        private async Task MileagesChangeAsync(IEnumerable<MileageModel> mileages)
+        {
+            if (!FrmMileageList.ShowDlg(this, mileages)) return;
+
+            var status = ProgramStatus.Default.Start(Status.SaveDatа);
+
+            try
+            {
+                var updated = await Database.Default.MileageSaveAsync(mileages);
+
+                dgvMileages.Refresh();
+
+                presenterDataGridViewMileages.Sort();
+
+                dgvMileages.SetSelectedRows(mileages);
+
+                MileagesUpdateChanged(updated);
+
+                TechPartsUpdateChanged(updated);
+
+                MileagesListChanged();
+            }
+            catch (Exception e)
+            {
+                Utils.Log.Query(e);
+
+                Utils.Log.Error(e);
+
+                Utils.Msg.Error(Resources.MsgDatabaseListItemSaveFail, e.Message);
+            }
+            finally
+            {
+                ProgramStatus.Default.Stop(status);
+            }
+
+            dgvMileages.Focus();
+        }
+
         private async Task MileagesAddNewAsync()
         {
             var mileage = new MileageModel()
@@ -148,13 +186,20 @@ namespace Technics
 
         private async Task MileagesChangeSelectedAsync()
         {
-            var mileage = MileageSelected;
+            var mileages = MileageSelectedList;
 
-            if (mileage == null) return;
+            if (!mileages.Any()) return;
 
-            dgvMileages.SetSelectedRows(mileage);
+            dgvMileages.SetSelectedRows(mileages);
 
-            await MileagesChangeAsync(mileage);
+            if (mileages.Count() == 1)
+            {
+                await MileagesChangeAsync(mileages.FirstOrDefault());
+            }
+            else
+            {
+                await MileagesChangeAsync(mileages);
+            }
         }
 
         private async Task MileagesDeleteSelectedAsync()
