@@ -11,7 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Technics.Properties;
-using static Technics.Enums;
+using static Technics.ProgramStatus;
 
 namespace Technics
 {

@@ -9,6 +9,7 @@ using Technics.Properties;
 using static P3tr0viCh.Utils.DataTableFile;
 using static Technics.Database.Models;
 using static Technics.Enums;
+using static Technics.ProgramStatus;
 
 namespace Technics
 {

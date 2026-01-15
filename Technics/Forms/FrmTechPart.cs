@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Technics.Properties;
 using static Technics.Database.Models;
-using static Technics.Enums;
+using static Technics.ProgramStatus;
 
 namespace Technics
 {

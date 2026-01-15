@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Technics.Presenters;
 using Technics.Properties;
 using static Technics.Database.Models;
-using static Technics.Enums;
+using static Technics.ProgramStatus;
 
 namespace Technics
 {
