@@ -215,7 +215,7 @@ namespace Technics
             {
                 Text = text
             };
-
+            
             await TechsAddNewItemAsync(folder);
         }
 

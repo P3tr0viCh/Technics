@@ -31,9 +31,9 @@
             this.components = new System.ComponentModel.Container();
             this.lblTech = new System.Windows.Forms.Label();
             this.cboxTech = new System.Windows.Forms.ComboBox();
+            this.bindingSourceTechs = new System.Windows.Forms.BindingSource(this.components);
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnOk = new System.Windows.Forms.Button();
-            this.bindingSourceTechs = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourceTechs)).BeginInit();
             this.SuspendLayout();
             // 
@@ -58,6 +58,10 @@
             this.cboxTech.TabIndex = 1;
             this.cboxTech.ValueMember = "Id";
             // 
+            // bindingSourceTechs
+            // 
+            this.bindingSourceTechs.DataSource = typeof(Technics.Database.Models.TechModel);
+            // 
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
@@ -78,10 +82,6 @@
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.Click += new System.EventHandler(this.BtnOk_Click);
             // 
-            // bindingSourceTechs
-            // 
-            this.bindingSourceTechs.DataSource = typeof(Technics.Database.Models.TechModel);
-            // 
             // FrmMileageList
             // 
             this.AcceptButton = this.btnOk;
@@ -100,7 +100,7 @@
             this.Name = "FrmMileageList";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Пробег {0}";
+            this.Text = "Пробеги";
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourceTechs)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

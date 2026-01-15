@@ -81,7 +81,7 @@ namespace Technics
         {
             try
             {
-                var tech = cboxTech.GetSelectedItem<TechModel>();
+                Tech = cboxTech.GetSelectedItem<TechModel>();
 
                 return true;
             }

@@ -128,8 +128,6 @@ namespace Technics
         {
             try
             {
-                Utils.AssertComboBox<TechModel>(cboxTech, Resources.ErrorTechEmpty);
-
                 if (tboxMileage.IsEmpty() && tboxMileageCommon.IsEmpty())
                 {
                     tboxMileage.Focus();
@@ -138,6 +136,12 @@ namespace Technics
                 }
 
                 var tech = cboxTech.GetSelectedItem<TechModel>();
+
+                AssertMileageValue(tboxMileage);
+
+                AssertMileageValue(tboxMileageCommon);
+
+                if (tech.IsNew) return true;
 
                 var mileagePrev = new MileageModel()
                 {
@@ -150,8 +154,6 @@ namespace Technics
 
                 DebugWrite.Line($"mileageCommonPrev = {mileageCommonPrev}");
 
-                AssertMileageValue(tboxMileage);
-
                 var mileage = tboxMileage.GetDouble();
 
                 if (mileage > 0.0)
@@ -161,8 +163,6 @@ namespace Technics
 
                     return true;
                 }
-
-                AssertMileageValue(tboxMileageCommon);
 
                 var mileageCommon = tboxMileageCommon.GetDouble();
 
@@ -194,7 +194,7 @@ namespace Technics
             try
             {
                 var tech = cboxTech.GetSelectedItem<TechModel>();
-
+                
                 mileage.TechId = tech.Id;
                 mileage.TechText = tech.Text;
 

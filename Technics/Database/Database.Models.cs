@@ -15,7 +15,7 @@ namespace Technics
             {
                 public long? ParentId { get; set; } = null;
 
-                public new void Clear()
+                public override void Clear()
                 {
                     base.Clear();
 
@@ -43,7 +43,7 @@ namespace Technics
             {
                 public long? FolderId { get; set; } = null;
 
-                public new void Clear()
+                public override void Clear()
                 {
                     base.Clear();
 
@@ -68,13 +68,29 @@ namespace Technics
             // ---------------------------------------------------------------
             public abstract class BaseTechId : BaseId, ITechId
             {
-                public long? TechId { get; set; } = null;
+                private long? techId = null;
+
+                public long? TechId
+                {
+                    get => techId;
+                    set
+                    {
+                        if (value == Sql.NewId)
+                        {
+                            value = null;
+
+                            TechText = null;
+                        }
+
+                        techId = value;
+                    }
+                }
 
                 [Write(false)]
                 [Computed]
                 public string TechText { get; set; } = default;
 
-                public new void Clear()
+                public override void Clear()
                 {
                     base.Clear();
 
@@ -110,7 +126,7 @@ namespace Technics
 
                 public string Description { get; set; } = null;
 
-                public new void Clear()
+                public override void Clear()
                 {
                     base.Clear();
 
@@ -146,7 +162,7 @@ namespace Technics
             [Table(Tables.parts)]
             public class PartModel : BaseText
             {
-                public new void Clear()
+                public override void Clear()
                 {
                     base.Clear();
                 }
@@ -181,7 +197,7 @@ namespace Technics
 
                 public double? MileageCommon { get; set; } = null;
 
-                public new void Clear()
+                public override void Clear()
                 {
                     base.Clear();
 
