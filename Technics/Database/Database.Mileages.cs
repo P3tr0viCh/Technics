@@ -41,9 +41,28 @@ namespace Technics
         {
             var query = new Query()
             {
-                Fields = "IFNULL(SUM(mileage), 0.0)",
+                Fields = "mileagecommon",
                 Table = Tables.mileages,
-                Where = "id != :id AND techid = :techid AND datetime <= :datetime"
+                Where = "techid = :techid AND datetime < :datetime",
+                Order = "datetime DESC"
+            };
+
+            object param = new { id = mileage.Id, techid = mileage.TechId, datetime = mileage.DateTime };
+
+            using (var connection = GetConnection())
+            {
+                return await connection.QuerySingleRowAsync<double>(query, param);
+            }
+        }
+
+        public async Task<double> MileagesGetMileageCommonNextAsync(MileageModel mileage)
+        {
+            var query = new Query()
+            {
+                Fields = "mileagecommon",
+                Table = Tables.mileages,
+                Where = "techid = :techid AND datetime > :datetime",
+                Order = "datetime"
             };
 
             object param = new { id = mileage.Id, techid = mileage.TechId, datetime = mileage.DateTime };
@@ -74,20 +93,46 @@ namespace Technics
 
             if (!mileages.Any()) return updated;
 
-            var mileageCommon = 0.0;
+            double mileageValue;
+
+            var mileageCommonValue = 0.0;
 
             foreach (var mileage in mileages)
             {
-                mileageCommon += mileage.Mileage;
+                if (mileage.MileageType == MileageType.Single)
+                {
+                    mileageValue = mileage.Mileage;
 
-                if (mileage.MileageCommon == mileageCommon) continue;
+                    mileageCommonValue += mileage.Mileage;
+                }
+                else
+                {
+                    mileageValue = (double)mileage.MileageCommon - mileageCommonValue;
 
-                mileage.MileageCommon = mileageCommon;
+                    mileageCommonValue = (double)mileage.MileageCommon;
+                }
 
-                await connection.ExecuteSqlAsync(ResourcesSql.UpdateMileagesMileageCommonById,
-                    new { id = mileage.Id, mileagecommon = mileage.MileageCommon }, transaction);
+                if (mileage.Mileage == mileageValue &&
+                    mileage.MileageCommon == mileageCommonValue) continue;
 
-                updated.Add(new UpdateMileageModel() { Id = mileage.Id, MileageCommon = mileageCommon });
+                mileage.Mileage = mileageValue;
+
+                mileage.MileageCommon = mileageCommonValue;
+
+                await connection.ExecuteSqlAsync(ResourcesSql.UpdateMileagesMileagesById,
+                    new
+                    {
+                        id = mileage.Id,
+                        mileage = mileage.Mileage,
+                        mileagecommon = mileage.MileageCommon
+                    }, transaction);
+
+                updated.Add(new UpdateMileageModel()
+                {
+                    Id = mileage.Id,
+                    Mileage = mileageValue,
+                    MileageCommon = mileageCommonValue
+                });
             }
 
             return updated;

@@ -114,6 +114,12 @@ namespace Technics
                 }
             }
 
+            public enum MileageType
+            {
+                Single = 0,
+                Common = 1,
+            }
+
             // ---------------------------------------------------------------
             [Table(Tables.mileages)]
             public class MileageModel : BaseTechId
@@ -122,7 +128,9 @@ namespace Technics
 
                 public double Mileage { get; set; } = default;
 
-                public double? MileageCommon { get; set; } = null;
+                public double MileageCommon { get; set; } = default;
+
+                public MileageType MileageType { get; set; } = MileageType.Single;
 
                 public string Description { get; set; } = null;
 
@@ -133,7 +141,9 @@ namespace Technics
                     DateTime = default;
 
                     Mileage = default;
-                    MileageCommon = null;
+                    MileageCommon = default;
+
+                    MileageType = MileageType.Single;
 
                     Description = null;
                 }
@@ -153,6 +163,8 @@ namespace Technics
 
                     Mileage = source.Mileage;
                     MileageCommon = source.MileageCommon;
+
+                    MileageType = source.MileageType;
 
                     Description = source.Description;
                 }

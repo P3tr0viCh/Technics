@@ -120,8 +120,8 @@
   <data name="ErrorCsvFileWrongHeader" xml:space="preserve">
     <value>Неверный формат файла (заголовок не соответствует заданному)</value>
   </data>
-  <data name="ErrorMileageCommonWrong" xml:space="preserve">
-    <value>Указанный общий пробег ({0}) меньше или равен уже внесённому в базу данных ({1}).</value>
+  <data name="ErrorMileageCommonWrongLess" xml:space="preserve">
+    <value>Общий пробег ({0}) меньше предыдущего, уже внесённого в базу данных, пробега ({1}).</value>
   </data>
   <data name="ErrorMileagesEmpty" xml:space="preserve">
     <value>Не один из пробегов не указан.</value>
@@ -300,5 +300,8 @@
   </data>
   <data name="TextListAdd" xml:space="preserve">
     <value>Добавить элемент...</value>
+  </data>
+  <data name="ErrorMileageCommonWrongGreater" xml:space="preserve">
+    <value>Общий пробег ({0}) больше следующего, уже внесённого в базу данных, пробега ({1}).</value>
   </data>
 </root>

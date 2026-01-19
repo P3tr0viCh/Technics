@@ -24,14 +24,24 @@ namespace Technics
             {
                 mileage.Assign(value);
 
+                selfChange = true;
+
                 cboxTech.SelectedValue = value.TechId ?? Sql.NewId;
 
                 dtpDateTime.SetDateTime(value.DateTime);
 
-                TextBoxSetValue(tboxMileage, value.Mileage, AppSettings.Default.FormatMileagesMileage);
-                TextBoxSetValue(tboxMileageCommon, value.MileageCommon, AppSettings.Default.FormatMileagesMileageCommon);
+                if (value.MileageType == MileageType.Single)
+                {
+                    tboxMileage.SetDouble(value.Mileage, AppSettings.Default.FormatMileagesMileage);
+                }
+                else
+                {
+                    tboxMileageCommon.SetDouble(value.MileageCommon, AppSettings.Default.FormatMileagesMileageCommon);
+                }
 
                 tboxDescription.SetText(value.Description);
+
+                selfChange = false;
             }
         }
 
@@ -78,11 +88,26 @@ namespace Technics
             dtpDateTime.CustomFormat = AppSettings.Default.FormatDateTime;
         }
 
-        private async Task<double> GetMileageCommonPrevAsync(MileageModel mileage)
+        private class MileageCommons
+        {
+            public double Prev { get; private set; }
+            public double Next { get; private set; }
+
+            public MileageCommons(double prev, double next)
+            {
+                Prev = prev;
+                Next = next;
+            }
+        }
+
+        private async Task<MileageCommons> GetMileageCommonsAsync(MileageModel mileage)
         {
             try
             {
-                return await Database.Default.MileagesGetMileageCommonPrevAsync(mileage);
+                var prev = await Database.Default.MileagesGetMileageCommonPrevAsync(mileage);
+                var next = await Database.Default.MileagesGetMileageCommonNextAsync(mileage);
+
+                return new MileageCommons(prev, next);
             }
             catch (Exception e)
             {
@@ -93,8 +118,6 @@ namespace Technics
                 throw new Exception(string.Format(Resources.MsgDatabaseLoadFail, e.Message));
             }
         }
-
-        private double mileageCommonPrev;
 
         private void AssertMileageValue(TextBox textBox)
         {
@@ -115,13 +138,16 @@ namespace Technics
             }
         }
 
-        private void TextBoxSetValue(TextBox textBox, double? value, string format)
+        private void TextBoxMileageSetFocus()
         {
-            selfChange = true;
-
-            textBox.SetDouble(value, format);
-
-            selfChange = false;
+            if (Mileage.MileageType == MileageType.Single)
+            {
+                tboxMileage.Focus();
+            }
+            else
+            {
+                tboxMileageCommon.Focus();
+            }
         }
 
         private async Task<bool> CheckDataAsync()
@@ -135,47 +161,77 @@ namespace Technics
                     throw new Exception(Resources.ErrorMileagesEmpty);
                 }
 
-                var tech = cboxTech.GetSelectedItem<TechModel>();
-
                 AssertMileageValue(tboxMileage);
 
                 AssertMileageValue(tboxMileageCommon);
 
+                var mileage = tboxMileage.GetDouble();
+
+                var mileageCommon = tboxMileageCommon.GetDouble();
+
+                if (mileage == 0 && mileageCommon == 0)
+                {
+                    tboxMileage.Focus();
+
+                    throw new Exception(Resources.ErrorMileagesEmpty);
+                }
+
+                if (mileage > 0.0)
+                {
+                    Mileage.MileageType = MileageType.Single;
+                }
+                else
+                {
+                    Mileage.MileageType = MileageType.Common;
+                }
+
+                var tech = cboxTech.GetSelectedItem<TechModel>();
+
                 if (tech.IsNew) return true;
 
-                var mileagePrev = new MileageModel()
+                var mileageModel = new MileageModel()
                 {
                     Id = Mileage.Id,
                     TechId = tech.Id,
                     DateTime = dtpDateTime.GetDateTime(),
                 };
 
-                mileageCommonPrev = await GetMileageCommonPrevAsync(mileagePrev);
+                var mileageCommons = await GetMileageCommonsAsync(mileageModel);
 
-                DebugWrite.Line($"mileageCommonPrev = {mileageCommonPrev}");
+                DebugWrite.Line($"mileageCommons = {mileageCommons.Prev}, {mileageCommons.Next}");
 
-                var mileage = tboxMileage.GetDouble();
-
-                if (mileage > 0.0)
+                if (Mileage.MileageType == MileageType.Single)
                 {
-                    TextBoxSetValue(tboxMileageCommon, mileageCommonPrev + mileage,
-                        AppSettings.Default.FormatMileagesMileageCommon);
-
-                    return true;
+                    mileageCommon = mileageCommons.Prev + mileage;
+                }
+                else
+                {
+                    mileage = mileageCommon - mileageCommons.Prev;
                 }
 
-                var mileageCommon = tboxMileageCommon.GetDouble();
-
-                if (mileageCommon <= mileageCommonPrev)
+                if (mileageCommon > mileageCommons.Next && mileageCommons.Next > 0)
                 {
-                    tboxMileageCommon.Focus();
+                    TextBoxMileageSetFocus();
 
-                    throw new Exception(string.Format(Resources.ErrorMileageCommonWrong,
-                        mileageCommon, mileageCommonPrev));
+                    throw new Exception(string.Format(Resources.ErrorMileageCommonWrongGreater,
+                        mileageCommon, mileageCommons.Next));
                 }
 
-                TextBoxSetValue(tboxMileage, mileageCommon - mileageCommonPrev,
-                    AppSettings.Default.FormatMileagesMileage);
+                if (mileageCommon < mileageCommons.Prev && mileageCommons.Prev > 0)
+                {
+                    TextBoxMileageSetFocus();
+
+                    throw new Exception(string.Format(Resources.ErrorMileageCommonWrongLess,
+                        mileageCommon, mileageCommons.Prev));
+                }
+
+                selfChange = true;
+
+                tboxMileageCommon.SetDouble(mileageCommon, AppSettings.Default.FormatMileagesMileageCommon);
+
+                tboxMileage.SetDouble(mileage, AppSettings.Default.FormatMileagesMileage);
+
+                selfChange = false;
 
                 return true;
             }
@@ -194,7 +250,7 @@ namespace Technics
             try
             {
                 var tech = cboxTech.GetSelectedItem<TechModel>();
-                
+
                 mileage.TechId = tech.Id;
                 mileage.TechText = tech.Text;
 

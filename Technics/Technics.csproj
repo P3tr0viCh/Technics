@@ -181,6 +181,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ResourcesSettings.resx</DependentUpon>
     </Compile>
+    <Compile Include="Properties\ResourcesSql.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResourcesSql.resx</DependentUpon>
+    </Compile>
     <Compile Include="Utils.cs" />
     <Compile Include="Utils.Forms.cs" />
     <Compile Include="Lists.cs" />
@@ -194,11 +199,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ResourcesLog.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Properties\ResourcesSql.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ResourcesSql.resx</DependentUpon>
     </Compile>
     <Compile Include="Utils.Log.cs" />
     <Compile Include="Utils.Msg.cs" />
@@ -241,8 +241,8 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\ResourcesSql.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>ResourcesSql.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>ResourcesSql.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <Compile Include="Presenters\PresenterFrmListBase.Database.cs" />
     <None Include="packages.config" />
@@ -280,7 +280,7 @@
     <None Include="Resources\CreateTableTechParts.sql" />
     <None Include="Resources\SelectMileages.sql" />
     <None Include="Resources\SelectTechParts.sql" />
-    <None Include="Resources\UpdateMileagesMileageCommonById.sql" />
+    <None Include="Resources\UpdateMileagesMileagesById.sql" />
     <None Include="Resources\UpdateTechPartsMileagesById.sql" />
     <None Include="Resources\ClearMileagesMileageCommonByTechId.sql" />
     <None Include="Resources\ClearTechPartsMileagesByTechId.sql" />

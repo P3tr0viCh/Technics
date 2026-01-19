@@ -72,6 +72,7 @@ namespace Technics
 
                 if (changed == null) continue;
 
+                mileage.Mileage = changed.Mileage;
                 mileage.MileageCommon = changed.MileageCommon;
             }
         }

@@ -70,11 +70,20 @@ namespace Technics.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Указанный общий пробег ({0}) меньше или равен уже внесённому в базу данных ({1})..
+        ///   Looks up a localized string similar to Общий пробег ({0}) больше следующего, уже внесённого в базу данных, пробега ({1})..
         /// </summary>
-        internal static string ErrorMileageCommonWrong {
+        internal static string ErrorMileageCommonWrongGreater {
             get {
-                return ResourceManager.GetString("ErrorMileageCommonWrong", resourceCulture);
+                return ResourceManager.GetString("ErrorMileageCommonWrongGreater", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Общий пробег ({0}) меньше предыдущего, уже внесённого в базу данных, пробега ({1})..
+        /// </summary>
+        internal static string ErrorMileageCommonWrongLess {
+            get {
+                return ResourceManager.GetString("ErrorMileageCommonWrongLess", resourceCulture);
             }
         }
         

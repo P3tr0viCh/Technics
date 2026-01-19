@@ -79,7 +79,7 @@ namespace Technics.Properties {
         ///SET
         ///	mileage = null,
         ///	mileagecommon = null
-        ///WHERE techid = :techid;.
+        ///WHERE partid = :partid;.
         /// </summary>
         internal static string ClearTechPartsMileagesByPartId {
             get {
@@ -120,7 +120,8 @@ namespace Technics.Properties {
         ///	techid INTEGER,
         ///	datetime TEXT,
         ///	mileage REAL,
-        ///	mileageCommon REAL,
+        ///	mileagecommon REAL,
+        ///	mileagetype INTEGER,
         ///	description TEXT,
         ///	FOREIGN KEY (techid) REFERENCES techs (id)
         ///	ON DELETE SET NULL
@@ -153,7 +154,7 @@ namespace Technics.Properties {
         ///	datetimeinstall TEXT,
         ///	datetimeremove TEXT,
         ///	mileage REAL,
-        ///	mileageCommon REAL,
+        ///	mileagecommon REAL,
         ///	FOREIGN KEY (techid) REFERENCES techs (id)
         ///	ON DELETE SET NULL
         ///	ON UPDATE CASCADE,
@@ -182,11 +183,9 @@ namespace Technics.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SELECT mileages.id, techid, techs.text AS techtext, datetime, mileage, mileagecommon, description
+        ///   Looks up a localized string similar to SELECT mileages.id, techid, techs.text AS techtext, datetime, mileage, mileagecommon, mileagetype, description
         ///FROM mileages
-        ///LEFT JOIN techs ON mileages.techid = techs.id
-        ///{0}
-        ///ORDER BY datetime DESC;.
+        ///LEFT JOIN techs ON mileages.techid = techs.id.
         /// </summary>
         internal static string SelectMileages {
             get {
@@ -201,9 +200,7 @@ namespace Technics.Properties {
         ///	mileage, mileagecommon
         ///FROM techparts
         ///LEFT JOIN techs ON techparts.techid = techs.id
-        ///LEFT JOIN parts ON techparts.partid = parts.id
-        ///{0}
-        ///ORDER BY datetimeinstall DESC;.
+        ///LEFT JOIN parts ON techparts.partid = parts.id.
         /// </summary>
         internal static string SelectTechParts {
             get {
@@ -224,12 +221,13 @@ namespace Technics.Properties {
         ///   Looks up a localized string similar to UPDATE
         ///	mileages
         ///SET
+        ///	mileage = :mileage,
         ///	mileagecommon = :mileagecommon
         ///WHERE id = :id;.
         /// </summary>
-        internal static string UpdateMileagesMileageCommonById {
+        internal static string UpdateMileagesMileagesById {
             get {
-                return ResourceManager.GetString("UpdateMileagesMileageCommonById", resourceCulture);
+                return ResourceManager.GetString("UpdateMileagesMileagesById", resourceCulture);
             }
         }
         

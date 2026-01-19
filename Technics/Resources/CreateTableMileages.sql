@@ -3,7 +3,8 @@ CREATE TABLE mileages (
 	techid INTEGER,
 	datetime TEXT,
 	mileage REAL,
-	mileageCommon REAL,
+	mileagecommon REAL,
+	mileagetype INTEGER,
 	description TEXT,
 	FOREIGN KEY (techid) REFERENCES techs (id)
 	ON DELETE SET NULL

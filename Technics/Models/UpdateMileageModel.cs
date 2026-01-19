@@ -4,6 +4,7 @@ namespace Technics
 {
     public class UpdateMileageModel : BaseId
     {
-        public double? MileageCommon { get; set; } = null;
+        public double Mileage { get; set; } = default;
+        public double MileageCommon { get; set; } = default;
     }
 }
