@@ -56,7 +56,7 @@ namespace Technics
             AppSettings.LoadDataGridColumns(dgvMileages, AppSettings.Default.ColumnStates);
             AppSettings.LoadDataGridColumns(dgvTechParts, AppSettings.Default.ColumnStates);
 
-            tvTechs.Width = AppSettings.Default.PanelTechsWidth;
+            panelTechs.Width = AppSettings.Default.PanelTechsWidth;
             panelBottom.Height = AppSettings.Default.PanelBottomHeight;
 
             ToolStripsShowText = AppSettings.Default.ToolStripsShowText;
@@ -120,7 +120,7 @@ namespace Technics
             AppSettings.SaveDataGridColumns(dgvMileages, AppSettings.Default.ColumnStates);
             AppSettings.SaveDataGridColumns(dgvTechParts, AppSettings.Default.ColumnStates);
 
-            AppSettings.Default.PanelTechsWidth = tvTechs.Width;
+            AppSettings.Default.PanelTechsWidth = panelTechs.Width;
             AppSettings.Default.PanelBottomHeight = panelBottom.Height;
 
             AppSettings.Default.ToolStripsShowText = miViewToolStripsShowText.Checked;

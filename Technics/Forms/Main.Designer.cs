@@ -130,8 +130,8 @@
             // 
             // toolStripContainer.ContentPanel
             // 
-            this.toolStripContainer.ContentPanel.Controls.Add(this.splitterMileages);
             this.toolStripContainer.ContentPanel.Controls.Add(this.panelTop);
+            this.toolStripContainer.ContentPanel.Controls.Add(this.splitterMileages);
             this.toolStripContainer.ContentPanel.Controls.Add(this.panelBottom);
             this.toolStripContainer.ContentPanel.Size = new System.Drawing.Size(872, 443);
             this.toolStripContainer.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -184,6 +184,7 @@
             this.splitterMileages.Cursor = System.Windows.Forms.Cursors.HSplit;
             this.splitterMileages.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.splitterMileages.Location = new System.Drawing.Point(0, 239);
+            this.splitterMileages.MinExtra = 160;
             this.splitterMileages.MinSize = 160;
             this.splitterMileages.Name = "splitterMileages";
             this.splitterMileages.Size = new System.Drawing.Size(872, 8);
@@ -198,7 +199,7 @@
             this.panelTop.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelTop.Location = new System.Drawing.Point(0, 0);
             this.panelTop.Name = "panelTop";
-            this.panelTop.Size = new System.Drawing.Size(872, 247);
+            this.panelTop.Size = new System.Drawing.Size(872, 239);
             this.panelTop.TabIndex = 1;
             // 
             // panelTechPart
@@ -208,7 +209,7 @@
             this.panelTechPart.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelTechPart.Location = new System.Drawing.Point(268, 0);
             this.panelTechPart.Name = "panelTechPart";
-            this.panelTechPart.Size = new System.Drawing.Size(604, 247);
+            this.panelTechPart.Size = new System.Drawing.Size(604, 239);
             this.panelTechPart.TabIndex = 5;
             // 
             // dgvTechParts
@@ -232,7 +233,7 @@
             this.dgvTechParts.Name = "dgvTechParts";
             this.dgvTechParts.ReadOnly = true;
             this.dgvTechParts.RowHeadersWidth = 32;
-            this.dgvTechParts.Size = new System.Drawing.Size(604, 197);
+            this.dgvTechParts.Size = new System.Drawing.Size(604, 189);
             this.dgvTechParts.TabIndex = 3;
             this.dgvTechParts.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DgvTechParts_CellMouseDoubleClick);
             this.dgvTechParts.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DataGridView_CellMouseDown);
@@ -345,8 +346,10 @@
             // 
             this.splitterTechs.Cursor = System.Windows.Forms.Cursors.VSplit;
             this.splitterTechs.Location = new System.Drawing.Point(260, 0);
+            this.splitterTechs.MinExtra = 160;
+            this.splitterTechs.MinSize = 160;
             this.splitterTechs.Name = "splitterTechs";
-            this.splitterTechs.Size = new System.Drawing.Size(8, 247);
+            this.splitterTechs.Size = new System.Drawing.Size(8, 239);
             this.splitterTechs.TabIndex = 3;
             this.splitterTechs.TabStop = false;
             // 
@@ -357,7 +360,7 @@
             this.panelTechs.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelTechs.Location = new System.Drawing.Point(0, 0);
             this.panelTechs.Name = "panelTechs";
-            this.panelTechs.Size = new System.Drawing.Size(260, 247);
+            this.panelTechs.Size = new System.Drawing.Size(260, 239);
             this.panelTechs.TabIndex = 4;
             // 
             // tvTechs
@@ -372,7 +375,7 @@
             this.tvTechs.Name = "tvTechs";
             this.tvTechs.SelectedImageIndex = 0;
             this.tvTechs.ShowRootLines = false;
-            this.tvTechs.Size = new System.Drawing.Size(260, 197);
+            this.tvTechs.Size = new System.Drawing.Size(260, 189);
             this.tvTechs.TabIndex = 0;
             this.tvTechs.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TvTechs_AfterSelect);
             this.tvTechs.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.TvTechs_NodeMouseClick);
