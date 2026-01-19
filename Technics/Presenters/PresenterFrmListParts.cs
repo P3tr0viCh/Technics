@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Technics.Forms;
 using Technics.Properties;
 using static Technics.Database.Models;
 
@@ -39,13 +40,7 @@ namespace Technics.Presenters
 
         protected override bool ShowItemChangeDialog(PartModel value)
         {
-            var text = value.Text;
-
-            if (!Utils.TextInputBoxShow(ref text, Resources.TitlePart)) return false;
-
-            value.Text = text;
-
-            return true;
+            return FrmPart.ShowDlg(Form, value);
         }
 
         protected override bool ShowItemDeleteDialog(IEnumerable<PartModel> list)
@@ -60,12 +55,30 @@ namespace Technics.Presenters
 
         protected override void UpdateColumns()
         {
+            DataGridView.Columns[nameof(PartModel.Text)].DisplayIndex = 0;
+
             DataGridView.Columns[nameof(PartModel.Text)].HeaderText = ResourcesColumnHeader.Text;
+
+            DataGridView.Columns[nameof(PartModel.Description)].HeaderText = ResourcesColumnHeader.Description;
         }
 
         public override int Compare(PartModel x, PartModel y, string dataPropertyName)
         {
-            return Comparer.Default.Compare(x.Text, y.Text);
+            var result = 0;
+
+            switch (dataPropertyName)
+            {
+                case nameof(PartModel.Text): 
+                    result = Comparer.Default.Compare(x.Text, y.Text);
+                    if (result == 0) result = Comparer.Default.Compare(x.Description, y.Description);
+                    break;
+                case nameof(PartModel.Description):
+                    result = Comparer.Default.Compare(x.Description, y.Description);
+                    if (result == 0) result = Comparer.Default.Compare(x.Text, y.Text);
+                    break;
+            }
+
+            return result;
         }
     }
 }

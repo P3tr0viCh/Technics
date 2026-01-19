@@ -304,4 +304,7 @@
   <data name="ErrorMileageCommonWrongGreater" xml:space="preserve">
     <value>Общий пробег ({0}) больше следующего, уже внесённого в базу данных, пробега ({1}).</value>
   </data>
+  <data name="ErrorValueNeedText" xml:space="preserve">
+    <value>Необходимо внести текст.</value>
+  </data>
 </root>

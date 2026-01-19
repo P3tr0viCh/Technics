@@ -1,4 +1,5 @@
 CREATE TABLE parts (
 	id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-	text TEXT
+	text TEXT,
+	description TEXT
 );

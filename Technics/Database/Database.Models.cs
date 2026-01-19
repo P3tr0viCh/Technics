@@ -174,9 +174,13 @@ namespace Technics
             [Table(Tables.parts)]
             public class PartModel : BaseText
             {
+                public string Description { get; set; } = null;
+
                 public override void Clear()
                 {
                     base.Clear();
+
+                    Description = null;
                 }
 
                 public void Assign(PartModel source)
@@ -189,6 +193,8 @@ namespace Technics
                     }
 
                     base.Assign(source);
+
+                    Description = source.Description;
                 }
             }
 

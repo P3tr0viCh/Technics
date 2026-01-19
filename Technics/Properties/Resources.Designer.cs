@@ -180,6 +180,15 @@ namespace Technics.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Необходимо внести текст..
+        /// </summary>
+        internal static string ErrorValueNeedText {
+            get {
+                return ResourceManager.GetString("ErrorValueNeedText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to .gpx;.csv.
         /// </summary>
         internal static string FilterFolderBrowserDialogMileages {

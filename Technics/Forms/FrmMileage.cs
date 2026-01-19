@@ -11,8 +11,6 @@ namespace Technics
 {
     public partial class FrmMileage : Form
     {
-        public IMainForm MainForm => Owner as IMainForm;
-
         private bool selfChange = false;
 
         private readonly MileageModel mileage = new MileageModel();
