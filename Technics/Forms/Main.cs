@@ -279,6 +279,7 @@ namespace Technics
                 toolStripMain.SetShowTextAndToolTips(value);
                 toolStripTechs.SetShowTextAndToolTips(value);
                 toolStripMileages.SetShowTextAndToolTips(value);
+                toolStripTechParts.SetShowTextAndToolTips(value);
             }
         }
 
