@@ -3,6 +3,7 @@
 #endif
 
 using P3tr0viCh.Utils;
+using P3tr0viCh.Utils.Comparers;
 using P3tr0viCh.Utils.Extensions;
 using P3tr0viCh.Utils.Forms;
 using System;
@@ -62,10 +63,10 @@ namespace Technics
             ToolStripsShowText = AppSettings.Default.ToolStripsShowText;
 
             presenterDataGridViewMileages.SortColumn = MileagesDateTime.Name;
-            presenterDataGridViewMileages.SortOrderDescending = true;
+            presenterDataGridViewMileages.SortOrder = ComparerSortOrder.Descending;
 
             presenterDataGridViewTechParts.SortColumn = TechPartsDateTimeInstall.Name;
-            presenterDataGridViewTechParts.SortOrderDescending = true;
+            presenterDataGridViewTechParts.SortOrder = ComparerSortOrder.Descending;
 
             UpdateSettings();
 

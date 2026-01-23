@@ -1,4 +1,5 @@
 ﻿using P3tr0viCh.Utils;
+using P3tr0viCh.Utils.Comparers;
 using System.Collections;
 using System.Windows.Forms;
 using static Technics.Database.Models;
@@ -11,41 +12,53 @@ namespace Technics.Presenters
         {
         }
 
-        public override int Compare(TechPartModel x, TechPartModel y, string dataPropertyName)
+        public override int Compare(TechPartModel x, TechPartModel y, string dataPropertyName, ComparerSortOrder sortOrder)
         {
             var result = 0;
 
             switch (dataPropertyName)
             {
                 case nameof(TechPartModel.TechText):
-                    result = Comparer.Default.Compare(x.TechText, y.TechText);
-                    if (result == 0) result = Comparer.Default.Compare(y.DateTimeInstall, x.DateTimeInstall);
-                    if (result == 0) result = Comparer.Default.Compare(x.Mileage, y.Mileage);
+                    result = EmptyStringComparer.Default.Compare(x.TechText, y.TechText, sortOrder);
+                    if (result == 0)
+                        result = SortOrderComparer.Default.Compare(x.DateTimeInstall, y.DateTimeInstall, ComparerSortOrder.Descending);
+                    if (result == 0)
+                        result = SortOrderComparer.Default.Compare(x.Mileage, y.Mileage, ComparerSortOrder.Ascending);
                     break;
                 case nameof(TechPartModel.PartText):
-                    result = Comparer.Default.Compare(x.PartText, y.PartText);
-                    if (result == 0) result = Comparer.Default.Compare(y.DateTimeInstall, x.DateTimeInstall);
-                    if (result == 0) result = Comparer.Default.Compare(x.Mileage, y.Mileage);
+                    result = EmptyStringComparer.Default.Compare(x.PartText, y.PartText, sortOrder);
+                    if (result == 0)
+                        result = SortOrderComparer.Default.Compare(x.DateTimeInstall, y.DateTimeInstall, ComparerSortOrder.Descending);
+                    if (result == 0)
+                        result = SortOrderComparer.Default.Compare(x.Mileage, y.Mileage, ComparerSortOrder.Ascending);
                     break;
                 case nameof(TechPartModel.Mileage):
-                    result = Comparer.Default.Compare(x.Mileage, y.Mileage);
-                    if (result == 0) result = Comparer.Default.Compare(y.DateTimeInstall, x.DateTimeInstall);
-                    if (result == 0) result = Comparer.Default.Compare(x.TechText, y.TechText);
+                    result = SortOrderComparer.Default.Compare(x.Mileage, y.Mileage, sortOrder);
+                    if (result == 0)
+                        result = SortOrderComparer.Default.Compare(x.DateTimeInstall, y.DateTimeInstall, ComparerSortOrder.Descending);
+                    if (result == 0)
+                        result = EmptyStringComparer.Default.Compare(x.TechText, y.TechText, ComparerSortOrder.Ascending);
                     break;
                 case nameof(TechPartModel.DateTimeInstall):
-                    result = Comparer.Default.Compare(x.DateTimeInstall, y.DateTimeInstall);
-                    if (result == 0) result = Comparer.Default.Compare(x.TechText, y.TechText);
-                    if (result == 0) result = Comparer.Default.Compare(x.PartText, y.PartText);
+                    result = SortOrderComparer.Default.Compare(x.DateTimeInstall, y.DateTimeInstall, sortOrder);
+                    if (result == 0)
+                        result = EmptyStringComparer.Default.Compare(x.TechText, y.TechText, ComparerSortOrder.Ascending);
+                    if (result == 0)
+                        result = EmptyStringComparer.Default.Compare(x.PartText, y.PartText, ComparerSortOrder.Ascending);
                     break;
                 case nameof(TechPartModel.DateTimeRemove):
-                    result = Comparer.Default.Compare(x.DateTimeRemove, y.DateTimeRemove);
-                    if (result == 0) result = Comparer.Default.Compare(x.TechText, y.TechText);
-                    if (result == 0) result = Comparer.Default.Compare(x.PartText, y.PartText);
+                    result = SortOrderComparer.Default.Compare(x.DateTimeRemove, y.DateTimeRemove, sortOrder);
+                    if (result == 0)
+                        result = EmptyStringComparer.Default.Compare(x.TechText, y.TechText, ComparerSortOrder.Ascending);
+                    if (result == 0)
+                        result = EmptyStringComparer.Default.Compare(x.PartText, y.PartText, ComparerSortOrder.Ascending);
                     break;
                 case nameof(TechPartModel.MileageCommon):
-                    result = Comparer.Default.Compare(x.MileageCommon, y.MileageCommon);
-                    if (result == 0) result = Comparer.Default.Compare(x.TechText, y.TechText);
-                    if (result == 0) result = Comparer.Default.Compare(x.PartText, y.PartText);
+                    result = SortOrderComparer.Default.Compare(x.MileageCommon, y.MileageCommon, sortOrder);
+                    if (result == 0)
+                        result = EmptyStringComparer.Default.Compare(x.TechText, y.TechText, ComparerSortOrder.Ascending);
+                    if (result == 0)
+                        result = EmptyStringComparer.Default.Compare(x.PartText, y.PartText, ComparerSortOrder.Ascending);
                     break;
             }
 

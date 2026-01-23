@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using P3tr0viCh.Utils.Comparers;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -58,9 +58,9 @@ namespace Technics.Presenters
             DataGridView.Columns[nameof(TechModel.Text)].HeaderText = ResourcesColumnHeader.Text;
         }
 
-        public override int Compare(TechModel x, TechModel y, string dataPropertyName)
+        public override int Compare(TechModel x, TechModel y, string dataPropertyName, ComparerSortOrder sortOrder)
         {
-            return Comparer.Default.Compare(x.Text, y.Text);
+            return EmptyStringComparer.Default.Compare(x.Text, y.Text, sortOrder);
         }
     }
 }

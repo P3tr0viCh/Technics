@@ -1,12 +1,12 @@
 ﻿using P3tr0viCh.Database;
 using P3tr0viCh.Utils;
+using P3tr0viCh.Utils.Comparers;
 using P3tr0viCh.Utils.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static Technics.Database.Models;
 
 namespace Technics.Presenters
 {
@@ -271,6 +271,6 @@ namespace Technics.Presenters
             await ListItemChangeSelectedAsync();
         }
 
-        public abstract int Compare(T x, T y, string dataPropertyName);
+        public abstract int Compare(T x, T y, string dataPropertyName, ComparerSortOrder sortOrder);
     }
 }

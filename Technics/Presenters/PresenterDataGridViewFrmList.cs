@@ -1,5 +1,6 @@
 ﻿using P3tr0viCh.Database;
 using P3tr0viCh.Utils;
+using P3tr0viCh.Utils.Comparers;
 
 namespace Technics.Presenters
 {
@@ -13,9 +14,9 @@ namespace Technics.Presenters
             this.presenterFrmList = presenterFrmList;
         }
 
-        public override int Compare(T x, T y, string dataPropertyName)
+        public override int Compare(T x, T y, string dataPropertyName, ComparerSortOrder sortOrder)
         {
-            return presenterFrmList.Compare(x, y, dataPropertyName);    
+            return presenterFrmList.Compare(x, y, dataPropertyName, sortOrder);    
         }
     }
 }

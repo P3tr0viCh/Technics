@@ -1,5 +1,5 @@
 ﻿using P3tr0viCh.Utils;
-using System.Collections;
+using P3tr0viCh.Utils.Comparers;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Technics.Forms;
@@ -62,19 +62,21 @@ namespace Technics.Presenters
             DataGridView.Columns[nameof(PartModel.Description)].HeaderText = ResourcesColumnHeader.Description;
         }
 
-        public override int Compare(PartModel x, PartModel y, string dataPropertyName)
+        public override int Compare(PartModel x, PartModel y, string dataPropertyName, ComparerSortOrder sortOrder)
         {
             var result = 0;
 
             switch (dataPropertyName)
             {
-                case nameof(PartModel.Text): 
-                    result = Comparer.Default.Compare(x.Text, y.Text);
-                    if (result == 0) result = Comparer.Default.Compare(x.Description, y.Description);
+                case nameof(PartModel.Text):
+                    result = EmptyStringComparer.Default.Compare(x.Text, y.Text, sortOrder);
+                    if (result == 0)
+                        result = EmptyStringComparer.Default.Compare(x.Description, y.Description, ComparerSortOrder.Ascending);
                     break;
                 case nameof(PartModel.Description):
-                    result = Comparer.Default.Compare(x.Description, y.Description);
-                    if (result == 0) result = Comparer.Default.Compare(x.Text, y.Text);
+                    result = EmptyStringComparer.Default.Compare(x.Description, y.Description, sortOrder);
+                    if (result == 0)
+                        result = EmptyStringComparer.Default.Compare(x.Text, y.Text, ComparerSortOrder.Ascending);
                     break;
             }
 

@@ -3,6 +3,7 @@
 #endif
 
 using P3tr0viCh.Utils;
+using P3tr0viCh.Utils.Comparers;
 using P3tr0viCh.Utils.Extensions;
 using P3tr0viCh.Utils.Settings;
 using System;
