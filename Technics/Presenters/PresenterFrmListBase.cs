@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Technics.Properties;
 
 namespace Technics.Presenters
 {
@@ -222,11 +223,22 @@ namespace Technics.Presenters
 
         private async Task ListItemChangeAsync(T value)
         {
-            if (!ShowItemChangeDialog(value)) return;
+            try
+            {
+                if (!ShowItemChangeDialog(value)) return;
 
-            await PerformListItemSaveAsync(value);
+                await PerformListItemSaveAsync(value);
 
-            ListItemChange(value);
+                ListItemChange(value);
+            }
+            catch (Exception e)
+            {
+                Utils.Log.Query(e);
+
+                Utils.Log.Error(e);
+
+                Utils.Msg.Error(Resources.MsgDatabaseListItemSaveFail, e.Message);
+            }
         }
 
         public async Task ListItemAddNewAsync()
@@ -253,15 +265,26 @@ namespace Technics.Presenters
         {
             if (!CanDelete) return;
 
-            var list = SelectedList;
+            try
+            {
+                var list = SelectedList;
 
-            DataGridView.SetSelectedRows(list.Cast<BaseId>());
+                DataGridView.SetSelectedRows(list.Cast<BaseId>());
 
-            if (!ShowItemDeleteDialog(list)) return;
+                if (!ShowItemDeleteDialog(list)) return;
 
-            await PerformListItemDeleteAsync(list);
+                await PerformListItemDeleteAsync(list);
 
-            ListItemDelete(list);
+                ListItemDelete(list);
+            }
+            catch (Exception e)
+            {
+                Utils.Log.Query(e);
+
+                Utils.Log.Error(e);
+
+                Utils.Msg.Error(Resources.MsgDatabaseListItemDeleteFail, e.Message);
+            }
         }
 
         private async void DataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
