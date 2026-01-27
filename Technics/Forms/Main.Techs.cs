@@ -152,7 +152,7 @@ namespace Technics
 
         private async Task TechsAddNewItemAsync(BaseId value)
         {
-            var status = ProgramStatus.Default.Start(Status.SaveDatа);
+            var status = ProgramStatus.Default.Start(Status.SaveData);
 
             try
             {
@@ -264,7 +264,7 @@ namespace Technics
 
             changedModel.Text = text;
 
-            var status = ProgramStatus.Default.Start(Status.SaveDatа);
+            var status = ProgramStatus.Default.Start(Status.SaveData);
 
             try
             {
@@ -342,7 +342,7 @@ namespace Technics
 
             if (!Utils.Msg.Question(question, deletedModel.Text)) return;
 
-            var status = ProgramStatus.Default.Start(Status.SaveDatа);
+            var status = ProgramStatus.Default.Start(Status.SaveData);
 
             try
             {

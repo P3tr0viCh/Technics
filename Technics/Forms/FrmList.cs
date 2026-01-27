@@ -2,6 +2,7 @@
 using P3tr0viCh.Utils.Extensions;
 using System;
 using System.Windows.Forms;
+using Technics.Interfaces;
 using Technics.Presenters;
 using static Technics.Presenters.PresenterStatusStripFrmList;
 
@@ -12,8 +13,6 @@ namespace Technics
         public IMainForm MainForm => Owner as IMainForm;
 
         public DataGridView DataGridView => dataGridView;
-
-        public BindingSource BindingSource => bindingSource;
 
         public ToolStrip ToolStrip => toolStrip;
 

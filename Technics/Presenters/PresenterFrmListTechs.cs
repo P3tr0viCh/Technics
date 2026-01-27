@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Technics.Interfaces;
 using Technics.Properties;
 using static Technics.Database.Models;
 
@@ -21,9 +22,9 @@ namespace Technics.Presenters
 
         protected override void LoadFormState()
         {
-            BindingSource.DataSource = Enumerable.Empty<TechModel>();
+            bindingSource.DataSource = Enumerable.Empty<TechModel>();
 
-            DataGridView.DataSource = BindingSource;
+            DataGridView.DataSource = bindingSource;
 
             base.LoadFormState();
 

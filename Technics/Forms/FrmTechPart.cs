@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Technics.Interfaces;
 using Technics.Properties;
 using static Technics.Database.Models;
 using static Technics.ProgramStatus;

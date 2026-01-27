@@ -81,7 +81,7 @@ namespace Technics
         {
             if (!FrmMileage.ShowDlg(this, mileage)) return;
 
-            var status = ProgramStatus.Default.Start(Status.SaveDatа);
+            var status = ProgramStatus.Default.Start(Status.SaveData);
 
             try
             {
@@ -130,7 +130,7 @@ namespace Technics
         {
             if (!FrmMileageList.ShowDlg(this, mileages)) return;
 
-            var status = ProgramStatus.Default.Start(Status.SaveDatа);
+            var status = ProgramStatus.Default.Start(Status.SaveData);
 
             try
             {
@@ -213,7 +213,7 @@ namespace Technics
 
             if (!Utils.Msg.Question(mileages)) return;
 
-            var status = ProgramStatus.Default.Start(Status.SaveDatа);
+            var status = ProgramStatus.Default.Start(Status.SaveData);
 
             try
             {

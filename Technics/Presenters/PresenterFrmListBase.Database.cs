@@ -19,11 +19,11 @@ namespace Technics.Presenters
             {
                 var list = await Database.Default.ListLoadAsync<T>();
 
-                BindingSource.DataSource = list;
+                bindingSource.DataSource = list;
 
                 presenterDataGridView.Sort();
 
-                BindingSource.Position = 0;
+                bindingSource.Position = 0;
 
                 PerformOnListChanged();
 
@@ -52,7 +52,7 @@ namespace Technics.Presenters
 
         private async Task PerformListItemSaveAsync(T value)
         {
-            var status = ProgramStatus.Default.Start(Status.SaveDatа);
+            var status = ProgramStatus.Default.Start(Status.SaveData);
 
             try
             {
@@ -71,7 +71,7 @@ namespace Technics.Presenters
 
         private async Task PerformListItemDeleteAsync(IEnumerable<T> list)
         {
-            var status = ProgramStatus.Default.Start(Status.SaveDatа);
+            var status = ProgramStatus.Default.Start(Status.SaveData);
 
             try
             {

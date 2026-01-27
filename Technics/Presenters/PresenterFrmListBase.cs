@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Technics.Interfaces;
 using Technics.Properties;
 
 namespace Technics.Presenters
@@ -24,7 +25,8 @@ namespace Technics.Presenters
         public bool Changed { get; set; } = false;
 
         public DataGridView DataGridView => FrmList.DataGridView;
-        public BindingSource BindingSource => FrmList.BindingSource;
+
+        internal readonly BindingSource bindingSource;
 
         internal readonly PresenterDataGridViewFrmList<T> presenterDataGridView;
 
@@ -34,6 +36,8 @@ namespace Technics.Presenters
 
             Form.Load += new EventHandler(Form_Load);
             Form.FormClosing += new FormClosingEventHandler(FrmList_FormClosing);
+
+            bindingSource = new BindingSource();
 
             presenterDataGridView = new PresenterDataGridViewFrmList<T>(this);
 
@@ -50,7 +54,7 @@ namespace Technics.Presenters
             FormClosing();
         }
 
-        private FrmListGrant grants = FrmListGrant.Add | FrmListGrant.Change | FrmListGrant.Delete;
+        private FrmListGrant grants = FrmListGrant.All;
         protected FrmListGrant Grants
         {
             get => grants;
@@ -98,9 +102,9 @@ namespace Technics.Presenters
 
         private void SetDataSource()
         {
-            BindingSource.DataSource = Enumerable.Empty<T>();
+            bindingSource.DataSource = Enumerable.Empty<T>();
 
-            DataGridView.DataSource = BindingSource;
+            DataGridView.DataSource = bindingSource;
         }
 
         protected abstract string FormTitle { get; }
@@ -159,7 +163,7 @@ namespace Technics.Presenters
 
         public T Find(T value)
         {
-            return BindingSource.Cast<T>().Where(item => item.Id == value.Id).FirstOrDefault();
+            return bindingSource.Cast<T>().Where(item => item.Id == value.Id).FirstOrDefault();
         }
 
         public T Selected
@@ -188,15 +192,15 @@ namespace Technics.Presenters
 
             if (item == default)
             {
-                BindingSource.Add(value);
+                bindingSource.Add(value);
             }
             else
             {
-                var index = BindingSource.IndexOf(item);
+                var index = bindingSource.IndexOf(item);
 
-                BindingSource.List[index] = value;
+                bindingSource.List[index] = value;
 
-                BindingSource.ResetItem(index);
+                bindingSource.ResetItem(index);
             }
 
             DataGridView.SetSelectedRows(value);
@@ -210,7 +214,7 @@ namespace Technics.Presenters
         {
             foreach (var item in list)
             {
-                BindingSource.Remove(item);
+                bindingSource.Remove(item);
             }
 
             PerformOnListChanged();

@@ -15,7 +15,7 @@ namespace Technics
             [Description("Загрузка данных...")]
             LoadData,
             [Description("Сохранение данных...")]
-            SaveDatа,
+            SaveData,
             [Description("Чтение файлов...")]
             ReadFiles,
             [Description("Поиск файлов gpx...")]

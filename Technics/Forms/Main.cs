@@ -9,6 +9,7 @@ using P3tr0viCh.Utils.Forms;
 using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Technics.Interfaces;
 using Technics.Presenters;
 using Technics.Properties;
 using static Technics.Enums;

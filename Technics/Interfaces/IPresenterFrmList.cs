@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Technics
+namespace Technics.Interfaces
 {
     public delegate void ListChanged();
 

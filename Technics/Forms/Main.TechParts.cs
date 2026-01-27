@@ -83,7 +83,7 @@ namespace Technics
         {
             if (!FrmTechPart.ShowDlg(this, techPart)) return;
 
-            var status = ProgramStatus.Default.Start(Status.SaveDatа);
+            var status = ProgramStatus.Default.Start(Status.SaveData);
 
             try
             {
@@ -165,7 +165,7 @@ namespace Technics
 
             if (!Utils.Msg.Question(techParts)) return;
 
-            var status = ProgramStatus.Default.Start(Status.SaveDatа);
+            var status = ProgramStatus.Default.Start(Status.SaveData);
 
             try
             {

@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using Technics.Properties;
+using Technics.Interfaces;
 using static Technics.Database.Models;
 
 namespace Technics

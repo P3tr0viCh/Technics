@@ -9,5 +9,6 @@ namespace Technics
         Add = 1,
         Change = 2,
         Delete = 4,
+        All = Add | Change | Delete,
     }
 }
