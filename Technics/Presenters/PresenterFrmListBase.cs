@@ -42,6 +42,8 @@ namespace Technics.Presenters
             presenterDataGridView = new PresenterDataGridViewFrmList<T>(this);
 
             DataGridView.CellDoubleClick += new DataGridViewCellEventHandler(DataGridView_CellDoubleClick);
+
+            DataGridView.CellMouseDown += new DataGridViewCellMouseEventHandler(DataGridView_CellMouseDown);
         }
 
         private async void Form_Load(object sender, System.EventArgs e)
@@ -296,6 +298,11 @@ namespace Technics.Presenters
             if (e.RowIndex < 0) return;
 
             await ListItemChangeSelectedAsync();
+        }
+
+        private void DataGridView_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            Utils.SelectCellOnCellMouseDown(DataGridView, e);
         }
 
         public abstract int Compare(T x, T y, string dataPropertyName, ComparerSortOrder sortOrder);
