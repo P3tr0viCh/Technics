@@ -9,9 +9,18 @@ namespace Technics.Presenters
 {
     internal abstract partial class PresenterFrmListBase<T>
     {
+        private readonly WrapperCancellationTokenSource ctsList = new WrapperCancellationTokenSource();
+
+        ~PresenterFrmListBase()
+        {
+            ctsList.Cancel();
+        }
+
         private async Task ListLoadAsync()
         {
             DebugWrite.Line("start");
+
+            ctsList.Start();
 
             var status = ProgramStatus.Default.Start(Status.LoadData);
 
@@ -29,6 +38,10 @@ namespace Technics.Presenters
 
                 Changed = false;
             }
+            catch (TaskCanceledException e)
+            {
+                DebugWrite.Error(e);
+            }
             catch (Exception e)
             {
                 Utils.Log.Query(e);
@@ -39,6 +52,8 @@ namespace Technics.Presenters
             }
             finally
             {
+                ctsList.Finally();
+
                 ProgramStatus.Default.Stop(status);
             }
 
