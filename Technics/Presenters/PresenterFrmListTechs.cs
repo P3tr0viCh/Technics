@@ -22,10 +22,6 @@ namespace Technics.Presenters
 
         protected override void LoadFormState()
         {
-            bindingSource.DataSource = Enumerable.Empty<TechModel>();
-
-            DataGridView.DataSource = bindingSource;
-
             base.LoadFormState();
 
             presenterDataGridView.SortColumn = nameof(TechModel.Text);
