@@ -1,7 +1,7 @@
 ﻿using P3tr0viCh.Database;
-using P3tr0viCh.Utils;
 using P3tr0viCh.Utils.Comparers;
 using P3tr0viCh.Utils.Extensions;
+using P3tr0viCh.Utils.Presenters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,11 +42,9 @@ namespace Technics.Presenters
             presenterDataGridView = new PresenterDataGridViewFrmList<T>(this);
 
             DataGridView.CellDoubleClick += new DataGridViewCellEventHandler(DataGridView_CellDoubleClick);
-
-            DataGridView.CellMouseDown += new DataGridViewCellMouseEventHandler(DataGridView_CellMouseDown);
         }
 
-        private async void Form_Load(object sender, System.EventArgs e)
+        private async void Form_Load(object sender, EventArgs e)
         {
             await FormLoadAsync();
         }
@@ -275,7 +273,7 @@ namespace Technics.Presenters
             {
                 var list = SelectedList;
 
-                DataGridView.SetSelectedRows(list.Cast<BaseId>());
+                DataGridView.SetSelectedRows(list);
 
                 if (!ShowItemDeleteDialog(list)) return;
 
@@ -298,11 +296,6 @@ namespace Technics.Presenters
             if (e.RowIndex < 0) return;
 
             await ListItemChangeSelectedAsync();
-        }
-
-        private void DataGridView_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
-        {
-            Utils.SelectCellOnCellMouseDown(DataGridView, e);
         }
 
         public abstract int Compare(T x, T y, string dataPropertyName, ComparerSortOrder sortOrder);

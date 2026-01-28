@@ -194,7 +194,7 @@ namespace Technics
 
                         transaction.Commit();
 
-                        Utils.Log.ListItemSaveOk<MileageModel>();
+                        Utils.Log.ListItemSaveOk(mileage);
 
                         return update;
                     }

@@ -245,7 +245,7 @@ namespace Technics
 
                         transaction.Commit();
 
-                        Utils.Log.ListItemSaveOk<TechPartModel>();
+                        Utils.Log.ListItemSaveOk(techPart);
 
                         return update;
                     }

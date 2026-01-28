@@ -65,7 +65,6 @@
             this.toolStripContainer.Name = "toolStripContainer";
             this.toolStripContainer.Size = new System.Drawing.Size(384, 265);
             this.toolStripContainer.TabIndex = 3;
-            this.toolStripContainer.Text = "toolStripContainer1";
             // 
             // toolStripContainer.TopToolStripPanel
             // 

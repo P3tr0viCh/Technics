@@ -78,7 +78,7 @@ namespace Technics
                 await connection.ListItemSaveAsync(value, null);
             }
 
-            Utils.Log.ListItemSaveOk<T>();
+            Utils.Log.ListItemSaveOk(value);
         }
 
         public async Task ListItemSaveAsync<T>(IEnumerable<T> values) where T : BaseId

@@ -77,9 +77,9 @@ namespace Technics
                 Info(string.Format(ResourcesLog.ListItemSaveOk, typeof(T).Name, count), memberName);
             }
 
-            public static void ListItemSaveOk<T>([CallerMemberName] string memberName = "")
+            public static void ListItemSaveOk<T>(T value, [CallerMemberName] string memberName = "")
             {
-                Info(string.Format(ResourcesLog.ListItemSaveOk, typeof(T).Name, 1), memberName);
+                Info(string.Format(ResourcesLog.ListItemSaveOk, value.GetType().Name, 1), memberName);
             }
 
             public static void ListItemDeleteOk<T>(IEnumerable<T> values, [CallerMemberName] string memberName = "")

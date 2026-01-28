@@ -35,7 +35,6 @@
             this.LabelMileageCount = new System.Windows.Forms.ToolStripStatusLabel();
             this.LabelTechPartCount = new System.Windows.Forms.ToolStripStatusLabel();
             this.LabelStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.splitterMileages = new System.Windows.Forms.Splitter();
             this.panelTop = new System.Windows.Forms.Panel();
             this.panelTechPart = new System.Windows.Forms.Panel();
             this.dgvTechParts = new System.Windows.Forms.DataGridView();
@@ -66,6 +65,7 @@
             this.miTechAddTech = new System.Windows.Forms.ToolStripMenuItem();
             this.tsbtnTechChange = new System.Windows.Forms.ToolStripButton();
             this.tsbtnTechDelete = new System.Windows.Forms.ToolStripButton();
+            this.splitterMileages = new System.Windows.Forms.Splitter();
             this.panelBottom = new System.Windows.Forms.Panel();
             this.dgvMileages = new System.Windows.Forms.DataGridView();
             this.MileagesTechText = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -179,18 +179,6 @@
             this.LabelStatus.Spring = true;
             this.LabelStatus.Text = "Status";
             // 
-            // splitterMileages
-            // 
-            this.splitterMileages.Cursor = System.Windows.Forms.Cursors.HSplit;
-            this.splitterMileages.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.splitterMileages.Location = new System.Drawing.Point(0, 239);
-            this.splitterMileages.MinExtra = 160;
-            this.splitterMileages.MinSize = 160;
-            this.splitterMileages.Name = "splitterMileages";
-            this.splitterMileages.Size = new System.Drawing.Size(872, 8);
-            this.splitterMileages.TabIndex = 2;
-            this.splitterMileages.TabStop = false;
-            // 
             // panelTop
             // 
             this.panelTop.Controls.Add(this.panelTechPart);
@@ -236,7 +224,6 @@
             this.dgvTechParts.Size = new System.Drawing.Size(604, 189);
             this.dgvTechParts.TabIndex = 3;
             this.dgvTechParts.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DgvTechParts_CellMouseDoubleClick);
-            this.dgvTechParts.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DataGridView_CellMouseDown);
             this.dgvTechParts.SelectionChanged += new System.EventHandler(this.DgvTechParts_SelectionChanged);
             // 
             // TechPartsTechText
@@ -496,6 +483,18 @@
             this.tsbtnTechDelete.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsbtnTechDelete.Click += new System.EventHandler(this.TsbtnTechDelete_Click);
             // 
+            // splitterMileages
+            // 
+            this.splitterMileages.Cursor = System.Windows.Forms.Cursors.HSplit;
+            this.splitterMileages.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.splitterMileages.Location = new System.Drawing.Point(0, 239);
+            this.splitterMileages.MinExtra = 160;
+            this.splitterMileages.MinSize = 160;
+            this.splitterMileages.Name = "splitterMileages";
+            this.splitterMileages.Size = new System.Drawing.Size(872, 8);
+            this.splitterMileages.TabIndex = 2;
+            this.splitterMileages.TabStop = false;
+            // 
             // panelBottom
             // 
             this.panelBottom.Controls.Add(this.dgvMileages);
@@ -529,7 +528,6 @@
             this.dgvMileages.Size = new System.Drawing.Size(872, 146);
             this.dgvMileages.TabIndex = 3;
             this.dgvMileages.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DgvMileages_CellMouseDoubleClick);
-            this.dgvMileages.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DataGridView_CellMouseDown);
             this.dgvMileages.SelectionChanged += new System.EventHandler(this.DgvMileages_SelectionChanged);
             // 
             // MileagesTechText

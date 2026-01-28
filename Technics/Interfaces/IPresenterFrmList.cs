@@ -6,10 +6,9 @@ namespace Technics.Interfaces
 
     internal interface IPresenterFrmList
     {
-        FrmListType ListType { get; }
-
         IFrmList FrmList { get; }
 
+        FrmListType ListType { get; }
 
         event ListChanged OnListChanged;
 

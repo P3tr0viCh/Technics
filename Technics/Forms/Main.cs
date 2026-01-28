@@ -6,6 +6,7 @@ using P3tr0viCh.Utils;
 using P3tr0viCh.Utils.Comparers;
 using P3tr0viCh.Utils.Extensions;
 using P3tr0viCh.Utils.Forms;
+using P3tr0viCh.Utils.Presenters;
 using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -83,7 +84,7 @@ namespace Technics
                 ProgramStatus.Stop(status);
             }
 #endif
-            
+
             await UpdateDataAsync(DataLoad.Techs);
 
             await LoadFromFilesAsync(LoadFilesType.DirectoryTracks);
@@ -178,11 +179,6 @@ namespace Technics
             {
                 tvTechs.SelectedNode = e.Node;
             }
-        }
-
-        private void DataGridView_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
-        {
-            Utils.SelectCellOnCellMouseDown((DataGridView)sender, e);
         }
 
         private async void TvTechs_AfterSelect(object sender, TreeViewEventArgs e)
