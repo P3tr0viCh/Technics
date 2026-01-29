@@ -43,7 +43,7 @@ namespace Technics
             {
                 Fields = "mileagecommon",
                 Table = Tables.mileages,
-                Where = "techid = :techid AND datetime < :datetime",
+                Where = "techid = @techid AND datetime < @datetime",
                 Order = "datetime DESC"
             };
 
@@ -61,7 +61,7 @@ namespace Technics
             {
                 Fields = "mileagecommon",
                 Table = Tables.mileages,
-                Where = "techid = :techid AND datetime > :datetime",
+                Where = "techid = @techid AND datetime > @datetime",
                 Order = "datetime"
             };
 
@@ -83,7 +83,7 @@ namespace Technics
             var query = new Query()
             {
                 Table = Tables.mileages,
-                Where = "techid = :techid",
+                Where = "techid = @techid",
                 Order = "datetime"
             };
 
@@ -178,7 +178,7 @@ namespace Technics
 
                         if (!mileage.IsNew)
                         {
-                            var prevValue = await connection.ListItemLoadByIdAsync<MileageModel>(transaction, mileage.Id);
+                            var prevValue = await connection.ListItemLoadByIdAsync<MileageModel>(mileage.Id, transaction);
 
                             if (prevValue?.TechId != mileage.TechId)
                             {

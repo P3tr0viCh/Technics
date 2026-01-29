@@ -49,11 +49,11 @@ namespace Technics
 
             if (techPart.DateTimeRemove == null)
             {
-                query.Where = "techid = :techid AND datetime >= :datetimeinstall";
+                query.Where = "techid = @techid AND datetime >= @datetimeinstall";
             }
             else
             {
-                query.Where = "techid = :techid AND datetime >= :datetimeinstall AND datetime < :datetimeremove";
+                query.Where = "techid = @techid AND datetime >= @datetimeinstall AND datetime < @datetimeremove";
             }
 
             object param = new
@@ -94,7 +94,7 @@ namespace Technics
             var query = new Query()
             {
                 Table = Tables.techparts,
-                Where = "partid = :partid",
+                Where = "partid = @partid",
                 Order = "datetimeinstall"
             };
 
@@ -225,7 +225,7 @@ namespace Technics
 
                         if (!techPart.IsNew)
                         {
-                            var prevValue = await connection.ListItemLoadByIdAsync<TechPartModel>(transaction, techPart.Id);
+                            var prevValue = await connection.ListItemLoadByIdAsync<TechPartModel>(techPart.Id, transaction);
 
                             if (prevValue?.TechId != techPart.TechId)
                             {
