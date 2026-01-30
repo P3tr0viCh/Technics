@@ -143,7 +143,7 @@ namespace Technics.Presenters
 
             UpdateColumns();
 
-            await ListLoadAsync();
+            await PerformListLoadAsync();
         }
 
         private void UpdateCommonColumns()

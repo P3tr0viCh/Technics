@@ -120,6 +120,9 @@
   <data name="Description" xml:space="preserve">
     <value>Описание</value>
   </data>
+  <data name="Folder" xml:space="preserve">
+    <value>Папка</value>
+  </data>
   <data name="Text" xml:space="preserve">
     <value>Текст</value>
   </data>

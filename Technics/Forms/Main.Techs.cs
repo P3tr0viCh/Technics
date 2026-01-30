@@ -2,10 +2,12 @@
 using P3tr0viCh.Utils;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Technics.Properties;
+using static Technics.Database;
 using static Technics.Database.Models;
 using static Technics.ProgramStatus;
 
@@ -47,6 +49,33 @@ namespace Technics
             selectedTechList = GetTechList(tvTechs.SelectedNode);
 
             await UpdateDataAsync(DataLoad.Mileages | DataLoad.TechParts);
+
+#if DEBUG
+            var path = string.Empty;
+
+            if (selected is TreeNodeTech techNode)
+            {
+                var folderId = techNode.Tech.FolderId;
+
+                var folder = Lists.Default.Folders.Find(folderId);
+
+                if (folder != null)
+                {
+                    path = folder.Path + Path.DirectorySeparatorChar;
+                }
+
+                path += techNode.Tech.Text;
+            }
+            else
+            {
+                if (selected is TreeNodeFolder folderNode)
+                {
+                    path = folderNode.Folder.Path;
+                }
+            }
+
+            DebugWrite.Line($"selected path: {Path.DirectorySeparatorChar}{path}");
+#endif
         }
 
         private async Task TechsLoadAsync()
@@ -57,33 +86,39 @@ namespace Technics
             {
                 tvTechs.Nodes[0].Nodes.Clear();
 
-                var folderList = await Database.Default.ListLoadAsync<FolderModel>();
+                var folders = await Database.Default.ListLoadAsync<FolderModel>();
 
-                folderList = folderList.OrderBy(f => f.Id).ToList();
+                Lists.Default.Folders = new FolderList(folders);
+
+                folders = folders.OrderBy(f => f.Id).ToList();
 
                 var folderNodes = new Dictionary<long, TreeNodeFolder>
                 {
                     [Sql.NewId] = tvTechs.Nodes[0] as TreeNodeFolder
                 };
 
-                foreach (var folder in folderList)
+                foreach (var folder in folders)
                 {
                     var folderNode = new TreeNodeFolder(folder);
 
                     folderNodes[folder.Id] = folderNode;
 
-                    folderNodes[(long)folder.ParentId].Nodes.Add(folderNode);
+                    var parentId = folder.ParentId ?? Sql.NewId;
+
+                    folderNodes[parentId].Nodes.Add(folderNode);
                 }
 
                 var techs = await Database.Default.ListLoadAsync<TechModel>();
 
-                Lists.Default.Techs = techs.OrderBy(tech => tech.Text).ToList();
+                Lists.Default.Techs = new TechList(techs.OrderBy(tech => tech.Text));
 
                 foreach (var tech in Lists.Default.Techs)
                 {
                     var techNode = new TreeNodeTech(tech);
+                    
+                    var folderId = tech.FolderId ?? Sql.NewId;
 
-                    folderNodes[(long)tech.FolderId].Nodes.Add(techNode);
+                    folderNodes[folderId].Nodes.Add(techNode);
                 }
 
                 tvTechs.ExpandAll();
@@ -167,6 +202,8 @@ namespace Technics
                     node = new TreeNodeFolder(folder);
 
                     await Database.Default.ListItemSaveAsync(folder);
+
+                    Lists.Default.Folders.Add(folder);
                 }
                 else
                 {
@@ -215,7 +252,7 @@ namespace Technics
             {
                 Text = text
             };
-            
+
             await TechsAddNewItemAsync(folder);
         }
 
@@ -271,6 +308,8 @@ namespace Technics
                 if (changedModel is FolderModel folder)
                 {
                     await Database.Default.ListItemSaveAsync(folder);
+
+                    Lists.Default.Folders.Replace(folder);
                 }
                 else
                 {
@@ -381,6 +420,8 @@ namespace Technics
                 if (deletedModel is FolderModel folder)
                 {
                     await Database.Default.ListItemDeleteAsync(folder);
+
+                    Lists.Default.Folders.Remove(folder);
                 }
                 else
                 {

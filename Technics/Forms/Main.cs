@@ -89,14 +89,14 @@ namespace Technics
 
             await LoadFromFilesAsync(LoadFilesType.DirectoryTracks);
 
+            Lists.Default.Folders.ForEach(f => DebugWrite.Line(f.Text + ": " + f.Path));
+
             SelfChange = false;
         }
 
         private void ProgramStatus_StatusChanged(object sender, Status status)
         {
             presenterStatusStrip.Status = status;
-
-            UseWaitCursor = !ProgramStatus.Default.IsIdle;
         }
 
         private void Main_FormClosing(object sender, FormClosingEventArgs e)

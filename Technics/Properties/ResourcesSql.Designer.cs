@@ -137,7 +137,9 @@ namespace Technics.Properties {
         /// <summary>
         ///   Looks up a localized string similar to CREATE TABLE parts (
         ///	id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-        ///	text TEXT
+        ///	folderid INTEGER,
+        ///	text TEXT,
+        ///	description TEXT
         ///);.
         /// </summary>
         internal static string CreateTableParts {
@@ -190,6 +192,17 @@ namespace Technics.Properties {
         internal static string SelectMileages {
             get {
                 return ResourceManager.GetString("SelectMileages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SELECT mileages.id, techid, techs.text AS techtext, datetime, mileage, mileagecommon, mileagetype, description
+        ///FROM mileages
+        ///LEFT JOIN techs ON mileages.techid = techs.id.
+        /// </summary>
+        internal static string SelectParts {
+            get {
+                return ResourceManager.GetString("SelectParts", resourceCulture);
             }
         }
         

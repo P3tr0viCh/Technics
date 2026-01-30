@@ -84,6 +84,7 @@
             this.cboxTech.Size = new System.Drawing.Size(176, 25);
             this.cboxTech.TabIndex = 1;
             this.cboxTech.ValueMember = "Id";
+            this.cboxTech.SelectedIndexChanged += new System.EventHandler(this.CboxTech_SelectedIndexChanged);
             // 
             // bindingSourceTechs
             // 

@@ -3,6 +3,7 @@ using P3tr0viCh.Utils;
 using P3tr0viCh.Utils.Extensions;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -75,7 +76,11 @@ namespace Technics
             await LoadDataAsync();
 
             TechPart = techPart;
+
+            UpdatePartsList(TechPart.TechId);
         }
+
+        private IEnumerable<PartModel> Parts { get; set; }
 
         private async Task LoadDataAsync()
         {
@@ -93,25 +98,7 @@ namespace Technics
 
                 bindingSourceTechs.Position = 0;
 
-                var list = await Database.Default.ListLoadAsync<PartModel>();
-
-                bindingSourceParts.DataSource = list.OrderBy(part => part.Text).ToBindingList();
-
-                bindingSourceParts.Insert(0, new PartModel());
-
-                bindingSourceParts.Insert(1, new PartModel()
-                {
-                    Id = Consts.Id.ListEdit,
-                    Text = Resources.TextListEdit
-                });
-
-                bindingSourceParts.Insert(2, new PartModel()
-                {
-                    Id = Consts.Id.ListAdd,
-                    Text = Resources.TextListAdd
-                });
-
-                bindingSourceParts.Position = 0;
+                Parts = await Database.Default.ListLoadAsync<PartModel>();
             }
             catch (Exception e)
             {
@@ -370,6 +357,62 @@ namespace Technics
             if (!changed) return;
 
             await AfterChangeListAsync(null);
+        }
+
+        private void CboxTech_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (selfChange) return;
+
+            var tech = cboxTech.GetSelectedItem<TechModel>();
+
+            UpdatePartsList(tech);
+        }
+
+        private IEnumerable<PartModel> GetPartsForTech(TechModel tech)
+        {
+            if (tech?.IsNew ?? true) return Parts.ToBindingList();
+
+            var folders = Lists.Default.Folders.GetFolderList(tech?.FolderId);
+
+            DebugWrite.Line($"folders: {string.Join(", ", folders.Select(f => f.Text))}");
+            
+            DebugWrite.Line($"parts folderid: {string.Join(", ", Parts.Select(p => p.FolderId))}");
+
+            return Parts.Where(part =>
+                part.FolderId == null ||
+                folders.Select(f => f.Id).Contains((long)part.FolderId)).ToBindingList();
+        }
+
+        private void UpdatePartsList(TechModel tech)
+        {
+            selfChange = true;
+
+            bindingSourceParts.DataSource = GetPartsForTech(tech);
+
+            bindingSourceParts.Insert(0, new PartModel());
+
+            bindingSourceParts.Insert(1, new PartModel()
+            {
+                Id = Consts.Id.ListEdit,
+                Text = Resources.TextListEdit
+            });
+
+            bindingSourceParts.Insert(2, new PartModel()
+            {
+                Id = Consts.Id.ListAdd,
+                Text = Resources.TextListAdd
+            });
+
+            bindingSourceParts.Position = 0;
+
+            selfChange = false;
+        }
+
+        private void UpdatePartsList(long? techId)
+        {
+            var tech = Lists.Default.Techs.Find(techId);
+
+            UpdatePartsList(tech);
         }
 
         private async void CboxPart_SelectedIndexChanged(object sender, EventArgs e)

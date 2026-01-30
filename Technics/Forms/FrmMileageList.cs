@@ -62,7 +62,7 @@ namespace Technics
 
             if (techIds.Count() == 1)
             {
-                Tech = Lists.Default.FindTechById(techIds.First());
+                Tech = Lists.Default.Techs.Find(techIds.First());
             }
             else
             {

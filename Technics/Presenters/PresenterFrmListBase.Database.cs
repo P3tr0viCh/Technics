@@ -16,7 +16,22 @@ namespace Technics.Presenters
             ctsList.Cancel();
         }
 
-        private async Task ListLoadAsync()
+        protected virtual async Task<IEnumerable<T>> ListLoadAsync()
+        {
+            return await Database.Default.ListLoadAsync<T>();
+        }
+
+        protected virtual async Task ListItemSaveAsync(T value)
+        {
+            await Database.Default.ListItemSaveAsync(value);
+        }
+
+        protected virtual async Task ListItemDeleteAsync(IEnumerable<T> list)
+        {
+            await Database.Default.ListItemDeleteAsync(list);
+        }
+
+        private async Task PerformListLoadAsync()
         {
             DebugWrite.Line("start");
 
@@ -26,7 +41,7 @@ namespace Technics.Presenters
 
             try
             {
-                var list = await Database.Default.ListLoadAsync<T>();
+                var list = await ListLoadAsync();
 
                 bindingSource.DataSource = list;
 
@@ -60,11 +75,6 @@ namespace Technics.Presenters
             DebugWrite.Line("end");
         }
 
-        protected virtual async Task ListItemSaveAsync(T value)
-        {
-            await Database.Default.ListItemSaveAsync(value);
-        }
-
         private async Task PerformListItemSaveAsync(T value)
         {
             var status = ProgramStatus.Default.Start(Status.SaveData);
@@ -77,11 +87,6 @@ namespace Technics.Presenters
             {
                 ProgramStatus.Default.Stop(status);
             }
-        }
-
-        protected virtual async Task ListItemDeleteAsync(IEnumerable<T> list)
-        {
-            await Database.Default.ListItemDeleteAsync(list);
         }
 
         private async Task PerformListItemDeleteAsync(IEnumerable<T> list)

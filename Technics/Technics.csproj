@@ -164,6 +164,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Interfaces\IPresenterFrmList.cs" />
+    <Compile Include="Models\BaseIdList.cs" />
     <Compile Include="Presenters\PresenterDataGridViewFrmList.cs" />
     <Compile Include="Presenters\PresenterDataGridViewMileages.cs" />
     <Compile Include="Presenters\PresenterDataGridViewTechParts.cs" />
@@ -255,6 +256,7 @@
     </EmbeddedResource>
     <Compile Include="Presenters\PresenterFrmListBase.Database.cs" />
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\Database.Models.FolderModel.datasource" />
     <None Include="Properties\DataSources\Database.Models.MileageModel.datasource" />
     <None Include="Properties\DataSources\Database.Models.PartModel.datasource" />
     <None Include="Properties\DataSources\Database.Models.TechModel.datasource" />
@@ -294,6 +296,7 @@
     <None Include="Resources\ClearMileagesMileageCommonByTechId.sql" />
     <None Include="Resources\ClearTechPartsMileagesByTechId.sql" />
     <None Include="Resources\ClearTechPartsMileagesByPartId.sql" />
+    <None Include="Resources\SelectParts.sql" />
     <Content Include="Technics.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

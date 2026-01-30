@@ -1,10 +1,13 @@
-﻿using P3tr0viCh.Utils;
+﻿using P3tr0viCh.Database;
+using P3tr0viCh.Utils;
 using P3tr0viCh.Utils.Extensions;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Technics.Properties;
 using static Technics.Database.Models;
+using static Technics.ProgramStatus;
 
 namespace Technics.Forms
 {
@@ -19,6 +22,8 @@ namespace Technics.Forms
             set
             {
                 part.Assign(value);
+
+                cboxFolder.SelectedValue = value.FolderId ?? Sql.NewId;
 
                 tboxText.SetText(value.Text);
 
@@ -51,9 +56,43 @@ namespace Technics.Forms
             }
         }
 
-        private void FrmPart_Load(PartModel part)
+        private async void FrmPart_Load(PartModel part)
         {
+            await LoadDataAsync();
+
             Part = part;
+        }
+
+        private async Task LoadDataAsync()
+        {
+            DebugWrite.Line("start");
+
+            var status = ProgramStatus.Default.Start(Status.LoadData);
+
+            try
+            {
+                var list = await Database.Default.ListLoadAsync<FolderModel>();
+
+                bindingSourceFolders.DataSource = list.OrderBy(folder => folder.Text).ToBindingList();
+
+                bindingSourceFolders.Insert(0, new FolderModel());
+
+                bindingSourceFolders.Position = 0;
+            }
+            catch (Exception e)
+            {
+                Utils.Log.Query(e);
+
+                Utils.Log.Error(e);
+
+                Utils.Msg.Error(Resources.MsgDatabaseLoadFail, e.Message);
+            }
+            finally
+            {
+                ProgramStatus.Default.Stop(status);
+            }
+
+            DebugWrite.Line("end");
         }
 
         private bool CheckData()
@@ -83,6 +122,11 @@ namespace Technics.Forms
         {
             try
             {
+                var folder = cboxFolder.GetSelectedItem<FolderModel>();
+
+                part.FolderId = folder.Id;
+                part.FolderText = folder.Text;
+
                 part.Text = tboxText.GetTrimText();
 
                 part.Description = tboxDescription.GetTrimTextNullable();

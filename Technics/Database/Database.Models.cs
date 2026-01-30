@@ -13,13 +13,24 @@ namespace Technics
             [Table(Tables.folders)]
             public class FolderModel : BaseText
             {
-                public long? ParentId { get; set; } = null;
+                private long? parentId = null;
+                public long? ParentId
+                {
+                    get => parentId;
+                    set => parentId = value != Sql.NewId ? value : null;
+                }
+
+                [Computed]
+                [Write(false)]
+                public string Path { get; set; } = string.Empty;
 
                 public override void Clear()
                 {
                     base.Clear();
 
                     ParentId = null;
+
+                    Path = string.Empty;
                 }
 
                 public void Assign(FolderModel source)
@@ -34,6 +45,8 @@ namespace Technics
                     base.Assign(source);
 
                     ParentId = source.ParentId;
+
+                    Path = source.Path;
                 }
             }
 
@@ -41,7 +54,12 @@ namespace Technics
             [Table(Tables.techs)]
             public class TechModel : BaseText
             {
-                public long? FolderId { get; set; } = null;
+                private long? folderId = null;
+                public long? FolderId
+                {
+                    get => folderId;
+                    set => folderId = value != Sql.NewId ? value : null;
+                }
 
                 public override void Clear()
                 {
@@ -69,7 +87,6 @@ namespace Technics
             public abstract class BaseTechId : BaseId, ITechId
             {
                 private long? techId = null;
-
                 public long? TechId
                 {
                     get => techId;
@@ -86,8 +103,8 @@ namespace Technics
                     }
                 }
 
-                [Write(false)]
                 [Computed]
+                [Write(false)]
                 public string TechText { get; set; } = default;
 
                 public override void Clear()
@@ -174,11 +191,25 @@ namespace Technics
             [Table(Tables.parts)]
             public class PartModel : BaseText
             {
+                private long? folderId = null;
+                public long? FolderId
+                {
+                    get => folderId;
+                    set => folderId = value != Sql.NewId ? value : null;
+                }
+
+                [Computed]
+                [Write(false)]
+                public string FolderText { get; set; } = default;
+
                 public string Description { get; set; } = null;
 
                 public override void Clear()
                 {
                     base.Clear();
+
+                    FolderId = null;
+                    FolderText = default;
 
                     Description = null;
                 }
@@ -194,6 +225,9 @@ namespace Technics
 
                     base.Assign(source);
 
+                    FolderId = source.FolderId;
+                    FolderText = source.FolderText;
+
                     Description = source.Description;
                 }
             }
@@ -202,10 +236,15 @@ namespace Technics
             [Table(Tables.techparts)]
             public class TechPartModel : BaseTechId, IPartId
             {
-                public long? PartId { get; set; } = null;
+                private long? partId = null;
+                public long? PartId
+                {
+                    get => partId;
+                    set => partId = value != Sql.NewId ? value : null;
+                }
 
-                [Write(false)]
                 [Computed]
+                [Write(false)]
                 public string PartText { get; set; } = default;
 
                 public DateTime DateTimeInstall { get; set; } = default;

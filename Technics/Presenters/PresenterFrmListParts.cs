@@ -39,6 +39,11 @@ namespace Technics.Presenters
             presenterDataGridView.SortColumn = nameof(TechModel.Text);
         }
 
+        protected async override Task<IEnumerable<PartModel>> ListLoadAsync()
+        {
+            return await Database.Default.ListLoadAsync<PartModel>(ResourcesSql.SelectParts);
+        }
+
         protected override bool ShowItemChangeDialog(PartModel value)
         {
             return FrmPart.ShowDlg(Form, value);
@@ -56,11 +61,14 @@ namespace Technics.Presenters
 
         protected override void UpdateColumns()
         {
-            DataGridView.Columns[nameof(PartModel.Text)].DisplayIndex = 0;
+            DataGridView.Columns[nameof(PartModel.FolderText)].DisplayIndex = 0;
+            DataGridView.Columns[nameof(PartModel.Text)].DisplayIndex = 1;
 
             DataGridView.Columns[nameof(PartModel.Text)].HeaderText = ResourcesColumnHeader.Text;
-
+            DataGridView.Columns[nameof(PartModel.FolderText)].HeaderText = ResourcesColumnHeader.Folder;
             DataGridView.Columns[nameof(PartModel.Description)].HeaderText = ResourcesColumnHeader.Description;
+
+            DataGridView.Columns[nameof(PartModel.FolderId)].Visible = false;
         }
 
         public override int Compare(PartModel x, PartModel y, string dataPropertyName, ComparerSortOrder sortOrder)
@@ -69,8 +77,17 @@ namespace Technics.Presenters
 
             switch (dataPropertyName)
             {
+                case nameof(PartModel.FolderText):
+                    result = EmptyStringComparer.Default.Compare(x.FolderText, y.FolderText, sortOrder);
+                    if (result == 0)
+                        result = EmptyStringComparer.Default.Compare(x.Text, y.Text, ComparerSortOrder.Ascending);
+                    if (result == 0)
+                        result = EmptyStringComparer.Default.Compare(x.Description, y.Description, ComparerSortOrder.Ascending);
+                    break;
                 case nameof(PartModel.Text):
                     result = EmptyStringComparer.Default.Compare(x.Text, y.Text, sortOrder);
+                    if (result == 0)
+                        result = EmptyStringComparer.Default.Compare(x.FolderText, y.FolderText, ComparerSortOrder.Ascending);
                     if (result == 0)
                         result = EmptyStringComparer.Default.Compare(x.Description, y.Description, ComparerSortOrder.Ascending);
                     break;
@@ -78,6 +95,8 @@ namespace Technics.Presenters
                     result = EmptyStringComparer.Default.Compare(x.Description, y.Description, sortOrder);
                     if (result == 0)
                         result = EmptyStringComparer.Default.Compare(x.Text, y.Text, ComparerSortOrder.Ascending);
+                    if (result == 0)
+                        result = EmptyStringComparer.Default.Compare(x.FolderText, y.FolderText, ComparerSortOrder.Ascending);
                     break;
             }
 

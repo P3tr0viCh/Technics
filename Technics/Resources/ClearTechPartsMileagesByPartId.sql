@@ -3,4 +3,4 @@ UPDATE
 SET
 	mileage = null,
 	mileagecommon = null
-WHERE partid = :partid;
+WHERE partid = @partid;
