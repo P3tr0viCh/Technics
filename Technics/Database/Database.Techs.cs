@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data.Common;
 using System.Threading.Tasks;
 using Technics.Properties;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrackBar;
 using static Technics.Database.Models;
 
 namespace Technics

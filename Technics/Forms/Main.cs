@@ -331,17 +331,17 @@ namespace Technics
             await ShowListAsync((FrmListType)((ToolStripItem)sender).Tag);
         }
 
-        private async void TsbtnTechPartAdd_Click(object sender, EventArgs e)
+        private async void TsbtnTechPartsAdd_Click(object sender, EventArgs e)
         {
             await TechPartsAddNewAsync();
         }
 
-        private async void TsbtnTechPartChange_Click(object sender, EventArgs e)
+        private async void TsbtnTechPartsChange_Click(object sender, EventArgs e)
         {
             await TechPartsChangeSelectedAsync();
         }
 
-        private async void TsbtnTechPartDelete_Click(object sender, EventArgs e)
+        private async void TsbtnTechPartsDelete_Click(object sender, EventArgs e)
         {
             await TechPartsDeleteSelectedAsync();
         }
@@ -374,6 +374,36 @@ namespace Technics
         private void DgvTechParts_SelectionChanged(object sender, EventArgs e)
         {
             presenterStatusStrip.TechPartSelectedCount = dgvTechParts.SelectedCount();
+        }
+
+        private async void MiTechPartsAdd_Click(object sender, EventArgs e)
+        {
+            await TechPartsAddNewAsync();
+        }
+
+        private async void MiTechPartsChange_Click(object sender, EventArgs e)
+        {
+            await TechPartsChangeSelectedAsync();
+        }
+
+        private async void MiTechPartsDelete_Click(object sender, EventArgs e)
+        {
+            await TechPartsDeleteSelectedAsync();
+        }
+
+        private async void MiMileagesAdd_Click(object sender, EventArgs e)
+        {
+            await MileagesAddNewAsync();
+        }
+
+        private async void MiMileagesChange_Click(object sender, EventArgs e)
+        {
+            await MileagesChangeSelectedAsync();
+        }
+
+        private async void MiMileagesDelete_Click(object sender, EventArgs e)
+        {
+            await MileagesDeleteSelectedAsync();
         }
     }
 }

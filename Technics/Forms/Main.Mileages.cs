@@ -57,7 +57,11 @@ namespace Technics
 
         private void MileagesListChanged()
         {
-            tsbtnMileageDelete.Enabled = tsbtnMileageChange.Enabled = bindingSourceMileages.Count > 0;
+            tsbtnMileagesDelete.Enabled =
+            tsbtnMileagesChange.Enabled =
+            miMileagesDelete.Enabled =
+            miMileagesChange.Enabled =
+                bindingSourceMileages.Count > 0;
 
             presenterStatusStrip.MileageCount = bindingSourceMileages.Count;
         }

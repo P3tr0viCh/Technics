@@ -44,11 +44,15 @@
             this.TechPartsDateTimeRemove = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TechPartsMileage = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TechPartsMileageCommon = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.menuTechParts = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.miTechPartsAdd = new System.Windows.Forms.ToolStripMenuItem();
+            this.miTechPartsChange = new System.Windows.Forms.ToolStripMenuItem();
+            this.miTechPartsDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.bindingSourceTechParts = new System.Windows.Forms.BindingSource(this.components);
             this.toolStripTechParts = new System.Windows.Forms.ToolStrip();
-            this.tsbtnTechPartAdd = new System.Windows.Forms.ToolStripButton();
-            this.tsbtnTechPartChange = new System.Windows.Forms.ToolStripButton();
-            this.tsbtnTechPartDelete = new System.Windows.Forms.ToolStripButton();
+            this.tsbtnTechPartsAdd = new System.Windows.Forms.ToolStripButton();
+            this.tsbtnTechPartsChange = new System.Windows.Forms.ToolStripButton();
+            this.tsbtnTechPartsDelete = new System.Windows.Forms.ToolStripButton();
             this.splitterTechs = new System.Windows.Forms.Splitter();
             this.panelTechs = new System.Windows.Forms.Panel();
             this.tvTechs = new System.Windows.Forms.TreeView();
@@ -73,14 +77,18 @@
             this.MileagesMileage = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MileagesMileageCommon = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MileagesDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.menuMileages = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.miMileagesAdd = new System.Windows.Forms.ToolStripMenuItem();
+            this.miMileagesChange = new System.Windows.Forms.ToolStripMenuItem();
+            this.miMileagesDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.bindingSourceMileages = new System.Windows.Forms.BindingSource(this.components);
             this.toolStripMileages = new System.Windows.Forms.ToolStrip();
-            this.tsbtnMileageAdd = new System.Windows.Forms.ToolStripButton();
-            this.tsbtnMileageAddFromFile = new System.Windows.Forms.ToolStripSplitButton();
+            this.tsbtnMileagesAdd = new System.Windows.Forms.ToolStripButton();
+            this.tsbtnMileagesAddFromFile = new System.Windows.Forms.ToolStripSplitButton();
             this.miMileagesFromFiles = new System.Windows.Forms.ToolStripMenuItem();
             this.miMileagesFromDirectory = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsbtnMileageChange = new System.Windows.Forms.ToolStripButton();
-            this.tsbtnMileageDelete = new System.Windows.Forms.ToolStripButton();
+            this.tsbtnMileagesChange = new System.Windows.Forms.ToolStripButton();
+            this.tsbtnMileagesDelete = new System.Windows.Forms.ToolStripButton();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.miMainFile = new System.Windows.Forms.ToolStripMenuItem();
             this.miFileSettings = new System.Windows.Forms.ToolStripMenuItem();
@@ -108,6 +116,7 @@
             this.panelTop.SuspendLayout();
             this.panelTechPart.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTechParts)).BeginInit();
+            this.menuTechParts.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourceTechParts)).BeginInit();
             this.toolStripTechParts.SuspendLayout();
             this.panelTechs.SuspendLayout();
@@ -115,6 +124,7 @@
             this.toolStripTechs.SuspendLayout();
             this.panelBottom.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMileages)).BeginInit();
+            this.menuMileages.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourceMileages)).BeginInit();
             this.toolStripMileages.SuspendLayout();
             this.menuStrip.SuspendLayout();
@@ -215,6 +225,7 @@
             this.TechPartsDateTimeRemove,
             this.TechPartsMileage,
             this.TechPartsMileageCommon});
+            this.dgvTechParts.ContextMenuStrip = this.menuTechParts;
             this.dgvTechParts.DataSource = this.bindingSourceTechParts;
             this.dgvTechParts.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvTechParts.Location = new System.Drawing.Point(0, 50);
@@ -280,6 +291,36 @@
             this.TechPartsMileageCommon.ReadOnly = true;
             this.TechPartsMileageCommon.Width = 150;
             // 
+            // menuTechParts
+            // 
+            this.menuTechParts.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.miTechPartsAdd,
+            this.miTechPartsChange,
+            this.miTechPartsDelete});
+            this.menuTechParts.Name = "menuTechParts";
+            this.menuTechParts.Size = new System.Drawing.Size(129, 70);
+            // 
+            // miTechPartsAdd
+            // 
+            this.miTechPartsAdd.Name = "miTechPartsAdd";
+            this.miTechPartsAdd.Size = new System.Drawing.Size(128, 22);
+            this.miTechPartsAdd.Text = "Добавить";
+            this.miTechPartsAdd.Click += new System.EventHandler(this.MiTechPartsAdd_Click);
+            // 
+            // miTechPartsChange
+            // 
+            this.miTechPartsChange.Name = "miTechPartsChange";
+            this.miTechPartsChange.Size = new System.Drawing.Size(128, 22);
+            this.miTechPartsChange.Text = "Изменить";
+            this.miTechPartsChange.Click += new System.EventHandler(this.MiTechPartsChange_Click);
+            // 
+            // miTechPartsDelete
+            // 
+            this.miTechPartsDelete.Name = "miTechPartsDelete";
+            this.miTechPartsDelete.Size = new System.Drawing.Size(128, 22);
+            this.miTechPartsDelete.Text = "Удалить";
+            this.miTechPartsDelete.Click += new System.EventHandler(this.MiTechPartsDelete_Click);
+            // 
             // bindingSourceTechParts
             // 
             this.bindingSourceTechParts.DataSource = typeof(Technics.Database.Models.TechPartModel);
@@ -290,44 +331,44 @@
             this.toolStripTechParts.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStripTechParts.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.toolStripTechParts.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsbtnTechPartAdd,
-            this.tsbtnTechPartChange,
-            this.tsbtnTechPartDelete});
+            this.tsbtnTechPartsAdd,
+            this.tsbtnTechPartsChange,
+            this.tsbtnTechPartsDelete});
             this.toolStripTechParts.Location = new System.Drawing.Point(0, 0);
             this.toolStripTechParts.Name = "toolStripTechParts";
             this.toolStripTechParts.ShowItemToolTips = false;
             this.toolStripTechParts.Size = new System.Drawing.Size(604, 50);
             this.toolStripTechParts.TabIndex = 2;
             // 
-            // tsbtnTechPartAdd
+            // tsbtnTechPartsAdd
             // 
-            this.tsbtnTechPartAdd.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnTechPartAdd.Image")));
-            this.tsbtnTechPartAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbtnTechPartAdd.Name = "tsbtnTechPartAdd";
-            this.tsbtnTechPartAdd.Size = new System.Drawing.Size(74, 47);
-            this.tsbtnTechPartAdd.Text = "Добавить";
-            this.tsbtnTechPartAdd.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.tsbtnTechPartAdd.Click += new System.EventHandler(this.TsbtnTechPartAdd_Click);
+            this.tsbtnTechPartsAdd.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnTechPartsAdd.Image")));
+            this.tsbtnTechPartsAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbtnTechPartsAdd.Name = "tsbtnTechPartsAdd";
+            this.tsbtnTechPartsAdd.Size = new System.Drawing.Size(74, 47);
+            this.tsbtnTechPartsAdd.Text = "Добавить";
+            this.tsbtnTechPartsAdd.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tsbtnTechPartsAdd.Click += new System.EventHandler(this.TsbtnTechPartsAdd_Click);
             // 
-            // tsbtnTechPartChange
+            // tsbtnTechPartsChange
             // 
-            this.tsbtnTechPartChange.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnTechPartChange.Image")));
-            this.tsbtnTechPartChange.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbtnTechPartChange.Name = "tsbtnTechPartChange";
-            this.tsbtnTechPartChange.Size = new System.Drawing.Size(75, 47);
-            this.tsbtnTechPartChange.Text = "Изменить";
-            this.tsbtnTechPartChange.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.tsbtnTechPartChange.Click += new System.EventHandler(this.TsbtnTechPartChange_Click);
+            this.tsbtnTechPartsChange.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnTechPartsChange.Image")));
+            this.tsbtnTechPartsChange.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbtnTechPartsChange.Name = "tsbtnTechPartsChange";
+            this.tsbtnTechPartsChange.Size = new System.Drawing.Size(75, 47);
+            this.tsbtnTechPartsChange.Text = "Изменить";
+            this.tsbtnTechPartsChange.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tsbtnTechPartsChange.Click += new System.EventHandler(this.TsbtnTechPartsChange_Click);
             // 
-            // tsbtnTechPartDelete
+            // tsbtnTechPartsDelete
             // 
-            this.tsbtnTechPartDelete.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnTechPartDelete.Image")));
-            this.tsbtnTechPartDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbtnTechPartDelete.Name = "tsbtnTechPartDelete";
-            this.tsbtnTechPartDelete.Size = new System.Drawing.Size(64, 47);
-            this.tsbtnTechPartDelete.Text = "Удалить";
-            this.tsbtnTechPartDelete.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.tsbtnTechPartDelete.Click += new System.EventHandler(this.TsbtnTechPartDelete_Click);
+            this.tsbtnTechPartsDelete.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnTechPartsDelete.Image")));
+            this.tsbtnTechPartsDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbtnTechPartsDelete.Name = "tsbtnTechPartsDelete";
+            this.tsbtnTechPartsDelete.Size = new System.Drawing.Size(64, 47);
+            this.tsbtnTechPartsDelete.Text = "Удалить";
+            this.tsbtnTechPartsDelete.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tsbtnTechPartsDelete.Click += new System.EventHandler(this.TsbtnTechPartsDelete_Click);
             // 
             // splitterTechs
             // 
@@ -519,6 +560,7 @@
             this.MileagesMileage,
             this.MileagesMileageCommon,
             this.MileagesDescription});
+            this.dgvMileages.ContextMenuStrip = this.menuMileages;
             this.dgvMileages.DataSource = this.bindingSourceMileages;
             this.dgvMileages.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvMileages.Location = new System.Drawing.Point(0, 50);
@@ -575,6 +617,36 @@
             this.MileagesDescription.ReadOnly = true;
             this.MileagesDescription.Width = 150;
             // 
+            // menuMileages
+            // 
+            this.menuMileages.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.miMileagesAdd,
+            this.miMileagesChange,
+            this.miMileagesDelete});
+            this.menuMileages.Name = "menuTechParts";
+            this.menuMileages.Size = new System.Drawing.Size(129, 70);
+            // 
+            // miMileagesAdd
+            // 
+            this.miMileagesAdd.Name = "miMileagesAdd";
+            this.miMileagesAdd.Size = new System.Drawing.Size(128, 22);
+            this.miMileagesAdd.Text = "Добавить";
+            this.miMileagesAdd.Click += new System.EventHandler(this.MiMileagesAdd_Click);
+            // 
+            // miMileagesChange
+            // 
+            this.miMileagesChange.Name = "miMileagesChange";
+            this.miMileagesChange.Size = new System.Drawing.Size(128, 22);
+            this.miMileagesChange.Text = "Изменить";
+            this.miMileagesChange.Click += new System.EventHandler(this.MiMileagesChange_Click);
+            // 
+            // miMileagesDelete
+            // 
+            this.miMileagesDelete.Name = "miMileagesDelete";
+            this.miMileagesDelete.Size = new System.Drawing.Size(128, 22);
+            this.miMileagesDelete.Text = "Удалить";
+            this.miMileagesDelete.Click += new System.EventHandler(this.MiMileagesDelete_Click);
+            // 
             // bindingSourceMileages
             // 
             this.bindingSourceMileages.DataSource = typeof(Technics.Database.Models.MileageModel);
@@ -585,72 +657,72 @@
             this.toolStripMileages.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStripMileages.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.toolStripMileages.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsbtnMileageAdd,
-            this.tsbtnMileageAddFromFile,
-            this.tsbtnMileageChange,
-            this.tsbtnMileageDelete});
+            this.tsbtnMileagesAdd,
+            this.tsbtnMileagesAddFromFile,
+            this.tsbtnMileagesChange,
+            this.tsbtnMileagesDelete});
             this.toolStripMileages.Location = new System.Drawing.Point(0, 0);
             this.toolStripMileages.Name = "toolStripMileages";
             this.toolStripMileages.ShowItemToolTips = false;
             this.toolStripMileages.Size = new System.Drawing.Size(872, 50);
             this.toolStripMileages.TabIndex = 2;
             // 
-            // tsbtnMileageAdd
+            // tsbtnMileagesAdd
             // 
-            this.tsbtnMileageAdd.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnMileageAdd.Image")));
-            this.tsbtnMileageAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbtnMileageAdd.Name = "tsbtnMileageAdd";
-            this.tsbtnMileageAdd.Size = new System.Drawing.Size(74, 47);
-            this.tsbtnMileageAdd.Text = "Добавить";
-            this.tsbtnMileageAdd.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.tsbtnMileageAdd.Click += new System.EventHandler(this.TsbtnMileagesAdd_Click);
+            this.tsbtnMileagesAdd.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnMileagesAdd.Image")));
+            this.tsbtnMileagesAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbtnMileagesAdd.Name = "tsbtnMileagesAdd";
+            this.tsbtnMileagesAdd.Size = new System.Drawing.Size(74, 47);
+            this.tsbtnMileagesAdd.Text = "Добавить";
+            this.tsbtnMileagesAdd.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tsbtnMileagesAdd.Click += new System.EventHandler(this.TsbtnMileagesAdd_Click);
             // 
-            // tsbtnMileageAddFromFile
+            // tsbtnMileagesAddFromFile
             // 
-            this.tsbtnMileageAddFromFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsbtnMileagesAddFromFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.miMileagesFromFiles,
             this.miMileagesFromDirectory});
-            this.tsbtnMileageAddFromFile.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnMileageAddFromFile.Image")));
-            this.tsbtnMileageAddFromFile.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbtnMileageAddFromFile.Name = "tsbtnMileageAddFromFile";
-            this.tsbtnMileageAddFromFile.Size = new System.Drawing.Size(57, 47);
-            this.tsbtnMileageAddFromFile.Text = "Файл";
-            this.tsbtnMileageAddFromFile.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.tsbtnMileageAddFromFile.ButtonClick += new System.EventHandler(this.TsbtnMileageAddFromFile_ButtonClick);
+            this.tsbtnMileagesAddFromFile.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnMileagesAddFromFile.Image")));
+            this.tsbtnMileagesAddFromFile.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbtnMileagesAddFromFile.Name = "tsbtnMileagesAddFromFile";
+            this.tsbtnMileagesAddFromFile.Size = new System.Drawing.Size(57, 47);
+            this.tsbtnMileagesAddFromFile.Text = "Файл";
+            this.tsbtnMileagesAddFromFile.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tsbtnMileagesAddFromFile.ButtonClick += new System.EventHandler(this.TsbtnMileageAddFromFile_ButtonClick);
             // 
             // miMileagesFromFiles
             // 
             this.miMileagesFromFiles.Name = "miMileagesFromFiles";
-            this.miMileagesFromFiles.Size = new System.Drawing.Size(120, 24);
+            this.miMileagesFromFiles.Size = new System.Drawing.Size(180, 24);
             this.miMileagesFromFiles.Text = "Файлы";
             this.miMileagesFromFiles.Click += new System.EventHandler(this.MiMileagesFromFiles_Click);
             // 
             // miMileagesFromDirectory
             // 
             this.miMileagesFromDirectory.Name = "miMileagesFromDirectory";
-            this.miMileagesFromDirectory.Size = new System.Drawing.Size(120, 24);
+            this.miMileagesFromDirectory.Size = new System.Drawing.Size(180, 24);
             this.miMileagesFromDirectory.Text = "Папка";
             this.miMileagesFromDirectory.Click += new System.EventHandler(this.MiMileagesFromDirectory_Click);
             // 
-            // tsbtnMileageChange
+            // tsbtnMileagesChange
             // 
-            this.tsbtnMileageChange.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnMileageChange.Image")));
-            this.tsbtnMileageChange.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbtnMileageChange.Name = "tsbtnMileageChange";
-            this.tsbtnMileageChange.Size = new System.Drawing.Size(75, 47);
-            this.tsbtnMileageChange.Text = "Изменить";
-            this.tsbtnMileageChange.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.tsbtnMileageChange.Click += new System.EventHandler(this.TsbtnMileagesChange_Click);
+            this.tsbtnMileagesChange.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnMileagesChange.Image")));
+            this.tsbtnMileagesChange.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbtnMileagesChange.Name = "tsbtnMileagesChange";
+            this.tsbtnMileagesChange.Size = new System.Drawing.Size(75, 47);
+            this.tsbtnMileagesChange.Text = "Изменить";
+            this.tsbtnMileagesChange.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tsbtnMileagesChange.Click += new System.EventHandler(this.TsbtnMileagesChange_Click);
             // 
-            // tsbtnMileageDelete
+            // tsbtnMileagesDelete
             // 
-            this.tsbtnMileageDelete.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnMileageDelete.Image")));
-            this.tsbtnMileageDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbtnMileageDelete.Name = "tsbtnMileageDelete";
-            this.tsbtnMileageDelete.Size = new System.Drawing.Size(64, 47);
-            this.tsbtnMileageDelete.Text = "Удалить";
-            this.tsbtnMileageDelete.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.tsbtnMileageDelete.Click += new System.EventHandler(this.TsbtnMileagesDelete_Click);
+            this.tsbtnMileagesDelete.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnMileagesDelete.Image")));
+            this.tsbtnMileagesDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbtnMileagesDelete.Name = "tsbtnMileagesDelete";
+            this.tsbtnMileagesDelete.Size = new System.Drawing.Size(64, 47);
+            this.tsbtnMileagesDelete.Text = "Удалить";
+            this.tsbtnMileagesDelete.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tsbtnMileagesDelete.Click += new System.EventHandler(this.TsbtnMileagesDelete_Click);
             // 
             // menuStrip
             // 
@@ -840,6 +912,7 @@
             this.panelTechPart.ResumeLayout(false);
             this.panelTechPart.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTechParts)).EndInit();
+            this.menuTechParts.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourceTechParts)).EndInit();
             this.toolStripTechParts.ResumeLayout(false);
             this.toolStripTechParts.PerformLayout();
@@ -851,6 +924,7 @@
             this.panelBottom.ResumeLayout(false);
             this.panelBottom.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMileages)).EndInit();
+            this.menuMileages.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourceMileages)).EndInit();
             this.toolStripMileages.ResumeLayout(false);
             this.toolStripMileages.PerformLayout();
@@ -891,12 +965,12 @@
         private System.Windows.Forms.Panel panelBottom;
         private System.Windows.Forms.Splitter splitterTechs;
         private System.Windows.Forms.ToolStrip toolStripMileages;
-        private System.Windows.Forms.ToolStripButton tsbtnMileageChange;
-        private System.Windows.Forms.ToolStripButton tsbtnMileageDelete;
+        private System.Windows.Forms.ToolStripButton tsbtnMileagesChange;
+        private System.Windows.Forms.ToolStripButton tsbtnMileagesDelete;
         private System.Windows.Forms.DataGridView dgvMileages;
         private System.Windows.Forms.BindingSource bindingSourceMileages;
         private System.Windows.Forms.Panel panelTechs;
-        private System.Windows.Forms.ToolStripButton tsbtnMileageAdd;
+        private System.Windows.Forms.ToolStripButton tsbtnMileagesAdd;
         private System.Windows.Forms.DataGridViewTextBoxColumn MileagesTechText;
         private System.Windows.Forms.DataGridViewTextBoxColumn MileagesDateTime;
         private System.Windows.Forms.DataGridViewTextBoxColumn MileagesMileage;
@@ -913,10 +987,10 @@
         private System.Windows.Forms.BindingSource bindingSourceTechParts;
         private System.Windows.Forms.Panel panelTechPart;
         private System.Windows.Forms.ToolStrip toolStripTechParts;
-        private System.Windows.Forms.ToolStripButton tsbtnTechPartChange;
-        private System.Windows.Forms.ToolStripButton tsbtnTechPartDelete;
+        private System.Windows.Forms.ToolStripButton tsbtnTechPartsChange;
+        private System.Windows.Forms.ToolStripButton tsbtnTechPartsDelete;
         private System.Windows.Forms.DataGridView dgvTechParts;
-        private System.Windows.Forms.ToolStripButton tsbtnTechPartAdd;
+        private System.Windows.Forms.ToolStripButton tsbtnTechPartsAdd;
         private System.Windows.Forms.ToolStripMenuItem miListTechs;
         private System.Windows.Forms.ToolStripButton tsbtnListTechs;
         private System.Windows.Forms.ToolStripStatusLabel LabelMileageCount;
@@ -927,13 +1001,21 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn TechPartsDateTimeRemove;
         private System.Windows.Forms.DataGridViewTextBoxColumn TechPartsMileage;
         private System.Windows.Forms.DataGridViewTextBoxColumn TechPartsMileageCommon;
-        private System.Windows.Forms.ToolStripSplitButton tsbtnMileageAddFromFile;
+        private System.Windows.Forms.ToolStripSplitButton tsbtnMileagesAddFromFile;
         private System.Windows.Forms.ToolStripMenuItem miMileagesFromFiles;
         private System.Windows.Forms.ToolStripMenuItem miMileagesFromDirectory;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
         private System.Windows.Forms.ToolStripMenuItem miFileSettings;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ContextMenuStrip menuTechParts;
+        private System.Windows.Forms.ToolStripMenuItem miTechPartsAdd;
+        private System.Windows.Forms.ToolStripMenuItem miTechPartsChange;
+        private System.Windows.Forms.ToolStripMenuItem miTechPartsDelete;
+        private System.Windows.Forms.ContextMenuStrip menuMileages;
+        private System.Windows.Forms.ToolStripMenuItem miMileagesAdd;
+        private System.Windows.Forms.ToolStripMenuItem miMileagesChange;
+        private System.Windows.Forms.ToolStripMenuItem miMileagesDelete;
     }
 }
 
