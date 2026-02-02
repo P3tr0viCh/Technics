@@ -1,5 +1,7 @@
-﻿using P3tr0viCh.Utils;
+﻿using Newtonsoft.Json.Linq;
+using P3tr0viCh.Utils;
 using P3tr0viCh.Utils.Comparers;
+using P3tr0viCh.Utils.Extensions;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Technics.Forms;
@@ -15,6 +17,7 @@ namespace Technics.Presenters
 
         public PresenterFrmListParts(IFrmList frmList) : base(frmList)
         {
+            Grants = Grants.AddFlag(FrmListGrant.MultiChange);
         }
 
         protected override PartModel GetNewItem()
@@ -47,6 +50,11 @@ namespace Technics.Presenters
         protected override bool ShowItemChangeDialog(PartModel value)
         {
             return FrmPart.ShowDlg(Form, value);
+        }
+
+        protected override bool ShowItemChangeDialog(IEnumerable<PartModel> list)
+        {
+            return FrmPartList.ShowDlg(Form, list);
         }
 
         protected override bool ShowItemDeleteDialog(IEnumerable<PartModel> list)

@@ -122,6 +122,12 @@
     <Compile Include="Forms\FrmPart.Designer.cs">
       <DependentUpon>FrmPart.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\FrmPartList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmPartList.Designer.cs">
+      <DependentUpon>FrmPartList.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\FrmSettings.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -220,6 +226,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FrmPart.resx">
       <DependentUpon>FrmPart.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FrmPartList.resx">
+      <DependentUpon>FrmPartList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FrmTechPart.resx">
       <DependentUpon>FrmTechPart.cs</DependentUpon>

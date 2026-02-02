@@ -1,4 +1,5 @@
-﻿using P3tr0viCh.Database;
+﻿using Newtonsoft.Json.Linq;
+using P3tr0viCh.Database;
 using P3tr0viCh.Utils.Comparers;
 using P3tr0viCh.Utils.Extensions;
 using P3tr0viCh.Utils.Presenters;
@@ -186,7 +187,7 @@ namespace Technics.Presenters
             OnListChanged?.Invoke();
         }
 
-        private void ListItemChange(T value)
+        private void InternalListItemChange(T value)
         {
             var item = Find(value);
 
@@ -202,8 +203,27 @@ namespace Technics.Presenters
 
                 bindingSource.ResetItem(index);
             }
+        }
+
+        private void ListItemChange(T value)
+        {
+            InternalListItemChange(value);
 
             DataGridView.SetSelectedRows(value);
+
+            presenterDataGridView.Sort();
+
+            PerformOnListChanged();
+        }
+
+        private void ListItemChange(IEnumerable<T> list)
+        {
+            foreach (var item in list)
+            {
+                InternalListItemChange(item);
+            }
+
+            DataGridView.SetSelectedRows(list);
 
             presenterDataGridView.Sort();
 
@@ -223,6 +243,12 @@ namespace Technics.Presenters
         protected virtual T GetNewItem() => new T();
 
         protected abstract bool ShowItemChangeDialog(T value);
+
+        protected virtual bool ShowItemChangeDialog(IEnumerable<T> value)
+        {
+            return false;
+        }
+
         protected abstract bool ShowItemDeleteDialog(IEnumerable<T> list);
 
         private async Task ListItemChangeAsync(T value)
@@ -245,6 +271,26 @@ namespace Technics.Presenters
             }
         }
 
+        private async Task ListItemChangeAsync(IEnumerable<T> list)
+        {
+            try
+            {
+                if (!ShowItemChangeDialog(list)) return;
+
+                await PerformListItemSaveAsync(list);
+
+                ListItemChange(list);
+            }
+            catch (Exception e)
+            {
+                Utils.Log.Query(e);
+
+                Utils.Log.Error(e);
+
+                Utils.Msg.Error(Resources.MsgDatabaseListItemSaveFail, e.Message);
+            }
+        }
+
         public async Task ListItemAddNewAsync()
         {
             if (!CanAdd) return;
@@ -254,15 +300,36 @@ namespace Technics.Presenters
             await ListItemChangeAsync(item);
         }
 
-        public async Task ListItemChangeSelectedAsync()
+        private async Task ListItemChangeSelectedItemAsync()
         {
-            if (!CanChange) return;
-
             var item = Selected;
 
             DataGridView.SetSelectedRows(item);
 
             await ListItemChangeAsync(item);
+        }
+
+        private async Task ListItemChangeSelectedListAsync()
+        {
+            var list = SelectedList;
+
+            DataGridView.SetSelectedRows(list);
+
+            await ListItemChangeAsync(list);
+        }
+
+        public async Task ListItemChangeSelectedAsync()
+        {
+            if (!CanChange) return;
+
+            if (Grants.HasFlag(FrmListGrant.MultiChange) && DataGridView.SelectedCount() > 1)
+            {
+                await ListItemChangeSelectedListAsync();
+            }
+            else
+            {
+                await ListItemChangeSelectedItemAsync();
+            }
         }
 
         public async Task ListItemDeleteSelectedAsync()

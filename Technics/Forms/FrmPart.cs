@@ -2,18 +2,14 @@
 using P3tr0viCh.Utils;
 using P3tr0viCh.Utils.Extensions;
 using System;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Technics.Properties;
 using static Technics.Database.Models;
-using static Technics.ProgramStatus;
 
 namespace Technics.Forms
 {
     public partial class FrmPart : Form
     {
-
         private readonly PartModel part = new PartModel();
 
         private PartModel Part
@@ -56,43 +52,18 @@ namespace Technics.Forms
             }
         }
 
-        private async void FrmPart_Load(PartModel part)
+        private void FrmPart_Load(PartModel part)
         {
-            await LoadDataAsync();
+            LoadData();
 
             Part = part;
         }
 
-        private async Task LoadDataAsync()
+        private void LoadData()
         {
-            DebugWrite.Line("start");
+            bindingSourceFolders.DataSource = Lists.Default.Folders.ToBindingList();
 
-            var status = ProgramStatus.Default.Start(Status.LoadData);
-
-            try
-            {
-                var list = await Database.Default.ListLoadAsync<FolderModel>();
-
-                bindingSourceFolders.DataSource = list.OrderBy(folder => folder.Text).ToBindingList();
-
-                bindingSourceFolders.Insert(0, new FolderModel());
-
-                bindingSourceFolders.Position = 0;
-            }
-            catch (Exception e)
-            {
-                Utils.Log.Query(e);
-
-                Utils.Log.Error(e);
-
-                Utils.Msg.Error(Resources.MsgDatabaseLoadFail, e.Message);
-            }
-            finally
-            {
-                ProgramStatus.Default.Stop(status);
-            }
-
-            DebugWrite.Line("end");
+            bindingSourceFolders.Insert(0, new FolderModel());
         }
 
         private bool CheckData()

@@ -92,13 +92,19 @@ namespace Technics
 
             try
             {
-                bindingSourceTechs.DataSource = Lists.Default.Techs.ToBindingList();
+                bindingSourceTechs.DataSource = null;
 
-                bindingSourceTechs.Insert(0, new TechModel());
+                var techs = Lists.Default.Techs.ToBindingList();
 
-                bindingSourceTechs.Position = 0;
+                techs.Insert(0, new TechModel());
 
-                Parts = await Database.Default.ListLoadAsync<PartModel>();
+                bindingSourceTechs.DataSource = techs;
+
+                var list = await Database.Default.ListLoadAsync<PartModel>();
+
+                list = list.OrderBy(part => part.Text);
+
+                Parts = list;
             }
             catch (Exception e)
             {
@@ -296,6 +302,8 @@ namespace Technics
 
             cboxTech.SelectedValue = tech?.Id ?? Sql.NewId;
 
+            UpdatePartsList(tech);
+
             cboxPart.SelectedValue = value?.Id ?? Sql.NewId;
 
             selfChange = false;
@@ -343,6 +351,13 @@ namespace Technics
 
             value.Text = text;
 
+            var tech = cboxTech.GetSelectedItem<TechModel>();
+
+            var folder = Lists.Default.Folders.Find(tech?.FolderId);
+
+            value.FolderId = folder?.Id;
+            value.FolderText = folder?.Text;
+
             if (!await ListItemSaveAsync(value)) return;
 
             await AfterChangeListAsync(value);
@@ -375,35 +390,37 @@ namespace Technics
             var folders = Lists.Default.Folders.GetFolderList(tech?.FolderId);
 
             DebugWrite.Line($"folders: {string.Join(", ", folders.Select(f => f.Text))}");
-            
+
             DebugWrite.Line($"parts folderid: {string.Join(", ", Parts.Select(p => p.FolderId))}");
 
             return Parts.Where(part =>
                 part.FolderId == null ||
-                folders.Select(f => f.Id).Contains((long)part.FolderId)).ToBindingList();
+                folders.Select(f => f.Id).Contains((long)part.FolderId));
         }
 
         private void UpdatePartsList(TechModel tech)
         {
             selfChange = true;
 
-            bindingSourceParts.DataSource = GetPartsForTech(tech);
+            bindingSourceParts.DataSource = null;
 
-            bindingSourceParts.Insert(0, new PartModel());
+            var list = GetPartsForTech(tech).ToBindingList();
 
-            bindingSourceParts.Insert(1, new PartModel()
+            list.Insert(0, new PartModel());
+
+            list.Insert(1, new PartModel()
             {
                 Id = Consts.Id.ListEdit,
                 Text = Resources.TextListEdit
             });
 
-            bindingSourceParts.Insert(2, new PartModel()
+            list.Insert(2, new PartModel()
             {
                 Id = Consts.Id.ListAdd,
                 Text = Resources.TextListAdd
             });
 
-            bindingSourceParts.Position = 0;
+            bindingSourceParts.DataSource = list;
 
             selfChange = false;
         }

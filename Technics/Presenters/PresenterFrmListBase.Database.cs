@@ -26,6 +26,11 @@ namespace Technics.Presenters
             await Database.Default.ListItemSaveAsync(value);
         }
 
+        protected virtual async Task ListItemSaveAsync(IEnumerable<T> list)
+        {
+            await Database.Default.ListItemSaveAsync(list);
+        }
+
         protected virtual async Task ListItemDeleteAsync(IEnumerable<T> list)
         {
             await Database.Default.ListItemDeleteAsync(list);
@@ -82,6 +87,20 @@ namespace Technics.Presenters
             try
             {
                 await ListItemSaveAsync(value);
+            }
+            finally
+            {
+                ProgramStatus.Default.Stop(status);
+            }
+        }
+
+        private async Task PerformListItemSaveAsync(IEnumerable<T> list)
+        {
+            var status = ProgramStatus.Default.Start(Status.SaveData);
+
+            try
+            {
+                await ListItemSaveAsync(list);
             }
             finally
             {

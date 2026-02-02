@@ -5,48 +5,47 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using Technics.Interfaces;
 using static Technics.Database.Models;
 
-namespace Technics
+namespace Technics.Forms
 {
-    public partial class FrmMileageList : Form
+    public partial class FrmPartList : Form
     {
-        private readonly TechModel tech = new TechModel();
+        private readonly FolderModel folder = new FolderModel();
 
-        private TechModel Tech
+        private FolderModel Folder
         {
-            get => tech;
+            get => folder;
             set
             {
-                tech.Assign(value);
+                folder.Assign(value);
 
-                cboxTech.SelectedValue = value?.Id ?? Sql.NewId;
+                cboxFolder.SelectedValue = value?.Id ?? Sql.NewId;
             }
         }
 
-        public FrmMileageList()
+        public FrmPartList()
         {
             InitializeComponent();
         }
 
-        public static bool ShowDlg(Form owner, IEnumerable<MileageModel> mileages)
+        public static bool ShowDlg(Form owner, IEnumerable<PartModel> parts)
         {
-            using (var frm = new FrmMileageList()
+            using (var frm = new FrmPartList()
             {
                 Owner = owner,
             })
             {
-                frm.Load += (sender, args) => frm.FrmMileageList_Load(mileages);
+                frm.Load += (sender, args) => frm.FrmPart_Load(parts);
 
                 var result = frm.ShowDialog(owner) == DialogResult.OK;
 
                 if (result)
                 {
-                    foreach (var mileage in mileages)
+                    foreach (var part in parts)
                     {
-                        mileage.TechId = frm.Tech.Id;
-                        mileage.TechText = frm.Tech.Text;
+                        part.FolderId = frm.Folder.Id;
+                        part.FolderText = frm.Folder.Text;
                     }
                 }
 
@@ -54,34 +53,34 @@ namespace Technics
             }
         }
 
-        private void FrmMileageList_Load(IEnumerable<MileageModel> mileages)
+        private void FrmPart_Load(IEnumerable<PartModel> parts)
         {
             LoadData();
 
-            var techIds = mileages.Select(mileage => mileage.TechId).Distinct();
+            var folderIds = parts.Select(part => part.FolderId).Distinct();
 
-            if (techIds.Count() == 1)
+            if (folderIds.Count() == 1)
             {
-                Tech = Lists.Default.Techs.Find(techIds.First());
+                Folder = Lists.Default.Folders.Find(folderIds.First());
             }
             else
             {
-                Tech = new TechModel();
+                Folder = new FolderModel();
             }
         }
 
         private void LoadData()
         {
-            bindingSourceTechs.DataSource = Lists.Default.Techs.ToBindingList();
+            bindingSourceFolders.DataSource = Lists.Default.Folders.ToBindingList();
 
-            bindingSourceTechs.Insert(0, new TechModel());
+            bindingSourceFolders.Insert(0, new FolderModel());
         }
 
         private bool UpdateData()
         {
             try
             {
-                Tech = cboxTech.GetSelectedItem<TechModel>();
+                Folder = cboxFolder.GetSelectedItem<FolderModel>();
 
                 return true;
             }

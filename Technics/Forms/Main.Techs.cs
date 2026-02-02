@@ -88,9 +88,11 @@ namespace Technics
 
                 var folders = await Database.Default.ListLoadAsync<FolderModel>();
 
+                folders = folders.OrderBy(f => f.Text);
+
                 Lists.Default.Folders = new FolderList(folders);
 
-                folders = folders.OrderBy(f => f.Id).ToList();
+                folders = folders.OrderBy(f => f.Id);
 
                 var folderNodes = new Dictionary<long, TreeNodeFolder>
                 {
