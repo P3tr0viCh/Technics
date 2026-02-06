@@ -7,7 +7,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Technics.Properties;
-using static Technics.Database;
 using static Technics.Database.Models;
 using static Technics.ProgramStatus;
 
@@ -15,6 +14,8 @@ namespace Technics
 {
     public partial class Main
     {
+        internal readonly WrapperCancellationTokenSource ctsTechsLoad = new WrapperCancellationTokenSource();
+
         private void AddTechsRoot()
         {
             tvTechs.Nodes.Add(new TreeNodeFolder()
@@ -82,11 +83,15 @@ namespace Technics
         {
             DebugWrite.Line("start");
 
+            ctsTechsLoad.Start();
+
             try
             {
                 tvTechs.Nodes[0].Nodes.Clear();
 
                 var folders = await Database.Default.ListLoadAsync<FolderModel>();
+
+                if (ctsTechsLoad.IsCancellationRequested) return;
 
                 folders = folders.OrderBy(f => f.Text);
 
@@ -112,6 +117,8 @@ namespace Technics
 
                 var techs = await Database.Default.ListLoadAsync<TechModel>();
 
+                if (ctsTechsLoad.IsCancellationRequested) return;
+
                 Lists.Default.Techs = new TechList(techs.OrderBy(tech => tech.Text));
 
                 foreach (var tech in Lists.Default.Techs)
@@ -131,8 +138,14 @@ namespace Technics
 
                 Utils.Log.Info(ResourcesLog.LoadOk);
             }
+            catch (TaskCanceledException e)
+            {
+                DebugWrite.Error(e);
+            }
             finally
             {
+                ctsTechsLoad.Finally();
+
                 DebugWrite.Line("end");
             }
         }

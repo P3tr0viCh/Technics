@@ -103,7 +103,6 @@
     <Compile Include="Forms\FrmList.Designer.cs">
       <DependentUpon>FrmList.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FrmListGrant.cs" />
     <Compile Include="Forms\FrmMileage.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -137,7 +136,6 @@
     <Compile Include="Forms\FrmTechPart.Designer.cs">
       <DependentUpon>FrmTechPart.cs</DependentUpon>
     </Compile>
-    <Compile Include="Interfaces\IFrmList.cs" />
     <Compile Include="Interfaces\IMainForm.cs" />
     <Compile Include="Forms\Main.CheckDirectoryTracks.cs">
       <SubType>Form</SubType>
@@ -169,7 +167,6 @@
     <Compile Include="Forms\Main.Utils.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Interfaces\IPresenterFrmList.cs" />
     <Compile Include="Models\BaseIdList.cs" />
     <Compile Include="Presenters\PresenterDataGridViewFrmList.cs" />
     <Compile Include="Presenters\PresenterDataGridViewMileages.cs" />
@@ -263,7 +260,6 @@
       <SubType>Designer</SubType>
       <LastGenOutput>ResourcesSql.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Presenters\PresenterFrmListBase.Database.cs" />
     <None Include="packages.config" />
     <None Include="Properties\DataSources\Database.Models.FolderModel.datasource" />
     <None Include="Properties\DataSources\Database.Models.MileageModel.datasource" />

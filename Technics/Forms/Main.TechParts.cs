@@ -13,15 +13,21 @@ namespace Technics
 {
     public partial class Main
     {
+        internal readonly WrapperCancellationTokenSource ctsTechPartsLoad = new WrapperCancellationTokenSource();
+
         internal readonly PresenterDataGridViewTechParts presenterDataGridViewTechParts;
 
         private async Task TechPartsLoadAsync(IEnumerable<TechModel> techs)
         {
             DebugWrite.Line("start");
 
+            ctsTechPartsLoad.Start();
+
             try
             {
                 var list = await Database.Default.TechPartsLoadAsync(techs);
+
+                if (ctsTechPartsLoad.IsCancellationRequested) return;
 
                 bindingSourceTechParts.DataSource = list;
 
@@ -33,8 +39,14 @@ namespace Technics
 
                 Utils.Log.Info(ResourcesLog.LoadOk);
             }
+            catch (TaskCanceledException e)
+            {
+                DebugWrite.Error(e);
+            }
             finally
             {
+                ctsTechPartsLoad.Finally();
+
                 DebugWrite.Line("end");
             }
         }
@@ -55,7 +67,7 @@ namespace Technics
 
         private void TechPartsListChanged()
         {
-            tsbtnTechPartsDelete.Enabled = 
+            tsbtnTechPartsDelete.Enabled =
             tsbtnTechPartsChange.Enabled =
             miTechPartsDelete.Enabled =
             miTechPartsChange.Enabled =

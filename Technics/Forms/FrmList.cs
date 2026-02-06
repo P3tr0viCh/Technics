@@ -1,4 +1,5 @@
 ﻿using P3tr0viCh.Utils.Extensions;
+using P3tr0viCh.Utils.Interfaces;
 using P3tr0viCh.Utils.Presenters;
 using System;
 using System.Windows.Forms;
@@ -11,6 +12,8 @@ namespace Technics
     public partial class FrmList : Form, IFrmList, PresenterStatusStrip<StatusLabel>.IPresenterStatusStrip
     {
         public IMainForm MainForm => Owner as IMainForm;
+
+        private FrmListType ListType { get; set; }
 
         public DataGridView DataGridView => dataGridView;
 
@@ -32,11 +35,12 @@ namespace Technics
             using (var frm = new FrmList()
             {
                 Owner = owner,
+                ListType = listType,
             })
             {
                 frm.PresenterFrmList = PresenterFrmListFactory.PresenterFrmListInstance(frm, listType);
-                
-                frm.PresenterFrmList.OnListChanged += frm.PresenterFrmList_OnListChanged;
+
+                frm.PresenterFrmList.FrmListChanged += frm.PresenterFrmList_FrmListChanged;
 
                 frm.ShowDialog(owner);
 
@@ -44,7 +48,7 @@ namespace Technics
             }
         }
 
-        private void PresenterFrmList_OnListChanged()
+        private void PresenterFrmList_FrmListChanged(object sender)
         {
             tsbtnChange.Enabled = tsbtnDelete.Enabled = !DataGridView.IsEmpty();
 

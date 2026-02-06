@@ -113,16 +113,14 @@ namespace Technics
 
         public async Task<IEnumerable<T>> ListLoadAsync<T>(string sql = null, object param = null)
         {
-            IEnumerable<T> list;
-
             using (var connection = GetConnection())
             {
-                list = await connection.ListLoadAsync<T>(sql, param);
+                var list = await connection.ListLoadAsync<T>(sql, param);
+
+                Utils.Log.ListLoadOk(list);
+
+                return list;
             }
-
-            Utils.Log.ListLoadOk(list);
-
-            return list;
         }
 
         public async Task<IEnumerable<T>> ListLoadAsync<T>(Query query)

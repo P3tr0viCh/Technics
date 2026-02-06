@@ -1,370 +1,120 @@
-﻿using Newtonsoft.Json.Linq;
-using P3tr0viCh.Database;
-using P3tr0viCh.Utils.Comparers;
-using P3tr0viCh.Utils.Extensions;
+﻿using P3tr0viCh.Database;
+using P3tr0viCh.Utils.Interfaces;
 using P3tr0viCh.Utils.Presenters;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Technics.Interfaces;
 using Technics.Properties;
+using static Technics.ProgramStatus;
 
 namespace Technics.Presenters
 {
-    internal abstract partial class PresenterFrmListBase<T> :
-        IPresenterFrmList,
-        IPresenterDataGridViewCompare<T> where T : BaseId, new()
+    internal abstract partial class PresenterFrmListBase<T> : PresenterFrmList<T> where T : BaseId, new()
     {
-        public IFrmList FrmList { get; private set; }
-
-        public Form Form => FrmList as Form;
-
         public abstract FrmListType ListType { get; }
 
-        public bool Changed { get; set; } = false;
-
-        public DataGridView DataGridView => FrmList.DataGridView;
-
-        internal readonly BindingSource bindingSource;
-
-        internal readonly PresenterDataGridViewFrmList<T> presenterDataGridView;
-
-        public PresenterFrmListBase(IFrmList frmList)
+        public PresenterFrmListBase(IFrmList frmList) : base(frmList)
         {
-            FrmList = frmList;
-
-            Form.Load += new EventHandler(Form_Load);
-            Form.FormClosing += new FormClosingEventHandler(FrmList_FormClosing);
-
-            bindingSource = new BindingSource();
-
-            presenterDataGridView = new PresenterDataGridViewFrmList<T>(this);
-
-            DataGridView.CellDoubleClick += new DataGridViewCellEventHandler(DataGridView_CellDoubleClick);
         }
 
-        private async void Form_Load(object sender, EventArgs e)
-        {
-            await FormLoadAsync();
-        }
-
-        private void FrmList_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            FormClosing();
-        }
-
-        private FrmListGrant grants = FrmListGrant.All;
-        protected FrmListGrant Grants
-        {
-            get => grants;
-            set
-            {
-                grants = value;
-
-                foreach (ToolStripItem item in FrmList.ToolStrip.Items)
-                {
-                    if (item.Name == "tsbtnClose")
-                    {
-                        continue;
-                    }
-
-                    if (item.Name == "tsbtnAdd")
-                    {
-                        item.Visible = CanAdd;
-                        continue;
-                    }
-
-                    if (item.Name == "tsbtnChange")
-                    {
-                        item.Visible = CanChange;
-                        continue;
-                    }
-
-                    if (item.Name == "tsbtnDelete")
-                    {
-                        item.Visible = CanDelete;
-                        continue;
-                    }
-
-                    if (item.Name == "toolStripSeparator1")
-                    {
-                        item.Visible = CanAdd || CanChange || CanDelete;
-                        continue;
-                    }
-                }
-            }
-        }
-
-        private bool CanAdd => grants.HasFlag(FrmListGrant.Add);
-        private bool CanChange => grants.HasFlag(FrmListGrant.Change);
-        private bool CanDelete => grants.HasFlag(FrmListGrant.Delete);
-
-        private void SetDataSource()
-        {
-            bindingSource.DataSource = Enumerable.Empty<T>();
-
-            DataGridView.DataSource = bindingSource;
-        }
-
-        protected abstract string FormTitle { get; }
-
-        protected virtual void LoadFormState()
-        {
-            AppSettings.LoadFormState(Form, ListType.ToString(), AppSettings.Default.FormStates);
-            AppSettings.LoadDataGridColumns(FrmList.DataGridView, ListType.ToString(), AppSettings.Default.ColumnStates);
-        }
-
-        protected virtual void SaveFormState()
-        {
-            AppSettings.SaveFormState(Form, ListType.ToString(), AppSettings.Default.FormStates);
-            AppSettings.SaveDataGridColumns(FrmList.DataGridView, ListType.ToString(), AppSettings.Default.ColumnStates);
-        }
-
-        protected abstract void UpdateColumns();
-
-        private async Task FormLoadAsync()
+        protected override void FormOpened()
         {
             Utils.Log.WriteFormOpen(Form);
 
             Utils.Log.Info($"ListType = {ListType}");
-
-            Form.Text = FormTitle;
-
-            FrmList.ToolStrip.SetShowTextAndToolTips(AppSettings.Default.ToolStripsShowText);
-
-            DataGridView.MultiSelect = true;
-
-            SetDataSource();
-
-            LoadFormState();
-
-            UpdateCommonColumns();
-
-            UpdateColumns();
-
-            await PerformListLoadAsync();
         }
 
-        private void UpdateCommonColumns()
+        protected override void FormClosed()
+        {
+            Utils.Log.WriteFormClose(Form);
+        }
+
+        protected override void LoadFormState()
+        {
+            FrmList.ToolStrip.SetShowTextAndToolTips(AppSettings.Default.ToolStripsShowText);
+
+            AppSettings.LoadFormState(Form, ListType.ToString(), AppSettings.Default.FormStates);
+            AppSettings.LoadDataGridColumns(FrmList.DataGridView, ListType.ToString(), AppSettings.Default.ColumnStates);
+        }
+
+        protected override void SaveFormState()
+        {
+            AppSettings.SaveFormState(Form, ListType.ToString(), AppSettings.Default.FormStates);
+            AppSettings.SaveDataGridColumns(FrmList.DataGridView, ListType.ToString(), AppSettings.Default.ColumnStates);
+
+            AppSettings.Default.Save();
+        }
+
+        protected override void UpdateColumns()
         {
             DataGridView.Columns[nameof(BaseId.Id)].Visible = false;
             DataGridView.Columns[nameof(BaseId.IsNew)].Visible = false;
         }
 
-        public void FormClosing()
+        protected override object StatusStartLoad()
         {
-            SaveFormState();
-
-            AppSettings.Default.Save();
-
-            Utils.Log.WriteFormClose(Form);
+            return ProgramStatus.Default.Start(Status.LoadData);
         }
 
-        public T Find(T value)
+        protected override object StatusStartSave()
         {
-            return bindingSource.Cast<T>().Where(item => item.Id == value.Id).FirstOrDefault();
+            return ProgramStatus.Default.Start(Status.SaveData);
         }
 
-        public T Selected
+        protected override object StatusStartDelete()
         {
-            get => presenterDataGridView.Selected;
-            set => presenterDataGridView.Selected = Find(value);
+            return ProgramStatus.Default.Start(Status.SaveData);
         }
 
-        public IEnumerable<T> SelectedList
+        protected override void StatusStop(object status)
         {
-            get => DataGridView.GetSelectedList<T>();
+            ProgramStatus.Default.Stop((P3tr0viCh.Utils.ProgramStatus<Status>.Status)status);
         }
 
-        public event ListChanged OnListChanged;
-
-        private void PerformOnListChanged()
+        protected override async Task<IEnumerable<T>> ListLoadAsync(CancellationToken cancellationToken)
         {
-            Changed = true;
-
-            OnListChanged?.Invoke();
+            return await Database.Default.ListLoadAsync<T>();
         }
 
-        private void InternalListItemChange(T value)
+        protected override async Task ListItemSaveAsync(T value)
         {
-            var item = Find(value);
-
-            if (item == default)
-            {
-                bindingSource.Add(value);
-            }
-            else
-            {
-                var index = bindingSource.IndexOf(item);
-
-                bindingSource.List[index] = value;
-
-                bindingSource.ResetItem(index);
-            }
+            await Database.Default.ListItemSaveAsync(value);
         }
 
-        private void ListItemChange(T value)
+        protected override async Task ListItemSaveAsync(IEnumerable<T> list)
         {
-            InternalListItemChange(value);
-
-            DataGridView.SetSelectedRows(value);
-
-            presenterDataGridView.Sort();
-
-            PerformOnListChanged();
+            await Database.Default.ListItemSaveAsync(list);
         }
 
-        private void ListItemChange(IEnumerable<T> list)
+        protected override async Task ListItemDeleteAsync(IEnumerable<T> list)
         {
-            foreach (var item in list)
-            {
-                InternalListItemChange(item);
-            }
-
-            DataGridView.SetSelectedRows(list);
-
-            presenterDataGridView.Sort();
-
-            PerformOnListChanged();
+            await Database.Default.ListItemDeleteAsync(list);
         }
 
-        private void ListItemDelete(IEnumerable<T> list)
+        private void ListLoadException(Exception e, string message)
         {
-            foreach (var item in list)
-            {
-                bindingSource.Remove(item);
-            }
+            Utils.Log.Query(e);
 
-            PerformOnListChanged();
+            Utils.Log.Error(e);
+
+            Utils.Msg.Error(message, e.Message);
         }
 
-        protected virtual T GetNewItem() => new T();
-
-        protected abstract bool ShowItemChangeDialog(T value);
-
-        protected virtual bool ShowItemChangeDialog(IEnumerable<T> value)
+        protected override void ListLoadException(Exception e)
         {
-            return false;
+            ListLoadException(e, Resources.MsgDatabaseLoadFail);
         }
 
-        protected abstract bool ShowItemDeleteDialog(IEnumerable<T> list);
-
-        private async Task ListItemChangeAsync(T value)
+        protected override void ListItemChangeException(Exception e)
         {
-            try
-            {
-                if (!ShowItemChangeDialog(value)) return;
-
-                await PerformListItemSaveAsync(value);
-
-                ListItemChange(value);
-            }
-            catch (Exception e)
-            {
-                Utils.Log.Query(e);
-
-                Utils.Log.Error(e);
-
-                Utils.Msg.Error(Resources.MsgDatabaseListItemSaveFail, e.Message);
-            }
+            ListLoadException(e, Resources.MsgDatabaseListItemSaveFail);
         }
 
-        private async Task ListItemChangeAsync(IEnumerable<T> list)
+        protected override void ListItemDeleteException(Exception e)
         {
-            try
-            {
-                if (!ShowItemChangeDialog(list)) return;
-
-                await PerformListItemSaveAsync(list);
-
-                ListItemChange(list);
-            }
-            catch (Exception e)
-            {
-                Utils.Log.Query(e);
-
-                Utils.Log.Error(e);
-
-                Utils.Msg.Error(Resources.MsgDatabaseListItemSaveFail, e.Message);
-            }
+            ListLoadException(e, Resources.MsgDatabaseListItemDeleteFail);
         }
-
-        public async Task ListItemAddNewAsync()
-        {
-            if (!CanAdd) return;
-
-            var item = GetNewItem();
-
-            await ListItemChangeAsync(item);
-        }
-
-        private async Task ListItemChangeSelectedItemAsync()
-        {
-            var item = Selected;
-
-            DataGridView.SetSelectedRows(item);
-
-            await ListItemChangeAsync(item);
-        }
-
-        private async Task ListItemChangeSelectedListAsync()
-        {
-            var list = SelectedList;
-
-            DataGridView.SetSelectedRows(list);
-
-            await ListItemChangeAsync(list);
-        }
-
-        public async Task ListItemChangeSelectedAsync()
-        {
-            if (!CanChange) return;
-
-            if (Grants.HasFlag(FrmListGrant.MultiChange) && DataGridView.SelectedCount() > 1)
-            {
-                await ListItemChangeSelectedListAsync();
-            }
-            else
-            {
-                await ListItemChangeSelectedItemAsync();
-            }
-        }
-
-        public async Task ListItemDeleteSelectedAsync()
-        {
-            if (!CanDelete) return;
-
-            try
-            {
-                var list = SelectedList;
-
-                DataGridView.SetSelectedRows(list);
-
-                if (!ShowItemDeleteDialog(list)) return;
-
-                await PerformListItemDeleteAsync(list);
-
-                ListItemDelete(list);
-            }
-            catch (Exception e)
-            {
-                Utils.Log.Query(e);
-
-                Utils.Log.Error(e);
-
-                Utils.Msg.Error(Resources.MsgDatabaseListItemDeleteFail, e.Message);
-            }
-        }
-
-        private async void DataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex < 0) return;
-
-            await ListItemChangeSelectedAsync();
-        }
-
-        public abstract int Compare(T x, T y, string dataPropertyName, ComparerSortOrder sortOrder);
     }
 }

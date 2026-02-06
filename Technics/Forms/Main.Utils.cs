@@ -153,6 +153,12 @@ namespace Technics
 
         private void CancelTokens()
         {
+            ctsTechsLoad.Cancel();
+
+            ctsMileagesLoad.Cancel();
+            
+            ctsTechPartsLoad.Cancel();
+
             ctsCheckDirectoryTracks.Cancel();
         }
     }

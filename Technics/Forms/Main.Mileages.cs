@@ -17,13 +17,19 @@ namespace Technics
     {
         internal readonly PresenterDataGridViewMileages presenterDataGridViewMileages;
 
+        internal readonly WrapperCancellationTokenSource ctsMileagesLoad = new WrapperCancellationTokenSource();
+
         private async Task MileagesLoadAsync(IEnumerable<TechModel> techs)
         {
             DebugWrite.Line("start");
 
+            ctsMileagesLoad.Start();
+
             try
             {
                 var list = await Database.Default.MileagesLoadAsync(techs);
+
+                if (ctsMileagesLoad.IsCancellationRequested) return;
 
                 bindingSourceMileages.DataSource = list;
 
@@ -35,8 +41,14 @@ namespace Technics
 
                 Utils.Log.Info(ResourcesLog.LoadOk);
             }
+            catch (TaskCanceledException e)
+            {
+                DebugWrite.Error(e);
+            }
             finally
             {
+                ctsMileagesLoad.Finally();
+
                 DebugWrite.Line("end");
             }
         }

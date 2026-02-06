@@ -1,11 +1,13 @@
-﻿using Newtonsoft.Json.Linq;
-using P3tr0viCh.Utils;
+﻿using P3tr0viCh.Utils;
 using P3tr0viCh.Utils.Comparers;
+using P3tr0viCh.Utils.EventArguments;
 using P3tr0viCh.Utils.Extensions;
+using P3tr0viCh.Utils.Forms;
+using P3tr0viCh.Utils.Interfaces;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Technics.Forms;
-using Technics.Interfaces;
 using Technics.Properties;
 using static Technics.Database.Models;
 
@@ -18,6 +20,11 @@ namespace Technics.Presenters
         public PresenterFrmListParts(IFrmList frmList) : base(frmList)
         {
             Grants = Grants.AddFlag(FrmListGrant.MultiChange);
+
+            ItemChangeDialog += PresenterFrmListParts_ItemChangeDialog;
+            ItemListChangeDialog += PresenterFrmListParts_ItemListChangeDialog;
+
+            ItemListDeleteDialog += PresenterFrmListParts_ItemListDeleteDialog;
         }
 
         protected override PartModel GetNewItem()
@@ -39,27 +46,27 @@ namespace Technics.Presenters
         {
             base.LoadFormState();
 
-            presenterDataGridView.SortColumn = nameof(TechModel.Text);
+            PresenterDataGridView.SortColumn = nameof(TechModel.Text);
         }
 
-        protected async override Task<IEnumerable<PartModel>> ListLoadAsync()
+        private void PresenterFrmListParts_ItemChangeDialog(object sender, ItemDialogEventArgs<PartModel> e)
+        {
+            e.Ok = FrmPart.ShowDlg(Form, e.Value);
+        }
+
+        private void PresenterFrmListParts_ItemListChangeDialog(object sender, ItemListDialogEventArgs<PartModel> e)
+        {
+            e.Ok = FrmPartList.ShowDlg(Form, e.Values);
+        }
+
+        private void PresenterFrmListParts_ItemListDeleteDialog(object sender, ItemListDialogEventArgs<PartModel> e)
+        {
+            e.Ok = Utils.Msg.Question(e.Values);
+        }
+
+        protected async override Task<IEnumerable<PartModel>> ListLoadAsync(CancellationToken cancellationToken)
         {
             return await Database.Default.ListLoadAsync<PartModel>(ResourcesSql.SelectParts);
-        }
-
-        protected override bool ShowItemChangeDialog(PartModel value)
-        {
-            return FrmPart.ShowDlg(Form, value);
-        }
-
-        protected override bool ShowItemChangeDialog(IEnumerable<PartModel> list)
-        {
-            return FrmPartList.ShowDlg(Form, list);
-        }
-
-        protected override bool ShowItemDeleteDialog(IEnumerable<PartModel> list)
-        {
-            return Utils.Msg.Question(list);
         }
 
         protected override async Task ListItemDeleteAsync(IEnumerable<PartModel> list)
@@ -69,6 +76,8 @@ namespace Technics.Presenters
 
         protected override void UpdateColumns()
         {
+            base.UpdateColumns();
+
             DataGridView.Columns[nameof(PartModel.FolderText)].DisplayIndex = 0;
             DataGridView.Columns[nameof(PartModel.Text)].DisplayIndex = 1;
 

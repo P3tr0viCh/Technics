@@ -1,8 +1,10 @@
 ﻿using P3tr0viCh.Utils.Comparers;
+using P3tr0viCh.Utils.EventArguments;
+using P3tr0viCh.Utils.Forms;
+using P3tr0viCh.Utils.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Technics.Interfaces;
 using Technics.Properties;
 using static Technics.Database.Models;
 
@@ -15,6 +17,10 @@ namespace Technics.Presenters
         public PresenterFrmListTechs(IFrmList frmList) : base(frmList)
         {
             Grants = FrmListGrant.Change | FrmListGrant.Delete;
+
+            ItemChangeDialog += PresenterFrmListTechs_ItemChangeDialog;
+
+            ItemListDeleteDialog += PresenterFrmListTechs_ItemListDeleteDialog;
         }
 
         protected override string FormTitle => Resources.TitleListTechs;
@@ -23,10 +29,10 @@ namespace Technics.Presenters
         {
             base.LoadFormState();
 
-            presenterDataGridView.SortColumn = nameof(TechModel.Text);
+            PresenterDataGridView.SortColumn = nameof(TechModel.Text);
         }
 
-        protected override bool ShowItemChangeDialog(TechModel value)
+        private bool ShowItemChangeDialog(TechModel value)
         {
             var text = value.Text;
 
@@ -37,9 +43,14 @@ namespace Technics.Presenters
             return true;
         }
 
-        protected override bool ShowItemDeleteDialog(IEnumerable<TechModel> list)
+        private void PresenterFrmListTechs_ItemChangeDialog(object sender, ItemDialogEventArgs<TechModel> e)
         {
-            return Utils.Msg.Question(list);
+            e.Ok = ShowItemChangeDialog(e.Value);
+        }
+
+        private void PresenterFrmListTechs_ItemListDeleteDialog(object sender, ItemListDialogEventArgs<TechModel> e)
+        {
+            e.Ok = Utils.Msg.Question(e.Values);
         }
 
         protected override async Task ListItemDeleteAsync(IEnumerable<TechModel> list)
@@ -49,6 +60,8 @@ namespace Technics.Presenters
 
         protected override void UpdateColumns()
         {
+            base.UpdateColumns();
+
             DataGridView.Columns[nameof(TechModel.FolderId)].Visible = false;
 
             DataGridView.Columns[nameof(TechModel.Text)].HeaderText = ResourcesColumnHeader.Text;

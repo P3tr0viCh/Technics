@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using Technics.Properties;
 using static Technics.Database.Models;
 using static Technics.Enums;
@@ -36,7 +37,7 @@ namespace Technics
             {
                 SelfChange = true;
 
-                await Task.Delay(100);
+                Application.DoEvents();
 
                 if (load.HasFlag(DataLoad.Techs))
                 {
