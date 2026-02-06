@@ -5,13 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 using Technics.Properties;
 using static Technics.ProgramStatus;
 
 namespace Technics.Presenters
 {
-    internal abstract partial class PresenterFrmListBase<T> : PresenterFrmList<T> where T : BaseId, new()
+    internal abstract class PresenterFrmListBase<T> : PresenterFrmList<T> where T : BaseId, new()
     {
         public abstract FrmListType ListType { get; }
 
@@ -49,8 +48,8 @@ namespace Technics.Presenters
 
         protected override void UpdateColumns()
         {
-            DataGridView.Columns[nameof(BaseId.Id)].Visible = false;
-            DataGridView.Columns[nameof(BaseId.IsNew)].Visible = false;
+            FrmList.DataGridView.Columns[nameof(BaseId.Id)].Visible = false;
+            FrmList.DataGridView.Columns[nameof(BaseId.IsNew)].Visible = false;
         }
 
         protected override object StatusStartLoad()
@@ -93,7 +92,7 @@ namespace Technics.Presenters
             await Database.Default.ListItemDeleteAsync(list);
         }
 
-        private void ListLoadException(Exception e, string message)
+        private void PerformListLoadException(Exception e, string message)
         {
             Utils.Log.Query(e);
 
@@ -104,17 +103,17 @@ namespace Technics.Presenters
 
         protected override void ListLoadException(Exception e)
         {
-            ListLoadException(e, Resources.MsgDatabaseLoadFail);
+            PerformListLoadException(e, Resources.MsgDatabaseLoadFail);
         }
 
         protected override void ListItemChangeException(Exception e)
         {
-            ListLoadException(e, Resources.MsgDatabaseListItemSaveFail);
+            PerformListLoadException(e, Resources.MsgDatabaseListItemSaveFail);
         }
 
         protected override void ListItemDeleteException(Exception e)
         {
-            ListLoadException(e, Resources.MsgDatabaseListItemDeleteFail);
+            PerformListLoadException(e, Resources.MsgDatabaseListItemDeleteFail);
         }
     }
 }

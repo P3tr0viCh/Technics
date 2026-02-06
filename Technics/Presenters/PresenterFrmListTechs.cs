@@ -4,7 +4,6 @@ using P3tr0viCh.Utils.Forms;
 using P3tr0viCh.Utils.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 using Technics.Properties;
 using static Technics.Database.Models;
 
@@ -62,9 +61,9 @@ namespace Technics.Presenters
         {
             base.UpdateColumns();
 
-            DataGridView.Columns[nameof(TechModel.FolderId)].Visible = false;
+            FrmList.DataGridView.Columns[nameof(TechModel.FolderId)].Visible = false;
 
-            DataGridView.Columns[nameof(TechModel.Text)].HeaderText = ResourcesColumnHeader.Text;
+            FrmList.DataGridView.Columns[nameof(TechModel.Text)].HeaderText = ResourcesColumnHeader.Text;
         }
 
         public override int Compare(TechModel x, TechModel y, string dataPropertyName, ComparerSortOrder sortOrder)

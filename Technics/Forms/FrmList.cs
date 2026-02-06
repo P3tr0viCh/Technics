@@ -13,11 +13,11 @@ namespace Technics
     {
         public IMainForm MainForm => Owner as IMainForm;
 
-        private FrmListType ListType { get; set; }
-
         public DataGridView DataGridView => dataGridView;
 
         public ToolStrip ToolStrip => toolStrip;
+
+        public StatusStrip StatusStrip => statusStrip;
 
         private IPresenterFrmList PresenterFrmList { get; set; }
 
@@ -35,7 +35,6 @@ namespace Technics
             using (var frm = new FrmList()
             {
                 Owner = owner,
-                ListType = listType,
             })
             {
                 frm.PresenterFrmList = PresenterFrmListFactory.PresenterFrmListInstance(frm, listType);

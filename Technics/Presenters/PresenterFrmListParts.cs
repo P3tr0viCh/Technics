@@ -78,14 +78,14 @@ namespace Technics.Presenters
         {
             base.UpdateColumns();
 
-            DataGridView.Columns[nameof(PartModel.FolderText)].DisplayIndex = 0;
-            DataGridView.Columns[nameof(PartModel.Text)].DisplayIndex = 1;
+            FrmList.DataGridView.Columns[nameof(PartModel.FolderText)].DisplayIndex = 0;
+            FrmList.DataGridView.Columns[nameof(PartModel.Text)].DisplayIndex = 1;
 
-            DataGridView.Columns[nameof(PartModel.Text)].HeaderText = ResourcesColumnHeader.Text;
-            DataGridView.Columns[nameof(PartModel.FolderText)].HeaderText = ResourcesColumnHeader.Folder;
-            DataGridView.Columns[nameof(PartModel.Description)].HeaderText = ResourcesColumnHeader.Description;
+            FrmList.DataGridView.Columns[nameof(PartModel.Text)].HeaderText = ResourcesColumnHeader.Text;
+            FrmList.DataGridView.Columns[nameof(PartModel.FolderText)].HeaderText = ResourcesColumnHeader.Folder;
+            FrmList.DataGridView.Columns[nameof(PartModel.Description)].HeaderText = ResourcesColumnHeader.Description;
 
-            DataGridView.Columns[nameof(PartModel.FolderId)].Visible = false;
+            FrmList.DataGridView.Columns[nameof(PartModel.FolderId)].Visible = false;
         }
 
         public override int Compare(PartModel x, PartModel y, string dataPropertyName, ComparerSortOrder sortOrder)
