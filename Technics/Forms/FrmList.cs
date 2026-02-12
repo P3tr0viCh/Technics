@@ -9,7 +9,8 @@ using static Technics.Presenters.PresenterStatusStripFrmList;
 
 namespace Technics
 {
-    public partial class FrmList : Form, IFrmList, PresenterStatusStrip<StatusLabel>.IPresenterStatusStrip
+    public partial class FrmList : Form, IFrmList,
+        PresenterStatusStrip<StatusLabel>.IPresenterStatusStrip
     {
         public IMainForm MainForm => Owner as IMainForm;
 
@@ -39,7 +40,7 @@ namespace Technics
             {
                 frm.PresenterFrmList = PresenterFrmListFactory.PresenterFrmListInstance(frm, listType);
 
-                frm.PresenterFrmList.FrmListChanged += frm.PresenterFrmList_FrmListChanged;
+                frm.PresenterFrmList.ListChanged += frm.PresenterFrmList_ListChanged;
 
                 frm.ShowDialog(owner);
 
@@ -47,7 +48,7 @@ namespace Technics
             }
         }
 
-        private void PresenterFrmList_FrmListChanged(object sender)
+        private void PresenterFrmList_ListChanged(object sender, EventArgs e)
         {
             tsbtnChange.Enabled = tsbtnDelete.Enabled = !DataGridView.IsEmpty();
 
@@ -76,17 +77,17 @@ namespace Technics
 
         private async void TsbtnAdd_Click(object sender, EventArgs e)
         {
-            await PresenterFrmList.ListItemAddNewAsync();
+            await PresenterFrmList.AddNewItemAsync();
         }
 
         private async void TsbtnChange_Click(object sender, EventArgs e)
         {
-            await PresenterFrmList.ListItemChangeSelectedAsync();
+            await PresenterFrmList.SelectedChangeAsync();
         }
 
         private async void TsbtnDelete_Click(object sender, EventArgs e)
         {
-            await PresenterFrmList.ListItemDeleteSelectedAsync();
+            await PresenterFrmList.SelectedDeleteAsync();
         }
     }
 }

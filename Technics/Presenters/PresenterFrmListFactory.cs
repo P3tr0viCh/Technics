@@ -1,5 +1,6 @@
 ﻿using P3tr0viCh.Utils.Interfaces;
 using System;
+using Technics.Interfaces;
 
 namespace Technics.Presenters
 {

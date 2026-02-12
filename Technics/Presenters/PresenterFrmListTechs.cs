@@ -3,13 +3,14 @@ using P3tr0viCh.Utils.EventArguments;
 using P3tr0viCh.Utils.Forms;
 using P3tr0viCh.Utils.Interfaces;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Technics.Properties;
 using static Technics.Database.Models;
 
 namespace Technics.Presenters
 {
-    internal class PresenterFrmListTechs : PresenterFrmListBase<TechModel>
+    internal class PresenterFrmListTechs : PresenterFrmList<TechModel>
     {
         public override FrmListType ListType => FrmListType.Techs;
 
@@ -17,9 +18,9 @@ namespace Technics.Presenters
         {
             Grants = FrmListGrant.Change | FrmListGrant.Delete;
 
-            ItemChangeDialog += PresenterFrmListTechs_ItemChangeDialog;
+            ItemsChangeDialog += PresenterFrmListTechs_ItemsChangeDialog;
 
-            ItemListDeleteDialog += PresenterFrmListTechs_ItemListDeleteDialog;
+            ItemsDeleteDialog += PresenterFrmListTechs_ItemsDeleteDialog;
         }
 
         protected override string FormTitle => Resources.TitleListTechs;
@@ -42,17 +43,21 @@ namespace Technics.Presenters
             return true;
         }
 
-        private void PresenterFrmListTechs_ItemChangeDialog(object sender, ItemDialogEventArgs<TechModel> e)
+        private async Task PresenterFrmListTechs_ItemsChangeDialog(object sender, ItemsDialogEventArgs<TechModel> e)
         {
-            e.Ok = ShowItemChangeDialog(e.Value);
+            e.Ok = ShowItemChangeDialog(e.Values.First());
+
+            await Task.CompletedTask;
         }
 
-        private void PresenterFrmListTechs_ItemListDeleteDialog(object sender, ItemListDialogEventArgs<TechModel> e)
+        private async Task PresenterFrmListTechs_ItemsDeleteDialog(object sender, ItemsDialogEventArgs<TechModel> e)
         {
             e.Ok = Utils.Msg.Question(e.Values);
+
+            await Task.CompletedTask;
         }
 
-        protected override async Task ListItemDeleteAsync(IEnumerable<TechModel> list)
+        protected override async Task DatabaseListItemsDeleteAsync(IEnumerable<TechModel> list)
         {
             await Database.Default.TechDeleteAsync(list);
         }

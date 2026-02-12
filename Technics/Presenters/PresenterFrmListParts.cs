@@ -5,6 +5,7 @@ using P3tr0viCh.Utils.Extensions;
 using P3tr0viCh.Utils.Forms;
 using P3tr0viCh.Utils.Interfaces;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Technics.Forms;
@@ -13,7 +14,7 @@ using static Technics.Database.Models;
 
 namespace Technics.Presenters
 {
-    internal class PresenterFrmListParts : PresenterFrmListBase<PartModel>
+    internal class PresenterFrmListParts : PresenterFrmList<PartModel>
     {
         public override FrmListType ListType => FrmListType.Parts;
 
@@ -21,10 +22,8 @@ namespace Technics.Presenters
         {
             Grants = Grants.AddFlag(FrmListGrant.MultiChange);
 
-            ItemChangeDialog += PresenterFrmListParts_ItemChangeDialog;
-            ItemListChangeDialog += PresenterFrmListParts_ItemListChangeDialog;
-
-            ItemListDeleteDialog += PresenterFrmListParts_ItemListDeleteDialog;
+            ItemsChangeDialog += PresenterFrmListParts_ItemsChangeDialog;
+            ItemsDeleteDialog += PresenterFrmListParts_ItemsDeleteDialog;
         }
 
         protected override PartModel GetNewItem()
@@ -49,27 +48,28 @@ namespace Technics.Presenters
             PresenterDataGridView.SortColumn = nameof(TechModel.Text);
         }
 
-        private void PresenterFrmListParts_ItemChangeDialog(object sender, ItemDialogEventArgs<PartModel> e)
+        private async Task PresenterFrmListParts_ItemsChangeDialog(object sender, ItemsDialogEventArgs<PartModel> e)
         {
-            e.Ok = FrmPart.ShowDlg(Form, e.Value);
+            e.Ok = e.Values.Count() == 1 ? 
+                FrmPart.ShowDlg(Form, e.Values.First()) :
+                FrmPartList.ShowDlg(Form, e.Values);
+
+            await Task.CompletedTask;
         }
 
-        private void PresenterFrmListParts_ItemListChangeDialog(object sender, ItemListDialogEventArgs<PartModel> e)
-        {
-            e.Ok = FrmPartList.ShowDlg(Form, e.Values);
-        }
-
-        private void PresenterFrmListParts_ItemListDeleteDialog(object sender, ItemListDialogEventArgs<PartModel> e)
+        private async Task PresenterFrmListParts_ItemsDeleteDialog(object sender, ItemsDialogEventArgs<PartModel> e)
         {
             e.Ok = Utils.Msg.Question(e.Values);
+
+            await Task.CompletedTask;
         }
 
-        protected async override Task<IEnumerable<PartModel>> ListLoadAsync(CancellationToken cancellationToken)
+        protected async override Task<IEnumerable<PartModel>> DatabaseListLoadAsync(CancellationToken cancellationToken)
         {
             return await Database.Default.ListLoadAsync<PartModel>(ResourcesSql.SelectParts);
         }
 
-        protected override async Task ListItemDeleteAsync(IEnumerable<PartModel> list)
+        protected override async Task DatabaseListItemsDeleteAsync(IEnumerable<PartModel> list)
         {
             await Database.Default.PartDeleteAsync(list);
         }

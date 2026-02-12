@@ -167,11 +167,12 @@
     <Compile Include="Forms\Main.Utils.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Interfaces\IPresenterFrmList.cs" />
     <Compile Include="Models\BaseIdList.cs" />
     <Compile Include="Presenters\PresenterDataGridViewFrmList.cs" />
     <Compile Include="Presenters\PresenterDataGridViewMileages.cs" />
     <Compile Include="Presenters\PresenterDataGridViewTechParts.cs" />
-    <Compile Include="Presenters\PresenterFrmListBase.cs" />
+    <Compile Include="Presenters\PresenterFrmList.cs" />
     <Compile Include="Presenters\PresenterFrmListFactory.cs" />
     <Compile Include="Presenters\PresenterFrmListParts.cs" />
     <Compile Include="Presenters\PresenterFrmListTechs.cs" />

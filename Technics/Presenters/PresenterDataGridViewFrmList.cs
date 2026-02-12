@@ -6,9 +6,9 @@ namespace Technics.Presenters
 {
     internal class PresenterDataGridViewFrmList<T> : PresenterDataGridView<T> where T : BaseId, new()
     {
-        private readonly PresenterFrmListBase<T> presenterFrmList;
+        private readonly PresenterFrmList<T> presenterFrmList;
 
-        public PresenterDataGridViewFrmList(PresenterFrmListBase<T> presenterFrmList) : 
+        public PresenterDataGridViewFrmList(PresenterFrmList<T> presenterFrmList) : 
             base(presenterFrmList.FrmList.DataGridView)
         {
             this.presenterFrmList = presenterFrmList;
