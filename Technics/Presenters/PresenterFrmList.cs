@@ -84,11 +84,11 @@ namespace Technics.Presenters
 
             switch (e.Status)
             {
-                case Status.Load:
+                case FrmListDatabaseActionStatus.Load:
                     status = ProgramStatus.Status.LoadData;
                     break;
-                case Status.Save:
-                case Status.Delete:
+                case FrmListDatabaseActionStatus.Save:
+                case FrmListDatabaseActionStatus.Delete:
                     status = ProgramStatus.Status.SaveData;
                     break;
             }

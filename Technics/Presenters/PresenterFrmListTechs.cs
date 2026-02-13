@@ -19,7 +19,6 @@ namespace Technics.Presenters
             Grants = FrmListGrant.Change | FrmListGrant.Delete;
 
             ItemsChangeDialog += PresenterFrmListTechs_ItemsChangeDialog;
-
             ItemsDeleteDialog += PresenterFrmListTechs_ItemsDeleteDialog;
         }
 

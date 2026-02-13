@@ -85,6 +85,8 @@ namespace Technics
             }
 #endif
 
+            await Task.Delay(10);
+
             await UpdateDataAsync(DataLoad.Techs);
 
             await LoadFromFilesAsync(LoadFilesType.DirectoryTracks);

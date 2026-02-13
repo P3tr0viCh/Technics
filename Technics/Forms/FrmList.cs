@@ -9,8 +9,7 @@ using static Technics.Presenters.PresenterStatusStripFrmList;
 
 namespace Technics
 {
-    public partial class FrmList : Form, IFrmList,
-        PresenterStatusStrip<StatusLabel>.IPresenterStatusStrip
+    public partial class FrmList : Form, IFrmList, PresenterStatusStrip<StatusLabel>.IPresenterStatusStrip
     {
         public IMainForm MainForm => Owner as IMainForm;
 
