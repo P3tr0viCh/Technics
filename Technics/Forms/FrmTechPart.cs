@@ -3,7 +3,6 @@ using P3tr0viCh.Utils;
 using P3tr0viCh.Utils.Extensions;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -422,6 +421,8 @@ namespace Technics
 
             bindingSourceParts.DataSource = list;
 
+            cboxPart.SelectedValue = TechPart.PartId ?? Sql.NewId;
+
             selfChange = false;
         }
 
@@ -449,6 +450,11 @@ namespace Technics
 
                     break;
             }
+        }
+
+        private void FrmTechPart_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            selfChange = true;
         }
     }
 }

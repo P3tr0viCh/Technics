@@ -181,6 +181,7 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Установка и снятие";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmTechPart_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourceTechs)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourceParts)).EndInit();
             this.ResumeLayout(false);
