@@ -78,29 +78,56 @@ namespace Technics
         {
             DebugWrite.Line("start");
 
-            var status = ProgramStatus.Default.Start(Status.ReadFiles);
-
             try
             {
                 var mileages = new List<MileageModel>();
 
-                foreach (var file in files)
-                {
-                    var loaded = await LoadFromFileAsync(file);
+                var status = ProgramStatus.Default.Start(Status.ReadFiles);
 
-                    mileages.AddRange(loaded);
+                try
+                {
+                    foreach (var file in files)
+                    {
+                        var loaded = await LoadFromFileAsync(file);
+
+                        mileages.AddRange(loaded);
+                    }
+                }
+                finally
+                {
+                    ProgramStatus.Default.Stop(status);
                 }
 
-                if (mileages.Count == 0) return Enumerable.Empty<MileageModel>();
+                switch (mileages.Count)
+                {
+                    case 0:
+                        return Enumerable.Empty<MileageModel>();
 
-                await Database.Default.MileageSaveAsync(mileages);
+                    case 1:
+                        if (!FrmMileage.ShowDlg(this, mileages.First())) return Enumerable.Empty<MileageModel>();
+
+                        break;
+                    default:
+                        if (!FrmMileageList.ShowDlg(this, mileages)) return Enumerable.Empty<MileageModel>();
+
+                        break;
+                }
+
+                status = ProgramStatus.Default.Start(Status.ReadFiles);
+
+                try
+                {
+                    await Database.Default.MileageSaveAsync(mileages);
+                }
+                finally
+                {
+                    ProgramStatus.Default.Stop(status);
+                }
 
                 return mileages;
             }
             finally
             {
-                ProgramStatus.Default.Stop(status);
-
                 DebugWrite.Line("end");
             }
         }
