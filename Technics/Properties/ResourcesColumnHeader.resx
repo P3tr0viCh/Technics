@@ -123,6 +123,9 @@
   <data name="Folder" xml:space="preserve">
     <value>Папка</value>
   </data>
+  <data name="State" xml:space="preserve">
+    <value>Архив</value>
+  </data>
   <data name="Text" xml:space="preserve">
     <value>Текст</value>
   </data>

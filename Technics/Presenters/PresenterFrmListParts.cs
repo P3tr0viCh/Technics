@@ -50,7 +50,7 @@ namespace Technics.Presenters
 
         private async Task PresenterFrmListParts_ItemsChangeDialog(object sender, ItemsDialogEventArgs<PartModel> e)
         {
-            e.Ok = e.Values.Count() == 1 ? 
+            e.Ok = e.Values.Count() == 1 ?
                 FrmPart.ShowDlg(Form, e.Values.First()) :
                 FrmPartList.ShowDlg(Form, e.Values);
 
@@ -83,9 +83,14 @@ namespace Technics.Presenters
 
             FrmList.DataGridView.Columns[nameof(PartModel.Text)].HeaderText = ResourcesColumnHeader.Text;
             FrmList.DataGridView.Columns[nameof(PartModel.FolderText)].HeaderText = ResourcesColumnHeader.Folder;
+            FrmList.DataGridView.Columns[nameof(PartModel.StateAsString)].HeaderText = ResourcesColumnHeader.State;
             FrmList.DataGridView.Columns[nameof(PartModel.Description)].HeaderText = ResourcesColumnHeader.Description;
 
             FrmList.DataGridView.Columns[nameof(PartModel.FolderId)].Visible = false;
+            FrmList.DataGridView.Columns[nameof(PartModel.State)].Visible = false;
+            FrmList.DataGridView.Columns[nameof(PartModel.AvailableForUse)].Visible = false;
+
+            FrmList.DataGridView.Columns[nameof(PartModel.StateAsString)].DefaultCellStyle = DataGridViewCellStyles.PartsState;
         }
 
         public override int Compare(PartModel x, PartModel y, string dataPropertyName, ComparerSortOrder sortOrder)
@@ -110,6 +115,13 @@ namespace Technics.Presenters
                     break;
                 case nameof(PartModel.Description):
                     result = EmptyStringComparer.Default.Compare(x.Description, y.Description, sortOrder);
+                    if (result == 0)
+                        result = EmptyStringComparer.Default.Compare(x.Text, y.Text, ComparerSortOrder.Ascending);
+                    if (result == 0)
+                        result = EmptyStringComparer.Default.Compare(x.FolderText, y.FolderText, ComparerSortOrder.Ascending);
+                    break;
+                case nameof(PartModel.StateAsString):
+                    result = SortOrderComparer.Default.Compare(x.State, y.State, sortOrder);
                     if (result == 0)
                         result = EmptyStringComparer.Default.Compare(x.Text, y.Text, ComparerSortOrder.Ascending);
                     if (result == 0)

@@ -135,7 +135,7 @@ namespace Technics.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Деталь «{0}» уже установлена на {1} {2}..
+        ///   Looks up a localized string similar to Деталь «{0}» установлена на {1} {2}..
         /// </summary>
         internal static string ErrorPartInUse {
             get {
@@ -460,6 +460,15 @@ namespace Technics.Properties {
         internal static string StatusTechPartSelectedCount {
             get {
                 return ResourceManager.GetString("StatusTechPartSelectedCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ×.
+        /// </summary>
+        internal static string TextCellX {
+            get {
+                return ResourceManager.GetString("TextCellX", resourceCulture);
             }
         }
         

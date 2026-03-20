@@ -141,7 +141,7 @@
     <value>Деталь не указана.</value>
   </data>
   <data name="ErrorPartInUse" xml:space="preserve">
-    <value>Деталь «{0}» уже установлена на {1} {2}.</value>
+    <value>Деталь «{0}» установлена на {1} {2}.</value>
   </data>
   <data name="ErrorTechEmpty" xml:space="preserve">
     <value>Техника не указана.</value>
@@ -306,5 +306,8 @@
   </data>
   <data name="ErrorValueNeedText" xml:space="preserve">
     <value>Необходимо внести текст.</value>
+  </data>
+  <data name="TextCellX" xml:space="preserve">
+    <value>×</value>
   </data>
 </root>

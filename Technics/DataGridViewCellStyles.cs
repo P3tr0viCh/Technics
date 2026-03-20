@@ -16,6 +16,14 @@ namespace Technics
             }
         }
 
+        private class TopCenter : DataGridViewCellStyle
+        {
+            public TopCenter()
+            {
+                Alignment = DataGridViewContentAlignment.TopCenter;
+            }
+        }
+
         public static readonly DataGridViewCellStyle MileagesMileage = new TopRight()
         {
         };
@@ -29,6 +37,10 @@ namespace Technics
         };
 
         public static readonly DataGridViewCellStyle TechPartsMileageCommon = new TopRight()
+        {
+        };
+
+        public static readonly DataGridViewCellStyle PartsState = new TopCenter()
         {
         };
 

@@ -1,3 +1,3 @@
-SELECT parts.id, folderid, folders.text AS foldertext, parts.text, description
+SELECT parts.id, folderid, folders.text AS foldertext, parts.text, parts.state, description
 FROM parts
 LEFT JOIN folders ON parts.folderid = folders.id;

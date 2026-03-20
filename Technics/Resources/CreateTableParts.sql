@@ -2,5 +2,6 @@ CREATE TABLE parts (
 	id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
 	folderid INTEGER,
 	text TEXT,
+	state INTEGER,
 	description TEXT
 );

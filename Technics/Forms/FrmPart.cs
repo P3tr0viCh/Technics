@@ -2,6 +2,9 @@
 using P3tr0viCh.Utils;
 using P3tr0viCh.Utils.Extensions;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Technics.Properties;
 using static Technics.Database.Models;
@@ -24,6 +27,8 @@ namespace Technics.Forms
                 tboxText.SetText(value.Text);
 
                 tboxDescription.SetText(value.Description);
+
+                cboxState.Checked = value.State;
             }
         }
 
@@ -66,16 +71,48 @@ namespace Technics.Forms
             bindingSourceFolders.Insert(0, new FolderModel());
         }
 
-        private bool CheckData()
+        private async Task AssertPartInUseAsync()
+        {
+            if (part.IsNew) return;
+
+            if (!cboxState.Checked) return;
+
+            DebugWrite.Line("start");
+
+            try
+            {
+                var filter = new Database.Filter.TechParts()
+                {
+                    Parts = new List<PartModel>() { Part },
+                };
+
+                var techPartList = await Database.Default.TechPartsLoadAsync(filter);
+
+                if (techPartList.IsEmpty()) return;
+
+                var lastItem = techPartList.First();
+
+                if (lastItem.DateTimeRemove == default)
+                {
+                    throw new Exception(string.Format(Resources.ErrorPartInUse,
+                        lastItem.PartText,
+                        lastItem.TechText,
+                        lastItem.DateTimeInstall.ToString(AppSettings.Default.FormatDateTime)));
+                }
+            }
+            finally
+            {
+                DebugWrite.Line("end");
+            }
+        }
+
+        private async Task<bool> CheckDataAsync()
         {
             try
             {
-                if (tboxText.IsEmpty())
-                {
-                    tboxText.Focus();
+                Utils.AssertTextEmpty(tboxText);
 
-                    throw new Exception(Resources.ErrorValueNeedText);
-                }
+                await AssertPartInUseAsync();
 
                 return true;
             }
@@ -102,6 +139,8 @@ namespace Technics.Forms
 
                 part.Description = tboxDescription.GetTrimTextNullable();
 
+                part.State = cboxState.Checked;
+
                 return true;
             }
             catch (Exception e)
@@ -114,9 +153,9 @@ namespace Technics.Forms
             }
         }
 
-        private void BtnOk_Click(object sender, System.EventArgs e)
+        private async void BtnOk_Click(object sender, System.EventArgs e)
         {
-            if (CheckData() && UpdateData())
+            if (await CheckDataAsync() && UpdateData())
             {
                 DialogResult = DialogResult.OK;
             }

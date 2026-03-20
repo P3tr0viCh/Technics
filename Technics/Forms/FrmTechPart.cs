@@ -384,15 +384,17 @@ namespace Technics
 
         private IEnumerable<PartModel> GetPartsForTech(TechModel tech)
         {
-            if (tech?.IsNew ?? true) return Parts.ToBindingList();
+            var availableParts = Parts.Where(part => part.AvailableForUse).ToBindingList();
+
+            if (tech?.IsNew ?? true) return availableParts;
 
             var folders = Lists.Default.Folders.GetFolderList(tech?.FolderId);
 
             DebugWrite.Line($"folders: {string.Join(", ", folders.Select(f => f.Text))}");
 
-            DebugWrite.Line($"parts folderid: {string.Join(", ", Parts.Select(p => p.FolderId))}");
+            DebugWrite.Line($"parts folderid: {string.Join(", ", availableParts.Select(p => p.FolderId))}");
 
-            return Parts.Where(part =>
+            return availableParts.Where(part =>
                 part.FolderId == null ||
                 folders.Select(f => f.Id).Contains((long)part.FolderId));
         }

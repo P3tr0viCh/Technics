@@ -1,6 +1,8 @@
 ﻿using Dapper.Contrib.Extensions;
 using P3tr0viCh.Database;
 using System;
+using System.ComponentModel;
+using Technics.Properties;
 using static Technics.Database.Interfaces;
 
 namespace Technics
@@ -202,6 +204,16 @@ namespace Technics
                 [Write(false)]
                 public string FolderText { get; set; } = default;
 
+                public bool State { get; set; } = false;
+
+                [Computed]
+                [Write(false)]
+                public bool AvailableForUse => State != true;
+
+                [Computed]
+                [Write(false)]
+                public string StateAsString => State ? Resources.TextCellX : string.Empty;
+
                 public string Description { get; set; } = null;
 
                 public override void Clear()
@@ -210,6 +222,8 @@ namespace Technics
 
                     FolderId = null;
                     FolderText = default;
+
+                    State = false;
 
                     Description = null;
                 }
@@ -227,6 +241,8 @@ namespace Technics
 
                     FolderId = source.FolderId;
                     FolderText = source.FolderText;
+
+                    State = source.State;
 
                     Description = source.Description;
                 }

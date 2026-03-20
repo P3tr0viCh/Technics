@@ -38,25 +38,26 @@
             this.lblFolder = new System.Windows.Forms.Label();
             this.cboxFolder = new System.Windows.Forms.ComboBox();
             this.bindingSourceFolders = new System.Windows.Forms.BindingSource(this.components);
+            this.cboxState = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourceFolders)).BeginInit();
             this.SuspendLayout();
             // 
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(288, 184);
+            this.btnCancel.Location = new System.Drawing.Point(288, 208);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(80, 32);
-            this.btnCancel.TabIndex = 7;
+            this.btnCancel.TabIndex = 8;
             this.btnCancel.Text = "Отмена";
             this.btnCancel.UseVisualStyleBackColor = true;
             // 
             // btnOk
             // 
-            this.btnOk.Location = new System.Drawing.Point(200, 184);
+            this.btnOk.Location = new System.Drawing.Point(200, 208);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(80, 32);
-            this.btnOk.TabIndex = 6;
+            this.btnOk.TabIndex = 7;
             this.btnOk.Text = "OK";
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.Click += new System.EventHandler(this.BtnOk_Click);
@@ -118,12 +119,23 @@
             // 
             this.bindingSourceFolders.DataSource = typeof(Technics.Database.Models.FolderModel);
             // 
+            // cboxState
+            // 
+            this.cboxState.AutoSize = true;
+            this.cboxState.Location = new System.Drawing.Point(8, 176);
+            this.cboxState.Name = "cboxState";
+            this.cboxState.Size = new System.Drawing.Size(359, 23);
+            this.cboxState.TabIndex = 6;
+            this.cboxState.Text = "Архив (больше не используется или утилизировано)";
+            this.cboxState.UseVisualStyleBackColor = true;
+            // 
             // FrmPart
             // 
             this.AcceptButton = this.btnOk;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(376, 225);
+            this.ClientSize = new System.Drawing.Size(376, 249);
+            this.Controls.Add(this.cboxState);
             this.Controls.Add(this.lblFolder);
             this.Controls.Add(this.cboxFolder);
             this.Controls.Add(this.lblText);
@@ -158,5 +170,6 @@
         private System.Windows.Forms.Label lblFolder;
         private System.Windows.Forms.ComboBox cboxFolder;
         private System.Windows.Forms.BindingSource bindingSourceFolders;
+        private System.Windows.Forms.CheckBox cboxState;
     }
 }

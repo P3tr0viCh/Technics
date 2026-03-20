@@ -35,6 +35,16 @@ namespace Technics
             toolStrip.ShowItemToolTips = !value;
         }
 
+        public static void AssertTextEmpty(TextBox textBox)
+        {
+            if (textBox.IsEmpty())
+            {
+                textBox.Focus();
+
+                throw new Exception(Resources.ErrorValueNeedText);
+            }
+        }
+
         public static void AssertComboBox<T>(ComboBox comboBox, string error) where T : BaseId
         {
             var item = comboBox.GetSelectedItem<T>();
