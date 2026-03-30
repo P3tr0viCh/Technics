@@ -44,10 +44,6 @@
             this.TechPartsDateTimeRemove = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TechPartsMileage = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TechPartsMileageCommon = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.menuTechParts = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.miTechPartsAdd = new System.Windows.Forms.ToolStripMenuItem();
-            this.miTechPartsChange = new System.Windows.Forms.ToolStripMenuItem();
-            this.miTechPartsDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.bindingSourceTechParts = new System.Windows.Forms.BindingSource(this.components);
             this.toolStripTechParts = new System.Windows.Forms.ToolStrip();
             this.tsbtnTechPartsAdd = new System.Windows.Forms.ToolStripButton();
@@ -77,10 +73,6 @@
             this.MileagesMileage = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MileagesMileageCommon = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MileagesDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.menuMileages = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.miMileagesAdd = new System.Windows.Forms.ToolStripMenuItem();
-            this.miMileagesChange = new System.Windows.Forms.ToolStripMenuItem();
-            this.miMileagesDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.bindingSourceMileages = new System.Windows.Forms.BindingSource(this.components);
             this.toolStripMileages = new System.Windows.Forms.ToolStrip();
             this.tsbtnMileagesAdd = new System.Windows.Forms.ToolStripButton();
@@ -106,6 +98,14 @@
             this.tsbtnListParts = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tsbtnClose = new System.Windows.Forms.ToolStripButton();
+            this.menuTechParts = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.miTechPartsAdd = new System.Windows.Forms.ToolStripMenuItem();
+            this.miTechPartsChange = new System.Windows.Forms.ToolStripMenuItem();
+            this.miTechPartsDelete = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuMileages = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.miMileagesAdd = new System.Windows.Forms.ToolStripMenuItem();
+            this.miMileagesChange = new System.Windows.Forms.ToolStripMenuItem();
+            this.miMileagesDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.toolStripContainer.BottomToolStripPanel.SuspendLayout();
@@ -116,7 +116,6 @@
             this.panelTop.SuspendLayout();
             this.panelTechPart.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTechParts)).BeginInit();
-            this.menuTechParts.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourceTechParts)).BeginInit();
             this.toolStripTechParts.SuspendLayout();
             this.panelTechs.SuspendLayout();
@@ -124,11 +123,12 @@
             this.toolStripTechs.SuspendLayout();
             this.panelBottom.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMileages)).BeginInit();
-            this.menuMileages.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourceMileages)).BeginInit();
             this.toolStripMileages.SuspendLayout();
             this.menuStrip.SuspendLayout();
             this.toolStripMain.SuspendLayout();
+            this.menuTechParts.SuspendLayout();
+            this.menuMileages.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStripContainer
@@ -225,7 +225,6 @@
             this.TechPartsDateTimeRemove,
             this.TechPartsMileage,
             this.TechPartsMileageCommon});
-            this.dgvTechParts.ContextMenuStrip = this.menuTechParts;
             this.dgvTechParts.DataSource = this.bindingSourceTechParts;
             this.dgvTechParts.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvTechParts.Location = new System.Drawing.Point(0, 50);
@@ -234,6 +233,7 @@
             this.dgvTechParts.RowHeadersWidth = 32;
             this.dgvTechParts.Size = new System.Drawing.Size(604, 189);
             this.dgvTechParts.TabIndex = 3;
+            this.dgvTechParts.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DgvTechParts_CellMouseClick);
             this.dgvTechParts.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DgvTechParts_CellMouseDoubleClick);
             this.dgvTechParts.SelectionChanged += new System.EventHandler(this.DgvTechParts_SelectionChanged);
             // 
@@ -290,36 +290,6 @@
             this.TechPartsMileageCommon.Name = "TechPartsMileageCommon";
             this.TechPartsMileageCommon.ReadOnly = true;
             this.TechPartsMileageCommon.Width = 150;
-            // 
-            // menuTechParts
-            // 
-            this.menuTechParts.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.miTechPartsAdd,
-            this.miTechPartsChange,
-            this.miTechPartsDelete});
-            this.menuTechParts.Name = "menuTechParts";
-            this.menuTechParts.Size = new System.Drawing.Size(129, 70);
-            // 
-            // miTechPartsAdd
-            // 
-            this.miTechPartsAdd.Name = "miTechPartsAdd";
-            this.miTechPartsAdd.Size = new System.Drawing.Size(128, 22);
-            this.miTechPartsAdd.Text = "Добавить";
-            this.miTechPartsAdd.Click += new System.EventHandler(this.MiTechPartsAdd_Click);
-            // 
-            // miTechPartsChange
-            // 
-            this.miTechPartsChange.Name = "miTechPartsChange";
-            this.miTechPartsChange.Size = new System.Drawing.Size(128, 22);
-            this.miTechPartsChange.Text = "Изменить";
-            this.miTechPartsChange.Click += new System.EventHandler(this.MiTechPartsChange_Click);
-            // 
-            // miTechPartsDelete
-            // 
-            this.miTechPartsDelete.Name = "miTechPartsDelete";
-            this.miTechPartsDelete.Size = new System.Drawing.Size(128, 22);
-            this.miTechPartsDelete.Text = "Удалить";
-            this.miTechPartsDelete.Click += new System.EventHandler(this.MiTechPartsDelete_Click);
             // 
             // bindingSourceTechParts
             // 
@@ -560,7 +530,6 @@
             this.MileagesMileage,
             this.MileagesMileageCommon,
             this.MileagesDescription});
-            this.dgvMileages.ContextMenuStrip = this.menuMileages;
             this.dgvMileages.DataSource = this.bindingSourceMileages;
             this.dgvMileages.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvMileages.Location = new System.Drawing.Point(0, 50);
@@ -569,6 +538,7 @@
             this.dgvMileages.RowHeadersWidth = 32;
             this.dgvMileages.Size = new System.Drawing.Size(872, 146);
             this.dgvMileages.TabIndex = 3;
+            this.dgvMileages.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DgvMileages_CellMouseClick);
             this.dgvMileages.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DgvMileages_CellMouseDoubleClick);
             this.dgvMileages.SelectionChanged += new System.EventHandler(this.DgvMileages_SelectionChanged);
             // 
@@ -617,36 +587,6 @@
             this.MileagesDescription.ReadOnly = true;
             this.MileagesDescription.Width = 150;
             // 
-            // menuMileages
-            // 
-            this.menuMileages.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.miMileagesAdd,
-            this.miMileagesChange,
-            this.miMileagesDelete});
-            this.menuMileages.Name = "menuTechParts";
-            this.menuMileages.Size = new System.Drawing.Size(129, 70);
-            // 
-            // miMileagesAdd
-            // 
-            this.miMileagesAdd.Name = "miMileagesAdd";
-            this.miMileagesAdd.Size = new System.Drawing.Size(128, 22);
-            this.miMileagesAdd.Text = "Добавить";
-            this.miMileagesAdd.Click += new System.EventHandler(this.MiMileagesAdd_Click);
-            // 
-            // miMileagesChange
-            // 
-            this.miMileagesChange.Name = "miMileagesChange";
-            this.miMileagesChange.Size = new System.Drawing.Size(128, 22);
-            this.miMileagesChange.Text = "Изменить";
-            this.miMileagesChange.Click += new System.EventHandler(this.MiMileagesChange_Click);
-            // 
-            // miMileagesDelete
-            // 
-            this.miMileagesDelete.Name = "miMileagesDelete";
-            this.miMileagesDelete.Size = new System.Drawing.Size(128, 22);
-            this.miMileagesDelete.Text = "Удалить";
-            this.miMileagesDelete.Click += new System.EventHandler(this.MiMileagesDelete_Click);
-            // 
             // bindingSourceMileages
             // 
             this.bindingSourceMileages.DataSource = typeof(Technics.Database.Models.MileageModel);
@@ -693,14 +633,14 @@
             // miMileagesFromFiles
             // 
             this.miMileagesFromFiles.Name = "miMileagesFromFiles";
-            this.miMileagesFromFiles.Size = new System.Drawing.Size(180, 24);
+            this.miMileagesFromFiles.Size = new System.Drawing.Size(120, 24);
             this.miMileagesFromFiles.Text = "Файлы";
             this.miMileagesFromFiles.Click += new System.EventHandler(this.MiMileagesFromFiles_Click);
             // 
             // miMileagesFromDirectory
             // 
             this.miMileagesFromDirectory.Name = "miMileagesFromDirectory";
-            this.miMileagesFromDirectory.Size = new System.Drawing.Size(180, 24);
+            this.miMileagesFromDirectory.Size = new System.Drawing.Size(120, 24);
             this.miMileagesFromDirectory.Text = "Папка";
             this.miMileagesFromDirectory.Click += new System.EventHandler(this.MiMileagesFromDirectory_Click);
             // 
@@ -877,6 +817,66 @@
             this.tsbtnClose.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsbtnClose.Click += new System.EventHandler(this.TsbtnClose_Click);
             // 
+            // menuTechParts
+            // 
+            this.menuTechParts.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.miTechPartsAdd,
+            this.miTechPartsChange,
+            this.miTechPartsDelete});
+            this.menuTechParts.Name = "menuTechParts";
+            this.menuTechParts.Size = new System.Drawing.Size(129, 70);
+            // 
+            // miTechPartsAdd
+            // 
+            this.miTechPartsAdd.Name = "miTechPartsAdd";
+            this.miTechPartsAdd.Size = new System.Drawing.Size(128, 22);
+            this.miTechPartsAdd.Text = "Добавить";
+            this.miTechPartsAdd.Click += new System.EventHandler(this.MiTechPartsAdd_Click);
+            // 
+            // miTechPartsChange
+            // 
+            this.miTechPartsChange.Name = "miTechPartsChange";
+            this.miTechPartsChange.Size = new System.Drawing.Size(128, 22);
+            this.miTechPartsChange.Text = "Изменить";
+            this.miTechPartsChange.Click += new System.EventHandler(this.MiTechPartsChange_Click);
+            // 
+            // miTechPartsDelete
+            // 
+            this.miTechPartsDelete.Name = "miTechPartsDelete";
+            this.miTechPartsDelete.Size = new System.Drawing.Size(128, 22);
+            this.miTechPartsDelete.Text = "Удалить";
+            this.miTechPartsDelete.Click += new System.EventHandler(this.MiTechPartsDelete_Click);
+            // 
+            // menuMileages
+            // 
+            this.menuMileages.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.miMileagesAdd,
+            this.miMileagesChange,
+            this.miMileagesDelete});
+            this.menuMileages.Name = "menuTechParts";
+            this.menuMileages.Size = new System.Drawing.Size(129, 70);
+            // 
+            // miMileagesAdd
+            // 
+            this.miMileagesAdd.Name = "miMileagesAdd";
+            this.miMileagesAdd.Size = new System.Drawing.Size(128, 22);
+            this.miMileagesAdd.Text = "Добавить";
+            this.miMileagesAdd.Click += new System.EventHandler(this.MiMileagesAdd_Click);
+            // 
+            // miMileagesChange
+            // 
+            this.miMileagesChange.Name = "miMileagesChange";
+            this.miMileagesChange.Size = new System.Drawing.Size(128, 22);
+            this.miMileagesChange.Text = "Изменить";
+            this.miMileagesChange.Click += new System.EventHandler(this.MiMileagesChange_Click);
+            // 
+            // miMileagesDelete
+            // 
+            this.miMileagesDelete.Name = "miMileagesDelete";
+            this.miMileagesDelete.Size = new System.Drawing.Size(128, 22);
+            this.miMileagesDelete.Text = "Удалить";
+            this.miMileagesDelete.Click += new System.EventHandler(this.MiMileagesDelete_Click);
+            // 
             // openFileDialog
             // 
             this.openFileDialog.Multiselect = true;
@@ -912,7 +912,6 @@
             this.panelTechPart.ResumeLayout(false);
             this.panelTechPart.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTechParts)).EndInit();
-            this.menuTechParts.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourceTechParts)).EndInit();
             this.toolStripTechParts.ResumeLayout(false);
             this.toolStripTechParts.PerformLayout();
@@ -924,7 +923,6 @@
             this.panelBottom.ResumeLayout(false);
             this.panelBottom.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMileages)).EndInit();
-            this.menuMileages.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourceMileages)).EndInit();
             this.toolStripMileages.ResumeLayout(false);
             this.toolStripMileages.PerformLayout();
@@ -932,6 +930,8 @@
             this.menuStrip.PerformLayout();
             this.toolStripMain.ResumeLayout(false);
             this.toolStripMain.PerformLayout();
+            this.menuTechParts.ResumeLayout(false);
+            this.menuMileages.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

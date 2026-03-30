@@ -8,6 +8,7 @@ using P3tr0viCh.Utils.Extensions;
 using P3tr0viCh.Utils.Forms;
 using P3tr0viCh.Utils.Presenters;
 using System;
+using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Technics.Interfaces;
@@ -406,6 +407,16 @@ namespace Technics
         private async void MiMileagesDelete_Click(object sender, EventArgs e)
         {
             await MileagesDeleteSelectedAsync();
+        }
+
+        private void DgvTechParts_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            Utils.ShowMenuOnCellMouseClick(menuTechParts, dgvTechParts, e);
+        }
+
+        private void DgvMileages_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            Utils.ShowMenuOnCellMouseClick(menuMileages, dgvMileages, e);
         }
     }
 }

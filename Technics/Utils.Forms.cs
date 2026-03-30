@@ -9,14 +9,11 @@ namespace Technics
 {
     public static partial class Utils
     {
-        public static void SelectCellOnCellMouseDown(DataGridView dataGridView, DataGridViewCellMouseEventArgs e)
+        public static void ShowMenuOnCellMouseClick(ContextMenuStrip contextMenu, DataGridView dataGridView, DataGridViewCellMouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Right)
+            if (e.Button == MouseButtons.Right && e.RowIndex > -1 && e.ColumnIndex > -1)
             {
-                if (e.ColumnIndex >= 0 && e.RowIndex >= 0)
-                {
-                    dataGridView.CurrentCell = dataGridView[e.ColumnIndex, e.RowIndex];
-                }
+                contextMenu.Show(dataGridView, dataGridView.PointToClient(Cursor.Position));
             }
         }
 
