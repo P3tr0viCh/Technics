@@ -69,7 +69,7 @@ namespace Technics
         private async Task TechPartsUpdateMileagesAsync(
             DbConnection connection, DbTransaction transaction, TechPartModel techPart)
         {
-            if (techPart.Mileage == null)
+            if (techPart.MileageCommon == 0.0)
             {
                 techPart.MileageCommon = null;
             }
