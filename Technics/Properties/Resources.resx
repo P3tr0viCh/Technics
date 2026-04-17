@@ -258,9 +258,6 @@
   <data name="TitleMain" xml:space="preserve">
     <value>Учёт и обслуживание техники {0}</value>
   </data>
-  <data name="TitlePart" xml:space="preserve">
-    <value>Деталь</value>
-  </data>
   <data name="TitleTech" xml:space="preserve">
     <value>Техника</value>
   </data>
@@ -309,5 +306,8 @@
   </data>
   <data name="TextCellX" xml:space="preserve">
     <value>×</value>
+  </data>
+  <data name="TitlePart" xml:space="preserve">
+    <value>Деталь</value>
   </data>
 </root>

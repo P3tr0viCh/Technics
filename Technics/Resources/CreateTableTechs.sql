@@ -1,5 +1,7 @@
 CREATE TABLE techs (
 	id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
 	folderid INTEGER,
-	text TEXT
+	text TEXT,
+	state INTEGER,
+	description TEXT
 );

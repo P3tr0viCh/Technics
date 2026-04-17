@@ -5,6 +5,7 @@ using P3tr0viCh.Utils.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Technics.Forms;
 using Technics.Properties;
 using static Technics.Database.Models;
 
@@ -16,7 +17,7 @@ namespace Technics.Presenters
 
         public PresenterFrmListTechs(IFrmList frmList) : base(frmList)
         {
-            Grants = FrmListGrant.Change | FrmListGrant.Delete;
+            Grants = FrmListGrant.Change | FrmListGrant.Delete | FrmListGrant.Sort;
 
             ItemsChangeDialog += PresenterFrmListTechs_ItemsChangeDialog;
             ItemsDeleteDialog += PresenterFrmListTechs_ItemsDeleteDialog;
@@ -31,20 +32,9 @@ namespace Technics.Presenters
             PresenterDataGridView.SortColumn = nameof(TechModel.Text);
         }
 
-        private bool ShowItemChangeDialog(TechModel value)
-        {
-            var text = value.Text;
-
-            if (!Utils.TextInputBoxShow(ref text, Resources.TitleTech)) return false;
-
-            value.Text = text;
-
-            return true;
-        }
-
         private async Task PresenterFrmListTechs_ItemsChangeDialog(object sender, ItemsDialogEventArgs<TechModel> e)
         {
-            e.Ok = ShowItemChangeDialog(e.Values.First());
+            e.Ok = FrmTech.ShowDlg(Form, e.Values.First());
 
             await Task.CompletedTask;
         }
@@ -65,9 +55,17 @@ namespace Technics.Presenters
         {
             base.UpdateColumns();
 
-            FrmList.DataGridView.Columns[nameof(TechModel.FolderId)].Visible = false;
+            FrmList.DataGridView.Columns[nameof(TechModel.Text)].DisplayIndex = 0;
 
             FrmList.DataGridView.Columns[nameof(TechModel.Text)].HeaderText = ResourcesColumnHeader.Text;
+            FrmList.DataGridView.Columns[nameof(TechModel.StateAsString)].HeaderText = ResourcesColumnHeader.State;
+            FrmList.DataGridView.Columns[nameof(TechModel.Description)].HeaderText = ResourcesColumnHeader.Description;
+
+            FrmList.DataGridView.Columns[nameof(TechModel.FolderId)].Visible = false;
+            FrmList.DataGridView.Columns[nameof(TechModel.State)].Visible = false;
+            FrmList.DataGridView.Columns[nameof(TechModel.AvailableForUse)].Visible = false;
+
+            FrmList.DataGridView.Columns[nameof(TechModel.StateAsString)].DefaultCellStyle = DataGridViewCellStyles.PartsState;
         }
 
         public override int Compare(TechModel x, TechModel y, string dataPropertyName, ComparerSortOrder sortOrder)

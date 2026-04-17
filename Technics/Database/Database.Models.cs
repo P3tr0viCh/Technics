@@ -1,7 +1,6 @@
 ﻿using Dapper.Contrib.Extensions;
 using P3tr0viCh.Database;
 using System;
-using System.ComponentModel;
 using Technics.Properties;
 using static Technics.Database.Interfaces;
 
@@ -63,11 +62,27 @@ namespace Technics
                     set => folderId = value != Sql.NewId ? value : null;
                 }
 
+                public bool State { get; set; } = false;
+
+                [Computed]
+                [Write(false)]
+                public bool AvailableForUse => State != true;
+
+                [Computed]
+                [Write(false)]
+                public string StateAsString => State ? Resources.TextCellX : string.Empty;
+
+                public string Description { get; set; } = null;
+
                 public override void Clear()
                 {
                     base.Clear();
 
                     FolderId = null;
+
+                    State = false;
+
+                    Description = null;
                 }
 
                 public void Assign(TechModel source)
@@ -82,6 +97,10 @@ namespace Technics
                     base.Assign(source);
 
                     FolderId = source.FolderId;
+
+                    State = source.State;
+
+                    Description = source.Description;
                 }
             }
 

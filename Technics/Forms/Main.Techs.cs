@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Technics.Forms;
 using Technics.Properties;
 using static Technics.Database.Models;
 using static Technics.ProgramStatus;
@@ -124,7 +125,7 @@ namespace Technics
                 foreach (var tech in Lists.Default.Techs)
                 {
                     var techNode = new TreeNodeTech(tech);
-                    
+
                     var folderId = tech.FolderId ?? Sql.NewId;
 
                     folderNodes[folderId].Nodes.Add(techNode);
@@ -273,19 +274,14 @@ namespace Technics
 
         private async Task TechsAddNewTechAsync()
         {
-            var text =
-#if DEBUG
-                $"Tech {Str.Random(3)}";
-#else
-                string.Empty;
-#endif
-
-            if (!Utils.TextInputBoxShow(ref text, Resources.TitleTech)) return;
-
             var tech = new TechModel
             {
-                Text = text
+#if DEBUG
+                Text = $"Tech {Str.Random(3)}"
+#endif
             };
+
+            if (!FrmTech.ShowDlg(this, tech)) return;
 
             await TechsAddNewItemAsync(tech);
         }
@@ -296,25 +292,21 @@ namespace Technics
 
             var changedModel = changedNode.Model;
 
-            var text = changedModel.Text;
-
-            var caption = string.Empty;
-
             if (changedModel is FolderModel)
             {
-                caption = Resources.TitleTech;
+                var text = changedModel.Text;
+
+                if (!Utils.TextInputBoxShow(ref text, Resources.TitleTech)) return;
+
+                changedModel.Text = text;
             }
             else
             {
-                if (changedModel is TechModel)
+                if (changedModel is TechModel tech)
                 {
-                    caption = Resources.TitleTech;
+                    if (!FrmTech.ShowDlg(this, tech)) return;
                 }
             }
-
-            if (!Utils.TextInputBoxShow(ref text, caption)) return;
-
-            changedModel.Text = text;
 
             var status = ProgramStatus.Default.Start(Status.SaveData);
 
