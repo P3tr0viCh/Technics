@@ -2,6 +2,7 @@
 using P3tr0viCh.Utils;
 using P3tr0viCh.Utils.Extensions;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Technics.Properties;
@@ -72,14 +73,16 @@ namespace Technics
         {
             dtpDateTime.ContextMenuStrip = Utils.CreateMenuDateTimePicker();
 
-            LoadData();
+            LoadData(mileage.TechId);
 
             Mileage = mileage;
         }
 
-        private void LoadData()
+        private void LoadData(long? techId)
         {
-            bindingSourceTechs.DataSource = Lists.Default.Techs.ToBindingList();
+            bindingSourceTechs.DataSource = Lists.Default.Techs.
+                Where(tech => tech.AvailableForUse || tech.Id == techId).
+                ToBindingList();
 
             bindingSourceTechs.Insert(0, new TechModel());
 

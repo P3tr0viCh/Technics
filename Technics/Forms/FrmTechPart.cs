@@ -72,7 +72,7 @@ namespace Technics
 
             UpdateSettings();
 
-            await LoadDataAsync();
+            await LoadDataAsync(techPart.TechId);
 
             TechPart = techPart;
 
@@ -81,7 +81,7 @@ namespace Technics
 
         private IEnumerable<PartModel> Parts { get; set; }
 
-        private async Task LoadDataAsync()
+        private async Task LoadDataAsync(long? techId)
         {
             DebugWrite.Line("start");
 
@@ -93,7 +93,9 @@ namespace Technics
             {
                 bindingSourceTechs.DataSource = null;
 
-                var techs = Lists.Default.Techs.ToBindingList();
+                var techs = Lists.Default.Techs.
+                    Where(tech => tech.AvailableForUse || tech.Id == techId).
+                    ToBindingList();
 
                 techs.Insert(0, new TechModel());
 
@@ -297,7 +299,7 @@ namespace Technics
 
             var tech = cboxTech.GetSelectedItem<TechModel>();
 
-            await LoadDataAsync();
+            await LoadDataAsync(techPart.TechId);
 
             cboxTech.SelectedValue = tech?.Id ?? Sql.NewId;
 
@@ -384,7 +386,9 @@ namespace Technics
 
         private IEnumerable<PartModel> GetPartsForTech(TechModel tech)
         {
-            var availableParts = Parts.Where(part => part.AvailableForUse).ToBindingList();
+            var availableParts = Parts.
+                Where(part => part.AvailableForUse || part.Id == TechPart.PartId).
+                ToBindingList();
 
             if (tech?.IsNew ?? true) return availableParts;
 
@@ -450,6 +454,10 @@ namespace Technics
                 case Consts.Id.ListEdit:
                     await ChangePartsAsync();
 
+                    break;
+                default:
+                    techPart.PartId = part.Id;
+                    
                     break;
             }
         }

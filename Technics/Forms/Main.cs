@@ -8,7 +8,6 @@ using P3tr0viCh.Utils.Extensions;
 using P3tr0viCh.Utils.Forms;
 using P3tr0viCh.Utils.Presenters;
 using System;
-using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Technics.Interfaces;
