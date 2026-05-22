@@ -363,7 +363,6 @@
             // 
             // tvTechs
             // 
-            this.tvTechs.ContextMenuStrip = this.menuTechs;
             this.tvTechs.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tvTechs.HideSelection = false;
             this.tvTechs.ImageIndex = 0;

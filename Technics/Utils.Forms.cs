@@ -16,6 +16,16 @@ namespace Technics
                 contextMenu.Show(dataGridView, dataGridView.PointToClient(Cursor.Position));
             }
         }
+        
+        public static void ShowMenuOnNodeMouseClick(ContextMenuStrip contextMenu, TreeView treeView, TreeNodeMouseClickEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right && e.Node != null)
+            {
+                treeView.SelectedNode = e.Node;
+
+                contextMenu.Show(treeView, treeView.PointToClient(Cursor.Position));
+            }
+        }
 
         public static bool TextInputBoxShow(ref string text, string caption)
         {

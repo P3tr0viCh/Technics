@@ -30,6 +30,11 @@ namespace Technics
 
         public async Task<IEnumerable<TechPartModel>> TechPartsLoadAsync(IEnumerable<TechModel> techs)
         {
+            if (techs.IsEmpty())
+            {
+                return Enumerable.Empty<TechPartModel>();
+            }
+
             var filter = new TechParts()
             {
                 Techs = techs

@@ -310,4 +310,10 @@
   <data name="TitlePart" xml:space="preserve">
     <value>Деталь</value>
   </data>
+  <data name="TextArchive" xml:space="preserve">
+    <value>Archive</value>
+  </data>
+  <data name="TextTechArchive" xml:space="preserve">
+    <value>Архив</value>
+  </data>
 </root>

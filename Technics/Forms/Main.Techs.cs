@@ -17,12 +17,33 @@ namespace Technics
     {
         internal readonly WrapperCancellationTokenSource ctsTechsLoad = new WrapperCancellationTokenSource();
 
+        private readonly TreeNodeFolder TreeNodeRoot = new TreeNodeFolder()
+        {
+            Text = Resources.TextTechAll
+        };
+
+        private readonly TreeNodeFolder TreeNodeArchive = new TreeNodeFolder()
+        {
+            Text = Resources.TextTechArchive
+        };
+
         private void AddTechsRoot()
         {
-            tvTechs.Nodes.Add(new TreeNodeFolder()
+            TreeNodeArchive.Folder.Path = Resources.TextArchive;
+
+            tvTechs.Nodes.Add(TreeNodeRoot);
+
+            tvTechs.Nodes.Add(TreeNodeArchive);
+        }
+
+        private bool TechsCanAddItem
+        {
+            set
             {
-                Text = Resources.TextTechAll
-            });
+                tsbtnTechAdd.Enabled = value;
+
+                miTechAdd.Enabled = value;
+            }
         }
 
         private bool TechsCanChangeItem
@@ -44,7 +65,9 @@ namespace Technics
         {
             var selected = tvTechs.SelectedNode as TreeNodeBase;
 
-            TechsCanChangeItem = selected?.Model.IsNew == false;
+            TechsCanAddItem = selected?.Level == 0 ? selected?.Index == 0 : selected is TreeNodeFolder;
+
+            TechsCanChangeItem = selected?.Level > 0;
 
             miTechAdd.Visible = selected is TreeNodeFolder;
 
@@ -67,6 +90,11 @@ namespace Technics
                 }
 
                 path += techNode.Tech.Text;
+
+                if (!techNode.Tech.AvailableForUse)
+                {
+                    path = TreeNodeArchive.FullPath + Path.DirectorySeparatorChar + path;
+                }
             }
             else
             {
@@ -88,7 +116,8 @@ namespace Technics
 
             try
             {
-                tvTechs.Nodes[0].Nodes.Clear();
+                TreeNodeRoot.Nodes.Clear();
+                TreeNodeArchive.Nodes.Clear();
 
                 var folders = await Database.Default.ListLoadAsync<FolderModel>();
 
@@ -126,14 +155,26 @@ namespace Technics
                 {
                     var techNode = new TreeNodeTech(tech);
 
-                    var folderId = tech.FolderId ?? Sql.NewId;
+                    if (tech.AvailableForUse)
+                    {
+                        var folderId = tech.FolderId ?? Sql.NewId;
 
-                    folderNodes[folderId].Nodes.Add(techNode);
+                        folderNodes[folderId].Nodes.Add(techNode);
+                    }
+                    else
+                    {
+                        TreeNodeArchive.Nodes.Add(techNode);
+                    }
                 }
 
                 tvTechs.ExpandAll();
 
-                tvTechs.SelectedNode = tvTechs.Nodes[0];
+                if (!AppSettings.Default.ArchiveExpanded)
+                {
+                    TreeNodeArchive.Collapse();
+                }
+
+                tvTechs.SelectedNode = TreeNodeRoot;
 
                 await TechsSelectedChangedAsync();
 
@@ -166,6 +207,20 @@ namespace Technics
 
             if (parent is null)
             {
+                return result;
+            }
+
+            if (parent == TreeNodeRoot)
+            {
+                result.AddRange(Lists.Default.Techs.Where(tech => tech.AvailableForUse));
+
+                return result;
+            }
+
+            if (parent == TreeNodeArchive)
+            {
+                result.AddRange(Lists.Default.Techs.Where(tech => !tech.AvailableForUse));
+
                 return result;
             }
 
@@ -286,6 +341,25 @@ namespace Technics
             await TechsAddNewItemAsync(tech);
         }
 
+        private TreeNodeFolder FindFolderById(TreeNodeFolder folder, long? id)
+        {
+            if (id == null || id == Sql.NewId) return null;
+
+            foreach (var node in folder.Nodes)
+            {
+                if (node is TreeNodeFolder child)
+                {
+                    if (child.Folder.Id == id) return child;
+
+                    var child2 = FindFolderById(child, id);
+
+                    if (child2 != null) return child2;
+                }
+            }
+
+            return null;
+        }
+
         private async Task TechsChangeSelectedAsync()
         {
             if (!(tvTechs.SelectedNode is TreeNodeBase changedNode)) return;
@@ -310,6 +384,8 @@ namespace Technics
 
             var status = ProgramStatus.Default.Start(Status.SaveData);
 
+            SelfChange = true;
+
             try
             {
                 if (changedModel is FolderModel folder)
@@ -328,6 +404,25 @@ namespace Technics
 
                         Lists.Default.Techs.Add(tech);
 
+                        var parent = FindFolderById(TreeNodeRoot, tech.FolderId) ?? TreeNodeRoot;
+
+                        if (tech.AvailableForUse)
+                        {
+                            TreeNodeArchive.Nodes.Remove(changedNode);
+
+                            parent.Nodes.Add(changedNode);
+
+                            parent.Expand();
+                        }
+                        else
+                        {
+                            parent.Nodes.Remove(changedNode);
+
+                            TreeNodeArchive.Nodes.Add(changedNode);
+
+                            TreeNodeArchive.Expand();
+                        }
+
                         UpdateTechText(bindingSourceMileages, tech);
                         UpdateTechText(bindingSourceTechParts, tech);
                     }
@@ -345,6 +440,10 @@ namespace Technics
             }
             finally
             {
+                SelfChange = false;
+
+                tvTechs.SelectedNode = changedNode;
+
                 ProgramStatus.Default.Stop(status);
             }
 

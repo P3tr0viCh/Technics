@@ -464,6 +464,15 @@ namespace Technics.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Archive.
+        /// </summary>
+        internal static string TextArchive {
+            get {
+                return ResourceManager.GetString("TextArchive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ×.
         /// </summary>
         internal static string TextCellX {
@@ -532,6 +541,15 @@ namespace Technics.Properties {
         internal static string TextTechAll {
             get {
                 return ResourceManager.GetString("TextTechAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Архив.
+        /// </summary>
+        internal static string TextTechArchive {
+            get {
+                return ResourceManager.GetString("TextTechArchive", resourceCulture);
             }
         }
         

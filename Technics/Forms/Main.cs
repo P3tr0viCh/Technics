@@ -52,6 +52,9 @@ namespace Technics
 
             AddTechsRoot();
 
+            TechsCanAddItem = false;
+            TechsCanChangeItem = false;
+
             ProgramStatus.Default.StatusChanged += ProgramStatus_StatusChanged;
 
             AppSettings.LoadFormState(this, AppSettings.Default.FormStates);
@@ -130,6 +133,8 @@ namespace Technics
 
             AppSettings.Default.ToolStripsShowText = miViewToolStripsShowText.Checked;
 
+            AppSettings.Default.ArchiveExpanded = TreeNodeArchive.IsExpanded;
+
             AppSettingsSave();
 
             Utils.Log.WriteProgramStop();
@@ -177,10 +182,14 @@ namespace Technics
 
         private void TvTechs_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
-            if (e.Button == MouseButtons.Right)
+            if (e.Button == MouseButtons.Right && e.Node == TreeNodeArchive)
             {
                 tvTechs.SelectedNode = e.Node;
+
+                return;
             }
+
+            Utils.ShowMenuOnNodeMouseClick(menuTechs, tvTechs, e);
         }
 
         private async void TvTechs_AfterSelect(object sender, TreeViewEventArgs e)

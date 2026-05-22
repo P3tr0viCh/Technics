@@ -2,6 +2,7 @@
 using P3tr0viCh.Database;
 using P3tr0viCh.Database.Extensions;
 using P3tr0viCh.Utils;
+using P3tr0viCh.Utils.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
@@ -29,6 +30,11 @@ namespace Technics
 
         public async Task<IEnumerable<MileageModel>> MileagesLoadAsync(IEnumerable<TechModel> techs)
         {
+            if (techs.IsEmpty())
+            {
+                return Enumerable.Empty<MileageModel>();    
+            }
+
             var filter = new Mileages()
             {
                 Techs = techs
