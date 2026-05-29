@@ -71,7 +71,7 @@ namespace Technics
 
         private void FrmMileage_Load(MileageModel mileage)
         {
-            dtpDateTime.ContextMenuStrip = Utils.CreateMenuDateTimePicker();
+            dtpDateTime.AddMenuDateTimeActions();
 
             LoadData(mileage.TechId);
 

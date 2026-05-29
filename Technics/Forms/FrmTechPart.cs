@@ -67,8 +67,8 @@ namespace Technics
 
         private async void FrmTechPart_Load(TechPartModel techPart)
         {
-            dtpDateTimeInstall.ContextMenuStrip = Utils.CreateMenuDateTimePicker();
-            dtpDateTimeRemove.ContextMenuStrip = Utils.CreateMenuDateTimePicker();
+            dtpDateTimeInstall.AddMenuDateTimeActions();
+            dtpDateTimeRemove.AddMenuDateTimeActions();
 
             UpdateSettings();
 
