@@ -71,6 +71,7 @@ namespace Technics.Forms
             bindingSourceFolders.Insert(0, new FolderModel());
         }
 
+        // Запрет переноса в архив, если деталь всё ещё установлена.
         private async Task AssertPartInUseAsync()
         {
             if (part.IsNew) return;

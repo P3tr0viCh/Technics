@@ -45,6 +45,8 @@ namespace Technics
                 connection.Execute(ResourcesSql.CreateTableFolders);
                 connection.Execute(ResourcesSql.CreateTableMileages);
                 connection.Execute(ResourcesSql.CreateTableTechParts);
+                connection.Execute(ResourcesSql.CreateTableMts);
+                connection.Execute(ResourcesSql.CreateTableMaintenance);
             }
 
             Utils.Log.Info(ResourcesLog.DatabaseCreateOk);

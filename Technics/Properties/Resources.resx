@@ -310,4 +310,7 @@
   <data name="TextTechArchive" xml:space="preserve">
     <value>Архив</value>
   </data>
+  <data name="TitleListMaintenance" xml:space="preserve">
+    <value>Виды обслуживания</value>
+  </data>
 </root>

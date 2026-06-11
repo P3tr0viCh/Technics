@@ -65,7 +65,7 @@ namespace Technics.Properties {
         ///	mileages
         ///SET
         ///	mileagecommon = null
-        ///WHERE techid = :techid;.
+        ///WHERE techid = @techid;.
         /// </summary>
         internal static string ClearMileagesMileageCommonByTechId {
             get {
@@ -79,7 +79,7 @@ namespace Technics.Properties {
         ///SET
         ///	mileage = null,
         ///	mileagecommon = null
-        ///WHERE partid = :partid;.
+        ///WHERE partid = @partid;.
         /// </summary>
         internal static string ClearTechPartsMileagesByPartId {
             get {
@@ -93,7 +93,7 @@ namespace Technics.Properties {
         ///SET
         ///	mileage = null,
         ///	mileagecommon = null
-        ///WHERE techid = :techid;.
+        ///WHERE techid = @techid;.
         /// </summary>
         internal static string ClearTechPartsMileagesByTechId {
             get {
@@ -111,6 +111,21 @@ namespace Technics.Properties {
         internal static string CreateTableFolders {
             get {
                 return ResourceManager.GetString("CreateTableFolders", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CREATE TABLE parts (
+        ///	id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+        ///	folderid INTEGER,
+        ///	text TEXT,
+        ///	state INTEGER,
+        ///	description TEXT
+        ///);.
+        /// </summary>
+        internal static string CreateTableMaintenance {
+            get {
+                return ResourceManager.GetString("CreateTableMaintenance", resourceCulture);
             }
         }
         
@@ -135,10 +150,25 @@ namespace Technics.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to CREATE TABLE mts (
+        ///	id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+        ///	folderid INTEGER,
+        ///	text TEXT,
+        ///	description TEXT
+        ///);.
+        /// </summary>
+        internal static string CreateTableMts {
+            get {
+                return ResourceManager.GetString("CreateTableMts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to CREATE TABLE parts (
         ///	id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
         ///	folderid INTEGER,
         ///	text TEXT,
+        ///	state INTEGER,
         ///	description TEXT
         ///);.
         /// </summary>
@@ -175,7 +205,9 @@ namespace Technics.Properties {
         ///   Looks up a localized string similar to CREATE TABLE techs (
         ///	id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
         ///	folderid INTEGER,
-        ///	text TEXT
+        ///	text TEXT,
+        ///	state INTEGER,
+        ///	description TEXT
         ///);.
         /// </summary>
         internal static string CreateTableTechs {
@@ -185,7 +217,18 @@ namespace Technics.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SELECT mileages.id, techid, techs.text AS techtext, datetime, mileage, mileagecommon, mileagetype, description
+        ///   Looks up a localized string similar to SELECT parts.id, folderid, folders.text AS foldertext, parts.text, parts.state, description
+        ///FROM parts
+        ///LEFT JOIN folders ON parts.folderid = folders.id;.
+        /// </summary>
+        internal static string SelectMaintenance {
+            get {
+                return ResourceManager.GetString("SelectMaintenance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SELECT mileages.id, techid, techs.text AS techtext, datetime, mileage, mileagecommon, mileagetype, mileages.description
         ///FROM mileages
         ///LEFT JOIN techs ON mileages.techid = techs.id.
         /// </summary>
@@ -196,9 +239,20 @@ namespace Technics.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SELECT mileages.id, techid, techs.text AS techtext, datetime, mileage, mileagecommon, mileagetype, description
-        ///FROM mileages
-        ///LEFT JOIN techs ON mileages.techid = techs.id.
+        ///   Looks up a localized string similar to SELECT parts.id, folderid, folders.text AS foldertext, parts.text, parts.state, description
+        ///FROM parts
+        ///LEFT JOIN folders ON parts.folderid = folders.id;.
+        /// </summary>
+        internal static string SelectMts {
+            get {
+                return ResourceManager.GetString("SelectMts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SELECT parts.id, folderid, folders.text AS foldertext, parts.text, parts.state, description
+        ///FROM parts
+        ///LEFT JOIN folders ON parts.folderid = folders.id;.
         /// </summary>
         internal static string SelectParts {
             get {
@@ -234,9 +288,9 @@ namespace Technics.Properties {
         ///   Looks up a localized string similar to UPDATE
         ///	mileages
         ///SET
-        ///	mileage = :mileage,
-        ///	mileagecommon = :mileagecommon
-        ///WHERE id = :id;.
+        ///	mileage = @mileage,
+        ///	mileagecommon = @mileagecommon
+        ///WHERE id = @id;.
         /// </summary>
         internal static string UpdateMileagesMileagesById {
             get {
@@ -248,9 +302,9 @@ namespace Technics.Properties {
         ///   Looks up a localized string similar to UPDATE
         ///	techparts
         ///SET
-        ///	mileage = :mileage,
-        ///	mileagecommon = :mileagecommon
-        ///WHERE id = :id;.
+        ///	mileage = @mileage,
+        ///	mileagecommon = @mileagecommon
+        ///WHERE id = @id;.
         /// </summary>
         internal static string UpdateTechPartsMileagesById {
             get {

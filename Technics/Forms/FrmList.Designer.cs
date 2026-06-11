@@ -59,7 +59,7 @@
             // toolStripContainer.ContentPanel
             // 
             this.toolStripContainer.ContentPanel.Controls.Add(this.dataGridView);
-            this.toolStripContainer.ContentPanel.Size = new System.Drawing.Size(384, 193);
+            this.toolStripContainer.ContentPanel.Size = new System.Drawing.Size(384, 191);
             this.toolStripContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolStripContainer.Location = new System.Drawing.Point(0, 0);
             this.toolStripContainer.Name = "toolStripContainer";
@@ -73,24 +73,25 @@
             // statusStrip
             // 
             this.statusStrip.Dock = System.Windows.Forms.DockStyle.None;
+            this.statusStrip.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.slCount,
             this.slSelectedCount});
             this.statusStrip.Location = new System.Drawing.Point(0, 0);
             this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(384, 22);
+            this.statusStrip.Size = new System.Drawing.Size(384, 24);
             this.statusStrip.TabIndex = 0;
             // 
             // slCount
             // 
             this.slCount.Name = "slCount";
-            this.slCount.Size = new System.Drawing.Size(62, 17);
+            this.slCount.Size = new System.Drawing.Size(75, 19);
             this.slCount.Text = "count: 666";
             // 
             // slSelectedCount
             // 
             this.slSelectedCount.Name = "slSelectedCount";
-            this.slSelectedCount.Size = new System.Drawing.Size(68, 17);
+            this.slSelectedCount.Size = new System.Drawing.Size(81, 19);
             this.slSelectedCount.Text = "selected: 42";
             // 
             // dataGridView
@@ -105,7 +106,7 @@
             this.dataGridView.Name = "dataGridView";
             this.dataGridView.ReadOnly = true;
             this.dataGridView.RowHeadersWidth = 32;
-            this.dataGridView.Size = new System.Drawing.Size(384, 193);
+            this.dataGridView.Size = new System.Drawing.Size(384, 191);
             this.dataGridView.TabIndex = 1;
             this.dataGridView.SelectionChanged += new System.EventHandler(this.DataGridView_SelectionChanged);
             // 

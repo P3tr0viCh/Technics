@@ -85,6 +85,8 @@
   <ItemGroup>
     <Compile Include="AppSettings\AppSettings.cs" />
     <Compile Include="Consts.cs" />
+    <Compile Include="Database\Database.Models.Base.cs" />
+    <Compile Include="Database\Database.Mts.cs" />
     <Compile Include="Database\Database.Parts.cs" />
     <Compile Include="Database\Database.cs" />
     <Compile Include="Database\Database.Dummy.cs" />
@@ -114,6 +116,12 @@
     </Compile>
     <Compile Include="Forms\FrmMileageList.Designer.cs">
       <DependentUpon>FrmMileageList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FrmMt.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmMt.Designer.cs">
+      <DependentUpon>FrmMt.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\FrmPart.cs">
       <SubType>Form</SubType>
@@ -180,6 +188,7 @@
     <Compile Include="Presenters\PresenterDataGridViewTechParts.cs" />
     <Compile Include="Presenters\PresenterFrmList.cs" />
     <Compile Include="Presenters\PresenterFrmListFactory.cs" />
+    <Compile Include="Presenters\PresenterFrmListMts.cs" />
     <Compile Include="Presenters\PresenterFrmListParts.cs" />
     <Compile Include="Presenters\PresenterFrmListTechs.cs" />
     <Compile Include="Presenters\PresenterStatusStripFrmList.cs" />
@@ -227,6 +236,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FrmMileageList.resx">
       <DependentUpon>FrmMileageList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FrmMt.resx">
+      <DependentUpon>FrmMt.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FrmPart.resx">
       <DependentUpon>FrmPart.cs</DependentUpon>
@@ -313,6 +325,10 @@
     <None Include="Resources\ClearTechPartsMileagesByTechId.sql" />
     <None Include="Resources\ClearTechPartsMileagesByPartId.sql" />
     <None Include="Resources\SelectParts.sql" />
+    <None Include="Resources\CreateTableMaintenance.sql" />
+    <None Include="Resources\CreateTableMts.sql" />
+    <None Include="Resources\SelectMaintenance.sql" />
+    <None Include="Resources\SelectMts.sql" />
     <Content Include="Technics.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

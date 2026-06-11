@@ -2,13 +2,12 @@
 using P3tr0viCh.Database;
 using System;
 using Technics.Properties;
-using static Technics.Database.Interfaces;
 
 namespace Technics
 {
     public partial class Database
     {
-        public class Models
+        public partial class Models
         {
             // ---------------------------------------------------------------
             [Table(Tables.folders)]
@@ -51,105 +50,11 @@ namespace Technics
                 }
             }
 
+
             // ---------------------------------------------------------------
             [Table(Tables.techs)]
-            public class TechModel : BaseText
+            public class TechModel : BaseTextDescriptionFolderState
             {
-                private long? folderId = null;
-                public long? FolderId
-                {
-                    get => folderId;
-                    set => folderId = value != Sql.NewId ? value : null;
-                }
-
-                public bool State { get; set; } = false;
-
-                [Computed]
-                [Write(false)]
-                public bool AvailableForUse => State != true;
-
-                [Computed]
-                [Write(false)]
-                public string StateAsString => State ? Resources.TextCellX : string.Empty;
-
-                public string Description { get; set; } = null;
-
-                public override void Clear()
-                {
-                    base.Clear();
-
-                    FolderId = null;
-
-                    State = false;
-
-                    Description = null;
-                }
-
-                public void Assign(TechModel source)
-                {
-                    if (source == null)
-                    {
-                        Clear();
-
-                        return;
-                    }
-
-                    base.Assign(source);
-
-                    FolderId = source.FolderId;
-
-                    State = source.State;
-
-                    Description = source.Description;
-                }
-            }
-
-            // ---------------------------------------------------------------
-            public abstract class BaseTechId : BaseId, ITechId
-            {
-                private long? techId = null;
-                public long? TechId
-                {
-                    get => techId;
-                    set
-                    {
-                        if (value == Sql.NewId)
-                        {
-                            value = null;
-
-                            TechText = null;
-                        }
-
-                        techId = value;
-                    }
-                }
-
-                [Computed]
-                [Write(false)]
-                public string TechText { get; set; } = default;
-
-                public override void Clear()
-                {
-                    base.Clear();
-
-                    TechId = null;
-                    TechText = default;
-                }
-
-                public void Assign(BaseTechId source)
-                {
-                    if (source == null)
-                    {
-                        Clear();
-
-                        return;
-                    }
-
-                    base.Assign(source);
-
-                    TechId = source.TechId;
-                    TechText = source.TechText;
-                }
             }
 
             public enum MileageType
@@ -210,66 +115,13 @@ namespace Technics
 
             // ---------------------------------------------------------------
             [Table(Tables.parts)]
-            public class PartModel : BaseText
+            public class PartModel : BaseTextDescriptionFolderState
             {
-                private long? folderId = null;
-                public long? FolderId
-                {
-                    get => folderId;
-                    set => folderId = value != Sql.NewId ? value : null;
-                }
-
-                [Computed]
-                [Write(false)]
-                public string FolderText { get; set; } = default;
-
-                public bool State { get; set; } = false;
-
-                [Computed]
-                [Write(false)]
-                public bool AvailableForUse => State != true;
-
-                [Computed]
-                [Write(false)]
-                public string StateAsString => State ? Resources.TextCellX : string.Empty;
-
-                public string Description { get; set; } = null;
-
-                public override void Clear()
-                {
-                    base.Clear();
-
-                    FolderId = null;
-                    FolderText = default;
-
-                    State = false;
-
-                    Description = null;
-                }
-
-                public void Assign(PartModel source)
-                {
-                    if (source == null)
-                    {
-                        Clear();
-
-                        return;
-                    }
-
-                    base.Assign(source);
-
-                    FolderId = source.FolderId;
-                    FolderText = source.FolderText;
-
-                    State = source.State;
-
-                    Description = source.Description;
-                }
             }
 
             // ---------------------------------------------------------------
             [Table(Tables.techparts)]
-            public class TechPartModel : BaseTechId, IPartId
+            public class TechPartModel : BaseTechId
             {
                 private long? partId = null;
                 public long? PartId
@@ -324,44 +176,11 @@ namespace Technics
                     MileageCommon = source.MileageCommon;
                 }
             }
-            
+
             // ---------------------------------------------------------------
             [Table(Tables.mts)]
-            public class MtModel : BaseText
+            public class MtModel : BaseTextDescriptionFolder
             {
-                private long? folderId = null;
-                public long? FolderId
-                {
-                    get => folderId;
-                    set => folderId = value != Sql.NewId ? value : null;
-                }
-
-                public string Description { get; set; } = null;
-
-                public override void Clear()
-                {
-                    base.Clear();
-
-                    FolderId = null;
-
-                    Description = null;
-                }
-
-                public void Assign(MtModel source)
-                {
-                    if (source == null)
-                    {
-                        Clear();
-
-                        return;
-                    }
-
-                    base.Assign(source);
-
-                    FolderId = source.FolderId;
-
-                    Description = source.Description;
-                }
             }
 
             // ---------------------------------------------------------------

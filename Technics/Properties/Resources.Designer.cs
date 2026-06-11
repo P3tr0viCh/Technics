@@ -545,6 +545,15 @@ namespace Technics.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Виды обслуживания.
+        /// </summary>
+        internal static string TitleListMaintenance {
+            get {
+                return ResourceManager.GetString("TitleListMaintenance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Детали.
         /// </summary>
         internal static string TitleListParts {

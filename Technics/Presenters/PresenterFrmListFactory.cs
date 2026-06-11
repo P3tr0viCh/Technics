@@ -14,6 +14,8 @@ namespace Technics.Presenters
                     return new PresenterFrmListParts(frmList);
                 case FrmListType.Techs:
                     return new PresenterFrmListTechs(frmList);
+                case FrmListType.Maintenance:
+                    return new PresenterFrmListMts(frmList);
                 default:
                     throw new NotImplementedException();
             }

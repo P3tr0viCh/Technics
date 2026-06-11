@@ -87,7 +87,9 @@ namespace Technics.Presenters
             FrmList.DataGridView.Columns[nameof(PartModel.Description)].HeaderText = ResourcesColumnHeader.Description;
 
             FrmList.DataGridView.Columns[nameof(PartModel.FolderId)].Visible = false;
+            FrmList.DataGridView.Columns[nameof(TechModel.FolderText)].Visible = true;
             FrmList.DataGridView.Columns[nameof(PartModel.State)].Visible = false;
+            FrmList.DataGridView.Columns[nameof(PartModel.StateAsString)].Visible = true;
             FrmList.DataGridView.Columns[nameof(PartModel.AvailableForUse)].Visible = false;
 
             FrmList.DataGridView.Columns[nameof(PartModel.StateAsString)].DefaultCellStyle = DataGridViewCellStyles.PartsState;

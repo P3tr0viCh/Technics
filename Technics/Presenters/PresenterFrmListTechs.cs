@@ -62,6 +62,7 @@ namespace Technics.Presenters
             FrmList.DataGridView.Columns[nameof(TechModel.Description)].HeaderText = ResourcesColumnHeader.Description;
 
             FrmList.DataGridView.Columns[nameof(TechModel.FolderId)].Visible = false;
+            FrmList.DataGridView.Columns[nameof(TechModel.FolderText)].Visible = false;
             FrmList.DataGridView.Columns[nameof(TechModel.State)].Visible = false;
             FrmList.DataGridView.Columns[nameof(TechModel.AvailableForUse)].Visible = false;
 

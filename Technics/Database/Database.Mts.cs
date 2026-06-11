@@ -3,22 +3,22 @@ using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Threading.Tasks;
-using Technics.Properties;
 using static Technics.Database.Models;
 
 namespace Technics
 {
     public partial class Database
     {
-        private async Task PartDeleteAsync(DbConnection connection, DbTransaction transaction, PartModel part)
+        private async Task MtDeleteAsync(DbConnection connection, DbTransaction transaction, MtModel mt)
         {
-            await connection.ExecuteSqlAsync(ResourcesSql.ClearTechPartsMileagesByPartId,
-                new { partid = part.Id }, transaction);
+            // TODO: add
+            //            await connection.ExecuteSqlAsync(ResourcesSql.ClearTechMtsMileagesByMtId,
+            //                new { mtid = mt.Id }, transaction);
 
-            await connection.ListItemDeleteAsync(part, transaction);
+            await connection.ListItemDeleteAsync(mt, transaction);
         }
 
-        public async Task PartDeleteAsync(IEnumerable<PartModel> parts)
+        public async Task MtDeleteAsync(IEnumerable<MtModel> mts)
         {
             using (var connection = GetConnection())
             {
@@ -28,14 +28,14 @@ namespace Technics
                 {
                     try
                     {
-                        foreach (var part in parts)
+                        foreach (var mt in mts)
                         {
-                            await PartDeleteAsync(connection, transaction, part);
+                            await MtDeleteAsync(connection, transaction, mt);
                         }
 
                         transaction.Commit();
 
-                        Utils.Log.ListItemDeleteOk(parts);
+                        Utils.Log.ListItemDeleteOk(mts);
                     }
                     catch (Exception)
                     {
@@ -46,9 +46,9 @@ namespace Technics
             }
         }
 
-        public async Task PartDeleteAsync(PartModel part)
+        public async Task MtDeleteAsync(MtModel mt)
         {
-            await PartDeleteAsync(new List<PartModel>() { part });
+            await MtDeleteAsync(new List<MtModel>() { mt });
         }
     }
 }

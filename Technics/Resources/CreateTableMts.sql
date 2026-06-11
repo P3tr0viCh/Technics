@@ -1,0 +1,6 @@
+CREATE TABLE mts (
+	id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	folderid INTEGER,
+	text TEXT,
+	description TEXT
+);
