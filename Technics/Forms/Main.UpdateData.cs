@@ -18,6 +18,7 @@ namespace Technics
             Techs = 1,
             Mileages = 2,
             TechParts = 4,
+            Maintenance = 8,
         }
 
         private async Task UpdateDataAsync(DataLoad load = default)
@@ -26,7 +27,8 @@ namespace Technics
             {
                 load = DataLoad.Techs |
                        DataLoad.Mileages |
-                       DataLoad.TechParts;
+                       DataLoad.TechParts |
+                       DataLoad.Maintenance;
             }
 
             DebugWrite.Line($"Loading data {load}");

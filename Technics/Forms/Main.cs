@@ -37,14 +37,15 @@ namespace Technics
         {
             Text = string.Format(Resources.TitleMain, new AssemblyDecorator().VersionString(false));
 
-            splitterMileages.Cursor = Cursors.SizeNS;
-            splitterTechs.Cursor = Cursors.SizeWE;
-
             if (!SetDirectories()) return;
 
             AppSettingsLoad();
 
             if (!SetDatabase()) return;
+
+            splitterTopBottom.Cursor = Cursors.SizeNS;
+            splitterTechs.Cursor = Cursors.SizeWE;
+            splitterTechPart.Cursor = Cursors.SizeWE;
 
             SelfChange = true;
 
@@ -61,9 +62,11 @@ namespace Technics
 
             AppSettings.LoadDataGridColumns(dgvMileages, AppSettings.Default.ColumnStates);
             AppSettings.LoadDataGridColumns(dgvTechParts, AppSettings.Default.ColumnStates);
+            AppSettings.LoadDataGridColumns(dgvMaintenance, AppSettings.Default.ColumnStates);
 
             panelTechs.Width = AppSettings.Default.PanelTechsWidth;
             panelBottom.Height = AppSettings.Default.PanelBottomHeight;
+            panelTechPart.Width = AppSettings.Default.PanelTechPartWidth;
 
             ToolStripsShowText = AppSettings.Default.ToolStripsShowText;
 
@@ -127,9 +130,11 @@ namespace Technics
 
             AppSettings.SaveDataGridColumns(dgvMileages, AppSettings.Default.ColumnStates);
             AppSettings.SaveDataGridColumns(dgvTechParts, AppSettings.Default.ColumnStates);
+            AppSettings.SaveDataGridColumns(dgvMaintenance, AppSettings.Default.ColumnStates);
 
             AppSettings.Default.PanelTechsWidth = panelTechs.Width;
             AppSettings.Default.PanelBottomHeight = panelBottom.Height;
+            AppSettings.Default.PanelTechPartWidth = panelTechPart.Width;
 
             AppSettings.Default.ToolStripsShowText = miViewToolStripsShowText.Checked;
 
@@ -289,6 +294,7 @@ namespace Technics
                 toolStripTechs.SetShowTextAndToolTips(value);
                 toolStripMileages.SetShowTextAndToolTips(value);
                 toolStripTechParts.SetShowTextAndToolTips(value);
+                toolStripMaintenance.SetShowTextAndToolTips(value);
             }
         }
 
@@ -312,6 +318,7 @@ namespace Technics
             {
                 case FrmListType.Techs: return DataLoad.Techs;
                 case FrmListType.Parts: return DataLoad.TechParts;
+                case FrmListType.Maintenance: return DataLoad.Maintenance;
                 default: return default;
             }
         }

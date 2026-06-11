@@ -4,5 +4,6 @@
     {
         Parts,
         Techs,
+        Maintenance,
     }
 }

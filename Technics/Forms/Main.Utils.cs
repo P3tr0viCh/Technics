@@ -149,6 +149,9 @@ namespace Technics
 
             miListTechs.Tag = FrmListType.Techs;
             tsbtnListTechs.Tag = FrmListType.Techs;
+
+            miListMaintenance.Tag = FrmListType.Maintenance;
+            tsbtnListMaintenance.Tag = FrmListType.Maintenance;
         }
 
         private void CancelTokens()

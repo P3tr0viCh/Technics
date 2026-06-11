@@ -272,6 +272,7 @@
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\Database.Models.FolderModel.datasource" />
+    <None Include="Properties\DataSources\Database.Models.MaintenanceModel.datasource" />
     <None Include="Properties\DataSources\Database.Models.MileageModel.datasource" />
     <None Include="Properties\DataSources\Database.Models.PartModel.datasource" />
     <None Include="Properties\DataSources\Database.Models.TechModel.datasource" />

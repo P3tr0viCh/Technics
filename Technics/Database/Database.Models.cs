@@ -324,6 +324,83 @@ namespace Technics
                     MileageCommon = source.MileageCommon;
                 }
             }
+            
+            // ---------------------------------------------------------------
+            [Table(Tables.mts)]
+            public class MtModel : BaseText
+            {
+                private long? folderId = null;
+                public long? FolderId
+                {
+                    get => folderId;
+                    set => folderId = value != Sql.NewId ? value : null;
+                }
+
+                public string Description { get; set; } = null;
+
+                public override void Clear()
+                {
+                    base.Clear();
+
+                    FolderId = null;
+
+                    Description = null;
+                }
+
+                public void Assign(MtModel source)
+                {
+                    if (source == null)
+                    {
+                        Clear();
+
+                        return;
+                    }
+
+                    base.Assign(source);
+
+                    FolderId = source.FolderId;
+
+                    Description = source.Description;
+                }
+            }
+
+            // ---------------------------------------------------------------
+            [Table(Tables.maintenance)]
+            public class MaintenanceModel : BaseTechId
+            {
+                public DateTime DateTime { get; set; } = default;
+
+                public double MileageCommon { get; set; } = default;
+
+                public double MileageAfterMaintenance { get; set; } = default;
+
+                public override void Clear()
+                {
+                    base.Clear();
+
+                    DateTime = default;
+
+                    MileageCommon = default;
+                    MileageAfterMaintenance = default;
+                }
+
+                public void Assign(MaintenanceModel source)
+                {
+                    if (source == null)
+                    {
+                        Clear();
+
+                        return;
+                    }
+
+                    base.Assign(source);
+
+                    DateTime = source.DateTime;
+
+                    MileageCommon = source.MileageCommon;
+                    MileageAfterMaintenance = source.MileageAfterMaintenance;
+                }
+            }
         }
     }
 }

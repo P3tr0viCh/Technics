@@ -51,7 +51,9 @@ namespace Technics
         [Browsable(false)]
         public int PanelTechsWidth { get; set; } = 260;
         [Browsable(false)]
-        public int PanelBottomHeight { get; set; } = 128;
+        public int PanelTechPartWidth { get; set; } = 432;
+        [Browsable(false)]
+        public int PanelBottomHeight { get; set; } = 200;
 
         [Browsable(false)]
         public bool ToolStripsShowText { get; set; } = true;
