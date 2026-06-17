@@ -187,6 +187,17 @@ namespace Technics
             [Table(Tables.maintenance)]
             public class MaintenanceModel : BaseTechId
             {
+                private long? mtId = null;
+                public long? MtId
+                {
+                    get => mtId;
+                    set => mtId = value != Sql.NewId ? value : null;
+                }
+
+                [Computed]
+                [Write(false)]
+                public string MtText { get; set; } = default;
+
                 public DateTime DateTime { get; set; } = default;
 
                 public double MileageCommon { get; set; } = default;
@@ -196,6 +207,9 @@ namespace Technics
                 public override void Clear()
                 {
                     base.Clear();
+
+                    MtId = null;
+                    MtText = default;
 
                     DateTime = default;
 
@@ -213,6 +227,9 @@ namespace Technics
                     }
 
                     base.Assign(source);
+
+                    MtId = source.MtId;
+                    MtText = source.MtText;
 
                     DateTime = source.DateTime;
 

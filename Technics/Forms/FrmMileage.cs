@@ -80,9 +80,7 @@ namespace Technics
 
         private void LoadData(long? techId)
         {
-            bindingSourceTechs.DataSource = Lists.Default.Techs.
-                Where(tech => tech.AvailableForUse || tech.Id == techId).
-                ToBindingList();
+            bindingSourceTechs.DataSource = Lists.Default.Techs.GetAvailableForUse(techId);
 
             bindingSourceTechs.Insert(0, new TechModel());
 

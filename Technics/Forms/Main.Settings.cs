@@ -11,6 +11,7 @@ namespace Technics
             MileagesDateTime.DefaultCellStyle =
             TechPartsDateTimeInstall.DefaultCellStyle =
             TechPartsDateTimeRemove.DefaultCellStyle =
+            MaintenanceDateTime.DefaultCellStyle =
                 DataGridViewCellStyles.DateTime;
 
             MileagesMileage.DefaultCellStyle = DataGridViewCellStyles.MileagesMileage;
@@ -18,6 +19,9 @@ namespace Technics
 
             TechPartsMileage.DefaultCellStyle = DataGridViewCellStyles.TechPartsMileage;
             TechPartsMileageCommon.DefaultCellStyle = DataGridViewCellStyles.TechPartsMileageCommon;
+
+            MaintenanceMileageCommon.DefaultCellStyle = DataGridViewCellStyles.MaintenanceMileageCommon;
+            MaintenanceMileageAfterMaintenance.DefaultCellStyle = DataGridViewCellStyles.MaintenanceMileageAfterMaintenance;
         }
 
         private async Task ShowSettingsAsync()

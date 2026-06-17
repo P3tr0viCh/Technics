@@ -219,13 +219,13 @@
   <data name="StatusCount" xml:space="preserve">
     <value>Количество: {0}</value>
   </data>
-  <data name="StatusMileageCount" xml:space="preserve">
+  <data name="StatusMileagesCount" xml:space="preserve">
     <value>Пробеги: {0}</value>
   </data>
   <data name="StatusSelectedCount" xml:space="preserve">
     <value>Выделено: {0}</value>
   </data>
-  <data name="StatusTechPartCount" xml:space="preserve">
+  <data name="StatusTechPartsCount" xml:space="preserve">
     <value>Детали: {0}</value>
   </data>
   <data name="TextLabelText" xml:space="preserve">
@@ -261,11 +261,11 @@
 Каталог с базой данных установлен по умолчанию:
 {1}</value>
   </data>
-  <data name="StatusMileageSelectedCount" xml:space="preserve">
-    <value>(выделено: {0})</value>
+  <data name="StatusMileagesSelectedCount" xml:space="preserve">
+    <value>Пробеги: {0} (выделено: {0})</value>
   </data>
-  <data name="StatusTechPartSelectedCount" xml:space="preserve">
-    <value>(выделено: {0})</value>
+  <data name="StatusTechPartsSelectedCount" xml:space="preserve">
+    <value>Детали: {0} (выделено: {0})</value>
   </data>
   <data name="GitHubLink" xml:space="preserve">
     <value>https://github.com/P3tr0viCh/Technics</value>
@@ -312,5 +312,14 @@
   </data>
   <data name="TitleListMaintenance" xml:space="preserve">
     <value>Виды обслуживания</value>
+  </data>
+  <data name="ErrorMaintenanceEmpty" xml:space="preserve">
+    <value>Вид обслуживания не указан</value>
+  </data>
+  <data name="StatusMaintenanceCount" xml:space="preserve">
+    <value>Обслуживание: {0}</value>
+  </data>
+  <data name="StatusMaintenanceSelectedCount" xml:space="preserve">
+    <value>Обслуживание: {0} (выделено: {1})</value>
   </data>
 </root>

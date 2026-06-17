@@ -44,6 +44,14 @@ namespace Technics
         {
         };
 
+        public static readonly DataGridViewCellStyle MaintenanceMileageCommon = new TopRight()
+        {
+        };
+
+        public static readonly DataGridViewCellStyle MaintenanceMileageAfterMaintenance = new TopRight()
+        {
+        };
+
         public static void UpdateSettings()
         {
             DateTime.Format = AppSettings.Default.FormatDateTime;
@@ -53,6 +61,9 @@ namespace Technics
 
             TechPartsMileage.Format = AppSettings.Default.FormatTechPartsMileage;
             TechPartsMileageCommon.Format = AppSettings.Default.FormatTechPartsMileageCommon;
+
+            MaintenanceMileageCommon.Format = AppSettings.Default.FormatMaintenanceMileageCommon;
+            MaintenanceMileageAfterMaintenance.Format = AppSettings.Default.FormatMaintenanceMileageAfterMaintenance;
         }
     }
 }

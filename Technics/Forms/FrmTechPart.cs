@@ -93,9 +93,7 @@ namespace Technics
             {
                 bindingSourceTechs.DataSource = null;
 
-                var techs = Lists.Default.Techs.
-                    Where(tech => tech.AvailableForUse || tech.Id == techId).
-                    ToBindingList();
+                var techs = Lists.Default.Techs.GetAvailableForUse(techId);
 
                 techs.Insert(0, new TechModel());
 

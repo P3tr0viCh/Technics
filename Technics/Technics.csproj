@@ -95,10 +95,14 @@
     <Compile Include="Database\Database.Mileages.cs" />
     <Compile Include="Database\Database.Models.cs" />
     <Compile Include="Database\Database.Tables.cs" />
+    <Compile Include="Database\Database.Maintenance.cs" />
     <Compile Include="Database\Database.TechParts.cs" />
     <Compile Include="Database\Database.Techs.cs" />
     <Compile Include="DataGridViewCellStyles.cs" />
     <Compile Include="Enums.cs" />
+    <Compile Include="Forms\Main.Maintenance.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\FrmList.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -144,6 +148,12 @@
     <Compile Include="Forms\FrmTech.Designer.cs">
       <DependentUpon>FrmTech.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\FrmMaintenance.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmMaintenance.Designer.cs">
+      <DependentUpon>FrmMaintenance.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\FrmTechPart.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -185,6 +195,7 @@
     <Compile Include="Models\BaseIdList.cs" />
     <Compile Include="Presenters\PresenterDataGridViewFrmList.cs" />
     <Compile Include="Presenters\PresenterDataGridViewMileages.cs" />
+    <Compile Include="Presenters\PresenterDataGridViewMaintenance.cs" />
     <Compile Include="Presenters\PresenterDataGridViewTechParts.cs" />
     <Compile Include="Presenters\PresenterFrmList.cs" />
     <Compile Include="Presenters\PresenterFrmListFactory.cs" />
@@ -192,6 +203,7 @@
     <Compile Include="Presenters\PresenterFrmListParts.cs" />
     <Compile Include="Presenters\PresenterFrmListTechs.cs" />
     <Compile Include="Presenters\PresenterStatusStripFrmList.cs" />
+    <Compile Include="Presenters\PresenterStatusStripMain.CountModel.cs" />
     <Compile Include="Presenters\PresenterStatusStripMain.cs" />
     <Compile Include="Forms\FrmListType.cs" />
     <Compile Include="Models\UpdateMileageModel.cs" />
@@ -249,6 +261,9 @@
     <EmbeddedResource Include="Forms\FrmTech.resx">
       <DependentUpon>FrmTech.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FrmMaintenance.resx">
+      <DependentUpon>FrmMaintenance.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\FrmTechPart.resx">
       <DependentUpon>FrmTechPart.cs</DependentUpon>
     </EmbeddedResource>
@@ -286,6 +301,7 @@
     <None Include="Properties\DataSources\Database.Models.FolderModel.datasource" />
     <None Include="Properties\DataSources\Database.Models.MaintenanceModel.datasource" />
     <None Include="Properties\DataSources\Database.Models.MileageModel.datasource" />
+    <None Include="Properties\DataSources\Database.Models.MtModel.datasource" />
     <None Include="Properties\DataSources\Database.Models.PartModel.datasource" />
     <None Include="Properties\DataSources\Database.Models.TechModel.datasource" />
     <None Include="Properties\DataSources\Database.Models.TechPartModel.datasource" />

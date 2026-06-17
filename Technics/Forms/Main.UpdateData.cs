@@ -63,6 +63,15 @@ namespace Technics
 
                     TechPartSelectedList = selectedList;
                 }
+
+                if (load.HasFlag(DataLoad.Maintenance))
+                {
+                    var selectedList = TechPartSelectedList;
+
+                    await MaintenanceLoadAsync(SelectedTechList);
+
+                    TechPartSelectedList = selectedList;
+                }
             }
             catch (TaskCanceledException e)
             {

@@ -125,6 +125,24 @@ namespace Technics.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Обслуживание: пробег после обслуживания.
+        /// </summary>
+        internal static string Format_FormatMaintenanceMileageAfterMaintenance_DisplayName {
+            get {
+                return ResourceManager.GetString("Format.FormatMaintenanceMileageAfterMaintenance.DisplayName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Обслуживание: общий пробег.
+        /// </summary>
+        internal static string Format_FormatMaintenanceMileageCommon_DisplayName {
+            get {
+                return ResourceManager.GetString("Format.FormatMaintenanceMileageCommon.DisplayName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Пробеги: пробег.
         /// </summary>
         internal static string Format_FormatMileagesMileage_DisplayName {

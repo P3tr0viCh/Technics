@@ -31,6 +31,7 @@ namespace Technics
 
             presenterDataGridViewMileages = new PresenterDataGridViewMileages(dgvMileages);
             presenterDataGridViewTechParts = new PresenterDataGridViewTechParts(dgvTechParts);
+            presenterDataGridViewMaintenance = new PresenterDataGridViewMaintenance(dgvMaintenance);
         }
 
         private async void Main_Load(object sender, EventArgs e)
@@ -75,6 +76,9 @@ namespace Technics
 
             presenterDataGridViewTechParts.SortColumn = TechPartsDateTimeInstall.Name;
             presenterDataGridViewTechParts.SortOrder = ComparerSortOrder.Descending;
+
+            presenterDataGridViewMaintenance.SortColumn = MaintenanceDateTime.Name;
+            presenterDataGridViewMaintenance.SortOrder = ComparerSortOrder.Descending;
 
             UpdateSettings();
 
@@ -179,8 +183,9 @@ namespace Technics
             switch (label)
             {
                 case StatusLabel.Status: return LabelStatus;
-                case StatusLabel.MileageCount: return LabelMileageCount;
-                case StatusLabel.TechPartCount: return LabelTechPartCount;
+                case StatusLabel.MileagesCount: return LabelMileageCount;
+                case StatusLabel.TechPartsCount: return LabelTechPartCount;
+                case StatusLabel.MaintenanceCount: return LabelMaintenanceCount;
                 default: throw new ArgumentOutOfRangeException();
             }
         }
@@ -386,12 +391,12 @@ namespace Technics
 
         private void DgvMileages_SelectionChanged(object sender, EventArgs e)
         {
-            presenterStatusStrip.MileageSelectedCount = dgvMileages.SelectedCount();
+            presenterStatusStrip.Mileages.SelectedCount = dgvMileages.SelectedCount();
         }
 
         private void DgvTechParts_SelectionChanged(object sender, EventArgs e)
         {
-            presenterStatusStrip.TechPartSelectedCount = dgvTechParts.SelectedCount();
+            presenterStatusStrip.TechParts.SelectedCount = dgvTechParts.SelectedCount();
         }
 
         private async void MiTechPartsAdd_Click(object sender, EventArgs e)
@@ -432,6 +437,11 @@ namespace Technics
         private void DgvMileages_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             Utils.ShowMenuOnCellMouseClick(menuMileages, dgvMileages, e);
+        }
+
+        private void DgvMaintenance_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            Utils.ShowMenuOnCellMouseClick(menuMaintenance, dgvMaintenance, e);
         }
     }
 }

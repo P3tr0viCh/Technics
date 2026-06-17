@@ -75,7 +75,7 @@ namespace Technics
             miMileagesChange.Enabled =
                 bindingSourceMileages.Count > 0;
 
-            presenterStatusStrip.MileageCount = bindingSourceMileages.Count;
+            presenterStatusStrip.Mileages.Count = bindingSourceMileages.Count;
         }
 
         private void MileagesUpdateChanged(UpdateModel changes)

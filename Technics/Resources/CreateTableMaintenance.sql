@@ -1,7 +1,14 @@
-CREATE TABLE parts (
+CREATE TABLE maintenance (
 	id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-	folderid INTEGER,
-	text TEXT,
-	state INTEGER,
-	description TEXT
+	techid INTEGER,
+	mtid INTEGER,
+	datetime TEXT,
+	mileagecommon REAL,
+	mileageaftermaintenance REAL,
+	FOREIGN KEY (techid) REFERENCES techs (id)
+	ON DELETE SET NULL
+	ON UPDATE CASCADE,
+	FOREIGN KEY (mtid) REFERENCES mts (id)
+	ON DELETE SET NULL
+	ON UPDATE CASCADE
 );

@@ -47,6 +47,14 @@ namespace Technics
         [LocalizedDisplayName("Format.FormatTechPartsMileageCommon.DisplayName", Resource)]
         public string FormatTechPartsMileageCommon { get; set; } = "#,0";
 
+        [LocalizedCategory("Category.Format", Resource)]
+        [LocalizedDisplayName("Format.FormatMaintenanceMileageCommon.DisplayName", Resource)]
+        public string FormatMaintenanceMileageCommon { get; set; } = "#,0";
+
+        [LocalizedCategory("Category.Format", Resource)]
+        [LocalizedDisplayName("Format.FormatMaintenanceMileageAfterMaintenance.DisplayName", Resource)]
+        public string FormatMaintenanceMileageAfterMaintenance { get; set; } = "#,0";
+
         // --------------------------------------------------------------------------------------------------------
         [Browsable(false)]
         public int PanelTechsWidth { get; set; } = 260;

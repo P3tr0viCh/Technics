@@ -117,44 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Category.Directories" xml:space="preserve">
-    <value>Каталоги</value>
-  </data>
-  <data name="Category.Format" xml:space="preserve">
-    <value>Формат</value>
-  </data>
-  <data name="Format.FormatDateTime.DisplayName" xml:space="preserve">
-    <value>Дата и время</value>
-  </data>
-  <data name="Format.FormatMileagesMileage.DisplayName" xml:space="preserve">
-    <value>Пробеги: пробег</value>
-  </data>
-  <data name="DirectoryDatabase.DisplayName" xml:space="preserve">
-    <value>База данных</value>
-  </data>
-  <data name="DirectoryDatabase.Description" xml:space="preserve">
-    <value>Расположение файла базы данных.
-Пустое значение — \AppData\Local\P3tr0viCh\Technics\</value>
-  </data>
-  <data name="Format.FormatMileagesMileageCommon.DisplayName" xml:space="preserve">
-    <value>Пробеги: общий пробег</value>
-  </data>
-  <data name="Format.FormatTechPartsMileage.DisplayName" xml:space="preserve">
-    <value>Детали: пробег</value>
-  </data>
-  <data name="Format.FormatTechPartsMileageCommon.DisplayName" xml:space="preserve">
-    <value>Детали: общий пробег</value>
-  </data>
-  <data name="DirectoryTracks.Description" xml:space="preserve">
-    <value>Расположение каталога с треками. Пустое значение — поиск новых треков отключен.</value>
-  </data>
-  <data name="DirectoryTracks.DisplayName" xml:space="preserve">
-    <value>Треки</value>
-  </data>
-  <data name="Format.FormatMaintenanceMileageAfterMaintenance.DisplayName" xml:space="preserve">
-    <value>Обслуживание: пробег после обслуживания</value>
-  </data>
-  <data name="Format.FormatMaintenanceMileageCommon.DisplayName" xml:space="preserve">
-    <value>Обслуживание: общий пробег</value>
-  </data>
+  <metadata name="bindingSourceTechs.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>168, 17</value>
+  </metadata>
+  <metadata name="bindingSourceTechs.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>168, 17</value>
+  </metadata>
+  <metadata name="bindingSourceMts.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <metadata name="bindingSourceMts.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
 </root>

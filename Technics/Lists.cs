@@ -1,5 +1,6 @@
 ﻿using P3tr0viCh.Utils;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using Technics.Models;
@@ -15,6 +16,11 @@ namespace Technics
 
         public TechList(IEnumerable<TechModel> collection) : base(collection)
         {
+        }
+
+        public BindingList<TechModel> GetAvailableForUse(long? techId)
+        {
+            return this.Where(tech => tech.AvailableForUse || tech.Id == techId).ToBindingList();
         }
     }
 

@@ -70,6 +70,15 @@ namespace Technics.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Вид обслуживания не указан.
+        /// </summary>
+        internal static string ErrorMaintenanceEmpty {
+            get {
+                return ResourceManager.GetString("ErrorMaintenanceEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Общий пробег ({0}) больше следующего, уже внесённого в базу данных, пробега ({1})..
         /// </summary>
         internal static string ErrorMileageCommonWrongGreater {
@@ -419,20 +428,38 @@ namespace Technics.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Пробеги: {0}.
+        ///   Looks up a localized string similar to Обслуживание: {0}.
         /// </summary>
-        internal static string StatusMileageCount {
+        internal static string StatusMaintenanceCount {
             get {
-                return ResourceManager.GetString("StatusMileageCount", resourceCulture);
+                return ResourceManager.GetString("StatusMaintenanceCount", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to (выделено: {0}).
+        ///   Looks up a localized string similar to Обслуживание: {0} (выделено: {1}).
         /// </summary>
-        internal static string StatusMileageSelectedCount {
+        internal static string StatusMaintenanceSelectedCount {
             get {
-                return ResourceManager.GetString("StatusMileageSelectedCount", resourceCulture);
+                return ResourceManager.GetString("StatusMaintenanceSelectedCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Пробеги: {0}.
+        /// </summary>
+        internal static string StatusMileagesCount {
+            get {
+                return ResourceManager.GetString("StatusMileagesCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Пробеги: {0} (выделено: {0}).
+        /// </summary>
+        internal static string StatusMileagesSelectedCount {
+            get {
+                return ResourceManager.GetString("StatusMileagesSelectedCount", resourceCulture);
             }
         }
         
@@ -448,18 +475,18 @@ namespace Technics.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Детали: {0}.
         /// </summary>
-        internal static string StatusTechPartCount {
+        internal static string StatusTechPartsCount {
             get {
-                return ResourceManager.GetString("StatusTechPartCount", resourceCulture);
+                return ResourceManager.GetString("StatusTechPartsCount", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to (выделено: {0}).
+        ///   Looks up a localized string similar to Детали: {0} (выделено: {0}).
         /// </summary>
-        internal static string StatusTechPartSelectedCount {
+        internal static string StatusTechPartsSelectedCount {
             get {
-                return ResourceManager.GetString("StatusTechPartSelectedCount", resourceCulture);
+                return ResourceManager.GetString("StatusTechPartsSelectedCount", resourceCulture);
             }
         }
         

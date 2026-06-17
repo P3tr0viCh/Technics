@@ -101,6 +101,18 @@ namespace Technics
                     return result;
                 }
             }
+
+            public class Maintenance : BaseFilter
+            {
+                public IEnumerable<TechModel> Techs { get; set; } = null;
+
+                public override string ToString()
+                {
+                    var result = TechsToString(Techs);
+
+                    return result;
+                }
+            }
         }
     }
 }

@@ -1,3 +1,7 @@
-SELECT parts.id, folderid, folders.text AS foldertext, parts.text, parts.state, description
-FROM parts
-LEFT JOIN folders ON parts.folderid = folders.id;
+SELECT
+	maintenance.id, techid, techs.text AS techtext, mtid, mts.text AS mttext,
+	datetime,
+	mileagecommon, mileageaftermaintenance
+FROM maintenance
+LEFT JOIN techs ON maintenance.techid = techs.id
+LEFT JOIN mts ON maintenance.mtid = mts.id

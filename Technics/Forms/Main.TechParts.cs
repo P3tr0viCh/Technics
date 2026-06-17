@@ -73,7 +73,7 @@ namespace Technics
             miTechPartsChange.Enabled =
                 bindingSourceTechParts.Count > 0;
 
-            presenterStatusStrip.TechPartCount = bindingSourceTechParts.Count;
+            presenterStatusStrip.TechParts.Count = bindingSourceTechParts.Count;
         }
 
         private void TechPartsUpdateChanged(UpdateModel changes)

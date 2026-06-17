@@ -5,20 +5,30 @@ using static Technics.ProgramStatus;
 
 namespace Technics.Presenters
 {
-    internal class PresenterStatusStripMain : PresenterStatusStrip<PresenterStatusStripMain.StatusLabel>
+    internal partial class PresenterStatusStripMain : PresenterStatusStrip<PresenterStatusStripMain.StatusLabel>
     {
         public enum StatusLabel
         {
             Status,
-            MileageCount,
-            TechPartCount,
+            MileagesCount,
+            TechPartsCount,
+            MaintenanceCount,
         }
 
         public PresenterStatusStripMain(IPresenterStatusStrip view) : base(view)
         {
+            Mileages = new CountModel(this, StatusLabel.MileagesCount,
+                Resources.StatusMileagesCount, Resources.StatusMileagesSelectedCount);
+            TechParts = new CountModel(this, StatusLabel.TechPartsCount,
+                Resources.StatusTechPartsCount, Resources.StatusTechPartsSelectedCount);
+            Maintenance = new CountModel(this, StatusLabel.MaintenanceCount,
+                Resources.StatusMaintenanceCount, Resources.StatusMaintenanceSelectedCount);
+
             Status = Status.Idle;
-            MileageCount = 0;
-            TechPartCount = 0;
+
+            Mileages.Count = 0;
+            TechParts.Count = 0;
+            Maintenance.Count = 0;
         }
 
         public Status Status
@@ -26,82 +36,8 @@ namespace Technics.Presenters
             set => View.GetLabel(StatusLabel.Status).Text = value.Description();
         }
 
-        private int mileageCount = 0;
-
-        public int MileageCount
-        {
-            get => mileageCount;
-            set
-            {
-                mileageCount = value;
-
-                UpdateMileageCounts();
-            }
-        }
-
-        private int mileageSelectedCount = 0;
-
-        public int MileageSelectedCount
-        {
-            get => mileageSelectedCount;
-            set
-            {
-                mileageSelectedCount = value;
-
-                UpdateMileageCounts();
-            }
-        }
-
-        private void UpdateMileageCounts()
-        {
-            var text = string.Format(Resources.StatusMileageCount, mileageCount);
-
-            if (mileageSelectedCount > 1)
-            {
-                text += " " +
-                    string.Format(Resources.StatusMileageSelectedCount, mileageSelectedCount);
-            }
-
-            View.GetLabel(StatusLabel.MileageCount).Text = text;
-        }
-
-        private int techPartCount = 0;
-
-        public int TechPartCount
-        {
-            get => techPartCount;
-            set
-            {
-                techPartCount = value;
-
-                UpdateTechPartCounts();
-            }
-        }
-
-        private int techPartSelectedCount = 0;
-
-        public int TechPartSelectedCount
-        {
-            get => techPartSelectedCount;
-            set
-            {
-                techPartSelectedCount = value;
-
-                UpdateTechPartCounts();
-            }
-        }
-
-        private void UpdateTechPartCounts()
-        {
-            var text = string.Format(Resources.StatusTechPartCount, techPartCount);
-
-            if (techPartSelectedCount > 1)
-            {
-                text += " " +
-                    string.Format(Resources.StatusTechPartSelectedCount, techPartSelectedCount);
-            }
-
-            View.GetLabel(StatusLabel.TechPartCount).Text = text;
-        }
+        public readonly CountModel Mileages;
+        public readonly CountModel TechParts;
+        public readonly CountModel Maintenance;
     }
 }

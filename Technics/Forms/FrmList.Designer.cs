@@ -125,7 +125,7 @@
             this.toolStrip.Location = new System.Drawing.Point(3, 0);
             this.toolStrip.Name = "toolStrip";
             this.toolStrip.ShowItemToolTips = false;
-            this.toolStrip.Size = new System.Drawing.Size(288, 50);
+            this.toolStrip.Size = new System.Drawing.Size(319, 50);
             this.toolStrip.TabIndex = 0;
             // 
             // tsbtnAdd

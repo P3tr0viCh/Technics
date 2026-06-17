@@ -73,7 +73,7 @@ namespace Technics
 
             selectedTechList = GetTechList(tvTechs.SelectedNode);
 
-            await UpdateDataAsync(DataLoad.Mileages | DataLoad.TechParts);
+            await UpdateDataAsync(DataLoad.Mileages | DataLoad.TechParts | DataLoad.Maintenance);
 
 #if DEBUG
             var path = string.Empty;
