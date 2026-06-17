@@ -306,15 +306,6 @@ namespace Technics.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Удалить «{0}»?.
-        /// </summary>
-        internal static string QuestionItemDelete {
-            get {
-                return ResourceManager.GetString("QuestionItemDelete", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Удалить «{0}» из базы данных?
         ///Все значения в связанных записях будут отмечены пустыми..
         /// </summary>
@@ -325,21 +316,31 @@ namespace Technics.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Удалить «{0}» и ещё {1}?.
-        /// </summary>
-        internal static string QuestionItemListDelete {
-            get {
-                return ResourceManager.GetString("QuestionItemListDelete", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Удалить «{0}» и ещё {1} из базы данных?
         ///Все значения в связанных записях будут отмечены пустыми..
         /// </summary>
         internal static string QuestionItemListLinkedDelete {
             get {
                 return ResourceManager.GetString("QuestionItemListLinkedDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Удалить «{0}» с датой {1} из базы данных?.
+        /// </summary>
+        internal static string QuestionMaintenanceDelete {
+            get {
+                return ResourceManager.GetString("QuestionMaintenanceDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Удалить «{0}» с датой {1}  и ещё {2} из базы данных?
+        ///Все значения в связанных записях будут обновлены..
+        /// </summary>
+        internal static string QuestionMaintenanceListDelete {
+            get {
+                return ResourceManager.GetString("QuestionMaintenanceListDelete", resourceCulture);
             }
         }
         

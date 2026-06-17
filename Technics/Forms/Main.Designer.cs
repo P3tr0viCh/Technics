@@ -263,7 +263,7 @@
             this.dgvMileages.ReadOnly = true;
             this.dgvMileages.RowHeadersWidth = 32;
             this.dgvMileages.Size = new System.Drawing.Size(604, 185);
-            this.dgvMileages.TabIndex = 3;
+            this.dgvMileages.TabIndex = 0;
             this.dgvMileages.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DgvMileages_CellMouseClick);
             this.dgvMileages.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DgvMileages_CellMouseDoubleClick);
             this.dgvMileages.SelectionChanged += new System.EventHandler(this.DgvMileages_SelectionChanged);
@@ -331,7 +331,7 @@
             this.toolStripMileages.Name = "toolStripMileages";
             this.toolStripMileages.ShowItemToolTips = false;
             this.toolStripMileages.Size = new System.Drawing.Size(604, 50);
-            this.toolStripMileages.TabIndex = 2;
+            this.toolStripMileages.TabIndex = 1;
             // 
             // tsbtnMileagesAdd
             // 
@@ -409,7 +409,7 @@
             this.panelTechs.Location = new System.Drawing.Point(0, 0);
             this.panelTechs.Name = "panelTechs";
             this.panelTechs.Size = new System.Drawing.Size(260, 235);
-            this.panelTechs.TabIndex = 4;
+            this.panelTechs.TabIndex = 1;
             // 
             // tvTechs
             // 
@@ -518,7 +518,7 @@
             this.panelBottom.Location = new System.Drawing.Point(0, 243);
             this.panelBottom.Name = "panelBottom";
             this.panelBottom.Size = new System.Drawing.Size(872, 200);
-            this.panelBottom.TabIndex = 4;
+            this.panelBottom.TabIndex = 2;
             // 
             // dgvMaintenance
             // 
@@ -541,8 +541,9 @@
             this.dgvMaintenance.ReadOnly = true;
             this.dgvMaintenance.RowHeadersWidth = 32;
             this.dgvMaintenance.Size = new System.Drawing.Size(432, 150);
-            this.dgvMaintenance.TabIndex = 8;
+            this.dgvMaintenance.TabIndex = 2;
             this.dgvMaintenance.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DgvMaintenance_CellMouseClick);
+            this.dgvMaintenance.SelectionChanged += new System.EventHandler(this.DgvMaintenance_SelectionChanged);
             // 
             // MaintenanceTechText
             // 
@@ -604,7 +605,7 @@
             this.toolStripMaintenance.Name = "toolStripMaintenance";
             this.toolStripMaintenance.ShowItemToolTips = false;
             this.toolStripMaintenance.Size = new System.Drawing.Size(432, 50);
-            this.toolStripMaintenance.TabIndex = 7;
+            this.toolStripMaintenance.TabIndex = 3;
             // 
             // tsbtnMaintenanceAdd
             // 
@@ -614,6 +615,7 @@
             this.tsbtnMaintenanceAdd.Size = new System.Drawing.Size(74, 47);
             this.tsbtnMaintenanceAdd.Text = "Добавить";
             this.tsbtnMaintenanceAdd.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tsbtnMaintenanceAdd.Click += new System.EventHandler(this.TsbtnMaintenanceAdd_Click);
             // 
             // tsbtnMaintenanceChange
             // 
@@ -623,6 +625,7 @@
             this.tsbtnMaintenanceChange.Size = new System.Drawing.Size(75, 47);
             this.tsbtnMaintenanceChange.Text = "Изменить";
             this.tsbtnMaintenanceChange.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tsbtnMaintenanceChange.Click += new System.EventHandler(this.TsbtnMaintenanceChange_Click);
             // 
             // tsbtnMaintenanceDelete
             // 
@@ -632,6 +635,7 @@
             this.tsbtnMaintenanceDelete.Size = new System.Drawing.Size(64, 47);
             this.tsbtnMaintenanceDelete.Text = "Удалить";
             this.tsbtnMaintenanceDelete.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tsbtnMaintenanceDelete.Click += new System.EventHandler(this.TsbtnMaintenanceDelete_Click);
             // 
             // splitterTechPart
             // 
@@ -640,7 +644,7 @@
             this.splitterTechPart.MinSize = 160;
             this.splitterTechPart.Name = "splitterTechPart";
             this.splitterTechPart.Size = new System.Drawing.Size(8, 200);
-            this.splitterTechPart.TabIndex = 6;
+            this.splitterTechPart.TabIndex = 1;
             this.splitterTechPart.TabStop = false;
             // 
             // panelTechPart
@@ -651,7 +655,7 @@
             this.panelTechPart.Location = new System.Drawing.Point(0, 0);
             this.panelTechPart.Name = "panelTechPart";
             this.panelTechPart.Size = new System.Drawing.Size(432, 200);
-            this.panelTechPart.TabIndex = 5;
+            this.panelTechPart.TabIndex = 0;
             // 
             // dgvTechParts
             // 
@@ -675,7 +679,7 @@
             this.dgvTechParts.ReadOnly = true;
             this.dgvTechParts.RowHeadersWidth = 32;
             this.dgvTechParts.Size = new System.Drawing.Size(432, 150);
-            this.dgvTechParts.TabIndex = 3;
+            this.dgvTechParts.TabIndex = 0;
             this.dgvTechParts.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DgvTechParts_CellMouseClick);
             this.dgvTechParts.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DgvTechParts_CellMouseDoubleClick);
             this.dgvTechParts.SelectionChanged += new System.EventHandler(this.DgvTechParts_SelectionChanged);
@@ -751,7 +755,7 @@
             this.toolStripTechParts.Name = "toolStripTechParts";
             this.toolStripTechParts.ShowItemToolTips = false;
             this.toolStripTechParts.Size = new System.Drawing.Size(432, 50);
-            this.toolStripTechParts.TabIndex = 2;
+            this.toolStripTechParts.TabIndex = 1;
             // 
             // tsbtnTechPartsAdd
             // 
@@ -842,21 +846,21 @@
             // miListTechs
             // 
             this.miListTechs.Name = "miListTechs";
-            this.miListTechs.Size = new System.Drawing.Size(180, 24);
+            this.miListTechs.Size = new System.Drawing.Size(172, 24);
             this.miListTechs.Text = "Техника";
             this.miListTechs.Click += new System.EventHandler(this.MiList_Click);
             // 
             // miListParts
             // 
             this.miListParts.Name = "miListParts";
-            this.miListParts.Size = new System.Drawing.Size(180, 24);
+            this.miListParts.Size = new System.Drawing.Size(172, 24);
             this.miListParts.Text = "Детали";
             this.miListParts.Click += new System.EventHandler(this.MiList_Click);
             // 
             // miListMaintenance
             // 
             this.miListMaintenance.Name = "miListMaintenance";
-            this.miListMaintenance.Size = new System.Drawing.Size(180, 24);
+            this.miListMaintenance.Size = new System.Drawing.Size(172, 24);
             this.miListMaintenance.Text = "Обслуживание";
             this.miListMaintenance.Click += new System.EventHandler(this.MiList_Click);
             // 
@@ -1088,18 +1092,21 @@
             this.miMaintenanceAdd.Name = "miMaintenanceAdd";
             this.miMaintenanceAdd.Size = new System.Drawing.Size(140, 24);
             this.miMaintenanceAdd.Text = "Добавить";
+            this.miMaintenanceAdd.Click += new System.EventHandler(this.MiMaintenanceAdd_Click);
             // 
             // miMaintenanceChange
             // 
             this.miMaintenanceChange.Name = "miMaintenanceChange";
             this.miMaintenanceChange.Size = new System.Drawing.Size(140, 24);
             this.miMaintenanceChange.Text = "Изменить";
+            this.miMaintenanceChange.Click += new System.EventHandler(this.MiMaintenanceChange_Click);
             // 
             // miMaintenanceDelete
             // 
             this.miMaintenanceDelete.Name = "miMaintenanceDelete";
             this.miMaintenanceDelete.Size = new System.Drawing.Size(140, 24);
             this.miMaintenanceDelete.Text = "Удалить";
+            this.miMaintenanceDelete.Click += new System.EventHandler(this.MiMaintenanceDelete_Click);
             // 
             // Main
             // 

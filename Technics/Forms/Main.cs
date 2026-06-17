@@ -399,6 +399,11 @@ namespace Technics
             presenterStatusStrip.TechParts.SelectedCount = dgvTechParts.SelectedCount();
         }
 
+        private void DgvMaintenance_SelectionChanged(object sender, EventArgs e)
+        {
+            presenterStatusStrip.Maintenance.SelectedCount = dgvMaintenance.SelectedCount();
+        }
+
         private async void MiTechPartsAdd_Click(object sender, EventArgs e)
         {
             await TechPartsAddNewAsync();
@@ -442,6 +447,36 @@ namespace Technics
         private void DgvMaintenance_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             Utils.ShowMenuOnCellMouseClick(menuMaintenance, dgvMaintenance, e);
+        }
+
+        private async void TsbtnMaintenanceAdd_Click(object sender, EventArgs e)
+        {
+            await MaintenanceAddNewAsync();
+        }
+
+        private async void TsbtnMaintenanceChange_Click(object sender, EventArgs e)
+        {
+            await MaintenanceChangeSelectedAsync();
+        }
+
+        private async void TsbtnMaintenanceDelete_Click(object sender, EventArgs e)
+        {
+            await MaintenanceDeleteSelectedAsync();
+        }
+
+        private async void MiMaintenanceAdd_Click(object sender, EventArgs e)
+        {
+            await MaintenanceAddNewAsync();
+        }
+
+        private async void MiMaintenanceChange_Click(object sender, EventArgs e)
+        {
+            await MaintenanceChangeSelectedAsync();
+        }
+
+        private async void MiMaintenanceDelete_Click(object sender, EventArgs e)
+        {
+            await MaintenanceDeleteSelectedAsync();
         }
     }
 }

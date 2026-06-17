@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Technics.Forms;
 using Technics.Interfaces;
 using Technics.Properties;
 using static Technics.Database.Models;
@@ -132,7 +133,7 @@ namespace Technics
             {
                 Utils.AssertComboBox<TechModel>(cboxTech, Resources.ErrorTechEmpty);
 
-                Utils.AssertComboBox<PartModel>(cboxMt, Resources.ErrorMaintenanceEmpty);
+                Utils.AssertComboBox<MtModel>(cboxMt, Resources.ErrorMaintenanceEmpty);
 
                 return await Task.FromResult(true);
             }
@@ -193,7 +194,7 @@ namespace Technics
             selfChange = false;
         }
 
-        private async Task AfterChangeListAsync(PartModel value)
+        private async Task AfterChangeListAsync(MtModel value)
         {
             selfChange = true;
 
@@ -210,7 +211,7 @@ namespace Technics
             selfChange = false;
         }
 
-        private async Task<bool> ListItemSaveAsync(PartModel value)
+        private async Task<bool> ListItemSaveAsync(MtModel value)
         {
             var status = ProgramStatus.Default.Start(Status.LoadData);
 
@@ -240,24 +241,22 @@ namespace Technics
         {
             BeforeChangeList();
 
-            var value = new PartModel();
-#if DEBUG
-
-            value.Text = $"Part {Str.Random(5)}";
-#endif
-
-            var text = value.Text;
-
-            if (!Utils.TextInputBoxShow(ref text, Resources.TitlePart)) return;
-
-            value.Text = text;
-
             var tech = cboxTech.GetSelectedItem<TechModel>();
 
             var folder = Lists.Default.Folders.Find(tech?.FolderId);
 
-            value.FolderId = folder?.Id;
-            value.FolderText = folder?.Text;
+            var value = new MtModel
+            {
+#if DEBUG
+
+                Text = $"Maintenance {Str.Random(5)}",
+#endif
+
+                FolderId = folder?.Id,
+                FolderText = folder?.Text
+            };
+
+            if (!FrmMt.ShowDlg(this, value)) return;
 
             if (!await ListItemSaveAsync(value)) return;
 
@@ -268,7 +267,7 @@ namespace Technics
         {
             BeforeChangeList();
 
-            var changed = await MainForm.ShowListAsync(FrmListType.Parts);
+            var changed = await MainForm.ShowListAsync(FrmListType.Maintenance);
 
             if (!changed) return;
 
@@ -286,9 +285,7 @@ namespace Technics
 
         private IEnumerable<MtModel> GetMtsForTech(TechModel tech)
         {
-            var availableMts = Mts.
-                Where(mt => mt.Id == Maintenance.MtId).
-                ToBindingList();
+            var availableMts = Mts.ToBindingList();
 
             if (tech?.IsNew ?? true) return availableMts;
 

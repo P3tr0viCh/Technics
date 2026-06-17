@@ -43,7 +43,7 @@ namespace Technics
             return await MaintenanceLoadAsync(filter);
         }
 
-        /*        private async Task<double?> MaintenancesGetMileageAsync(
+        /* private async Task<double?> MaintenancesGetMileageAsync(
                     DbConnection connection, DbTransaction transaction, MaintenanceModel maintenance)
                 {
                     var query = new Query()
@@ -246,7 +246,7 @@ namespace Technics
 
                         await connection.ListItemSaveAsync(maintenance, transaction);
 
-                        // update.Maintenances = await MaintenancesUpdateMileagesForTechsOrPartAsync(
+                        // TODO: update.Maintenances = await MaintenancesUpdateMileagesForTechsOrPartAsync(
                         // connection, transaction, techIds, partIds);
 
                         transaction.Commit();
@@ -282,7 +282,7 @@ namespace Technics
 
                         var mtIds = maintenances.Select(maintenance => maintenance.MtId).DistinctNotNullLong();
 
-                        // update.Maintenances = await MaintenancesUpdateMileagesForTechsOrPartAsync(
+                        // TODO: update.Maintenances = await MaintenancesUpdateMileagesForTechsOrPartAsync(
                         // connection, transaction, techIds, partIds);
 
                         transaction.Commit();

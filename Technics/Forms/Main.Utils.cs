@@ -162,6 +162,8 @@ namespace Technics
             
             ctsTechPartsLoad.Cancel();
 
+            ctsMaintenanceLoad.Cancel();
+
             ctsCheckDirectoryTracks.Cancel();
         }
     }

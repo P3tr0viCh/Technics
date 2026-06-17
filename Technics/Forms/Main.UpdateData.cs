@@ -66,11 +66,11 @@ namespace Technics
 
                 if (load.HasFlag(DataLoad.Maintenance))
                 {
-                    var selectedList = TechPartSelectedList;
+                    var selectedList = MaintenanceSelectedList;
 
                     await MaintenanceLoadAsync(SelectedTechList);
 
-                    TechPartSelectedList = selectedList;
+                    MaintenanceSelectedList = selectedList;
                 }
             }
             catch (TaskCanceledException e)

@@ -113,9 +113,9 @@
             this.lblMt.AutoSize = true;
             this.lblMt.Location = new System.Drawing.Point(8, 64);
             this.lblMt.Name = "lblMt";
-            this.lblMt.Size = new System.Drawing.Size(53, 19);
+            this.lblMt.Size = new System.Drawing.Size(128, 19);
             this.lblMt.TabIndex = 2;
-            this.lblMt.Text = "Деталь";
+            this.lblMt.Text = "Вид обслуживания";
             // 
             // cboxMt
             // 

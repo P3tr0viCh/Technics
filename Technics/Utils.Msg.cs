@@ -128,6 +128,17 @@ namespace Technics
                                 string.Format(Resources.QuestionTechPartDelete, techPart.PartText, dt) :
                                 string.Format(Resources.QuestionTechPartListDelete, techPart.PartText, dt, count - 1);
                         }
+                        else
+                        {
+                            if (firstItem is MaintenanceModel maintenance)
+                            {
+                                var dt = maintenance.DateTime.ToString(AppSettings.Default.FormatDateTime);
+
+                                question = count == 1 ?
+                                    string.Format(Resources.QuestionMaintenanceDelete, maintenance.MtText, dt) :
+                                    string.Format(Resources.QuestionMaintenanceListDelete, maintenance.MtText, dt, count - 1);
+                            }
+                        }
                     }
                 }
 
