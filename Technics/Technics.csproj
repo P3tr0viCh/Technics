@@ -193,6 +193,7 @@
     </Compile>
     <Compile Include="Interfaces\IPresenterFrmList.cs" />
     <Compile Include="Models\BaseIdList.cs" />
+    <Compile Include="Models\UpdateMaintenanceModel.cs" />
     <Compile Include="Presenters\PresenterDataGridViewFrmList.cs" />
     <Compile Include="Presenters\PresenterDataGridViewMileages.cs" />
     <Compile Include="Presenters\PresenterDataGridViewMaintenance.cs" />
@@ -347,6 +348,7 @@
     <None Include="Resources\SelectMts.sql" />
     <None Include="Resources\ClearMaintenanceMileagesByMtId.sql" />
     <None Include="Resources\ClearMaintenanceMileagesByTechId.sql" />
+    <None Include="Resources\UpdateMaintenanceMileagesById.sql" />
     <Content Include="Technics.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

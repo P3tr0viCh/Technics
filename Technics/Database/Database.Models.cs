@@ -200,9 +200,9 @@ namespace Technics
 
                 public DateTime DateTime { get; set; } = default;
 
-                public double MileageCommon { get; set; } = default;
+                public double? MileageCommon { get; set; } = null;
 
-                public double MileageAfterMaintenance { get; set; } = default;
+                public double? MileageAfterMaintenance { get; set; } = null;
 
                 public override void Clear()
                 {
@@ -213,8 +213,8 @@ namespace Technics
 
                     DateTime = default;
 
-                    MileageCommon = default;
-                    MileageAfterMaintenance = default;
+                    MileageCommon = null;
+                    MileageAfterMaintenance = null;
                 }
 
                 public void Assign(MaintenanceModel source)

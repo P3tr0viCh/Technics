@@ -163,6 +163,9 @@
   <data name="TruncateTable" xml:space="preserve">
     <value>DELETE FROM {0};</value>
   </data>
+  <data name="UpdateMaintenanceMileagesById" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\UpdateMaintenanceMileagesById.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1251</value>
+  </data>
   <data name="UpdateMileagesMileagesById" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\UpdateMileagesMileagesById.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1251</value>
   </data>

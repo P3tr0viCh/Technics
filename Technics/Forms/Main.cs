@@ -286,6 +286,13 @@ namespace Technics
             await TechPartsChangeSelectedAsync();
         }
 
+        private async void DgvMaintenance_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+
+            await MaintenanceChangeSelectedAsync();
+        }
+
         private bool ToolStripsShowText
         {
             get => miViewToolStripsShowText.Checked;

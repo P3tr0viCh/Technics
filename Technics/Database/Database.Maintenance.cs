@@ -43,172 +43,168 @@ namespace Technics
             return await MaintenanceLoadAsync(filter);
         }
 
-        /* private async Task<double?> MaintenancesGetMileageAsync(
-                    DbConnection connection, DbTransaction transaction, MaintenanceModel maintenance)
+        private async Task<double?> MaintenanceGetMileageCommonAsync(
+                   DbConnection connection, DbTransaction transaction, MaintenanceModel maintenance)
+        {
+            var query = new Query
+            {
+                Fields = "mileagecommon",
+                Table = Tables.mileages,
+                Where = "techid = @techid AND datetime <= @datetime",
+                Order = "datetime DESC",
+                Limit = 1
+            };
+
+            object param = new
+            {
+                techid = maintenance.TechId,
+                datetime = maintenance.DateTime,
+            };
+
+            return await connection.QuerySingleRowAsync<double?>(query, param, transaction);
+        }
+
+        private async Task MaintenanceUpdateMileagesAsync(
+            DbConnection connection, DbTransaction transaction, MaintenanceModel maintenance)
+        {
+            if (maintenance.MileageCommon == 0.0)
+            {
+                maintenance.MileageCommon = null;
+            }
+
+            if (maintenance.MileageAfterMaintenance == 0.0)
+            {
+                maintenance.MileageAfterMaintenance = null;
+            }
+
+            await connection.ExecuteSqlAsync(ResourcesSql.UpdateMaintenanceMileagesById,
+                            new
+                            {
+                                id = maintenance.Id,
+                                mileagecommon = maintenance.MileageCommon,
+                                mileageaftermaintenance = maintenance.MileageAfterMaintenance,
+                            },
+                        transaction);
+        }
+
+        private async Task<List<UpdateMaintenanceModel>> MaintenanceUpdateMileagesByIdAsync(
+            DbConnection connection, DbTransaction transaction, long id)
+        {
+            var updated = new List<UpdateMaintenanceModel>();
+
+            if (id == Sql.NewId) return updated;
+
+            var query = new Query()
+            {
+                Table = Tables.maintenance,
+                Where = "id = @id"
+            };
+
+            object param = new { id };
+
+            var maintenances = await connection.ListLoadAsync<MaintenanceModel>(query, param, transaction);
+
+            if (!maintenances.Any()) return updated;
+
+            foreach (var maintenance in maintenances)
+            {
+                var mileageCommon = await MaintenanceGetMileageCommonAsync(connection, transaction, maintenance);
+
+                var mileageAfterMaintenance = 0.0;
+
+                if (maintenance.MileageCommon == mileageCommon &&
+                    maintenance.MileageAfterMaintenance == mileageAfterMaintenance) continue;
+
+                maintenance.MileageCommon = mileageCommon;
+
+                maintenance.MileageAfterMaintenance = mileageAfterMaintenance;
+
+                await MaintenanceUpdateMileagesAsync(connection, transaction, maintenance);
+
+                updated.Add(new UpdateMaintenanceModel()
                 {
-                    var query = new Query()
-                    {
-                        Fields = "SUM(mileage)",
-                        Table = Tables.mileages
-                    };
+                    Id = maintenance.Id,
+                    MileageCommon = maintenance.MileageCommon,
+                    MileageAfterMaintenance = maintenance.MileageAfterMaintenance,
+                });
+            }
 
-                    if (maintenance.DateTimeRemove == null)
-                    {
-                        query.Where = "techid = @techid AND datetime >= @datetimeinstall";
-                    }
-                    else
-                    {
-                        query.Where = "techid = @techid AND datetime >= @datetimeinstall AND datetime < @datetimeremove";
-                    }
+            return updated;
+        }
 
-                    object param = new
-                    {
-                        techid = maintenance.TechId,
-                        datetimeinstall = maintenance.DateTimeInstall,
-                        datetimeremove = maintenance.DateTimeRemove
-                    };
+        /* private async Task<List<UpdateMaintenanceModel>> MaintenancesUpdateMileagesForTechsAsync(
+             DbConnection connection, DbTransaction transaction, IEnumerable<long> techIds)
+         {
+             DebugWrite.Line($"techIds: {JsonConvert.SerializeObject(techIds)}");
 
-                    return await connection.QuerySingleRowAsync<double?>(query, param, transaction);
-                }
+             var query = new Query()
+             {
+                 Fields = "id, partid",
+                 Table = Tables.techparts,
+                 Where = ByIdToString("techid", techIds)
+             };
 
-                private async Task MaintenancesUpdateMileagesAsync(
-                    DbConnection connection, DbTransaction transaction, MaintenanceModel maintenance)
-                {
-                    if (maintenance.MileageCommon == 0.0)
-                    {
-                        maintenance.MileageCommon = null;
-                    }
+             var maintenances = await connection.ListLoadAsync<MaintenanceModel>(query, null, transaction);
 
-                    await connection.ExecuteSqlAsync(ResourcesSql.UpdateMaintenancesMileagesById,
-                                    new
-                                    {
-                                        id = maintenance.Id,
-                                        mileage = maintenance.Mileage,
-                                        mileagecommon = maintenance.MileageCommon
-                                    },
-                                transaction);
-                }
+             var parts = maintenances.Select(maintenance => maintenance.PartId).Distinct();
 
-                private async Task<List<UpdateMaintenanceModel>> MaintenancesUpdateMileagesForPartAsync(
-                    DbConnection connection, DbTransaction transaction, long? partId)
-                {
-                    var updated = new List<UpdateMaintenanceModel>();
+             var updated = await MaintenancesUpdateMileagesForPartsAsync(connection, transaction, parts);
 
-                    if (partId == null || partId == Sql.NewId) return updated;
+             return updated;
+         }*/
 
-                    var query = new Query()
-                    {
-                        Table = Tables.techparts,
-                        Where = "partid = @partid",
-                        Order = "datetimeinstall"
-                    };
+        private async Task<List<UpdateMaintenanceModel>> MaintenancesUpdateMileagesAsync(
+            DbConnection connection, DbTransaction transaction, IEnumerable<MaintenanceModel> maintenances)
+        {
+#if DEBUG
+            foreach (var maintenance in maintenances)
+            {
+                DebugWrite.Line($"maintenance id: {maintenance.Id}, techid: {maintenance.TechId}, mtid: {maintenance.MtId}");
+            }
+#endif
 
-                    object param = new { partid = partId };
+            var updated = new List<UpdateMaintenanceModel>();
 
-                    var maintenances = await connection.ListLoadAsync<MaintenanceModel>(query, param, transaction);
+            foreach (var maintenance in maintenances)
+            {
+                var changed = await MaintenanceUpdateMileagesByIdAsync(connection, transaction, maintenance.Id);
 
-                    if (!maintenances.Any()) return updated;
+                updated.AddRange(changed);
+            }
 
-                    var mileageCommon = 0.0;
+            if (updated.Count > 0)
+            {
+                Utils.Log.Info(string.Format(ResourcesLog.ListItemSaveOk, typeof(Maintenance).Name, updated.Count));
+            }
 
-                    foreach (var maintenance in maintenances)
-                    {
-                        var mileage = await MaintenancesGetMileageAsync(connection, transaction, maintenance);
+            return updated;
+        }
 
-                        if (mileage != null)
-                        {
-                            mileageCommon += (double)mileage;
-                        }
+        private async Task<List<UpdateMaintenanceModel>> MaintenanceUpdateMileagesForTechsOrMtsAsync(
+            DbConnection connection, DbTransaction transaction,
+            IEnumerable<long> techIds, IEnumerable<long> mtIds)
+        {
+            DebugWrite.Line($"techIds: {JsonConvert.SerializeObject(techIds)}, " +
+                $"mtIds: {JsonConvert.SerializeObject(mtIds)}");
 
-                        if (maintenance.Mileage == mileage &&
-                            maintenance.MileageCommon == mileageCommon) continue;
+            var query = new Query()
+            {
+                Fields = "id, techid, mtid",
+                Table = Tables.maintenance,
+            };
 
-                        maintenance.Mileage = mileage;
-                        maintenance.MileageCommon = mileageCommon;
+            var where = ByIdToString("techid", techIds);
 
-                        await MaintenancesUpdateMileagesAsync(connection, transaction, maintenance);
+            where = where.JoinExcludeEmpty(" AND ", ByIdToString("mtid", mtIds));
 
-                        updated.Add(new UpdateMaintenanceModel()
-                        {
-                            Id = maintenance.Id,
-                            Mileage = maintenance.Mileage,
-                            MileageCommon = maintenance.MileageCommon
-                        });
-                    }
+            query.Where = where;
 
-                    return updated;
-                }
+            var maintenance = await connection.ListLoadAsync<MaintenanceModel>(query, null, transaction);
 
-                private async Task<List<UpdateMaintenanceModel>> MaintenancesUpdateMileagesForPartsAsync(
-                    DbConnection connection, DbTransaction transaction, IEnumerable<long?> partIds)
-                {
-                    DebugWrite.Line($"partIds: {JsonConvert.SerializeObject(partIds)}");
+            var updated = await MaintenancesUpdateMileagesAsync(connection, transaction, maintenance);
 
-                    var updated = new List<UpdateMaintenanceModel>();
-
-                    foreach (var partId in partIds)
-                    {
-                        var changed = await MaintenancesUpdateMileagesForPartAsync(connection, transaction, partId);
-
-                        updated.AddRange(changed);
-                    }
-
-                    if (updated.Count > 0)
-                    {
-                        Utils.Log.Info(string.Format(ResourcesLog.ListItemSaveOk, typeof(Maintenances).Name, updated.Count));
-                    }
-
-                    return updated;
-                }
-
-                private async Task<List<UpdateMaintenanceModel>> MaintenancesUpdateMileagesForTechsAsync(
-                    DbConnection connection, DbTransaction transaction, IEnumerable<long> techIds)
-                {
-                    DebugWrite.Line($"techIds: {JsonConvert.SerializeObject(techIds)}");
-
-                    var query = new Query()
-                    {
-                        Fields = "id, partid",
-                        Table = Tables.techparts,
-                        Where = ByIdToString("techid", techIds)
-                    };
-
-                    var maintenances = await connection.ListLoadAsync<MaintenanceModel>(query, null, transaction);
-
-                    var parts = maintenances.Select(maintenance => maintenance.PartId).Distinct();
-
-                    var updated = await MaintenancesUpdateMileagesForPartsAsync(connection, transaction, parts);
-
-                    return updated;
-                }
-
-                private async Task<List<UpdateMaintenanceModel>> MaintenancesUpdateMileagesForTechsOrPartAsync(
-                    DbConnection connection, DbTransaction transaction,
-                    IEnumerable<long> techIds, IEnumerable<long> partIds)
-                {
-                    DebugWrite.Line($"techIds: {JsonConvert.SerializeObject(techIds)}, partIds: {JsonConvert.SerializeObject(partIds)}");
-
-                    var query = new Query()
-                    {
-                        Fields = "id, partid",
-                        Table = Tables.techparts,
-                    };
-
-                    var where = ByIdToString("techid", techIds);
-
-                    where = where.JoinExcludeEmpty(" OR ", ByIdToString("partid", partIds));
-
-                    query.Where = where;
-
-                    var maintenances = await connection.ListLoadAsync<MaintenanceModel>(query, null, transaction);
-
-                    var parts = maintenances.Select(maintenance => maintenance.PartId).Distinct();
-
-                    var updated = await MaintenancesUpdateMileagesForPartsAsync(connection, transaction, parts);
-
-                    return updated;
-                }
-        */
+            return updated;
+        }
 
         public async Task<UpdateModel> MaintenanceSaveAsync(MaintenanceModel maintenance)
         {
@@ -227,7 +223,8 @@ namespace Technics
                         var mtIds = new List<long>();
 
                         Utils.ListAddNotNull(techIds, maintenance.TechId);
-                        Utils.ListAddNotNull(techIds, maintenance.MtId);
+
+                        Utils.ListAddNotNull(mtIds, maintenance.MtId);
 
                         if (!maintenance.IsNew)
                         {
@@ -246,8 +243,8 @@ namespace Technics
 
                         await connection.ListItemSaveAsync(maintenance, transaction);
 
-                        // TODO: update.Maintenances = await MaintenancesUpdateMileagesForTechsOrPartAsync(
-                        // connection, transaction, techIds, partIds);
+                        update.Maintenance = await MaintenanceUpdateMileagesForTechsOrMtsAsync(
+                            connection, transaction, techIds, mtIds);
 
                         transaction.Commit();
 
@@ -282,8 +279,8 @@ namespace Technics
 
                         var mtIds = maintenances.Select(maintenance => maintenance.MtId).DistinctNotNullLong();
 
-                        // TODO: update.Maintenances = await MaintenancesUpdateMileagesForTechsOrPartAsync(
-                        // connection, transaction, techIds, partIds);
+                        update.Maintenance = await MaintenanceUpdateMileagesForTechsOrMtsAsync(
+                            connection, transaction, techIds, mtIds);
 
                         transaction.Commit();
 

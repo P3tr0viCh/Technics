@@ -226,7 +226,8 @@ namespace Technics
                         var partIds = new List<long>();
 
                         Utils.ListAddNotNull(techIds, techPart.TechId);
-                        Utils.ListAddNotNull(techIds, techPart.PartId);
+                        
+                        Utils.ListAddNotNull(partIds, techPart.PartId);
 
                         if (!techPart.IsNew)
                         {

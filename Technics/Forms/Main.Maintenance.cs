@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Technics.Presenters;
 using Technics.Properties;
+using static Technics.Database.Filter;
 using static Technics.Database.Models;
 using static Technics.ProgramStatus;
 
@@ -76,6 +77,25 @@ namespace Technics
             presenterStatusStrip.Maintenance.Count = bindingSourceMaintenance.Count;
         }
 
+        private void MaintenanceUpdateChanged(UpdateModel changes)
+        {
+            DebugWrite.Line(changes.Maintenance.Count);
+
+            var maintenance = MaintenanceList.ToList();
+
+            for (var i = 0; i < maintenance.Count; i++)
+            {
+                var changed = changes.Maintenance.Where(item => item.Id == maintenance[i].Id).FirstOrDefault();
+
+                if (changed == null) continue;
+
+                maintenance[i].MileageCommon = changed.MileageCommon;
+                maintenance[i].MileageAfterMaintenance = changed.MileageAfterMaintenance;
+
+                bindingSourceMaintenance.ResetItem(i);
+            }
+        }
+
         private async Task MaintenanceChangeAsync(MaintenanceModel maintenance)
         {
             if (!FrmMaintenance.ShowDlg(this, maintenance)) return;
@@ -103,7 +123,7 @@ namespace Technics
 
                 dgvMaintenance.SetSelectedRows(maintenance);
 
-                // TODO: MaintenanceUpdateChanged(changes);
+                MaintenanceUpdateChanged(changes);
 
                 MaintenanceListChanged();
             }
@@ -175,7 +195,7 @@ namespace Technics
 
                 dgvMaintenance.SetSelectedRows(dgvMaintenance.GetSelected<MaintenanceModel>());
 
-                // TODO: MaintenanceUpdateChanged(updated);
+                MaintenanceUpdateChanged(updated);
 
                 MaintenanceListChanged();
             }

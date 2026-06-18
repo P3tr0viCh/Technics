@@ -284,6 +284,20 @@ namespace Technics.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to UPDATE
+        ///	maintenance
+        ///SET
+        ///	mileagecommon = mileagecommon,
+        ///	mileageaftermaintenance = mileageaftermaintenance
+        ///WHERE id = @id;.
+        /// </summary>
+        internal static string UpdateMaintenanceMileagesById {
+            get {
+                return ResourceManager.GetString("UpdateMaintenanceMileagesById", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UPDATE
         ///	mileages
         ///SET
         ///	mileage = @mileage,

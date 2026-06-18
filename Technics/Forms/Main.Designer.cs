@@ -543,6 +543,7 @@
             this.dgvMaintenance.Size = new System.Drawing.Size(432, 150);
             this.dgvMaintenance.TabIndex = 2;
             this.dgvMaintenance.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DgvMaintenance_CellMouseClick);
+            this.dgvMaintenance.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DgvMaintenance_CellMouseDoubleClick);
             this.dgvMaintenance.SelectionChanged += new System.EventHandler(this.DgvMaintenance_SelectionChanged);
             // 
             // MaintenanceTechText
