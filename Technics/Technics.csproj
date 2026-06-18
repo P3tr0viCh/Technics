@@ -345,6 +345,8 @@
     <None Include="Resources\CreateTableMts.sql" />
     <None Include="Resources\SelectMaintenance.sql" />
     <None Include="Resources\SelectMts.sql" />
+    <None Include="Resources\ClearMaintenanceMileagesByMtId.sql" />
+    <None Include="Resources\ClearMaintenanceMileagesByTechId.sql" />
     <Content Include="Technics.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

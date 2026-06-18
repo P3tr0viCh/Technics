@@ -401,6 +401,30 @@ namespace Technics.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Удалить «{0}» из базы данных?
+        ///
+        ///Внимание.
+        ///Все значения в связанных записях также будут удалены..
+        /// </summary>
+        internal static string QuestionTechDelete {
+            get {
+                return ResourceManager.GetString("QuestionTechDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Удалить «{0}» и ещё {1} из базы данных?
+        ///
+        ///Внимание.
+        ///Все значения в связанных записях также будут удалены..
+        /// </summary>
+        internal static string QuestionTechListDelete {
+            get {
+                return ResourceManager.GetString("QuestionTechListDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Удалить «{0}» с датой установки {1} из базы данных?.
         /// </summary>
         internal static string QuestionTechPartDelete {

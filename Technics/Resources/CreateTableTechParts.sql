@@ -7,7 +7,7 @@ CREATE TABLE techparts (
 	mileage REAL,
 	mileagecommon REAL,
 	FOREIGN KEY (techid) REFERENCES techs (id)
-	ON DELETE SET NULL
+	ON DELETE CASCADE
 	ON UPDATE CASCADE,
 	FOREIGN KEY (partid) REFERENCES parts (id)
 	ON DELETE SET NULL

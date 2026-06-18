@@ -476,7 +476,7 @@ namespace Technics
 
             if (deletedNode is TreeNodeTech)
             {
-                question = Resources.QuestionItemLinkedDelete;
+                question = Resources.QuestionTechDelete;
             }
             else
             {

@@ -3,8 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Threading.Tasks;
-using Technics.Properties;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrackBar;
 using static Technics.Database.Models;
 
 namespace Technics
@@ -14,12 +12,6 @@ namespace Technics
         private async Task TechDeleteAsync(
             DbConnection connection, DbTransaction transaction, TechModel tech)
         {
-            await connection.ExecuteSqlAsync(ResourcesSql.ClearMileagesMileageCommonByTechId,
-                new { techid = tech.Id }, transaction);
-
-            await connection.ExecuteSqlAsync(ResourcesSql.ClearTechPartsMileagesByTechId,
-                new { techid = tech.Id }, transaction);
-
             await connection.ListItemDeleteAsync(tech, transaction);
         }
 

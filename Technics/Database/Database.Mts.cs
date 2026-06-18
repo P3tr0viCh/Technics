@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Threading.Tasks;
+using Technics.Properties;
 using static Technics.Database.Models;
 
 namespace Technics
@@ -11,9 +12,8 @@ namespace Technics
     {
         private async Task MtDeleteAsync(DbConnection connection, DbTransaction transaction, MtModel mt)
         {
-            // TODO: add
-            //            await connection.ExecuteSqlAsync(ResourcesSql.ClearTechMtsMileagesByMtId,
-            //                new { mtid = mt.Id }, transaction);
+            await connection.ExecuteSqlAsync(ResourcesSql.ClearMaintenanceMileagesByMtId,
+                new { mtid = mt.Id }, transaction);
 
             await connection.ListItemDeleteAsync(mt, transaction);
         }

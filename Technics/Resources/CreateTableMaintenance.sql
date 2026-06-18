@@ -6,7 +6,7 @@ CREATE TABLE maintenance (
 	mileagecommon REAL,
 	mileageaftermaintenance REAL,
 	FOREIGN KEY (techid) REFERENCES techs (id)
-	ON DELETE SET NULL
+	ON DELETE CASCADE
 	ON UPDATE CASCADE,
 	FOREIGN KEY (mtid) REFERENCES mts (id)
 	ON DELETE SET NULL

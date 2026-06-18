@@ -62,14 +62,15 @@ namespace Technics.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to UPDATE
-        ///	mileages
+        ///	maintenance
         ///SET
-        ///	mileagecommon = null
-        ///WHERE techid = @techid;.
+        ///	mileagecommon = null,
+        ///	mileageaftermaintenance = null
+        ///WHERE mtid = mtid;.
         /// </summary>
-        internal static string ClearMileagesMileageCommonByTechId {
+        internal static string ClearMaintenanceMileagesByMtId {
             get {
-                return ResourceManager.GetString("ClearMileagesMileageCommonByTechId", resourceCulture);
+                return ResourceManager.GetString("ClearMaintenanceMileagesByMtId", resourceCulture);
             }
         }
         
@@ -88,20 +89,6 @@ namespace Technics.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to UPDATE
-        ///	techparts
-        ///SET
-        ///	mileage = null,
-        ///	mileagecommon = null
-        ///WHERE techid = @techid;.
-        /// </summary>
-        internal static string ClearTechPartsMileagesByTechId {
-            get {
-                return ResourceManager.GetString("ClearTechPartsMileagesByTechId", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to CREATE TABLE folders (
         ///	id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
         ///	parentid INTEGER,
@@ -115,12 +102,19 @@ namespace Technics.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to CREATE TABLE parts (
+        ///   Looks up a localized string similar to CREATE TABLE maintenance (
         ///	id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-        ///	folderid INTEGER,
-        ///	text TEXT,
-        ///	state INTEGER,
-        ///	description TEXT
+        ///	techid INTEGER,
+        ///	mtid INTEGER,
+        ///	datetime TEXT,
+        ///	mileagecommon REAL,
+        ///	mileageaftermaintenance REAL,
+        ///	FOREIGN KEY (techid) REFERENCES techs (id)
+        ///	ON DELETE CASCADE
+        ///	ON UPDATE CASCADE,
+        ///	FOREIGN KEY (mtid) REFERENCES mts (id)
+        ///	ON DELETE SET NULL
+        ///	ON UPDATE CASCADE
         ///);.
         /// </summary>
         internal static string CreateTableMaintenance {
@@ -139,7 +133,7 @@ namespace Technics.Properties {
         ///	mileagetype INTEGER,
         ///	description TEXT,
         ///	FOREIGN KEY (techid) REFERENCES techs (id)
-        ///	ON DELETE SET NULL
+        ///	ON DELETE CASCADE
         ///	ON UPDATE CASCADE
         ///);.
         /// </summary>
@@ -188,7 +182,7 @@ namespace Technics.Properties {
         ///	mileage REAL,
         ///	mileagecommon REAL,
         ///	FOREIGN KEY (techid) REFERENCES techs (id)
-        ///	ON DELETE SET NULL
+        ///	ON DELETE CASCADE
         ///	ON UPDATE CASCADE,
         ///	FOREIGN KEY (partid) REFERENCES parts (id)
         ///	ON DELETE SET NULL
@@ -217,9 +211,13 @@ namespace Technics.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SELECT parts.id, folderid, folders.text AS foldertext, parts.text, parts.state, description
-        ///FROM parts
-        ///LEFT JOIN folders ON parts.folderid = folders.id;.
+        ///   Looks up a localized string similar to SELECT
+        ///	maintenance.id, techid, techs.text AS techtext, mtid, mts.text AS mttext,
+        ///	datetime,
+        ///	mileagecommon, mileageaftermaintenance
+        ///FROM maintenance
+        ///LEFT JOIN techs ON maintenance.techid = techs.id
+        ///LEFT JOIN mts ON maintenance.mtid = mts.id.
         /// </summary>
         internal static string SelectMaintenance {
             get {
@@ -239,9 +237,9 @@ namespace Technics.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SELECT parts.id, folderid, folders.text AS foldertext, parts.text, parts.state, description
-        ///FROM parts
-        ///LEFT JOIN folders ON parts.folderid = folders.id;.
+        ///   Looks up a localized string similar to SELECT mts.id, folderid, folders.text AS foldertext, mts.text, description
+        ///FROM mts
+        ///LEFT JOIN folders ON mts.folderid = folders.id;.
         /// </summary>
         internal static string SelectMts {
             get {

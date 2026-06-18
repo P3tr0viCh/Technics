@@ -92,55 +92,61 @@ namespace Technics
                 }
             }
 
+            private static string GetQuestion<T>(T item, int count)
+            {
+                if (item is TechModel tech)
+                {
+                    return count == 1 ?
+                        string.Format(Resources.QuestionTechDelete, tech.Text) :
+                        string.Format(Resources.QuestionTechListDelete, tech.Text, count - 1);
+                }
+
+                if (item is MileageModel mileage)
+                {
+                    var dt = mileage.DateTime.ToString(AppSettings.Default.FormatDateTime);
+
+                    return count == 1 ?
+                        string.Format(Resources.QuestionMileageDelete, dt) :
+                        string.Format(Resources.QuestionMileageListDelete, dt, count - 1);
+                }
+
+                if (item is TechPartModel techPart)
+                {
+                    var dt = techPart.DateTimeInstall.ToString(AppSettings.Default.FormatDateTime);
+
+                    return count == 1 ?
+                        string.Format(Resources.QuestionTechPartDelete, techPart.PartText, dt) :
+                        string.Format(Resources.QuestionTechPartListDelete, techPart.PartText, dt, count - 1);
+                }
+
+                if (item is MaintenanceModel maintenance)
+                {
+                    var dt = maintenance.DateTime.ToString(AppSettings.Default.FormatDateTime);
+
+                    return count == 1 ?
+                        string.Format(Resources.QuestionMaintenanceDelete, maintenance.MtText, dt) :
+                        string.Format(Resources.QuestionMaintenanceListDelete, maintenance.MtText, dt, count - 1);
+                }
+
+                if (item is IBaseText itemText)
+                {
+                    return count == 1 ?
+                        string.Format(Resources.QuestionItemLinkedDelete, itemText.Text) :
+                        string.Format(Resources.QuestionItemListLinkedDelete, itemText.Text, count - 1);
+                }
+
+                return string.Empty;
+            }
+
             public static bool Question<T>(IEnumerable<T> list)
             {
-                var count = list?.Count();
+                var count = list.Count();
 
                 if (count == 0) return false;
 
                 var firstItem = list.FirstOrDefault();
 
-                var question = string.Empty;
-
-                if (firstItem is IBaseText itemText)
-                {
-                    question = count == 1 ?
-                        string.Format(Resources.QuestionItemLinkedDelete, itemText.Text) :
-                        string.Format(Resources.QuestionItemListLinkedDelete, itemText.Text, count - 1);
-                }
-                else
-                {
-                    if (firstItem is MileageModel mileage)
-                    {
-                        var dt = mileage.DateTime.ToString(AppSettings.Default.FormatDateTime);
-
-                        question = count == 1 ?
-                            string.Format(Resources.QuestionMileageDelete, dt) :
-                            string.Format(Resources.QuestionMileageListDelete, dt, count - 1);
-                    }
-                    else
-                    {
-                        if (firstItem is TechPartModel techPart)
-                        {
-                            var dt = techPart.DateTimeInstall.ToString(AppSettings.Default.FormatDateTime);
-
-                            question = count == 1 ?
-                                string.Format(Resources.QuestionTechPartDelete, techPart.PartText, dt) :
-                                string.Format(Resources.QuestionTechPartListDelete, techPart.PartText, dt, count - 1);
-                        }
-                        else
-                        {
-                            if (firstItem is MaintenanceModel maintenance)
-                            {
-                                var dt = maintenance.DateTime.ToString(AppSettings.Default.FormatDateTime);
-
-                                question = count == 1 ?
-                                    string.Format(Resources.QuestionMaintenanceDelete, maintenance.MtText, dt) :
-                                    string.Format(Resources.QuestionMaintenanceListDelete, maintenance.MtText, dt, count - 1);
-                            }
-                        }
-                    }
-                }
+                var question = GetQuestion(firstItem, count);
 
                 return Question(question);
             }
