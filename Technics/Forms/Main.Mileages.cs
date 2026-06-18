@@ -124,6 +124,8 @@ namespace Technics
 
                 TechPartsUpdateChanged(updated);
 
+                MaintenanceUpdateChanged(updated);
+
                 MileagesListChanged();
             }
             catch (Exception e)
@@ -161,6 +163,8 @@ namespace Technics
                 MileagesUpdateChanged(updated);
 
                 TechPartsUpdateChanged(updated);
+
+                MaintenanceUpdateChanged(updated);
 
                 MileagesListChanged();
             }
@@ -245,6 +249,8 @@ namespace Technics
                 MileagesUpdateChanged(updated);
 
                 TechPartsUpdateChanged(updated);
+
+                MaintenanceUpdateChanged(updated);
 
                 MileagesListChanged();
             }

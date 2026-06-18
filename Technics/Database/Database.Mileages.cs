@@ -198,6 +198,8 @@ namespace Technics
 
                         update.TechParts = await TechPartsUpdateMileagesForTechsAsync(connection, transaction, techIds);
 
+                        update.Maintenance = await MaintenancesUpdateMileagesForTechsAsync(connection, transaction, techIds);
+
                         transaction.Commit();
 
                         Utils.Log.ListItemSaveOk(mileage);
