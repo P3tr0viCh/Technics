@@ -44,7 +44,7 @@ namespace Technics
         }
 
         private async Task<double?> MaintenanceGetMileageCommonAsync(
-                   DbConnection connection, DbTransaction transaction, MaintenanceModel maintenance)
+            DbConnection connection, DbTransaction transaction, MaintenanceModel maintenance)
         {
             var query = new Query
             {
@@ -84,7 +84,7 @@ namespace Technics
         {
             var query = new Query
             {
-                Fields = "mileagecommon",
+                Fields = "id, datetime, mileagecommon",
                 Table = Tables.maintenance,
                 Where = "techid = @techid AND mtid = @mtid AND datetime > @datetime",
                 Order = "datetime",
@@ -97,7 +97,6 @@ namespace Technics
                 mtid = maintenance.MtId,
                 datetime = maintenance.DateTime,
             };
-
 
             var next = await connection.QuerySingleRowAsync<MaintenanceModel>(query, param, transaction);
 
@@ -154,43 +153,42 @@ namespace Technics
 
             if (id == Sql.NewId) return updated;
 
-            var query = new Query()
+            var maintenance = await connection.ListItemLoadByIdAsync<MaintenanceModel>(id, transaction);
+
+            if (maintenance == null) return updated;
+
+            var changed = false;
+
+            var mileageCommon =
+                await MaintenanceGetMileageCommonAsync(connection, transaction, maintenance);
+
+            if (maintenance.MileageCommon != mileageCommon)
             {
-                Table = Tables.maintenance,
-                Where = "id = @id",
-                Order = "datetime DESC"
-            };
-
-            object param = new { id };
-
-            var maintenances = await connection.ListLoadAsync<MaintenanceModel>(query, param, transaction);
-
-            if (maintenances.IsEmpty()) return updated;
-
-            foreach (var maintenance in maintenances)
-            {
-                var mileageCommon =
-                    await MaintenanceGetMileageCommonAsync(connection, transaction, maintenance);
-
-                var mileageAfterMaintenance =
-                    await MaintenanceGetMileageAfterMaintenanceCommonAsync(connection, transaction, maintenance);
-
-                if (maintenance.MileageCommon == mileageCommon &&
-                    maintenance.MileageAfterMaintenance == mileageAfterMaintenance) continue;
+                changed = true;
 
                 maintenance.MileageCommon = mileageCommon;
+            }
+
+            var mileageAfterMaintenance = 
+                await MaintenanceGetMileageAfterMaintenanceCommonAsync(connection, transaction, maintenance);
+
+            if (maintenance.MileageAfterMaintenance != mileageAfterMaintenance)
+            {
+                changed = true;
 
                 maintenance.MileageAfterMaintenance = mileageAfterMaintenance;
-
-                await MaintenanceUpdateMileagesAsync(connection, transaction, maintenance);
-
-                updated.Add(new UpdateMaintenanceModel()
-                {
-                    Id = maintenance.Id,
-                    MileageCommon = maintenance.MileageCommon,
-                    MileageAfterMaintenance = maintenance.MileageAfterMaintenance,
-                });
             }
+
+            if (!changed) return updated;
+
+            await MaintenanceUpdateMileagesAsync(connection, transaction, maintenance);
+
+            updated.Add(new UpdateMaintenanceModel()
+            {
+                Id = maintenance.Id,
+                MileageCommon = maintenance.MileageCommon,
+                MileageAfterMaintenance = maintenance.MileageAfterMaintenance,
+            });
 
             return updated;
         }
@@ -204,7 +202,8 @@ namespace Technics
             {
                 Fields = "id",
                 Table = Tables.maintenance,
-                Where = ByIdToString("techid", techIds)
+                Where = ByIdToString("techid", techIds),
+                Order = "datetime DESC",
             };
 
             var maintenances = await connection.ListLoadAsync<MaintenanceModel>(query, null, transaction);
@@ -249,7 +248,8 @@ namespace Technics
             {
                 Fields = "id",
                 Table = Tables.maintenance,
-                Where = ByIdToString("techid", techIds).JoinExcludeEmpty(" AND ", ByIdToString("mtid", mtIds))
+                Where = ByIdToString("techid", techIds).JoinExcludeEmpty(" AND ", ByIdToString("mtid", mtIds)),
+                Order = "datetime DESC",
             };
 
             var maintenances = await connection.ListLoadAsync<MaintenanceModel>(query, null, transaction);
