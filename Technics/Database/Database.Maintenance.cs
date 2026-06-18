@@ -10,7 +10,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Technics.Properties;
 using static Technics.Database.Filter;
-using static Technics.Database.Interfaces;
 using static Technics.Database.Models;
 
 namespace Technics
@@ -80,6 +79,51 @@ namespace Technics
             return ticksBefore < ticksAfter ? before.MileageCommon : after.MileageCommon;
         }
 
+        private async Task<double?> MaintenanceGetMileageAfterMaintenanceCommonAsync(
+                   DbConnection connection, DbTransaction transaction, MaintenanceModel maintenance)
+        {
+            var query = new Query
+            {
+                Fields = "mileagecommon",
+                Table = Tables.maintenance,
+                Where = "techid = @techid AND mtid = @mtid AND datetime > @datetime",
+                Order = "datetime",
+                Limit = 1
+            };
+
+            object param = new
+            {
+                techid = maintenance.TechId,
+                mtid = maintenance.MtId,
+                datetime = maintenance.DateTime,
+            };
+
+
+            var next = await connection.QuerySingleRowAsync<MaintenanceModel>(query, param, transaction);
+
+            if (next != null) return next.MileageCommon - maintenance.MileageCommon;
+
+            query = new Query
+            {
+                Fields = "mileagecommon",
+                Table = Tables.mileages,
+                Where = "techid = @techid",
+                Order = "datetime DESC",
+                Limit = 1
+            };
+
+            param = new
+            {
+                techid = maintenance.TechId,
+            };
+
+            var last = await connection.QuerySingleRowAsync<double>(query, param, transaction);
+
+            if (last == 0) return 0.0;
+
+            return last - maintenance.MileageCommon;
+        }
+
         private async Task MaintenanceUpdateMileagesAsync(
             DbConnection connection, DbTransaction transaction, MaintenanceModel maintenance)
         {
@@ -113,20 +157,23 @@ namespace Technics
             var query = new Query()
             {
                 Table = Tables.maintenance,
-                Where = "id = @id"
+                Where = "id = @id",
+                Order = "datetime DESC"
             };
 
             object param = new { id };
 
             var maintenances = await connection.ListLoadAsync<MaintenanceModel>(query, param, transaction);
 
-            if (!maintenances.Any()) return updated;
+            if (maintenances.IsEmpty()) return updated;
 
             foreach (var maintenance in maintenances)
             {
-                var mileageCommon = await MaintenanceGetMileageCommonAsync(connection, transaction, maintenance);
+                var mileageCommon =
+                    await MaintenanceGetMileageCommonAsync(connection, transaction, maintenance);
 
-                var mileageAfterMaintenance = 0.0;
+                var mileageAfterMaintenance =
+                    await MaintenanceGetMileageAfterMaintenanceCommonAsync(connection, transaction, maintenance);
 
                 if (maintenance.MileageCommon == mileageCommon &&
                     maintenance.MileageAfterMaintenance == mileageAfterMaintenance) continue;

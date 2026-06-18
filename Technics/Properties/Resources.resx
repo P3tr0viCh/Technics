@@ -321,13 +321,13 @@
     <value>Удалить «{0}» из базы данных?
 
 Внимание.
-Все значения в связанных записях также будут удалены.</value>
+Все связанные записи также будут удалены.</value>
   </data>
   <data name="QuestionTechListDelete" xml:space="preserve">
     <value>Удалить «{0}» и ещё {1} из базы данных?
 
 Внимание.
-Все значения в связанных записях также будут удалены.</value>
+Все связанные записи также будут удалены.</value>
   </data>
   <data name="StatusMaintenanceCount" xml:space="preserve">
     <value>Обслуживание: {0}</value>

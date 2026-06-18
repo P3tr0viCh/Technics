@@ -120,7 +120,7 @@ namespace Technics
 
                         var mileages = await Default.MileagesLoadAsync(new List<TechModel>() { tech });
 
-                        if (!mileages.Any()) continue;
+                        if (mileages.IsEmpty()) continue;
 
                         var dateTimeInstall = mileages.Min(item => item.DateTime);
                         var dateTimeRemove = dateTimeInstall.AddDays(2);

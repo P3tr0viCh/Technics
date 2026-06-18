@@ -404,7 +404,7 @@ namespace Technics.Properties {
         ///   Looks up a localized string similar to Удалить «{0}» из базы данных?
         ///
         ///Внимание.
-        ///Все значения в связанных записях также будут удалены..
+        ///Все связанные записи также будут удалены..
         /// </summary>
         internal static string QuestionTechDelete {
             get {
@@ -416,7 +416,7 @@ namespace Technics.Properties {
         ///   Looks up a localized string similar to Удалить «{0}» и ещё {1} из базы данных?
         ///
         ///Внимание.
-        ///Все значения в связанных записях также будут удалены..
+        ///Все связанные записи также будут удалены..
         /// </summary>
         internal static string QuestionTechListDelete {
             get {

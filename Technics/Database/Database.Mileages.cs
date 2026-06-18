@@ -97,7 +97,7 @@ namespace Technics
 
             var mileages = await connection.ListLoadAsync<MileageModel>(query, param, transaction);
 
-            if (!mileages.Any()) return updated;
+            if (mileages.IsEmpty()) return updated;
 
             double mileageValue;
 

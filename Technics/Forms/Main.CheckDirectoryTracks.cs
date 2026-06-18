@@ -179,7 +179,7 @@ namespace Technics
 
                 if (ctsCheckDirectoryTracks.IsCancellationRequested) return Enumerable.Empty<string>();
 
-                if (!files.Any()) return Enumerable.Empty<string>();
+                if (files.IsEmpty()) return Enumerable.Empty<string>();
 
                 if (!QuestionAddTracks(files))
                 {

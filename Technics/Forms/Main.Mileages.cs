@@ -209,7 +209,7 @@ namespace Technics
         {
             var mileages = MileageSelectedList;
 
-            if (!mileages.Any()) return;
+            if (mileages.IsEmpty()) return;
 
             dgvMileages.SetSelectedRows(mileages);
 
@@ -227,7 +227,7 @@ namespace Technics
         {
             var mileages = MileageSelectedList;
 
-            if (!mileages.Any()) return;
+            if (mileages.IsEmpty()) return;
 
             dgvMileages.SetSelectedRows(mileages);
 
@@ -331,7 +331,7 @@ namespace Technics
 
         private async Task SelectMileagesAsync(IEnumerable<MileageModel> mileages)
         {
-            if (!mileages.Any()) return;
+            if (mileages.IsEmpty()) return;
 
             if (tvTechs.Nodes[0].IsSelected)
             {

@@ -176,7 +176,7 @@ namespace Technics
         {
             var maintenances = MaintenanceSelectedList;
 
-            if (!maintenances.Any()) return;
+            if (maintenances.IsEmpty()) return;
 
             dgvMaintenance.SetSelectedRows(maintenances);
 

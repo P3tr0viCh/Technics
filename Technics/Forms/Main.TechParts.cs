@@ -175,7 +175,7 @@ namespace Technics
         {
             var techParts = TechPartSelectedList;
 
-            if (!techParts.Any()) return;
+            if (techParts.IsEmpty()) return;
 
             dgvTechParts.SetSelectedRows(techParts);
 

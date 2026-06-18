@@ -107,7 +107,7 @@ namespace Technics
 
             var techParts = await connection.ListLoadAsync<TechPartModel>(query, param, transaction);
 
-            if (!techParts.Any()) return updated;
+            if (techParts.IsEmpty()) return updated;
 
             var mileageCommon = 0.0;
 
