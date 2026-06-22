@@ -274,23 +274,26 @@ namespace Technics
 
         private async void DgvMileages_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            if (e.RowIndex < 0) return;
-
-            await MileagesChangeSelectedAsync();
+            if (e.Button == MouseButtons.Left && e.RowIndex > -1)
+            {
+                await MileagesChangeSelectedAsync();
+            }
         }
 
         private async void DgvTechParts_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            if (e.RowIndex < 0) return;
-
-            await TechPartsChangeSelectedAsync();
+            if (e.Button == MouseButtons.Left && e.RowIndex > -1)
+            {
+                await TechPartsChangeSelectedAsync();
+            }
         }
 
         private async void DgvMaintenance_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            if (e.RowIndex < 0) return;
-
-            await MaintenanceChangeSelectedAsync();
+            if (e.Button == MouseButtons.Left && e.RowIndex > -1)
+            {
+                await MaintenanceChangeSelectedAsync();
+            }
         }
 
         private bool ToolStripsShowText
@@ -484,6 +487,33 @@ namespace Technics
         private async void MiMaintenanceDelete_Click(object sender, EventArgs e)
         {
             await MaintenanceDeleteSelectedAsync();
+        }
+
+        private void CopyToClipboard(DataGridView dataGridView)
+        {
+            try
+            {
+                Clipboard.SetDataObject(dataGridView.GetClipboardContent());
+            }
+            catch (Exception e)
+            {
+                Utils.Log.Error(e);
+            }
+        }
+
+        private void MiTechPartsCopy_Click(object sender, EventArgs e)
+        {
+            CopyToClipboard(dgvTechParts);
+        }
+
+        private void MiMileagesCopy_Click(object sender, EventArgs e)
+        {
+            CopyToClipboard(dgvMileages);
+        }
+
+        private void MiMaintenanceCopy_Click(object sender, EventArgs e)
+        {
+            CopyToClipboard(dgvMaintenance);
         }
     }
 }
