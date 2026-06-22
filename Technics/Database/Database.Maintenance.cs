@@ -46,37 +46,13 @@ namespace Technics
         private async Task<double?> MaintenanceGetMileageCommonAsync(
             DbConnection connection, DbTransaction transaction, MaintenanceModel maintenance)
         {
-            var query = new Query
+            var mileage = new MileageModel()
             {
-                Fields = "datetime, mileagecommon",
-                Table = Tables.mileages,
-                Limit = 1
+                TechId = maintenance.TechId,
+                DateTime = maintenance.DateTime,
             };
 
-            object param = new
-            {
-                techid = maintenance.TechId,
-                datetime = maintenance.DateTime,
-            };
-
-            query.Where = "techid = @techid AND datetime <= @datetime";
-            query.Order = "datetime DESC";
-
-            var before = await connection.QuerySingleRowAsync<MileageModel>(query, param, transaction);
-
-            query.Where = "techid = @techid AND datetime >= @datetime";
-            query.Order = "datetime";
-
-            var after = await connection.QuerySingleRowAsync<MileageModel>(query, param, transaction);
-
-            if (before == null && after == null) return null;
-            if (before == null) return after.MileageCommon;
-            if (after == null) return before.MileageCommon;
-
-            var ticksBefore = (maintenance.DateTime - before.DateTime).Ticks;
-            var ticksAfter = (after.DateTime - maintenance.DateTime).Ticks;
-
-            return ticksBefore < ticksAfter ? before.MileageCommon : after.MileageCommon;
+            return await MileagesGetMileageCommonPrevAsync(mileage);
         }
 
         private async Task<double?> MaintenanceGetMileageAfterMaintenanceCommonAsync(

@@ -32,7 +32,7 @@ namespace Technics
         {
             if (techs.IsEmpty())
             {
-                return Enumerable.Empty<MileageModel>();    
+                return Enumerable.Empty<MileageModel>();
             }
 
             var filter = new Mileages()
@@ -49,11 +49,16 @@ namespace Technics
             {
                 Fields = "mileagecommon",
                 Table = Tables.mileages,
-                Where = "techid = @techid AND datetime < @datetime",
+                Where = "techid = @techid AND datetime <= @datetime",
                 Order = "datetime DESC"
             };
 
-            object param = new { id = mileage.Id, techid = mileage.TechId, datetime = mileage.DateTime };
+            object param = new
+            {
+                id = mileage.Id,
+                techid = mileage.TechId,
+                datetime = mileage.DateTime
+            };
 
             using (var connection = GetConnection())
             {
