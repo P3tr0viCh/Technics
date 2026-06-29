@@ -6,6 +6,7 @@ using P3tr0viCh.Utils.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
+using System.Data.SQLite;
 using System.Linq;
 using System.Threading.Tasks;
 using Technics.Properties;
@@ -209,6 +210,17 @@ namespace Technics
             return updated;
         }
 
+        private async Task<UpdateModel> TechPartsAfterChangeAsync(
+            SQLiteConnection connection, SQLiteTransaction transaction,
+            IEnumerable<long> techIds, IEnumerable<long> partIds)
+        {
+            return new UpdateModel
+            {
+                TechParts = await TechPartsUpdateMileagesForTechsOrPartAsync(
+                    connection, transaction, techIds, partIds)
+            };
+        }
+
         public async Task<UpdateModel> TechPartSaveAsync(TechPartModel techPart)
         {
             using (var connection = GetConnection())
@@ -219,14 +231,12 @@ namespace Technics
                 {
                     try
                     {
-                        var update = new UpdateModel();
-
                         var techIds = new List<long>();
 
                         var partIds = new List<long>();
 
                         Utils.ListAddNotNull(techIds, techPart.TechId);
-                        
+
                         Utils.ListAddNotNull(partIds, techPart.PartId);
 
                         if (!techPart.IsNew)
@@ -246,8 +256,7 @@ namespace Technics
 
                         await connection.ListItemSaveAsync(techPart, transaction);
 
-                        update.TechParts = await TechPartsUpdateMileagesForTechsOrPartAsync(
-                            connection, transaction, techIds, partIds);
+                        var update = await TechPartsAfterChangeAsync(connection, transaction, techIds, partIds);
 
                         transaction.Commit();
 
@@ -274,16 +283,13 @@ namespace Technics
                 {
                     try
                     {
-                        var update = new UpdateModel();
-
                         await connection.ListItemDeleteAsync(techParts, transaction);
 
                         var techIds = techParts.Select(techPart => techPart.TechId).DistinctNotNullLong();
 
                         var partIds = techParts.Select(techPart => techPart.PartId).DistinctNotNullLong();
 
-                        update.TechParts = await TechPartsUpdateMileagesForTechsOrPartAsync(
-                            connection, transaction, techIds, partIds);
+                        var update = await TechPartsAfterChangeAsync(connection, transaction, techIds, partIds);
 
                         transaction.Commit();
 

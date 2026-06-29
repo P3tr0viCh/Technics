@@ -93,6 +93,15 @@ namespace Technics
             }
         }
 
+        private void MileagesAfterChange(UpdateModel update)
+        {
+            MileagesUpdateChanged(update);
+
+            TechPartsUpdateChanged(update);
+
+            MaintenanceUpdateChanged(update);
+        }
+
         private async Task MileagesChangeAsync(MileageModel mileage)
         {
             if (!FrmMileage.ShowDlg(this, mileage)) return;
@@ -120,11 +129,7 @@ namespace Technics
 
                 dgvMileages.SetSelectedRows(mileage);
 
-                MileagesUpdateChanged(updated);
-
-                TechPartsUpdateChanged(updated);
-
-                MaintenanceUpdateChanged(updated);
+                MileagesAfterChange(updated);
 
                 MileagesListChanged();
             }
@@ -160,11 +165,7 @@ namespace Technics
 
                 dgvMileages.SetSelectedRows(mileages);
 
-                MileagesUpdateChanged(updated);
-
-                TechPartsUpdateChanged(updated);
-
-                MaintenanceUpdateChanged(updated);
+                MileagesAfterChange(updated);
 
                 MileagesListChanged();
             }
@@ -246,11 +247,7 @@ namespace Technics
 
                 dgvMileages.SetSelectedRows(dgvMileages.GetSelectedList<MileageModel>());
 
-                MileagesUpdateChanged(updated);
-
-                TechPartsUpdateChanged(updated);
-
-                MaintenanceUpdateChanged(updated);
+                MileagesAfterChange(updated);
 
                 MileagesListChanged();
             }
@@ -327,20 +324,6 @@ namespace Technics
             };
 
             return mileage;
-        }
-
-        private async Task SelectMileagesAsync(IEnumerable<MileageModel> mileages)
-        {
-            if (mileages.IsEmpty()) return;
-
-            if (tvTechs.Nodes[0].IsSelected)
-            {
-                await UpdateDataAsync(DataLoad.Mileages | DataLoad.TechParts);
-            }
-
-            tvTechs.SelectedNode = tvTechs.Nodes[0];
-
-            MileageSelectedList = mileages;
         }
     }
 }

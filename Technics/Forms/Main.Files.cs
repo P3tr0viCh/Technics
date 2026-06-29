@@ -1,4 +1,5 @@
 ﻿using P3tr0viCh.Utils;
+using P3tr0viCh.Utils.Extensions;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -80,6 +81,8 @@ namespace Technics
 
             try
             {
+                if (files.IsEmpty()) return Enumerable.Empty<MileageModel>();
+
                 var mileages = new List<MileageModel>();
 
                 var status = ProgramStatus.Default.Start(Status.ReadFiles);
@@ -117,7 +120,20 @@ namespace Technics
 
                 try
                 {
-                    await Database.Default.MileageSaveAsync(mileages);
+                    var updated = await Database.Default.MileageSaveAsync(mileages);
+
+                    foreach (var mileage in mileages)
+                    {
+                        bindingSourceMileages.Add(mileage);
+                    }
+
+                    presenterDataGridViewMileages.Sort();
+
+                    dgvMileages.SetSelectedRows(mileages);
+
+                    MileagesAfterChange(updated);
+
+                    MileagesListChanged();
                 }
                 finally
                 {
@@ -196,11 +212,7 @@ namespace Technics
                     break;
             }
 
-            if (count == 0) return;
-
-            var mileages = await LoadFromFilesAsync(files);
-
-            await SelectMileagesAsync(mileages);
+            await LoadFromFilesAsync(files);
         }
     }
 }

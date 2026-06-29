@@ -2,7 +2,6 @@
 using P3tr0viCh.Utils;
 using P3tr0viCh.Utils.Extensions;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Technics.Properties;
@@ -153,6 +152,8 @@ namespace Technics
         {
             try
             {
+                Utils.AssertComboBox<TechModel>(cboxTech, Resources.ErrorTechEmpty);
+
                 if (tboxMileage.IsEmpty() && tboxMileageCommon.IsEmpty())
                 {
                     tboxMileage.Focus();

@@ -6,6 +6,7 @@ using P3tr0viCh.Utils.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
+using System.Data.SQLite;
 using System.Linq;
 using System.Threading.Tasks;
 using Technics.Properties;
@@ -46,13 +47,20 @@ namespace Technics
         private async Task<double?> MaintenanceGetMileageCommonAsync(
             DbConnection connection, DbTransaction transaction, MaintenanceModel maintenance)
         {
-            var mileage = new MileageModel()
+            var query = new Query()
             {
-                TechId = maintenance.TechId,
-                DateTime = maintenance.DateTime,
+                Fields = "SUM(mileage)",
+                Table = Tables.mileages,
+                Where = "techid = @techid AND datetime <= @datetime"
             };
 
-            return await MileagesGetMileageCommonPrevAsync(mileage);
+            object param = new
+            {
+                techid = maintenance.TechId,
+                datetime = maintenance.DateTime
+            };
+
+            return await connection.QuerySingleRowAsync<double?>(query, param, transaction);
         }
 
         private async Task<double?> MaintenanceGetMileageAfterMaintenanceCommonAsync(
@@ -145,7 +153,7 @@ namespace Technics
                 maintenance.MileageCommon = mileageCommon;
             }
 
-            var mileageAfterMaintenance = 
+            var mileageAfterMaintenance =
                 await MaintenanceGetMileageAfterMaintenanceCommonAsync(connection, transaction, maintenance);
 
             if (maintenance.MileageAfterMaintenance != mileageAfterMaintenance)
@@ -237,6 +245,17 @@ namespace Technics
             return updated;
         }
 
+        private async Task<UpdateModel> MaintenanceAfterChangeAsync(
+            SQLiteConnection connection, SQLiteTransaction transaction,
+            IEnumerable<long> techIds, IEnumerable<long> mtIds)
+        {
+            return new UpdateModel
+            {
+                Maintenance = await MaintenanceUpdateMileagesForTechsOrMtsAsync(
+                    connection, transaction, techIds, mtIds)
+            };
+        }
+
         public async Task<UpdateModel> MaintenanceSaveAsync(MaintenanceModel maintenance)
         {
             using (var connection = GetConnection())
@@ -247,8 +266,6 @@ namespace Technics
                 {
                     try
                     {
-                        var update = new UpdateModel();
-
                         var techIds = new List<long>();
 
                         var mtIds = new List<long>();
@@ -274,8 +291,7 @@ namespace Technics
 
                         await connection.ListItemSaveAsync(maintenance, transaction);
 
-                        update.Maintenance = await MaintenanceUpdateMileagesForTechsOrMtsAsync(
-                            connection, transaction, techIds, mtIds);
+                        var update = await MaintenanceAfterChangeAsync(connection, transaction, techIds, mtIds);
 
                         transaction.Commit();
 
@@ -302,16 +318,13 @@ namespace Technics
                 {
                     try
                     {
-                        var update = new UpdateModel();
-
                         await connection.ListItemDeleteAsync(maintenances, transaction);
 
                         var techIds = maintenances.Select(maintenance => maintenance.TechId).DistinctNotNullLong();
 
                         var mtIds = maintenances.Select(maintenance => maintenance.MtId).DistinctNotNullLong();
 
-                        update.Maintenance = await MaintenanceUpdateMileagesForTechsOrMtsAsync(
-                            connection, transaction, techIds, mtIds);
+                        var update = await MaintenanceAfterChangeAsync(connection, transaction, techIds, mtIds);
 
                         transaction.Commit();
 

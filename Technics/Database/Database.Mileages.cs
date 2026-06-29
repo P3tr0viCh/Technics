@@ -5,11 +5,15 @@ using P3tr0viCh.Utils;
 using P3tr0viCh.Utils.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data.Common;
+using System.Data.SQLite;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Transactions;
 using Technics.Properties;
 using static Technics.Database.Filter;
+using static Technics.Database.Interfaces;
 using static Technics.Database.Models;
 
 namespace Technics
@@ -55,7 +59,6 @@ namespace Technics
 
             object param = new
             {
-                id = mileage.Id,
                 techid = mileage.TechId,
                 datetime = mileage.DateTime
             };
@@ -171,6 +174,19 @@ namespace Technics
             return updated;
         }
 
+        private async Task<UpdateModel> MileagesAfterChangeAsync(
+            SQLiteConnection connection, SQLiteTransaction transaction, IEnumerable<long> techIds)
+        {
+            return new UpdateModel
+            {
+                Mileages = await MileagesUpdateMileagesAsync(connection, transaction, techIds),
+
+                TechParts = await TechPartsUpdateMileagesForTechsAsync(connection, transaction, techIds),
+
+                Maintenance = await MaintenancesUpdateMileagesForTechsAsync(connection, transaction, techIds)
+            };
+        }
+
         public async Task<UpdateModel> MileageSaveAsync(MileageModel mileage)
         {
             using (var connection = GetConnection())
@@ -181,8 +197,6 @@ namespace Technics
                 {
                     try
                     {
-                        var update = new UpdateModel();
-
                         var techIds = new List<long>();
 
                         Utils.ListAddNotNull(techIds, mileage.TechId);
@@ -199,11 +213,7 @@ namespace Technics
 
                         await connection.ListItemSaveAsync(mileage, transaction);
 
-                        update.Mileages = await MileagesUpdateMileagesAsync(connection, transaction, techIds);
-
-                        update.TechParts = await TechPartsUpdateMileagesForTechsAsync(connection, transaction, techIds);
-
-                        update.Maintenance = await MaintenancesUpdateMileagesForTechsAsync(connection, transaction, techIds);
+                        var update = await MileagesAfterChangeAsync(connection, transaction, techIds);
 
                         transaction.Commit();
 
@@ -230,15 +240,11 @@ namespace Technics
                 {
                     try
                     {
-                        var update = new UpdateModel();
-
                         await connection.ListItemSaveAsync(mileages, transaction);
 
                         var techIds = mileages.Select(mileage => mileage.TechId).DistinctNotNullLong();
 
-                        update.Mileages = await MileagesUpdateMileagesAsync(connection, transaction, techIds);
-
-                        update.TechParts = await TechPartsUpdateMileagesForTechsAsync(connection, transaction, techIds);
+                        var update = await MileagesAfterChangeAsync(connection, transaction, techIds);
 
                         transaction.Commit();
 
@@ -265,16 +271,12 @@ namespace Technics
                 {
                     try
                     {
-                        var update = new UpdateModel();
-
                         await connection.ListItemDeleteAsync(mileages, transaction);
 
                         var techIds = mileages.Select(mileage => mileage.TechId).Distinct()
                             .Where(id => id != null).Cast<long>();
 
-                        update.Mileages = await MileagesUpdateMileagesAsync(connection, transaction, techIds);
-
-                        update.TechParts = await TechPartsUpdateMileagesForTechsAsync(connection, transaction, techIds);
+                        var update = await MileagesAfterChangeAsync(connection, transaction, techIds);
 
                         transaction.Commit();
 
