@@ -126,6 +126,8 @@
             this.miMileagesDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.miMileagesCopy = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            this.miMileagesSelectDates = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.menuMaintenance = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -134,6 +136,10 @@
             this.miMaintenanceDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.miMaintenanceCopy = new System.Windows.Forms.ToolStripMenuItem();
+            this.miTechPartsSelectDates = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+            this.miMaintenanceSelectDates = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripContainer.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer.ContentPanel.SuspendLayout();
             this.toolStripContainer.TopToolStripPanel.SuspendLayout();
@@ -1022,40 +1028,42 @@
             this.miTechPartsChange,
             this.miTechPartsDelete,
             this.toolStripSeparator3,
-            this.miTechPartsCopy});
+            this.miTechPartsCopy,
+            this.toolStripSeparator7,
+            this.miTechPartsSelectDates});
             this.menuTechParts.Name = "menuTechParts";
-            this.menuTechParts.Size = new System.Drawing.Size(154, 106);
+            this.menuTechParts.Size = new System.Drawing.Size(186, 136);
             // 
             // miTechPartsAdd
             // 
             this.miTechPartsAdd.Name = "miTechPartsAdd";
-            this.miTechPartsAdd.Size = new System.Drawing.Size(153, 24);
+            this.miTechPartsAdd.Size = new System.Drawing.Size(185, 24);
             this.miTechPartsAdd.Text = "Добавить";
             this.miTechPartsAdd.Click += new System.EventHandler(this.MiTechPartsAdd_Click);
             // 
             // miTechPartsChange
             // 
             this.miTechPartsChange.Name = "miTechPartsChange";
-            this.miTechPartsChange.Size = new System.Drawing.Size(153, 24);
+            this.miTechPartsChange.Size = new System.Drawing.Size(185, 24);
             this.miTechPartsChange.Text = "Изменить";
             this.miTechPartsChange.Click += new System.EventHandler(this.MiTechPartsChange_Click);
             // 
             // miTechPartsDelete
             // 
             this.miTechPartsDelete.Name = "miTechPartsDelete";
-            this.miTechPartsDelete.Size = new System.Drawing.Size(153, 24);
+            this.miTechPartsDelete.Size = new System.Drawing.Size(185, 24);
             this.miTechPartsDelete.Text = "Удалить";
             this.miTechPartsDelete.Click += new System.EventHandler(this.MiTechPartsDelete_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(150, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(182, 6);
             // 
             // miTechPartsCopy
             // 
             this.miTechPartsCopy.Name = "miTechPartsCopy";
-            this.miTechPartsCopy.Size = new System.Drawing.Size(153, 24);
+            this.miTechPartsCopy.Size = new System.Drawing.Size(185, 24);
             this.miTechPartsCopy.Text = "Копировать";
             this.miTechPartsCopy.Click += new System.EventHandler(this.MiTechPartsCopy_Click);
             // 
@@ -1067,42 +1075,56 @@
             this.miMileagesChange,
             this.miMileagesDelete,
             this.toolStripSeparator4,
-            this.miMileagesCopy});
+            this.miMileagesCopy,
+            this.toolStripSeparator6,
+            this.miMileagesSelectDates});
             this.menuMileages.Name = "menuTechParts";
-            this.menuMileages.Size = new System.Drawing.Size(154, 106);
+            this.menuMileages.Size = new System.Drawing.Size(186, 136);
             // 
             // miMileagesAdd
             // 
             this.miMileagesAdd.Name = "miMileagesAdd";
-            this.miMileagesAdd.Size = new System.Drawing.Size(153, 24);
+            this.miMileagesAdd.Size = new System.Drawing.Size(185, 24);
             this.miMileagesAdd.Text = "Добавить";
             this.miMileagesAdd.Click += new System.EventHandler(this.MiMileagesAdd_Click);
             // 
             // miMileagesChange
             // 
             this.miMileagesChange.Name = "miMileagesChange";
-            this.miMileagesChange.Size = new System.Drawing.Size(153, 24);
+            this.miMileagesChange.Size = new System.Drawing.Size(185, 24);
             this.miMileagesChange.Text = "Изменить";
             this.miMileagesChange.Click += new System.EventHandler(this.MiMileagesChange_Click);
             // 
             // miMileagesDelete
             // 
             this.miMileagesDelete.Name = "miMileagesDelete";
-            this.miMileagesDelete.Size = new System.Drawing.Size(153, 24);
+            this.miMileagesDelete.Size = new System.Drawing.Size(185, 24);
             this.miMileagesDelete.Text = "Удалить";
             this.miMileagesDelete.Click += new System.EventHandler(this.MiMileagesDelete_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(150, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(182, 6);
             // 
             // miMileagesCopy
             // 
             this.miMileagesCopy.Name = "miMileagesCopy";
-            this.miMileagesCopy.Size = new System.Drawing.Size(153, 24);
+            this.miMileagesCopy.Size = new System.Drawing.Size(185, 24);
             this.miMileagesCopy.Text = "Копировать";
             this.miMileagesCopy.Click += new System.EventHandler(this.MiMileagesCopy_Click);
+            // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(182, 6);
+            // 
+            // miMileagesSelectDates
+            // 
+            this.miMileagesSelectDates.Name = "miMileagesSelectDates";
+            this.miMileagesSelectDates.Size = new System.Drawing.Size(185, 24);
+            this.miMileagesSelectDates.Text = "Переход к датам";
+            this.miMileagesSelectDates.Click += new System.EventHandler(this.MiMileagesSelectDates_Click);
             // 
             // openFileDialog
             // 
@@ -1120,42 +1142,68 @@
             this.miMaintenanceChange,
             this.miMaintenanceDelete,
             this.toolStripSeparator5,
-            this.miMaintenanceCopy});
+            this.miMaintenanceCopy,
+            this.toolStripSeparator8,
+            this.miMaintenanceSelectDates});
             this.menuMaintenance.Name = "menuTechParts";
-            this.menuMaintenance.Size = new System.Drawing.Size(154, 106);
+            this.menuMaintenance.Size = new System.Drawing.Size(186, 158);
             // 
             // miMaintenanceAdd
             // 
             this.miMaintenanceAdd.Name = "miMaintenanceAdd";
-            this.miMaintenanceAdd.Size = new System.Drawing.Size(153, 24);
+            this.miMaintenanceAdd.Size = new System.Drawing.Size(185, 24);
             this.miMaintenanceAdd.Text = "Добавить";
             this.miMaintenanceAdd.Click += new System.EventHandler(this.MiMaintenanceAdd_Click);
             // 
             // miMaintenanceChange
             // 
             this.miMaintenanceChange.Name = "miMaintenanceChange";
-            this.miMaintenanceChange.Size = new System.Drawing.Size(153, 24);
+            this.miMaintenanceChange.Size = new System.Drawing.Size(185, 24);
             this.miMaintenanceChange.Text = "Изменить";
             this.miMaintenanceChange.Click += new System.EventHandler(this.MiMaintenanceChange_Click);
             // 
             // miMaintenanceDelete
             // 
             this.miMaintenanceDelete.Name = "miMaintenanceDelete";
-            this.miMaintenanceDelete.Size = new System.Drawing.Size(153, 24);
+            this.miMaintenanceDelete.Size = new System.Drawing.Size(185, 24);
             this.miMaintenanceDelete.Text = "Удалить";
             this.miMaintenanceDelete.Click += new System.EventHandler(this.MiMaintenanceDelete_Click);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(150, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(182, 6);
             // 
             // miMaintenanceCopy
             // 
             this.miMaintenanceCopy.Name = "miMaintenanceCopy";
-            this.miMaintenanceCopy.Size = new System.Drawing.Size(153, 24);
+            this.miMaintenanceCopy.Size = new System.Drawing.Size(185, 24);
             this.miMaintenanceCopy.Text = "Копировать";
             this.miMaintenanceCopy.Click += new System.EventHandler(this.MiMaintenanceCopy_Click);
+            // 
+            // miTechPartsSelectDates
+            // 
+            this.miTechPartsSelectDates.Name = "miTechPartsSelectDates";
+            this.miTechPartsSelectDates.Size = new System.Drawing.Size(185, 24);
+            this.miTechPartsSelectDates.Text = "Переход к датам";
+            this.miTechPartsSelectDates.Click += new System.EventHandler(this.MiTechPartsSelectDates_Click);
+            // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(182, 6);
+            // 
+            // miMaintenanceSelectDates
+            // 
+            this.miMaintenanceSelectDates.Name = "miMaintenanceSelectDates";
+            this.miMaintenanceSelectDates.Size = new System.Drawing.Size(185, 24);
+            this.miMaintenanceSelectDates.Text = "Переход к датам";
+            this.miMaintenanceSelectDates.Click += new System.EventHandler(this.MiMaintenanceSelectDates_Click);
+            // 
+            // toolStripSeparator8
+            // 
+            this.toolStripSeparator8.Name = "toolStripSeparator8";
+            this.toolStripSeparator8.Size = new System.Drawing.Size(182, 6);
             // 
             // Main
             // 
@@ -1321,6 +1369,12 @@
         private System.Windows.Forms.ToolStripMenuItem miMileagesCopy;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripMenuItem miMaintenanceCopy;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+        private System.Windows.Forms.ToolStripMenuItem miMileagesSelectDates;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
+        private System.Windows.Forms.ToolStripMenuItem miTechPartsSelectDates;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
+        private System.Windows.Forms.ToolStripMenuItem miMaintenanceSelectDates;
     }
 }
 

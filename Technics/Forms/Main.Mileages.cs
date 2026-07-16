@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Technics.Presenters;
 using Technics.Properties;
 using static P3tr0viCh.Utils.Gpx;
+using static Technics.Database.Interfaces;
 using static Technics.Database.Models;
 using static Technics.ProgramStatus;
 
@@ -324,6 +325,14 @@ namespace Technics
             };
 
             return mileage;
+        }
+
+        private void MileagesSelectDates()
+        {
+            var dateTime = MileageSelected.DateTime;
+
+            dgvTechParts.SetSelectedRows(ListFindByDateTime(TechPartList, dateTime));
+            dgvMaintenance.SetSelectedRows(ListFindByDateTime(MaintenanceList, dateTime));
         }
     }
 }

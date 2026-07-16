@@ -213,5 +213,13 @@ namespace Technics
 
             dgvTechParts.Focus();
         }
+
+        private void TechPartsSelectDates()
+        {
+            var dateTime = TechPartSelected.DateTime;
+
+            dgvMileages.SetSelectedRows(ListFindByDateTime(MileageList, dateTime));
+            dgvMaintenance.SetSelectedRows(ListFindByDateTime(MaintenanceList, dateTime));
+        }
     }
 }

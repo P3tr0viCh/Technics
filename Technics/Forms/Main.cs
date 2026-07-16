@@ -101,7 +101,9 @@ namespace Technics
 
             await LoadFromFilesAsync(LoadFilesType.DirectoryTracks);
 
+#if DEBUG
             Lists.Default.Folders.ForEach(f => DebugWrite.Line(f.Text + ": " + f.Path));
+#endif
 
             SelfChange = false;
         }
@@ -514,6 +516,21 @@ namespace Technics
         private void MiMaintenanceCopy_Click(object sender, EventArgs e)
         {
             CopyToClipboard(dgvMaintenance);
+        }
+
+        private void MiMileagesSelectDates_Click(object sender, EventArgs e)
+        {
+            MileagesSelectDates();
+        }
+
+        private void MiTechPartsSelectDates_Click(object sender, EventArgs e)
+        {
+            TechPartsSelectDates();
+        }
+
+        private void MiMaintenanceSelectDates_Click(object sender, EventArgs e)
+        {
+            MaintenanceSelectDates();
         }
     }
 }

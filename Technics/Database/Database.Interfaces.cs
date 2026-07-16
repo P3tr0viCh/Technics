@@ -1,4 +1,6 @@
-﻿namespace Technics
+﻿using System;
+
+namespace Technics
 {
     public partial class Database
     {
@@ -14,6 +16,11 @@
             {
                 long? PartId { get; set; }
                 string PartText { get; set; }
+            }
+
+            public interface IDateTime
+            {
+                DateTime DateTime { get; set; }
             }
         }
     }

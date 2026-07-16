@@ -6,7 +6,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Technics.Presenters;
 using Technics.Properties;
-using static Technics.Database.Filter;
 using static Technics.Database.Models;
 using static Technics.ProgramStatus;
 
@@ -213,6 +212,14 @@ namespace Technics
             }
 
             dgvMaintenance.Focus();
+        }
+
+        private void MaintenanceSelectDates()
+        {
+            var dateTime = MaintenanceSelected.DateTime;
+
+            dgvMileages.SetSelectedRows(ListFindByDateTime(MileageList, dateTime));
+            dgvTechParts.SetSelectedRows(ListFindByDateTime(TechPartList, dateTime));
         }
     }
 }

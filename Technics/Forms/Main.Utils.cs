@@ -1,9 +1,12 @@
 ﻿using P3tr0viCh.Utils;
 using P3tr0viCh.Utils.Extensions;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using Technics.Properties;
+using static Technics.Database.Interfaces;
 
 namespace Technics
 {
@@ -159,12 +162,19 @@ namespace Technics
             ctsTechsLoad.Cancel();
 
             ctsMileagesLoad.Cancel();
-            
+
             ctsTechPartsLoad.Cancel();
 
             ctsMaintenanceLoad.Cancel();
 
             ctsCheckDirectoryTracks.Cancel();
+        }
+
+        private T ListFindByDateTime<T>(IEnumerable<T> source, DateTime dateTime) where T : IDateTime
+        {
+            if (source == null || source.IsEmpty() || dateTime == default) return default;
+
+            return source.OrderBy(m => Math.Abs((m.DateTime - dateTime).Ticks)).FirstOrDefault();
         }
     }
 }

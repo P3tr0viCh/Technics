@@ -2,6 +2,7 @@
 using P3tr0viCh.Database;
 using System;
 using Technics.Properties;
+using static Technics.Database.Interfaces;
 
 namespace Technics
 {
@@ -65,7 +66,7 @@ namespace Technics
 
             // ---------------------------------------------------------------
             [Table(Tables.mileages)]
-            public class MileageModel : BaseTechId
+            public class MileageModel : BaseTechId, IDateTime
             {
                 public DateTime DateTime { get; set; } = default;
 
@@ -121,7 +122,7 @@ namespace Technics
 
             // ---------------------------------------------------------------
             [Table(Tables.techparts)]
-            public class TechPartModel : BaseTechId
+            public class TechPartModel : BaseTechId, IDateTime
             {
                 private long? partId = null;
                 public long? PartId
@@ -136,6 +137,8 @@ namespace Technics
 
                 public DateTime DateTimeInstall { get; set; } = default;
                 public DateTime? DateTimeRemove { get; set; } = default;
+
+                public DateTime DateTime { get => DateTimeInstall; set => DateTimeInstall = value; }
 
                 public double? Mileage { get; set; } = null;
 
@@ -185,7 +188,7 @@ namespace Technics
 
             // ---------------------------------------------------------------
             [Table(Tables.maintenance)]
-            public class MaintenanceModel : BaseTechId
+            public class MaintenanceModel : BaseTechId, IDateTime
             {
                 private long? mtId = null;
                 public long? MtId
