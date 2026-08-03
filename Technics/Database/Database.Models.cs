@@ -138,6 +138,8 @@ namespace Technics
                 public DateTime DateTimeInstall { get; set; } = default;
                 public DateTime? DateTimeRemove { get; set; } = default;
 
+                [Computed]
+                [Write(false)]
                 public DateTime DateTime { get => DateTimeInstall; set => DateTimeInstall = value; }
 
                 public double? Mileage { get; set; } = null;
