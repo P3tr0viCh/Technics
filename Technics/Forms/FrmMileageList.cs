@@ -56,23 +56,27 @@ namespace Technics
 
         private void FrmMileageList_Load(IEnumerable<MileageModel> mileages)
         {
-            LoadData();
-
             var techIds = mileages.Select(mileage => mileage.TechId).Distinct();
+
+            TechModel tech;
 
             if (techIds.Count() == 1)
             {
-                Tech = Lists.Default.Techs.Find(techIds.First());
+                tech = Lists.Default.Techs.Find(techIds.First());
             }
             else
             {
-                Tech = new TechModel();
+                tech = new TechModel();
             }
+
+            LoadData(tech?.Id);
+
+            Tech = tech;
         }
 
-        private void LoadData()
+        private void LoadData(long? techId)
         {
-            bindingSourceTechs.DataSource = Lists.Default.Techs.ToBindingList();
+            bindingSourceTechs.DataSource = Lists.Default.Techs.GetAvailableForUse(techId);
 
             bindingSourceTechs.Insert(0, new TechModel());
         }
