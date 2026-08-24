@@ -65,9 +65,20 @@ namespace Technics
             AppSettings.LoadDataGridColumns(dgvTechParts, AppSettings.Default.ColumnStates);
             AppSettings.LoadDataGridColumns(dgvMaintenance, AppSettings.Default.ColumnStates);
 
-            panelTechs.Width = AppSettings.Default.PanelTechsWidth;
-            panelBottom.Height = AppSettings.Default.PanelBottomHeight;
-            panelTechPart.Width = AppSettings.Default.PanelTechPartWidth;
+            panelTechs.Width = CheckValue(AppSettings.Default.PanelTechsWidth,
+                toolStripContainer.ContentPanel.Width - splitterTechs.MinExtra,
+                splitterTechs.MinSize,
+                panelTechs.Width);
+
+            panelBottom.Height = CheckValue(AppSettings.Default.PanelBottomHeight,
+                toolStripContainer.ContentPanel.Height - splitterTopBottom.MinExtra,
+                splitterTopBottom.MinSize,
+                panelBottom.Height);
+
+            panelTechPart.Width = CheckValue(AppSettings.Default.PanelTechPartWidth,
+                toolStripContainer.ContentPanel.Width - splitterTechPart.MinExtra,
+                splitterTechPart.MinSize,
+                (toolStripContainer.ContentPanel.Width - splitterTechPart.Width) / 2);
 
             ToolStripsShowText = AppSettings.Default.ToolStripsShowText;
 

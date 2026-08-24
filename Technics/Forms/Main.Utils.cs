@@ -176,5 +176,10 @@ namespace Technics
 
             return source.OrderBy(m => Math.Abs((m.DateTime - dateTime).Ticks)).FirstOrDefault();
         }
+
+        private int CheckValue(int value, int maxSize, int minSize, int defValue)
+        {
+            return value > maxSize || value < minSize ? defValue : value;
+        }
     }
 }
