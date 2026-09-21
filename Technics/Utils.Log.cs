@@ -35,7 +35,7 @@ namespace Technics
 
                 DebugWrite.Line(s, memberName);
 
-                InternalLog.Default.Write($"{memberName}: {s}");
+                InternalLog.Default.Info($"{memberName}: {s}");
             }
 
             public static void Error(Exception e, [CallerMemberName] string memberName = "")
@@ -53,7 +53,7 @@ namespace Technics
 
                 DebugWrite.Error(err, memberName);
 
-                InternalLog.Default.Write($"{memberName} fail: {err}");
+                InternalLog.Default.Error($"{memberName} fail: {err}");
             }
 
             public static void Query(Exception e, [CallerMemberName] string memberName = "")

@@ -5,15 +5,12 @@ using P3tr0viCh.Utils;
 using P3tr0viCh.Utils.Extensions;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Data.Common;
 using System.Data.SQLite;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Transactions;
 using Technics.Properties;
 using static Technics.Database.Filter;
-using static Technics.Database.Interfaces;
 using static Technics.Database.Models;
 
 namespace Technics

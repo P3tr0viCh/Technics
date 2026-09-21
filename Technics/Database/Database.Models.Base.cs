@@ -38,6 +38,7 @@ namespace Technics
             public abstract class BaseTextDescriptionFolder : BaseTextDescription
             {
                 private long? folderId = null;
+
                 public long? FolderId
                 {
                     get => folderId;
@@ -74,15 +75,31 @@ namespace Technics
 
             public abstract class BaseTextDescriptionFolderState : BaseTextDescriptionFolder
             {
-                public bool State { get; set; } = false;
+                private bool state = false;
+                
+                private bool availableForUse = true;
+                
+                private string stateAsString = string.Empty;
+
+                public bool State
+                {
+                    get => state;
+                    set
+                    {
+                        state = value;
+                        
+                        availableForUse = state != true;
+                        stateAsString = state ? Resources.TextCellX : string.Empty;
+                    }
+                }
 
                 [Computed]
                 [Write(false)]
-                public bool AvailableForUse => State != true;
+                public bool AvailableForUse => availableForUse;
 
                 [Computed]
                 [Write(false)]
-                public string StateAsString => State ? Resources.TextCellX : string.Empty;
+                public string StateAsString => stateAsString;
 
                 public override void Clear()
                 {
@@ -109,6 +126,7 @@ namespace Technics
             public abstract class BaseTechId : BaseId, ITechId
             {
                 private long? techId = null;
+
                 public long? TechId
                 {
                     get => techId;

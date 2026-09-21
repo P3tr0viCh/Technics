@@ -36,8 +36,6 @@ namespace Technics
                 bindingSourceTechParts.Position = 0;
 
                 TechPartsListChanged();
-
-                Utils.Log.Info(ResourcesLog.LoadOk);
             }
             catch (TaskCanceledException e)
             {

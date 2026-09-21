@@ -36,7 +36,7 @@ namespace Technics
 
         private async void Main_Load(object sender, EventArgs e)
         {
-            Text = string.Format(Resources.TitleMain, new AssemblyDecorator().VersionString(false));
+            Text = string.Format(Resources.TitleMain, AssemblyDecorator.TitleVersionString());
 
             if (!SetDirectories()) return;
 

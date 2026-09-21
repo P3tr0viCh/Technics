@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using Technics.Presenters;
 using Technics.Properties;
 using static P3tr0viCh.Utils.Gpx;
-using static Technics.Database.Interfaces;
 using static Technics.Database.Models;
 using static Technics.ProgramStatus;
 
@@ -39,8 +38,6 @@ namespace Technics
                 bindingSourceMileages.Position = 0;
 
                 MileagesListChanged();
-
-                Utils.Log.Info(ResourcesLog.LoadOk);
             }
             catch (TaskCanceledException e)
             {

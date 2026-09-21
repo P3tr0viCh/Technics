@@ -36,8 +36,6 @@ namespace Technics
                 bindingSourceMaintenance.Position = 0;
 
                 MaintenanceListChanged();
-
-                Utils.Log.Info(ResourcesLog.LoadOk);
             }
             catch (TaskCanceledException e)
             {

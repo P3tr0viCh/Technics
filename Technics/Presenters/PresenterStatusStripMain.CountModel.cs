@@ -5,9 +5,14 @@
         public class CountModel
         {
             private readonly PresenterStatusStripMain parent;
+            
             private readonly StatusLabel statusLabel;
+            
             private readonly string textCount;
             private readonly string textSelectedCount;
+
+            private int count = 0;
+            private int selectedCount = 0;
 
             public CountModel(PresenterStatusStripMain parent, StatusLabel statusLabel,
                 string textCount, string textSelectedCount)
@@ -17,8 +22,6 @@
                 this.textCount = textCount;
                 this.textSelectedCount = textSelectedCount;
             }
-
-            private int count = 0;
 
             public int Count
             {
@@ -30,8 +33,6 @@
                     UpdateText();
                 }
             }
-
-            private int selectedCount = 0;
 
             public int SelectedCount
             {

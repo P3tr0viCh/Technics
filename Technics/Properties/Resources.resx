@@ -256,10 +256,10 @@
 {1}</value>
   </data>
   <data name="StatusMileagesSelectedCount" xml:space="preserve">
-    <value>Пробеги: {0} (выделено: {0})</value>
+    <value>Пробеги: {0} (выделено: {1})</value>
   </data>
   <data name="StatusTechPartsSelectedCount" xml:space="preserve">
-    <value>Детали: {0} (выделено: {0})</value>
+    <value>Детали: {0} (выделено: {1})</value>
   </data>
   <data name="GitHubLink" xml:space="preserve">
     <value>https://github.com/P3tr0viCh/Technics</value>

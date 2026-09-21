@@ -480,7 +480,7 @@ namespace Technics.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Пробеги: {0} (выделено: {0}).
+        ///   Looks up a localized string similar to Пробеги: {0} (выделено: {1}).
         /// </summary>
         internal static string StatusMileagesSelectedCount {
             get {
@@ -507,7 +507,7 @@ namespace Technics.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Детали: {0} (выделено: {0}).
+        ///   Looks up a localized string similar to Детали: {0} (выделено: {1}).
         /// </summary>
         internal static string StatusTechPartsSelectedCount {
             get {

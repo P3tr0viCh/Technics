@@ -39,7 +39,6 @@ namespace Technics
                 var programDataDirectory =
 #if DEBUG
                     Path.Combine(Files.ExecutableDirectory(), Files.ExecutableName());
-
 #else
                     Files.AppDataLocalDirectory();
 #endif

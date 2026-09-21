@@ -1,7 +1,6 @@
 ﻿using Dapper.Contrib.Extensions;
 using P3tr0viCh.Database;
 using System;
-using Technics.Properties;
 using static Technics.Database.Interfaces;
 
 namespace Technics
@@ -15,6 +14,7 @@ namespace Technics
             public class FolderModel : BaseText
             {
                 private long? parentId = null;
+
                 public long? ParentId
                 {
                     get => parentId;
@@ -125,6 +125,7 @@ namespace Technics
             public class TechPartModel : BaseTechId, IDateTime
             {
                 private long? partId = null;
+
                 public long? PartId
                 {
                     get => partId;
@@ -193,6 +194,7 @@ namespace Technics
             public class MaintenanceModel : BaseTechId, IDateTime
             {
                 private long? mtId = null;
+
                 public long? MtId
                 {
                     get => mtId;
