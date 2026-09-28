@@ -84,6 +84,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppSettings\AppSettings.cs" />
+    <Compile Include="AppSettings\Settings.cs" />
     <Compile Include="Consts.cs" />
     <Compile Include="Database\Database.Models.Base.cs" />
     <Compile Include="Database\Database.Mts.cs" />

@@ -127,7 +127,7 @@ namespace Technics
         {
             dtpDateTimeInstall.CustomFormat =
             dtpDateTimeRemove.CustomFormat =
-                AppSettings.Default.FormatDateTime;
+                AppSettings.Settings.FormatDateTime;
         }
 
         private void AssertDates()
@@ -175,7 +175,7 @@ namespace Technics
                         throw new Exception(string.Format(Resources.ErrorPartInUse,
                             lastItem.PartText,
                             lastItem.TechText,
-                            lastItem.DateTimeInstall.ToString(AppSettings.Default.FormatDateTime)));
+                            lastItem.DateTimeInstall.ToString(AppSettings.Settings.FormatDateTime)));
                     }
 
                     if (dateInstall < lastItem.DateTimeRemove)
@@ -183,7 +183,7 @@ namespace Technics
                         throw new Exception(string.Format(Resources.ErrorPartDateInstallLessDateRemove,
                             lastItem.PartText,
                             lastItem.TechText,
-                            lastItem.DateTimeRemove?.ToString(AppSettings.Default.FormatDateTime)));
+                            lastItem.DateTimeRemove?.ToString(AppSettings.Settings.FormatDateTime)));
                     }
 
                     return;
@@ -200,7 +200,7 @@ namespace Technics
                     throw new Exception(string.Format(Resources.ErrorPartDateInstallLessDateNextInstall,
                         nextItem.PartText,
                         nextItem.TechText,
-                        nextItem.DateTimeInstall.ToString(AppSettings.Default.FormatDateTime)));
+                        nextItem.DateTimeInstall.ToString(AppSettings.Settings.FormatDateTime)));
                 }
                 else
                 {
@@ -209,7 +209,7 @@ namespace Technics
                         throw new Exception(string.Format(Resources.ErrorPartDateRemoveGreaterDateNextInstall,
                             nextItem.PartText,
                             nextItem.TechText,
-                            nextItem.DateTimeInstall.ToString(AppSettings.Default.FormatDateTime)));
+                            nextItem.DateTimeInstall.ToString(AppSettings.Settings.FormatDateTime)));
                     }
                 }
             }

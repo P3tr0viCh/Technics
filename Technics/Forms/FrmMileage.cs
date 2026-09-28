@@ -30,11 +30,11 @@ namespace Technics
 
                 if (value.MileageType == MileageType.Single)
                 {
-                    tboxMileage.SetDouble(value.Mileage, AppSettings.Default.FormatMileagesMileage);
+                    tboxMileage.SetDouble(value.Mileage, AppSettings.Settings.FormatMileagesMileage);
                 }
                 else
                 {
-                    tboxMileageCommon.SetDouble(value.MileageCommon, AppSettings.Default.FormatMileagesMileageCommon);
+                    tboxMileageCommon.SetDouble(value.MileageCommon, AppSettings.Settings.FormatMileagesMileageCommon);
                 }
 
                 tboxDescription.SetText(value.Description);
@@ -83,7 +83,7 @@ namespace Technics
 
             bindingSourceTechs.Insert(0, new TechModel());
 
-            dtpDateTime.CustomFormat = AppSettings.Default.FormatDateTime;
+            dtpDateTime.CustomFormat = AppSettings.Settings.FormatDateTime;
         }
 
         private class MileageCommons
@@ -227,9 +227,9 @@ namespace Technics
 
                 selfChange = true;
 
-                tboxMileageCommon.SetDouble(mileageCommon, AppSettings.Default.FormatMileagesMileageCommon);
+                tboxMileageCommon.SetDouble(mileageCommon, AppSettings.Settings.FormatMileagesMileageCommon);
 
-                tboxMileage.SetDouble(mileage, AppSettings.Default.FormatMileagesMileage);
+                tboxMileage.SetDouble(mileage, AppSettings.Settings.FormatMileagesMileage);
 
                 selfChange = false;
 

@@ -2,6 +2,7 @@
 using P3tr0viCh.Utils;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -168,7 +169,7 @@ namespace Technics
 
                 tvTechs.ExpandAll();
 
-                if (!AppSettings.Default.ArchiveExpanded)
+                if (!AppSettings.Settings.ArchiveExpanded)
                 {
                     TreeNodeArchive.Collapse();
                 }

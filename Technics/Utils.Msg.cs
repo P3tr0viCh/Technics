@@ -103,7 +103,7 @@ namespace Technics
 
                 if (item is MileageModel mileage)
                 {
-                    var dt = mileage.DateTime.ToString(AppSettings.Default.FormatDateTime);
+                    var dt = mileage.DateTime.ToString(AppSettings.Settings.FormatDateTime);
 
                     return count == 1 ?
                         string.Format(Resources.QuestionMileageDelete, dt) :
@@ -112,7 +112,7 @@ namespace Technics
 
                 if (item is TechPartModel techPart)
                 {
-                    var dt = techPart.DateTimeInstall.ToString(AppSettings.Default.FormatDateTime);
+                    var dt = techPart.DateTimeInstall.ToString(AppSettings.Settings.FormatDateTime);
 
                     return count == 1 ?
                         string.Format(Resources.QuestionTechPartDelete, techPart.PartText, dt) :
@@ -121,7 +121,7 @@ namespace Technics
 
                 if (item is MaintenanceModel maintenance)
                 {
-                    var dt = maintenance.DateTime.ToString(AppSettings.Default.FormatDateTime);
+                    var dt = maintenance.DateTime.ToString(AppSettings.Settings.FormatDateTime);
 
                     return count == 1 ?
                         string.Format(Resources.QuestionMaintenanceDelete, maintenance.MtText, dt) :

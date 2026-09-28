@@ -59,28 +59,28 @@ namespace Technics
 
             ProgramStatus.Default.StatusChanged += ProgramStatus_StatusChanged;
 
-            AppSettings.LoadFormState(this, AppSettings.Default.FormStates);
+            AppSettings.Default.LoadFormState(this, AppSettings.Settings.FormStates);
 
-            AppSettings.LoadDataGridColumns(dgvMileages, AppSettings.Default.ColumnStates);
-            AppSettings.LoadDataGridColumns(dgvTechParts, AppSettings.Default.ColumnStates);
-            AppSettings.LoadDataGridColumns(dgvMaintenance, AppSettings.Default.ColumnStates);
+            AppSettings.Default.LoadDataGridColumns(dgvMileages, AppSettings.Settings.ColumnStates);
+            AppSettings.Default.LoadDataGridColumns(dgvTechParts, AppSettings.Settings.ColumnStates);
+            AppSettings.Default.LoadDataGridColumns(dgvMaintenance, AppSettings.Settings.ColumnStates);
 
-            panelTechs.Width = CheckValue(AppSettings.Default.PanelTechsWidth,
+            panelTechs.Width = CheckValue(AppSettings.Settings.PanelTechsWidth,
                 toolStripContainer.ContentPanel.Width - splitterTechs.MinExtra,
                 splitterTechs.MinSize,
                 panelTechs.Width);
 
-            panelBottom.Height = CheckValue(AppSettings.Default.PanelBottomHeight,
+            panelBottom.Height = CheckValue(AppSettings.Settings.PanelBottomHeight,
                 toolStripContainer.ContentPanel.Height - splitterTopBottom.MinExtra,
                 splitterTopBottom.MinSize,
                 panelBottom.Height);
 
-            panelTechPart.Width = CheckValue(AppSettings.Default.PanelTechPartWidth,
+            panelTechPart.Width = CheckValue(AppSettings.Settings.PanelTechPartWidth,
                 toolStripContainer.ContentPanel.Width - splitterTechPart.MinExtra,
                 splitterTechPart.MinSize,
                 (toolStripContainer.ContentPanel.Width - splitterTechPart.Width) / 2);
 
-            ToolStripsShowText = AppSettings.Default.ToolStripsShowText;
+            ToolStripsShowText = AppSettings.Settings.ToolStripsShowText;
 
             presenterDataGridViewMileages.SortColumn = MileagesDateTime.Name;
             presenterDataGridViewMileages.SortOrder = ComparerSortOrder.Descending;
@@ -143,19 +143,19 @@ namespace Technics
                     break;
             }
 
-            AppSettings.SaveFormState(this, AppSettings.Default.FormStates);
+            AppSettings.Default.SaveFormState(this, AppSettings.Settings.FormStates);
 
-            AppSettings.SaveDataGridColumns(dgvMileages, AppSettings.Default.ColumnStates);
-            AppSettings.SaveDataGridColumns(dgvTechParts, AppSettings.Default.ColumnStates);
-            AppSettings.SaveDataGridColumns(dgvMaintenance, AppSettings.Default.ColumnStates);
+            AppSettings.Default.SaveDataGridColumns(dgvMileages, AppSettings.Settings.ColumnStates);
+            AppSettings.Default.SaveDataGridColumns(dgvTechParts, AppSettings.Settings.ColumnStates);
+            AppSettings.Default.SaveDataGridColumns(dgvMaintenance, AppSettings.Settings.ColumnStates);
 
-            AppSettings.Default.PanelTechsWidth = panelTechs.Width;
-            AppSettings.Default.PanelBottomHeight = panelBottom.Height;
-            AppSettings.Default.PanelTechPartWidth = panelTechPart.Width;
+            AppSettings.Settings.PanelTechsWidth = panelTechs.Width;
+            AppSettings.Settings.PanelBottomHeight = panelBottom.Height;
+            AppSettings.Settings.PanelTechPartWidth = panelTechPart.Width;
 
-            AppSettings.Default.ToolStripsShowText = miViewToolStripsShowText.Checked;
+            AppSettings.Settings.ToolStripsShowText = miViewToolStripsShowText.Checked;
 
-            AppSettings.Default.ArchiveExpanded = TreeNodeArchive.IsExpanded;
+            AppSettings.Settings.ArchiveExpanded = TreeNodeArchive.IsExpanded;
 
             AppSettingsSave();
 
@@ -316,7 +316,7 @@ namespace Technics
             {
                 miViewToolStripsShowText.Checked = value;
 
-                AppSettings.Default.ToolStripsShowText = value;
+                AppSettings.Settings.ToolStripsShowText = value;
 
                 toolStripMain.SetShowTextAndToolTips(value);
                 toolStripTechs.SetShowTextAndToolTips(value);

@@ -161,7 +161,7 @@ namespace Technics
                     case LoadFilesType.FileDialog:
                         openFileDialog.FileName = string.Empty;
 
-                        openFileDialog.InitialDirectory = AppSettings.Default.DirectoryLastMileages;
+                        openFileDialog.InitialDirectory = AppSettings.Settings.DirectoryLastMileages;
 
                         openFileDialog.Filter = Resources.FilterOpenFileDialogMileages;
 
@@ -173,7 +173,7 @@ namespace Technics
 
                         break;
                     case LoadFilesType.FolderDialog:
-                        folderBrowserDialog.SelectedPath = AppSettings.Default.DirectoryLastMileages;
+                        folderBrowserDialog.SelectedPath = AppSettings.Settings.DirectoryLastMileages;
 
                         if (folderBrowserDialog.ShowDialog() != DialogResult.OK) return;
 
@@ -205,7 +205,7 @@ namespace Technics
             {
                 case LoadFilesType.FileDialog:
                 case LoadFilesType.FolderDialog:
-                    AppSettings.Default.DirectoryLastMileages = directoryLastMileages;
+                    AppSettings.Settings.DirectoryLastMileages = directoryLastMileages;
 
                     Utils.Log.Info(string.Format(ResourcesLog.OpenFiles, directoryLastMileages, count));
 

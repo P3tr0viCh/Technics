@@ -44,7 +44,7 @@ namespace Technics
 #endif
                 var programDirectoryCreated = CreateProgramDirectory(programDataDirectory);
 
-                AppSettings.Directory = programDataDirectory;
+                AppSettings.Default.Directory = programDataDirectory;
 
                 Utils.Log.Directory = programDataDirectory;
 
@@ -61,7 +61,7 @@ namespace Technics
 
                 Utils.Log.Info(Utils.Log.Directory, ResourcesLog.PathLogsDirectory);
 
-                Utils.Log.Info(AppSettings.FilePath, ResourcesLog.PathSettings);
+                Utils.Log.Info(AppSettings.Default.FilePath, ResourcesLog.PathSettings);
 
                 return true;
             }
@@ -85,11 +85,11 @@ namespace Technics
         {
             try
             {
-                var databaseDirectory = AppSettings.Default.DirectoryDatabase;
+                var databaseDirectory = AppSettings.Settings.DirectoryDatabase;
 
                 if (databaseDirectory.IsEmpty())
                 {
-                    databaseDirectory = AppSettings.Directory;
+                    databaseDirectory = AppSettings.Default.Directory;
                 }
 
                 try
@@ -100,9 +100,9 @@ namespace Technics
                 {
                     Utils.Log.Error(e);
 
-                    databaseDirectory = AppSettings.Directory;
+                    databaseDirectory = AppSettings.Default.Directory;
 
-                    AppSettings.Default.DirectoryDatabase = string.Empty;
+                    AppSettings.Settings.DirectoryDatabase = string.Empty;
 
                     Utils.Msg.Error(Resources.MsgDatabaseCreateFail, e.Message, databaseDirectory);
                 }
@@ -131,17 +131,16 @@ namespace Technics
 
         public void AppSettingsLoad()
         {
-            if (!AppSettings.Default.Load())
-            {
-                Utils.Log.Error(AppSettings.LastError);
-            }
+            if (AppSettings.Default.Load()) return;
+
+            Utils.Log.Error(AppSettings.Default.LastError);
         }
 
         public void AppSettingsSave()
         {
             if (AppSettings.Default.Save()) return;
 
-            Utils.Log.Error(AppSettings.LastError);
+            Utils.Log.Error(AppSettings.Default.LastError);
         }
 
         private void SetTags()

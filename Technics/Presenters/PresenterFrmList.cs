@@ -58,16 +58,16 @@ namespace Technics.Presenters
 
         protected override void LoadFormState()
         {
-            FrmList.ToolStrip.SetShowTextAndToolTips(AppSettings.Default.ToolStripsShowText);
+            FrmList.ToolStrip.SetShowTextAndToolTips(AppSettings.Settings.ToolStripsShowText);
 
-            AppSettings.LoadFormState(Form, ListType.ToString(), AppSettings.Default.FormStates);
-            AppSettings.LoadDataGridColumns(FrmList.DataGridView, ListType.ToString(), AppSettings.Default.ColumnStates);
+            AppSettings.Default.LoadFormState(Form, ListType.ToString(), AppSettings.Settings.FormStates);
+            AppSettings.Default.LoadDataGridColumns(FrmList.DataGridView, ListType.ToString(), AppSettings.Settings.ColumnStates);
         }
 
         protected override void SaveFormState()
         {
-            AppSettings.SaveFormState(Form, ListType.ToString(), AppSettings.Default.FormStates);
-            AppSettings.SaveDataGridColumns(FrmList.DataGridView, ListType.ToString(), AppSettings.Default.ColumnStates);
+            AppSettings.Default.SaveFormState(Form, ListType.ToString(), AppSettings.Settings.FormStates);
+            AppSettings.Default.SaveDataGridColumns(FrmList.DataGridView, ListType.ToString(), AppSettings.Settings.ColumnStates);
 
             AppSettings.Default.Save();
         }

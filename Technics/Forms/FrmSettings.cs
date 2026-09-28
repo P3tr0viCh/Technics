@@ -6,7 +6,7 @@ namespace Technics
 {
     internal class FrmSettings : FrmSettingsBase
     {
-        public FrmSettings(ISettingsBase settings) : base(settings)
+        public FrmSettings(ISettingsStore settingsStore) : base(settingsStore)
         {
         }
 
@@ -22,12 +22,12 @@ namespace Technics
 
         protected override void SaveFormState()
         {
-            AppSettings.SaveFormState(this, AppSettings.Default.FormStates);
+            AppSettings.Default.SaveFormState(this, AppSettings.Settings.FormStates);
         }
 
         protected override void LoadFormState()
         {
-            AppSettings.LoadFormState(this, AppSettings.Default.FormStates);
+            AppSettings.Default.LoadFormState(this, AppSettings.Settings.FormStates);
         }
 
         protected override void SettingsHasError(Exception e)

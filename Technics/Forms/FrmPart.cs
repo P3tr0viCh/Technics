@@ -98,7 +98,7 @@ namespace Technics.Forms
                     throw new Exception(string.Format(Resources.ErrorPartInUse,
                         lastItem.PartText,
                         lastItem.TechText,
-                        lastItem.DateTimeInstall.ToString(AppSettings.Default.FormatDateTime)));
+                        lastItem.DateTimeInstall.ToString(AppSettings.Settings.FormatDateTime)));
                 }
             }
             finally

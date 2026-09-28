@@ -54,16 +54,16 @@ namespace Technics
 
         public static void UpdateSettings()
         {
-            DateTime.Format = AppSettings.Default.FormatDateTime;
+            DateTime.Format = AppSettings.Settings.FormatDateTime;
 
-            MileagesMileage.Format = AppSettings.Default.FormatMileagesMileage;
-            MileagesMileageCommon.Format = AppSettings.Default.FormatMileagesMileageCommon;
+            MileagesMileage.Format = AppSettings.Settings.FormatMileagesMileage;
+            MileagesMileageCommon.Format = AppSettings.Settings.FormatMileagesMileageCommon;
 
-            TechPartsMileage.Format = AppSettings.Default.FormatTechPartsMileage;
-            TechPartsMileageCommon.Format = AppSettings.Default.FormatTechPartsMileageCommon;
+            TechPartsMileage.Format = AppSettings.Settings.FormatTechPartsMileage;
+            TechPartsMileageCommon.Format = AppSettings.Settings.FormatTechPartsMileageCommon;
 
-            MaintenanceMileageCommon.Format = AppSettings.Default.FormatMaintenanceMileageCommon;
-            MaintenanceMileageAfterMaintenance.Format = AppSettings.Default.FormatMaintenanceMileageAfterMaintenance;
+            MaintenanceMileageCommon.Format = AppSettings.Settings.FormatMaintenanceMileageCommon;
+            MaintenanceMileageAfterMaintenance.Format = AppSettings.Settings.FormatMaintenanceMileageAfterMaintenance;
         }
     }
 }

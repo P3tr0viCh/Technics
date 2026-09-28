@@ -124,7 +124,7 @@ namespace Technics
 
         private void UpdateSettings()
         {
-            dtpDateTime.CustomFormat = AppSettings.Default.FormatDateTime;
+            dtpDateTime.CustomFormat = AppSettings.Settings.FormatDateTime;
         }
 
         private async Task<bool> CheckDataAsync()
