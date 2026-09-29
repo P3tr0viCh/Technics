@@ -1,6 +1,7 @@
 ﻿using P3tr0viCh.Utils.Attributes;
 using P3tr0viCh.Utils.Converters;
 using P3tr0viCh.Utils.Settings;
+using P3tr0viCh.Utils.Storage;
 using System.ComponentModel;
 using System.Drawing.Design;
 using System.Windows.Forms.Design;
@@ -8,7 +9,7 @@ using System.Windows.Forms.Design;
 namespace Technics
 {
     [TypeConverter(typeof(PropertySortedConverter))]
-    internal partial class Settings : SettingsBase
+    internal partial class Settings : ObjectPersistenceBase
     {
         private const string ResourcesName = "Properties.ResourcesSettings";
 

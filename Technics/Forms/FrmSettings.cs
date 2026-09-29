@@ -1,12 +1,12 @@
 ﻿using P3tr0viCh.Utils.Forms;
-using P3tr0viCh.Utils.Settings;
+using P3tr0viCh.Utils.Storage;
 using System;
 
 namespace Technics
 {
     internal class FrmSettings : FrmSettingsBase
     {
-        public FrmSettings(ISettingsStore settingsStore) : base(settingsStore)
+        public FrmSettings(IObjectStorage objectStorage) : base(objectStorage)
         {
         }
 

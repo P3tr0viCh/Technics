@@ -3,7 +3,7 @@ using P3tr0viCh.Utils.Settings;
 
 namespace Technics
 {
-    internal class AppSettings : DefaultInstance<SettingsStore<Settings>>
+    internal class AppSettings : DefaultInstance<SettingsStorage<Settings>>
     {
         public static Settings Settings => Default.Settings;
     }

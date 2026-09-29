@@ -5,7 +5,7 @@
 using P3tr0viCh.Utils;
 using P3tr0viCh.Utils.Comparers;
 using P3tr0viCh.Utils.Extensions;
-using P3tr0viCh.Utils.Settings;
+using P3tr0viCh.Utils.Storage;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -18,19 +18,18 @@ namespace Technics
 {
     public partial class Main
     {
-        internal class GpxFiles : SettingsBase
+        internal class GpxFilesData : ObjectPersistenceBase
         {
             public IEnumerable<string> Files { get; set; } = Enumerable.Empty<string>();
-
-            public override void Check()
-            {
-            }
         }
 
-        internal class GpxFilesStore : DefaultInstance<SettingsStore<GpxFiles>>
+        internal class GpxFilesStorage : ObjectStorage<GpxFilesData>
         {
         }
 
+        internal class GpxFiles : DefaultInstance<GpxFilesStorage>
+        {
+        }
 
         private readonly WrapperCancellationTokenSource ctsCheckDirectoryTracks = new WrapperCancellationTokenSource();
 
@@ -61,19 +60,19 @@ namespace Technics
 
         private IEnumerable<string> ExceptNewFiles(IEnumerable<string> files)
         {
-            GpxFilesStore.Default.Directory = Path.GetDirectoryName(Database.Default.FileName);
+            GpxFiles.Default.Directory = Path.GetDirectoryName(Database.Default.FileName);
 
-            GpxFilesStore.Default.FileName = $"{Files.ExecutableName()}.GpxFiles.{Files.ExtConfig}";
+            GpxFiles.Default.FileName = $"{Files.ExecutableName()}.GpxFiles.{Files.ExtConfig}";
 
-            DebugWrite.Line($"GpxFiles: {GpxFilesStore.Default.FilePath}");
+            DebugWrite.Line($"GpxFiles: {GpxFiles.Default.FilePath}");
 
-            GpxFilesStore.Default.Load();
+            GpxFiles.Default.Load();
 
-            var newFiles = files.Except(GpxFilesStore.Default.Settings.Files, new PathComparer());
+            var newFiles = files.Except(GpxFiles.Default.Data.Files, new PathComparer());
 
-            GpxFilesStore.Default.Settings.Files = files;
+            GpxFiles.Default.Data.Files = files;
 
-            GpxFilesStore.Default.Save();
+            GpxFiles.Default.Save();
 
 #if SHOW_FILES
             DebugWrite.Line($"new files count: {newFiles.Count()}");
