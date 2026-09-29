@@ -22,12 +22,12 @@ namespace Technics
 
         protected override void SaveFormState()
         {
-            AppSettings.Default.SaveFormState(this, AppSettings.Settings.FormStates);
+            AppSettings.Default.SaveFormState(this);
         }
 
         protected override void LoadFormState()
         {
-            AppSettings.Default.LoadFormState(this, AppSettings.Settings.FormStates);
+            AppSettings.Default.LoadFormState(this);
         }
 
         protected override void SettingsHasError(Exception e)

@@ -1,7 +1,6 @@
 ﻿using P3tr0viCh.Utils.Attributes;
 using P3tr0viCh.Utils.Converters;
 using P3tr0viCh.Utils.Settings;
-using P3tr0viCh.Utils.Storage;
 using System.ComponentModel;
 using System.Drawing.Design;
 using System.Windows.Forms.Design;
@@ -9,7 +8,7 @@ using System.Windows.Forms.Design;
 namespace Technics
 {
     [TypeConverter(typeof(PropertySortedConverter))]
-    internal partial class Settings : ObjectPersistenceBase
+    internal partial class Settings : SettingsPersistenceBase, IFormStates, IColumnStates
     {
         private const string ResourcesName = "Properties.ResourcesSettings";
 
@@ -76,23 +75,9 @@ namespace Technics
 
         // --------------------------------------------------------------------------------------------------------
         [Browsable(false)]
-        public FormStates FormStates { get; private set; } = new FormStates();
+        public FormStates FormStates { get; set; }
 
         [Browsable(false)]
-        public ColumnStates ColumnStates { get; private set; } = new ColumnStates();
-
-        // --------------------------------------------------------------------------------------------------------
-        public override void Check()
-        {
-            if (FormStates == null)
-            {
-                FormStates = new FormStates();
-            }
-
-            if (ColumnStates == null)
-            {
-                ColumnStates = new ColumnStates();
-            }
-        }
+        public ColumnStates ColumnStates { get; set; }
     }
 }

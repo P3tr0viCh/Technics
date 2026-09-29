@@ -59,11 +59,11 @@ namespace Technics
 
             ProgramStatus.Default.StatusChanged += ProgramStatus_StatusChanged;
 
-            AppSettings.Default.LoadFormState(this, AppSettings.Settings.FormStates);
+            AppSettings.Default.LoadFormState(this);
 
-            AppSettings.Default.LoadDataGridColumns(dgvMileages, AppSettings.Settings.ColumnStates);
-            AppSettings.Default.LoadDataGridColumns(dgvTechParts, AppSettings.Settings.ColumnStates);
-            AppSettings.Default.LoadDataGridColumns(dgvMaintenance, AppSettings.Settings.ColumnStates);
+            AppSettings.Default.LoadDataGridColumns(dgvMileages);
+            AppSettings.Default.LoadDataGridColumns(dgvTechParts);
+            AppSettings.Default.LoadDataGridColumns(dgvMaintenance);
 
             panelTechs.Width = CheckValue(AppSettings.Settings.PanelTechsWidth,
                 toolStripContainer.ContentPanel.Width - splitterTechs.MinExtra,
@@ -143,11 +143,11 @@ namespace Technics
                     break;
             }
 
-            AppSettings.Default.SaveFormState(this, AppSettings.Settings.FormStates);
+            AppSettings.Default.SaveFormState(this);
 
-            AppSettings.Default.SaveDataGridColumns(dgvMileages, AppSettings.Settings.ColumnStates);
-            AppSettings.Default.SaveDataGridColumns(dgvTechParts, AppSettings.Settings.ColumnStates);
-            AppSettings.Default.SaveDataGridColumns(dgvMaintenance, AppSettings.Settings.ColumnStates);
+            AppSettings.Default.SaveDataGridColumns(dgvMileages);
+            AppSettings.Default.SaveDataGridColumns(dgvTechParts);
+            AppSettings.Default.SaveDataGridColumns(dgvMaintenance);
 
             AppSettings.Settings.PanelTechsWidth = panelTechs.Width;
             AppSettings.Settings.PanelBottomHeight = panelBottom.Height;
